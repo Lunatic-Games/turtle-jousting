@@ -212,7 +212,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Open to multiplayer"
 align = 0
 
-[node name="OpenMultiplayerButton2" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
+[node name="EnableTeamsButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
 margin_top = 350.0
 margin_right = 165.0
 margin_bottom = 376.0
@@ -229,7 +229,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Enable teams"
 align = 0
 
-[node name="OpenMultiplayerButton3" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
 margin_top = 386.0
 margin_right = 68.0
 margin_bottom = 412.0
@@ -246,7 +246,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Start"
 align = 0
 
-[node name="OpenMultiplayerButton4" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
 margin_top = 422.0
 margin_right = 62.0
 margin_bottom = 448.0
@@ -319,3 +319,6 @@ Press X to parry"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="CodeSection/HBoxContainer/JoinContainer/Button" to="." method="_connect_to_server"]
+[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
+[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]

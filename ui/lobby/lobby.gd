@@ -17,7 +17,7 @@ func _ready():
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
 # Open to multiplayer
-func create_server():
+func _create_server():
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_server(DEFAULT_PORT, 4)
 	if result == OK:
@@ -27,9 +27,11 @@ func create_server():
 	get_tree().network_peer = peer
 	
 # Attempt to join using ip
-func connect_to_server():
-	var peer = NetworkedMultiplayerENet.new()
+func _connect_to_server():
 	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
+	if ip == "":
+		return
+	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
 		print("Connected successfully to ", ip)
@@ -69,3 +71,7 @@ remote func register_connection():
 	print("Registering connection")
 	var id = get_tree().get_rpc_sender_id()
 	connections.append(id)
+
+# Exit game (this will eventually lead back to main menu)
+func _exit():
+	get_tree().quit()
