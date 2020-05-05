@@ -5,6 +5,11 @@ const DEFAULT_PORT = 32200
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
 
+# Keep track of other connections
+var connections = []
+
+# Dictionary of local players, player_num : device_id
+var local_players = {1 : 0}
 
 func _ready():
 	var p1_label = player_container.get_node("PlayerSlot1/CenterContainer/Name")
@@ -40,15 +45,10 @@ func _connect_to_server():
 		return
 	get_tree().network_peer = peer
 
-# Keep track of other connections
-var connections = []
-
-# Players of this connection
-var players = [1]
 
 # Called (on client and server) when a peer connects
 func _new_connection(id):
-	rpc_id(id, "register_connection")
+	rpc_id(id, "register_connection", get_open_slots())
 
 # Called when a peer disconnects
 func _disconnection(id):
@@ -67,11 +67,36 @@ func _connected_fail():
 	pass
 
 # Register new connection
-remote func register_connection():
+remote func register_connection(open_slots):
 	print("Registering connection")
 	var id = get_tree().get_rpc_sender_id()
 	connections.append(id)
-
+	
+	if id == 1:
+		var new_players = {}
+		var used_slots = get_used_slots()
+		var j = 0
+		for i in range(len(local_players)):
+			new_players[open_slots[i]] = local_players[used_slots[j]]
+			j += 1
+		local_players = new_players
+		print("New local players: ", local_players)
+		
+	
+func get_used_slots():
+	var slots = []
+	for i in range(4):
+		if local_players.has(i + 1):
+			slots.append(i + 1)
+	return slots
+		
+func get_open_slots():
+	var slots = []
+	for i in range(4):
+		if !local_players.has(i + 1):
+			slots.append(i + 1)
+	return slots
+	
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
