@@ -29,7 +29,9 @@ func _create_server():
 		print("Created server on port ", DEFAULT_PORT)
 	else:
 		print("Failed to create server on port ", DEFAULT_PORT)
+		return
 	get_tree().network_peer = peer
+	connections[1] = local_players.keys()
 	
 # Attempt to join using ip
 func _connect_to_server():
@@ -48,7 +50,8 @@ func _connect_to_server():
 
 # Called (on client and server) when a peer connects
 func _new_connection(id):
-	rpc_id(id, "register_connection", connections)
+	if is_network_master():
+		rpc_id(id, "register_connection", connections)
 
 # Called when a peer disconnects
 func _disconnection(id):
@@ -69,6 +72,7 @@ func _connected_fail():
 # Register new connection
 remote func register_connection(existing_connections):
 	print("Registering connection")
+	print("Existing connections:")
 	var sender_id = get_tree().get_rpc_sender_id()
 	
 	if sender_id == 1:
@@ -76,10 +80,13 @@ remote func register_connection(existing_connections):
 		var new_player_list = []
 		for key in local_players.keys():
 			for j in range(1, 5):
-				if !new_local_players.has(j) and !existing_connections.has(j):
+				if !new_local_players.has(j) and !is_slot_taken(j, existing_connections):
+					print("Found an open slot at ", j)
 					new_player_list.append(j)
 					new_local_players[j] = local_players[key]
 					break
+				else:
+					print("Spot taken")
 		local_players = new_local_players
 		print("Local players: ", local_players)
 		rpc("update_players", new_player_list)
@@ -87,14 +94,21 @@ remote func register_connection(existing_connections):
 	
 remote func update_players(new_player_list):
 	var sender_id = get_tree().get_rpc_sender_id()
-	for player in connections[sender_id]:
-		get_player_slot(player).reset()
+	if connections.has(sender_id):
+		for player in connections[sender_id]:
+			get_player_slot(player).reset()
 	connections[sender_id] = new_player_list
-	for player in connections:
+	for player in connections[sender_id]:
 		get_player_slot(player).player_loaded(player)
 	
 func get_player_slot(num):
 	return player_container.get_child(num + 1)
+	
+func is_slot_taken(i, existing_connections):
+	for connection in existing_connections:
+		if connection.has(i):
+			return true
+	return false
 	
 # Exit game (this will eventually lead back to main menu)
 func _exit():
