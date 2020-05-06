@@ -5,15 +5,15 @@ const DEFAULT_PORT = 32200
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
 
-# Keep track of other connections
-var connections = []
+# Keeps track of connections, connection_id : player_array
+var connections = {}
 
-# Dictionary of local players, player_num : device_id
-var local_players = {1 : 0}
+# Keeps track of local players, player_num : device_id
+var local_players = {}
 
 func _ready():
-	var p1_label = player_container.get_node("PlayerSlot1/CenterContainer/Name")
-	p1_label.text = "Player 1"
+	player_container.get_node("PlayerSlot1").player_loaded(1)
+	local_players[1] = 0
 	
 	var _err = get_tree().connect("network_peer_connected", self, "_new_connection")
 	_err = get_tree().connect("network_peer_disconnected", self, "_disconnection")
@@ -48,7 +48,7 @@ func _connect_to_server():
 
 # Called (on client and server) when a peer connects
 func _new_connection(id):
-	rpc_id(id, "register_connection", get_open_slots())
+	rpc_id(id, "register_connection", connections)
 
 # Called when a peer disconnects
 func _disconnection(id):
@@ -56,7 +56,7 @@ func _disconnection(id):
 	
 # Called on client when connected
 func _connected_ok():
-	print("Connected okay")
+	pass
 	
 # Called if kicked by server
 func _server_disconnected():
@@ -67,35 +67,33 @@ func _connected_fail():
 	pass
 
 # Register new connection
-remote func register_connection(open_slots):
+remote func register_connection(existing_connections):
 	print("Registering connection")
-	var id = get_tree().get_rpc_sender_id()
-	connections.append(id)
+	var sender_id = get_tree().get_rpc_sender_id()
 	
-	if id == 1:
-		var new_players = {}
-		var used_slots = get_used_slots()
-		var j = 0
-		for i in range(len(local_players)):
-			new_players[open_slots[i]] = local_players[used_slots[j]]
-			j += 1
-		local_players = new_players
-		print("New local players: ", local_players)
+	if sender_id == 1:
+		var new_local_players = {}
+		var new_player_list = []
+		for key in local_players.keys():
+			for j in range(4):
+				if !new_local_players.has(j) and !existing_connections.has(j):
+					new_player_list.append(j)
+					new_local_players[j] = local_players[key]
+		local_players = new_local_players
+		print("Local players: ", local_players)
+		rpc(new_player_list)
 		
 	
-func get_used_slots():
-	var slots = []
-	for i in range(4):
-		if local_players.has(i + 1):
-			slots.append(i + 1)
-	return slots
-		
-func get_open_slots():
-	var slots = []
-	for i in range(4):
-		if !local_players.has(i + 1):
-			slots.append(i + 1)
-	return slots
+remote func update_players(new_player_list):
+	var sender_id = get_tree().get_rpc_sender_id()
+	for player in connections[sender_id]:
+		get_player_slot(player).reset()
+	connections[sender_id] = new_player_list
+	for player in connections:
+		get_player_slot(player).player_loaded(player)
+	
+func get_player_slot(num):
+	return player_container.get_child(num + 1)
 	
 # Exit game (this will eventually lead back to main menu)
 func _exit():
