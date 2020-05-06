@@ -2,10 +2,10 @@ extends ColorRect
 
 var device_id
 var color_i = 0
+onready var DEFAULT_COLOR = color
 const COLORS = [Color.red, Color.blue, Color.green, Color.yellow]
 
 func _ready():
-	color = COLORS[color_i]
 	rset_config("color", MultiplayerAPI.RPC_MODE_REMOTE)
 	
 func _input(event):
@@ -31,9 +31,13 @@ remote func update_color(c):
 	
 func reset():
 	$CenterContainer/Name.text = "Press A to join"
+	color_i = 0
+	color = DEFAULT_COLOR
 	#device_id = null
 	
 func player_loaded(number, dev_id = null):
 	if dev_id != null:
 		device_id = dev_id
+	color_i = 0
+	color = COLORS[color_i]
 	$CenterContainer/Name.text = "Player " + str(number)
