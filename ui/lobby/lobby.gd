@@ -44,7 +44,7 @@ func _connect_to_server():
 		print("Failed to connect to ", ip)
 		return
 	get_tree().network_peer = peer
-
+	set_network_master(1)
 
 # Called (on client and server) when a peer connects
 func _new_connection(id):
@@ -52,7 +52,7 @@ func _new_connection(id):
 
 # Called when a peer disconnects
 func _disconnection(id):
-	connections.remove(connections.find(id))
+	connections.erase(id)
 	
 # Called on client when connected
 func _connected_ok():
@@ -75,13 +75,14 @@ remote func register_connection(existing_connections):
 		var new_local_players = {}
 		var new_player_list = []
 		for key in local_players.keys():
-			for j in range(4):
+			for j in range(1, 5):
 				if !new_local_players.has(j) and !existing_connections.has(j):
 					new_player_list.append(j)
 					new_local_players[j] = local_players[key]
+					break
 		local_players = new_local_players
 		print("Local players: ", local_players)
-		rpc(new_player_list)
+		rpc("update_players", new_player_list)
 		
 	
 remote func update_players(new_player_list):
