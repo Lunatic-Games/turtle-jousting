@@ -32,6 +32,10 @@ func _create_server():
 		return
 	get_tree().network_peer = peer
 	connections[1] = local_players.keys()
+	$CodeSection/HBoxContainer/CodeEditContainer.visible = false
+	$CodeSection/HBoxContainer/JoinContainer.visible = false
+	$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
+	$CodeSection/HBoxContainer/Code.visible = true
 	
 # Attempt to join using ip
 func _connect_to_server():
@@ -55,6 +59,8 @@ func _new_connection(id):
 
 # Called when a peer disconnects
 func _disconnection(id):
+	for player in connections[id]:
+		get_player_slot(player).reset()
 	connections.erase(id)
 	
 # Called on client when connected
@@ -92,7 +98,7 @@ remote func register_connection(existing_connections):
 		rpc("update_players", new_player_list)
 		
 	
-remote func update_players(new_player_list):
+remotesync func update_players(new_player_list):
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
 		for player in connections[sender_id]:
@@ -102,11 +108,11 @@ remote func update_players(new_player_list):
 		get_player_slot(player).player_loaded(player)
 	
 func get_player_slot(num):
-	return player_container.get_child(num + 1)
+	return player_container.get_child(num - 1)
 	
 func is_slot_taken(i, existing_connections):
-	for connection in existing_connections:
-		if connection.has(i):
+	for key in existing_connections.keys():
+		if existing_connections[key].has(i):
 			return true
 	return false
 	
