@@ -14,7 +14,9 @@ var local_players = {}
 # Setup
 func _ready():
 	player_container.get_node("PlayerSlot1").player_loaded(1)
+	player_container.get_node("PlayerSlot2").player_loaded(2)
 	local_players[1] = 0
+	local_players[2] = 1
 	
 	var _err = get_tree().connect("network_peer_connected", self, "_new_connection")
 	_err = get_tree().connect("network_peer_disconnected", self, "_disconnection")
@@ -34,23 +36,21 @@ func _create_server():
 	get_tree().network_peer = peer
 	connections[1] = local_players.keys()
 	
-	$CodeSection/HBoxContainer/CodeEditContainer.visible = false
-	$CodeSection/HBoxContainer/JoinContainer.visible = false
-	$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
-	$CodeSection/HBoxContainer/Code.visible = true
+	#$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
+	toggle_ui_visibility("multiplayer_ui", true)
+	toggle_ui_visibility("host_ui", true)
 	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = false
-	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = true
-	
+	toggle_ui_visibility("disconnected_ui", false)
+		
 # Close server and update UI
 func _close_server():
 	get_tree().network_peer = null
 	connections[1] = local_players.keys()
 	
-	$CodeSection/HBoxContainer/CodeEditContainer.visible = true
-	$CodeSection/HBoxContainer/JoinContainer.visible = true
-	$CodeSection/HBoxContainer/Code.visible = false
 	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = true
 	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
+	toggle_ui_visibility("disconnected_ui", true)
+	toggle_ui_visibility("multiplayer_ui", false)
 	
 # Attempt to join using ip
 func _connect_to_server():
@@ -60,7 +60,7 @@ func _connect_to_server():
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
-		print("Connected successfully to ", ip)
+		print("Client succesfully created")
 	else:
 		print("Failed to connect to ", ip)
 		return
@@ -73,26 +73,29 @@ func _new_connection(id):
 
 # Remove associated player slots on client disconnect
 func _disconnection(id):
+	if !connections.has(id):
+		return
 	for player in connections[id]:
 		get_player_slot(player).reset()
 	connections.erase(id)
 	
 # Called on client when connected
 func _connected_ok():
-	pass
+	toggle_ui_visibility("client_ui", true)
+	toggle_ui_visibility("host_ui", false)
+	toggle_ui_visibility("disconnected_ui", false)
+	toggle_ui_visibility("multiplayer_ui", true)
 	
 # Called if kicked by server
 func _server_disconnected():
-	pass
+	print("Disconnected by server")
 	
 # Called on client failure to connect
 func _connected_fail():
-	pass
+	print("Connection failed")
 
 # Add players and register connection
 remote func register_connection(existing_connections):
-	var sender_id = get_tree().get_rpc_sender_id()
-	
 	var new_local_players = {}
 	var new_player_list = []
 	for key in local_players.keys():
@@ -103,6 +106,7 @@ remote func register_connection(existing_connections):
 				break
 	if len(new_player_list) < len(local_players.keys()):
 		print("Not enough room to join")
+		get_tree().network_peer = null
 		return
 
 	local_players = new_local_players
@@ -117,16 +121,20 @@ remotesync func update_players(new_player_list):
 	connections[sender_id] = new_player_list
 	for player in connections[sender_id]:
 		get_player_slot(player).player_loaded(player)
-		
-# Remove sender's connection
-remote func remove_connection():
-	var sender_id = get_tree().get_rpc_sender_id()
-	connections.erase(sender_id)
 	
 # Get associated player slot
 func get_player_slot(num):
 	return player_container.get_child(num - 1)
 	
+# Disconnect self from server
+func _disconnect():
+	get_tree().network_peer = null
+	toggle_ui_visibility("multiplayer_ui", false)
+	toggle_ui_visibility("host_ui", true)
+	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
+	toggle_ui_visibility("client_ui", false)
+	toggle_ui_visibility("disconnected_ui", true)
+
 # Determine if player number is available
 func is_slot_taken(i, existing_connections):
 	for key in existing_connections.keys():
@@ -134,6 +142,11 @@ func is_slot_taken(i, existing_connections):
 			return true
 	return false
 	
+# Toggle the visibility of all ui in a group
+func toggle_ui_visibility(group_name, visibility):
+	for element in get_tree().get_nodes_in_group(group_name):
+		element.visible = visibility
+
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
