@@ -5,7 +5,7 @@ const DEFAULT_PORT = 32200
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
 
-# Keeps track of connections, connection_id : player_array
+# Keeps track of connections once doing multiplayer, connection_id : player_array
 var connections = {}
 
 # Keeps track of local players, player_num : device_id
@@ -13,17 +13,32 @@ var local_players = {}
 
 # Setup
 func _ready():
-	player_container.get_node("PlayerSlot1").player_loaded(1)
-	player_container.get_node("PlayerSlot2").player_loaded(2)
-	local_players[1] = 0
-	local_players[2] = 1
-	
 	var _err = get_tree().connect("network_peer_connected", self, "_new_connection")
 	_err = get_tree().connect("network_peer_disconnected", self, "_disconnection")
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
+func _input(event):
+	if event.is_action("ui_accept") and event.pressed:
+		var device = event.device
+		if event is InputEventKey:
+			device = "keyboard"
+		if !local_players.values().has(device):
+			var open_spot = get_next_available_slot()
+			if open_spot:
+				print("Adding player at position ", open_spot)
+				var slot = player_container.get_node("PlayerSlot" + str(open_spot))
+				slot.player_loaded(open_spot)
+				local_players[open_spot] = device
+				if connections:
+					rpc("update_players", local_players.keys())
+			else:
+				print("Lobby is full, no more players can be added")
+		else:
+			print("Device already added")
+			
+		
 # Open to multiplayer and update UI
 func _create_server():
 	var peer = NetworkedMultiplayerENet.new()
@@ -45,7 +60,7 @@ func _create_server():
 # Close server and update UI
 func _close_server():
 	get_tree().network_peer = null
-	connections[1] = local_players.keys()
+	connections.clear()
 	reset_to_local()
 	
 	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = true
@@ -82,15 +97,12 @@ func _disconnection(id):
 	
 # Called on client when connected
 func _connected_ok():
-	toggle_ui_visibility("client_ui", true)
-	toggle_ui_visibility("host_ui", false)
-	toggle_ui_visibility("disconnected_ui", false)
-	toggle_ui_visibility("multiplayer_ui", true)
+	pass
 	
 # Called if kicked by server
 func _server_disconnected():
 	print("Disconnected by server")
-	reset_to_local()
+	_disconnect()
 	
 # Called on client failure to connect
 func _connected_fail():
@@ -99,20 +111,19 @@ func _connected_fail():
 # Add players and register connection
 remote func register_connection(existing_connections):
 	var new_local_players = {}
-	var new_player_list = []
 	for key in local_players.keys():
 		for j in range(1, 5):
 			if !new_local_players.has(j) and !is_slot_taken(j, existing_connections):
-				new_player_list.append(j)
 				new_local_players[j] = local_players[key]
 				break
-	if len(new_player_list) < len(local_players.keys()):
-		print("Not enough room to join")
-		get_tree().network_peer = null
+	if len(new_local_players.keys()) < len(local_players.keys()):
+		print("Room full")
 		return
-
+		
+	_joined_lobby()
 	local_players = new_local_players
-	rpc("update_players", new_player_list)
+	add_existing_connections(existing_connections)
+	rpc("update_players", local_players.keys())
 		
 # Update connection player numbers and player slots
 remotesync func update_players(new_player_list):
@@ -124,13 +135,26 @@ remotesync func update_players(new_player_list):
 	for player in connections[sender_id]:
 		get_player_slot(player).player_loaded(player)
 	
+func add_existing_connections(conns):
+	connections = conns
+	for conn in connections.keys():
+		for player in connections[conn]:
+			get_player_slot(player).player_loaded(player)
+
 # Get associated player slot
 func get_player_slot(num):
 	return player_container.get_child(num - 1)
 	
+func _joined_lobby():
+	toggle_ui_visibility("client_ui", true)
+	toggle_ui_visibility("host_ui", false)
+	toggle_ui_visibility("disconnected_ui", false)
+	toggle_ui_visibility("multiplayer_ui", true)
+	
 # Disconnect self from server
 func _disconnect():
-	get_tree().network_peer = null
+	get_tree().set_deferred("network_peer", null)
+	connections.clear()
 	reset_to_local()
 	toggle_ui_visibility("multiplayer_ui", false)
 	toggle_ui_visibility("host_ui", true)
@@ -139,10 +163,18 @@ func _disconnect():
 	toggle_ui_visibility("disconnected_ui", true)
 
 # Determine if player number is available
-func is_slot_taken(i, existing_connections):
-	for key in existing_connections.keys():
-		if existing_connections[key].has(i):
+func is_slot_taken(i, conns):
+	for key in conns.keys():
+		if conns[key].has(i):
 			return true
+	return false
+	
+func get_next_available_slot():
+	for i in range(1, 5):
+		if connections and !is_slot_taken(i, connections):
+			return i
+		elif !connections and !local_players.has(i):
+			return i
 	return false
 	
 # Toggle the visibility of all ui in a group
@@ -150,6 +182,7 @@ func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
 		
+# Reset the player slots to be only local players
 func reset_to_local():
 	for i in range(1, 5):
 		get_player_slot(i).reset()
@@ -160,6 +193,7 @@ func reset_to_local():
 		new_local_players[i] = local_players[key]
 		get_player_slot(i).player_loaded(i)
 		i += 1
+	local_players = new_local_players
 
 # Exit game (this will eventually lead back to main menu)
 func _exit():
