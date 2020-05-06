@@ -28,10 +28,10 @@ func _input(event):
 			var open_spot = get_next_available_slot()
 			if open_spot:
 				print("Adding player at position ", open_spot)
-				var slot = player_container.get_node("PlayerSlot" + str(open_spot))
-				slot.player_loaded(open_spot, device)
+				get_player_slot(open_spot).player_loaded(open_spot, device)
 				local_players[open_spot] = device
 				if connections:
+					get_player_slot(open_spot).set_network_master(get_tree().get_network_unique_id())
 					rpc("update_players", local_players.keys())
 			else:
 				print("Lobby is full, no more players can be added")
@@ -133,8 +133,10 @@ remotesync func update_players(new_player_list):
 			get_player_slot(player).reset()
 	connections[sender_id] = new_player_list
 	for player in connections[sender_id]:
+		print("Setting network master to ", sender_id)
 		get_player_slot(player).player_loaded(player)
 		get_player_slot(player).set_network_master(sender_id)
+		print("Network master: ", get_player_slot(player).get_network_master())
 	
 func add_existing_connections(conns):
 	connections = conns

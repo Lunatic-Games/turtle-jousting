@@ -8,7 +8,11 @@ func _ready():
 	color = COLORS[color_i]
 	
 func _input(event):
+	if event is InputEventMouse:
+		return
+		
 	if get_tree().network_peer and !is_network_master():
+		print(get_network_master())
 		return
 		
 	var dev_id = event.device
@@ -27,7 +31,7 @@ func _input(event):
 		
 func reset():
 	$CenterContainer/Name.text = "Press A to join"
-	device_id = null
+	#device_id = null
 	
 func player_loaded(number, dev_id = null):
 	device_id = dev_id
