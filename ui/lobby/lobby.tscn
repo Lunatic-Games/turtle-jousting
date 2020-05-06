@@ -117,7 +117,6 @@ margin_right = 200.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 200, 30 )
 custom_fonts/font = SubResource( 2 )
-text = "10.0.0.231"
 context_menu_enabled = false
 
 [node name="JoinContainer" type="CenterContainer" parent="CodeSection/HBoxContainer"]
@@ -211,6 +210,24 @@ custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Open to multiplayer"
+align = 0
+
+[node name="CloseMultiplayerButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
+visible = false
+margin_top = 350.0
+margin_right = 214.0
+margin_bottom = 376.0
+size_flags_horizontal = 0
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
+text = "Close multiplayer"
 align = 0
 
 [node name="EnableTeamsButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
@@ -322,4 +339,5 @@ __meta__ = {
 }
 [connection signal="pressed" from="CodeSection/HBoxContainer/JoinContainer/Button" to="." method="_connect_to_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
+[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]
