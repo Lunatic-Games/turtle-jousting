@@ -29,7 +29,7 @@ func _input(event):
 			if open_spot:
 				print("Adding player at position ", open_spot)
 				var slot = player_container.get_node("PlayerSlot" + str(open_spot))
-				slot.player_loaded(open_spot)
+				slot.player_loaded(open_spot, device)
 				local_players[open_spot] = device
 				if connections:
 					rpc("update_players", local_players.keys())
@@ -134,6 +134,7 @@ remotesync func update_players(new_player_list):
 	connections[sender_id] = new_player_list
 	for player in connections[sender_id]:
 		get_player_slot(player).player_loaded(player)
+		get_player_slot(player).set_network_master(sender_id)
 	
 func add_existing_connections(conns):
 	connections = conns
@@ -191,7 +192,7 @@ func reset_to_local():
 	var i = 1
 	for key in local_players.keys():
 		new_local_players[i] = local_players[key]
-		get_player_slot(i).player_loaded(i)
+		get_player_slot(i).player_loaded(i, local_players[key])
 		i += 1
 	local_players = new_local_players
 
