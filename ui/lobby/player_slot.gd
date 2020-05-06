@@ -6,15 +6,12 @@ const COLORS = [Color.red, Color.blue, Color.green, Color.yellow]
 
 func _ready():
 	color = COLORS[color_i]
+	rset_config("color", MultiplayerAPI.RPC_MODE_REMOTE)
 	
 func _input(event):
-	if event is InputEventMouse:
-		return
-		
 	if get_tree().network_peer and !is_network_master():
-		print(get_network_master())
 		return
-		
+	
 	var dev_id = event.device
 	if event is InputEventKey or event is InputEventMouse:
 		dev_id = "keyboard"
@@ -29,10 +26,14 @@ func _input(event):
 		if get_tree().network_peer:
 			rset("color", color)
 		
+remote func update_color(c):
+	color = c
+	
 func reset():
 	$CenterContainer/Name.text = "Press A to join"
 	#device_id = null
 	
 func player_loaded(number, dev_id = null):
-	device_id = dev_id
+	if dev_id != null:
+		device_id = dev_id
 	$CenterContainer/Name.text = "Player " + str(number)

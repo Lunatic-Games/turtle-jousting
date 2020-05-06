@@ -4,6 +4,8 @@ const DEFAULT_PORT = 32200
 
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
+onready var button_container = get_node("HBoxContainer/GameContainer/" +
+	"VBoxContainer")
 
 # Keeps track of connections once doing multiplayer, connection_id : player_array
 var connections = {}
@@ -19,24 +21,24 @@ func _ready():
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	
+# Register new devices
 func _input(event):
 	if event.is_action("ui_accept") and event.pressed:
 		var device = event.device
 		if event is InputEventKey:
 			device = "keyboard"
+			
 		if !local_players.values().has(device):
 			var open_spot = get_next_available_slot()
 			if open_spot:
-				print("Adding player at position ", open_spot)
 				get_player_slot(open_spot).player_loaded(open_spot, device)
 				local_players[open_spot] = device
 				if connections:
-					get_player_slot(open_spot).set_network_master(get_tree().get_network_unique_id())
+					var net_id = get_tree().get_network_unique_id()
+					get_player_slot(open_spot).set_network_master(net_id)
 					rpc("update_players", local_players.keys())
 			else:
-				print("Lobby is full, no more players can be added")
-		else:
-			print("Device already added")
+				print("Lobby full")
 			
 		
 # Open to multiplayer and update UI
@@ -54,7 +56,7 @@ func _create_server():
 	#$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
 	toggle_ui_visibility("multiplayer_ui", true)
 	toggle_ui_visibility("host_ui", true)
-	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = false
+	button_container.get_node("OpenMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", false)
 		
 # Close server and update UI
@@ -63,8 +65,8 @@ func _close_server():
 	connections.clear()
 	reset_to_local()
 	
-	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = true
-	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
+	button_container.get_node("OpenMultiplayerButton").visible = true
+	button_container.get_node("CloseMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", true)
 	toggle_ui_visibility("multiplayer_ui", false)
 	
