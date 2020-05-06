@@ -6,11 +6,12 @@ onready var player_container = get_node("HBoxContainer/GameContainer/" +
 	"VBoxContainer/PlayerContainer")
 onready var button_container = get_node("HBoxContainer/GameContainer/" +
 	"VBoxContainer")
+onready var Player = preload("res://ui/lobby/player_data.gd")
 
-# Keeps track of connections once doing multiplayer, connection_id : player_array
+# Keeps track of multiplayer connections, connection_id : player_dict
 var connections = {}
 
-# Keeps track of local players, player_num : device_id
+# Keeps track of local players, player_num : player_data
 var local_players = {}
 
 # Setup
@@ -28,17 +29,22 @@ func _input(event):
 		if event is InputEventKey:
 			device = "keyboard"
 			
-		if !local_players.values().has(device):
-			var open_spot = get_next_available_slot()
-			if open_spot:
-				get_player_slot(open_spot).player_loaded(open_spot, device)
-				local_players[open_spot] = device
-				if connections:
-					var net_id = get_tree().get_network_unique_id()
-					get_player_slot(open_spot).set_network_master(net_id)
-					rpc("update_players", local_players.keys())
-			else:
-				print("Lobby full")
+		for player in local_players.values():
+			if player.device_id == device:
+				return
+				
+		var open_spot = get_next_available_slot()
+		if !open_spot:
+			print("Lobby full")
+			return
+		
+		var new_player = Player.new()
+		new_player.init(open_spot, device)
+		local_players[open_spot] = new_player
+		if connections:
+			new_player.net_id = get_tree().get_network_unique_id()
+			rpc("update_players", local_players)
+		get_player_slot(open_spot).update_data(new_player)
 			
 		
 # Open to multiplayer and update UI
@@ -51,7 +57,7 @@ func _create_server():
 		print("Failed to create server on port ", DEFAULT_PORT)
 		return
 	get_tree().network_peer = peer
-	connections[1] = local_players.keys()
+	connections[1] = local_players
 	
 	#$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
 	toggle_ui_visibility("multiplayer_ui", true)
@@ -93,8 +99,8 @@ func _new_connection(id):
 func _disconnection(id):
 	if !connections.has(id):
 		return
-	for player in connections[id]:
-		get_player_slot(player).reset()
+	for player in connections[id].values():
+		get_player_slot(player).update_data(null)
 	connections.erase(id)
 	
 # Called on client when connected
@@ -114,37 +120,35 @@ func _connected_fail():
 remote func register_connection(existing_connections):
 	var new_local_players = {}
 	for key in local_players.keys():
-		for j in range(1, 5):
-			if !new_local_players.has(j) and !is_slot_taken(j, existing_connections):
-				new_local_players[j] = local_players[key]
-				break
-	if len(new_local_players.keys()) < len(local_players.keys()):
-		print("Room full")
-		return
+		var pos = get_next_available_slot()
+		if !pos:
+			print("Room full")
+			return
+		else:
+			new_local_players[pos] = local_players[key]
+			new_local_players[pos].number = pos
+			new_local_players[pos].net_id = get_tree().get_network_unique_id()
 		
 	_joined_lobby()
 	local_players = new_local_players
 	add_existing_connections(existing_connections)
-	rpc("update_players", local_players.keys())
+	rpc("update_players", local_players)
 		
 # Update connection player numbers and player slots
 remotesync func update_players(new_player_list):
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
 		for player in connections[sender_id]:
-			get_player_slot(player).reset()
+			get_player_slot(player.number).update_data(null)
 	connections[sender_id] = new_player_list
 	for player in connections[sender_id]:
-		print("Setting network master to ", sender_id)
-		get_player_slot(player).player_loaded(player)
-		get_player_slot(player).set_network_master(sender_id)
-		print("Network master: ", get_player_slot(player).get_network_master())
+		get_player_slot(player.number).update_data(player)
 	
 func add_existing_connections(conns):
 	connections = conns
 	for conn in connections.keys():
 		for player in connections[conn]:
-			get_player_slot(player).player_loaded(player)
+			get_player_slot(player.number).update_data(player)
 
 # Get associated player slot
 func get_player_slot(num):
@@ -169,8 +173,8 @@ func _disconnect():
 
 # Determine if player number is available
 func is_slot_taken(i, conns):
-	for key in conns.keys():
-		if conns[key].has(i):
+	for conn in conns:
+		if conn.values().has(i):
 			return true
 	return false
 	
@@ -190,13 +194,13 @@ func toggle_ui_visibility(group_name, visibility):
 # Reset the player slots to be only local players
 func reset_to_local():
 	for i in range(1, 5):
-		get_player_slot(i).reset()
+		get_player_slot(i).update_data(null)
 		
 	var new_local_players = {}
 	var i = 1
 	for key in local_players.keys():
 		new_local_players[i] = local_players[key]
-		get_player_slot(i).player_loaded(i, local_players[key])
+		get_player_slot(i).update_data(new_local_players[i])
 		i += 1
 	local_players = new_local_players
 
