@@ -46,6 +46,7 @@ func _create_server():
 func _close_server():
 	get_tree().network_peer = null
 	connections[1] = local_players.keys()
+	reset_to_local()
 	
 	$HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton.visible = true
 	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
@@ -89,6 +90,7 @@ func _connected_ok():
 # Called if kicked by server
 func _server_disconnected():
 	print("Disconnected by server")
+	reset_to_local()
 	
 # Called on client failure to connect
 func _connected_fail():
@@ -129,6 +131,7 @@ func get_player_slot(num):
 # Disconnect self from server
 func _disconnect():
 	get_tree().network_peer = null
+	reset_to_local()
 	toggle_ui_visibility("multiplayer_ui", false)
 	toggle_ui_visibility("host_ui", true)
 	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
@@ -146,6 +149,17 @@ func is_slot_taken(i, existing_connections):
 func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
+		
+func reset_to_local():
+	for i in range(1, 5):
+		get_player_slot(i).reset()
+		
+	var new_local_players = {}
+	var i = 1
+	for key in local_players.keys():
+		new_local_players[i] = local_players[key]
+		get_player_slot(i).player_loaded(i)
+		i += 1
 
 # Exit game (this will eventually lead back to main menu)
 func _exit():
