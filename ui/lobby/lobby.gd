@@ -138,6 +138,9 @@ remote func join(existing_connections):
 		if pos == -1:
 			print("Room full")
 			connections.clear()
+			connections[1] = local_players.keys()
+			get_tree().set_deferred("network_peer", null)
+			print("Connections: ", connections)
 			return
 		else:
 			new_local_players[pos] = local_players[player]
