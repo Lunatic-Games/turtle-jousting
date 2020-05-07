@@ -41,9 +41,10 @@ func _input(event):
 		var new_player = Player.new()
 		new_player.init(open_spot, device)
 		local_players[open_spot] = new_player
+		print(local_players)
 		if connections:
 			new_player.net_id = get_tree().get_network_unique_id()
-			rpc("update_players", local_players)
+			rpc("update_players", to_json(local_players))
 		get_player_slot(open_spot).update_data(new_player)
 			
 		
@@ -132,10 +133,11 @@ remote func register_connection(existing_connections):
 	_joined_lobby()
 	local_players = new_local_players
 	add_existing_connections(existing_connections)
-	rpc("update_players", local_players)
+	rpc("update_players", to_json(local_players))
 		
 # Update connection player numbers and player slots
 remotesync func update_players(new_player_list):
+	new_player_list = parse_json(new_player_list)
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
 		for player in connections[sender_id].values():
