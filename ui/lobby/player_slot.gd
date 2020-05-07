@@ -39,6 +39,7 @@ func _input(event):
 
 
 func load_player(number, player_data={}):
+	set_process(true)
 	update_player_number(number)
 	color_i = player_data.get("color_i", 0)
 	color = COLORS[color_i]
@@ -48,6 +49,8 @@ func update_player_number(number):
 	$CenterContainer/Name.text = "Player " + str(number)
 
 func reset():
+	set_process(false)
+	player_loaded = false
 	$CenterContainer/Name.text = "Press A to join"
 	color_i = -1
 	color = DEFAULT_COLOR
@@ -56,7 +59,7 @@ func reset():
 func get_player_data():
 	return { "device_id" : device_id, "color_i" : color_i}
 
-remote func update_color(i):
+puppet func update_color(i):
 	color_i = i
 	if i == -1:
 		color = DEFAULT_COLOR
