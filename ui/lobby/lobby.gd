@@ -214,14 +214,16 @@ func _exit():
 func send_player_update():
 	var players = {}
 	for player in local_players.keys():
-		players[player] = to_json(local_players[player])
-	rpc("update_player", to_json(players))
+		players[player] = to_json(local_players[player].to_dict())
+	rpc("update_players", to_json(players))
 	
 func parse_player_update(update):
 	var players = {}
 	var outer = parse_json(update)
+	print("Outer: ", outer)
 	for player in outer.keys():
 		var data = Player.new()
-		data.from_dict(outer[player])
+		data.from_dict(parse_json(outer[player]))
 		players[player] = data
+	print("Recieved update: ", players)
 	return players
