@@ -44,7 +44,7 @@ func _input(event):
 		print(local_players)
 		if connections:
 			new_player.net_id = get_tree().get_network_unique_id()
-			rpc("update_players", to_json(local_players))
+			send_player_update()
 		get_player_slot(open_spot).update_data(new_player)
 			
 		
@@ -133,11 +133,12 @@ remote func register_connection(existing_connections):
 	_joined_lobby()
 	local_players = new_local_players
 	add_existing_connections(existing_connections)
-	rpc("update_players", to_json(local_players))
+	send_player_update()
 		
 # Update connection player numbers and player slots
-remotesync func update_players(new_player_list):
-	new_player_list = parse_json(new_player_list)
+remotesync func update_players(new_player_list_js):
+	var new_player_list = parse_player_update(new_player_list_js)
+	print("Player list: ", new_player_list)
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
 		for player in connections[sender_id].values():
@@ -209,3 +210,18 @@ func reset_to_local():
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
+	
+func send_player_update():
+	var players = {}
+	for player in local_players.keys():
+		players[player] = to_json(local_players[player])
+	rpc("update_player", to_json(players))
+	
+func parse_player_update(update):
+	var players = {}
+	var outer = parse_json(update)
+	for player in outer.keys():
+		var data = Player.new()
+		data.from_dict(outer[player])
+		players[player] = data
+	return players

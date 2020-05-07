@@ -28,7 +28,7 @@ func _input(event):
 	
 remotesync func update_data(player_data):
 	player = player_data
-	if player == null:
+	if player == null or !player.color_i:
 		color = DEFAULT_COLOR
 	else:
 		color = COLORS[player.color_i]
