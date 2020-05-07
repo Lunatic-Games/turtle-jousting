@@ -138,11 +138,11 @@ remote func register_connection(existing_connections):
 remotesync func update_players(new_player_list):
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
-		for player in connections[sender_id]:
-			get_player_slot(player.number).update_data(null)
+		for player in connections[sender_id].keys():
+			get_player_slot(player).update_data(null)
 	connections[sender_id] = new_player_list
-	for player in connections[sender_id]:
-		get_player_slot(player.number).update_data(player)
+	for player in connections[sender_id].keys():
+		get_player_slot(player).update_data(player)
 	
 func add_existing_connections(conns):
 	connections = conns
@@ -173,8 +173,8 @@ func _disconnect():
 
 # Determine if player number is available
 func is_slot_taken(i, conns):
-	for conn in conns:
-		if conn.values().has(i):
+	for conn in conns.keys():
+		if conns[conn].values().has(i):
 			return true
 	return false
 	
