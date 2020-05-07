@@ -42,9 +42,7 @@ func _input(event):
 		new_player.init(open_spot, device)
 		if connections:
 			new_player.net_id = get_tree().get_network_unique_id()
-		print("Creating player at position ", open_spot)
 		local_players[open_spot] = new_player
-		print(local_players)
 		if connections:
 			rpc("update_players", player_dict_to_string(local_players))
 		get_player_slot(open_spot).update_data(new_player)
@@ -218,7 +216,7 @@ func connections_dict_to_string():
 	var connections_dict = {}
 	for connection in connections.keys():
 		var player_dict = connections[connection]
-		connections_dict[connection] = to_json(player_dict_to_string(player_dict))
+		connections_dict[connection] = player_dict_to_string(player_dict)
 	return to_json(connections_dict)
 
 func string_to_connections(string):
@@ -238,6 +236,8 @@ func player_dict_to_string(players):
 func string_to_player_dict(string):
 	var players = {}
 	var outer = parse_json(string)
+	if typeof(outer) != TYPE_DICTIONARY:
+		return {}
 	for player in outer.keys():
 		var data = Player.new()
 		data.from_dict(parse_json(outer[player]))
