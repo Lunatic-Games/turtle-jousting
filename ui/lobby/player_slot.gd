@@ -7,7 +7,7 @@ var device_id
 var color_i = -1
 
 func _ready():
-	pass
+	set_process(false)
 
 
 func _process(_delta):
@@ -57,8 +57,6 @@ func get_player_data():
 	return { "device_id" : device_id, "color_i" : color_i, "color" : color}
 
 remote func update_color(i):
-	if get_tree().get_rpc_sender_id() == get_tree().get_network_unique_id():
-		return
 	color_i = i
 	if i == -1:
 		color = DEFAULT_COLOR

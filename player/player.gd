@@ -12,6 +12,7 @@ var movement_actions = {"up" : [false, false], "right" : [false, false],
 func _ready():
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_REMOTE)
+		$ColorRect.rset_config("color", MultiplayerAPI.RPC_MODE_REMOTE)
 
 func _unhandled_input(event):
 	if get_tree().network_peer and !is_network_master():
@@ -32,6 +33,9 @@ func _unhandled_input(event):
 	check_for_move_event(event, "left")
 
 func _physics_process(_delta):
+	if get_tree().network_peer and !is_network_master():
+		return
+		
 	var movement = Vector2()
 	if movement_actions["up"].has(true):
 		movement.y -= 1
