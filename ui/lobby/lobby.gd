@@ -1,6 +1,6 @@
 extends Control
 
-const DEFAULT_PORT = 32200
+const DEFAULT_PORT = 32201
 
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
