@@ -138,16 +138,16 @@ remote func register_connection(existing_connections):
 remotesync func update_players(new_player_list):
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
-		for player in connections[sender_id].keys():
-			get_player_slot(player).update_data(null)
+		for player in connections[sender_id].values():
+			get_player_slot(player.number).update_data(null)
 	connections[sender_id] = new_player_list
-	for player in connections[sender_id].keys():
-		get_player_slot(player).update_data(player)
+	for player in connections[sender_id].values():
+		get_player_slot(player.number).update_data(player)
 	
 func add_existing_connections(conns):
 	connections = conns
 	for conn in connections.keys():
-		for player in connections[conn]:
+		for player in connections[conn].values():
 			get_player_slot(player.number).update_data(player)
 
 # Get associated player slot
