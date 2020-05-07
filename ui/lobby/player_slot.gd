@@ -11,7 +11,7 @@ func _ready():
 
 
 func _process(_delta):
-	if !get_tree().network_peer:
+	if !get_tree().network_peer or !is_network_master():
 		return
 	rpc_unreliable("update_color", color_i)
 
@@ -33,6 +33,7 @@ func _input(event):
 		color_i += 1
 		if color_i >= len(COLORS):
 			color_i = 0
+		color = COLORS[color_i]
 
 
 func load_player(number, device=null):

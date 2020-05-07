@@ -59,7 +59,7 @@ func _create_server():
 		print("Failed to create server on port ", DEFAULT_PORT)
 		return
 	get_tree().network_peer = peer
-	connections[1] = local_players
+	connections[1] = local_players.keys()
 	
 	# <-Should make a function for grabbing ip->
 	toggle_ui_visibility("multiplayer_ui", true)
@@ -130,6 +130,7 @@ func _connected_fail():
 remote func join(existing_connections):
 	connections = existing_connections
 	var net_id = get_tree().get_network_unique_id()
+	connections[net_id] = []
 	var new_local_players = {}
 	
 	for player in local_players.keys():
