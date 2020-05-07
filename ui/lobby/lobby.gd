@@ -40,11 +40,13 @@ func _input(event):
 		
 		var new_player = Player.new()
 		new_player.init(open_spot, device)
+		if connections:
+			new_player.net_id = get_tree().get_network_unique_id()
+		print("Creating player at position ", open_spot)
 		local_players[open_spot] = new_player
 		print(local_players)
 		if connections:
-			new_player.net_id = get_tree().get_network_unique_id()
-			send_player_update()
+			rpc("update_players", player_dict_to_string(local_players))
 		get_player_slot(open_spot).update_data(new_player)
 			
 		
@@ -94,7 +96,7 @@ func _connect_to_server():
 # Called the new client connection to register itself
 func _new_connection(id):
 	if is_network_master():
-		rpc_id(id, "register_connection", connections)
+		rpc_id(id, "register_connection", connections_dict_to_string())
 
 # Remove associated player slots on client disconnect
 func _disconnection(id):
@@ -118,7 +120,8 @@ func _connected_fail():
 	print("Connection failed")
 
 # Add players and register connection
-remote func register_connection(existing_connections):
+remote func register_connection(existing_connections_js):
+	var existing_connections = string_to_connections(existing_connections_js)
 	var new_local_players = {}
 	for key in local_players.keys():
 		var pos = get_next_available_slot()
@@ -133,11 +136,11 @@ remote func register_connection(existing_connections):
 	_joined_lobby()
 	local_players = new_local_players
 	add_existing_connections(existing_connections)
-	send_player_update()
+	rpc("update_player", player_dict_to_string(local_players))
 		
 # Update connection player numbers and player slots
 remotesync func update_players(new_player_list_js):
-	var new_player_list = parse_player_update(new_player_list_js)
+	var new_player_list = string_to_player_dict(new_player_list_js)
 	print("Player list: ", new_player_list)
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
@@ -177,7 +180,7 @@ func _disconnect():
 # Determine if player number is available
 func is_slot_taken(i, conns):
 	for conn in conns.keys():
-		if conns[conn].values().has(i):
+		if conns[conn].keys().has(i):
 			return true
 	return false
 	
@@ -211,19 +214,32 @@ func reset_to_local():
 func _exit():
 	get_tree().quit()
 	
-func send_player_update():
-	var players = {}
-	for player in local_players.keys():
-		players[player] = to_json(local_players[player].to_dict())
-	rpc("update_players", to_json(players))
+func connections_dict_to_string():
+	var connections_dict = {}
+	for connection in connections.keys():
+		var player_dict = connections[connection]
+		connections_dict[connection] = to_json(player_dict_to_string(player_dict))
+	return to_json(connections_dict)
+
+func string_to_connections(string):
+	var new_connections = {}
+	var outer = parse_json(string)
+	for connection in outer.keys():
+		new_connections[connection] = string_to_player_dict(outer[connection])
+	return new_connections
 	
-func parse_player_update(update):
+	
+func player_dict_to_string(players):
+	var dict_players = {}
+	for player in players.keys():
+		dict_players[player] = to_json(players[player].to_dict())
+	return to_json(players)
+	
+func string_to_player_dict(string):
 	var players = {}
-	var outer = parse_json(update)
-	print("Outer: ", outer)
+	var outer = parse_json(string)
 	for player in outer.keys():
 		var data = Player.new()
 		data.from_dict(parse_json(outer[player]))
 		players[player] = data
-	print("Recieved update: ", players)
 	return players
