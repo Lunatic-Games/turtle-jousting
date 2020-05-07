@@ -376,4 +376,5 @@ __meta__ = {
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
+[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]

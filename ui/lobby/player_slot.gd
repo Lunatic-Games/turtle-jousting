@@ -40,26 +40,25 @@ func _input(event):
 
 func load_player(number, player_data={}):
 	set_process(true)
-	update_player_number(number)
+	$CenterContainer/Name.text = "Player " + str(number)
 	color_i = player_data.get("color_i", 0)
 	color = COLORS[color_i]
 	device_id = player_data.get("device_id", 0)
 	
-func update_player_number(number):
-	$CenterContainer/Name.text = "Player " + str(number)
 
 func reset():
 	set_process(false)
-	player_loaded = false
 	$CenterContainer/Name.text = "Press A to join"
 	color_i = -1
 	color = DEFAULT_COLOR
 	device_id = null
 	
 func get_player_data():
-	return { "device_id" : device_id, "color_i" : color_i}
+	return { "device_id" : device_id, "color_i" : color_i, "color" : color}
 
-puppet func update_color(i):
+remote func update_color(i):
+	if get_tree().get_rpc_sender_id() == get_tree().get_network_unique_id():
+		return
 	color_i = i
 	if i == -1:
 		color = DEFAULT_COLOR

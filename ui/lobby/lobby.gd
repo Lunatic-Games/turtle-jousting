@@ -1,6 +1,7 @@
 extends Control
 
 const DEFAULT_PORT = 32201
+const game_scene = preload("res://game/game.tscn")
 
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
@@ -40,11 +41,13 @@ func _input(event):
 			return
 		
 		local_players[pos] = device
-		if connections:
+		if get_tree().network_peer:
 			rpc("update_player_list", local_players)
 			var net_id = get_tree().get_network_unique_id()
-			connections[net_id] = local_players.keys()
 			get_player_slot(pos).set_network_master(net_id)
+			connections[net_id] = local_players.keys()
+		else:
+			connections[1] = local_players.keys()
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
 
@@ -59,7 +62,6 @@ func _create_server():
 		print("Failed to create server on port ", DEFAULT_PORT)
 		return
 	get_tree().network_peer = peer
-	connections[1] = local_players.keys()
 	
 	# <-Should make a function for grabbing ip->
 	toggle_ui_visibility("multiplayer_ui", true)
@@ -71,7 +73,6 @@ func _create_server():
 # Close server and update UI
 func _close_server():
 	get_tree().network_peer = null
-	connections.clear()
 	reset_to_local()
 	
 	button_container.get_node("OpenMultiplayerButton").visible = true
@@ -195,7 +196,6 @@ func _joined_lobby():
 
 # Disconnect self from server
 func _disconnect():
-	connections.clear()
 	reset_to_local()
 	get_tree().set_deferred("network_peer", null)
 	toggle_ui_visibility("multiplayer_ui", false)
@@ -207,6 +207,8 @@ func _disconnect():
 
 # Reset the player slots to be only local players
 func reset_to_local():
+	connections.clear()
+	connections[1] = []
 	var old_local_players = local_players.duplicate()
 	var player_data = {}
 	local_players = {}
@@ -215,10 +217,10 @@ func reset_to_local():
 		var pos = get_next_open_position()
 		local_players[pos] = old_local_players[key]
 		player_data[pos] = get_player_slot(key).get_player_data()
+		connections[1].append(pos)
 		
 	for i in range(1, 5):
 		if player_data.has(i):
-			print("Loading player data: ", player_data[i])
 			get_player_slot(i).load_player(i, player_data[i])
 		else:
 			get_player_slot(i).reset()
@@ -234,11 +236,6 @@ func get_next_open_position():
 
 # Determine if player number is available
 func slot_is_open(i):
-	if !connections:
-		if local_players.has(i):
-			return false
-		else:
-			return true
 	for connection in connections:
 		if connections[connection].has(i):
 			return false
@@ -250,7 +247,28 @@ func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
 
-
+func _on_StartButton_pressed():
+	if get_tree().network_peer:
+		rpc("start")
+	else:
+		start()
+	
+remotesync func start():
+	if get_tree().network_peer and is_network_master():
+		get_tree().refuse_new_network_connections = true
+	var new_game = game_scene.instance()
+	for connection in connections:
+		for player in connections[connection]:
+			var data = {}
+			if player in local_players.keys():
+				data = get_player_slot(player).get_player_data()
+			new_game.add_player(player, connection, data)
+	get_tree().get_root().add_child(new_game)
+	queue_free()
+	
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
+
+
+
