@@ -6,13 +6,13 @@ onready var player_container = get_node("HBoxContainer/GameContainer/" +
 	"VBoxContainer/PlayerContainer")
 onready var button_container = get_node("HBoxContainer/GameContainer/" +
 	"VBoxContainer")
-onready var Player = preload("res://ui/lobby/player_data.gd")
 
-# Keeps track of multiplayer connections, connection_id : player_dict
+# Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
 
-# Keeps track of local players, player_num : player_data
+# Keeps track of local players, player_number : device_id
 var local_players = {}
+
 
 # Setup
 func _ready():
@@ -21,7 +21,8 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
-	
+
+
 # Register new devices
 func _input(event):
 	if event.is_action("ui_accept") and event.pressed:
@@ -29,25 +30,25 @@ func _input(event):
 		if event is InputEventKey:
 			device = "keyboard"
 			
-		for player in local_players.values():
-			if player.device_id == device:
+		for device_id in local_players.values():
+			if device == device_id:
 				return
 				
-		var open_spot = get_next_available_slot()
-		if !open_spot:
+		var pos = get_next_open_position()
+		if pos == -1:
 			print("Lobby full")
 			return
 		
-		var new_player = Player.new()
-		new_player.init(open_spot, device)
+		local_players[pos] = device
 		if connections:
-			new_player.net_id = get_tree().get_network_unique_id()
-		local_players[open_spot] = new_player
-		if connections:
-			rpc("update_players", player_dict_to_string(local_players))
-		get_player_slot(open_spot).update_data(new_player)
-			
-		
+			rpc("update_player_list", local_players)
+			var net_id = get_tree().get_network_unique_id()
+			connections[net_id] = local_players.keys()
+			get_player_slot(pos).set_network_master(net_id)
+
+		get_player_slot(pos).load_player(pos, device)
+
+
 # Open to multiplayer and update UI
 func _create_server():
 	var peer = NetworkedMultiplayerENet.new()
@@ -60,12 +61,13 @@ func _create_server():
 	get_tree().network_peer = peer
 	connections[1] = local_players
 	
-	#$CodeSection/HBoxContainer/Code.text = IP.get_local_addresses()[0]
+	# <-Should make a function for grabbing ip->
 	toggle_ui_visibility("multiplayer_ui", true)
 	toggle_ui_visibility("host_ui", true)
 	button_container.get_node("OpenMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", false)
-		
+
+
 # Close server and update UI
 func _close_server():
 	get_tree().network_peer = null
@@ -76,7 +78,8 @@ func _close_server():
 	button_container.get_node("CloseMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", true)
 	toggle_ui_visibility("multiplayer_ui", false)
-	
+
+
 # Attempt to join using ip
 func _connect_to_server():
 	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
@@ -87,158 +90,159 @@ func _connect_to_server():
 	if result == OK:
 		print("Client succesfully created")
 	else:
-		print("Failed to connect to ", ip)
+		print("Failed to create client")
 		return
 	get_tree().network_peer = peer
 
-# Called the new client connection to register itself
+
+# Tell the new client connection to add itself
 func _new_connection(id):
 	if is_network_master():
-		rpc_id(id, "register_connection", connections_dict_to_string())
+		rpc_id(id, "join", connections)
+
 
 # Remove associated player slots on client disconnect
 func _disconnection(id):
 	if !connections.has(id):
 		return
-	for player in connections[id].values():
-		get_player_slot(player).update_data(null)
+	for player in connections[id].keys():
+		get_player_slot(player).reset()
 	connections.erase(id)
-	
+
+
 # Called on client when connected
 func _connected_ok():
 	pass
-	
+
+
 # Called if kicked by server
 func _server_disconnected():
 	print("Disconnected by server")
 	_disconnect()
-	
+
+
 # Called on client failure to connect
 func _connected_fail():
 	print("Connection failed")
 
+
 # Add players and register connection
-remote func register_connection(existing_connections_js):
-	var existing_connections = string_to_connections(existing_connections_js)
+remote func join(existing_connections):
+	connections = existing_connections
+	var net_id = get_tree().get_network_unique_id()
 	var new_local_players = {}
-	for key in local_players.keys():
-		var pos = get_next_available_slot()
-		if !pos:
+	
+	for player in local_players.keys():
+		get_player_slot(player).reset()
+		
+	for player in local_players.keys():
+		var pos = get_next_open_position()
+		if pos == -1:
 			print("Room full")
+			connections.clear()
 			return
 		else:
-			new_local_players[pos] = local_players[key]
-			new_local_players[pos].number = pos
-			new_local_players[pos].net_id = get_tree().get_network_unique_id()
+			new_local_players[pos] = local_players[player]
+			connections[net_id].append(pos)
 		
 	_joined_lobby()
 	local_players = new_local_players
-	add_existing_connections(existing_connections)
-	rpc("update_players", player_dict_to_string(local_players))
-		
+	load_existing_connections()
+	rpc("update_player_list", local_players)
+	for player in local_players.keys():
+		get_player_slot(player).load_player(player, local_players[player])
+		get_player_slot(player).set_network_master(net_id)
+
+
 # Update connection player numbers and player slots
-remotesync func update_players(new_player_list_js):
-	var new_player_list = string_to_player_dict(new_player_list_js)
+remote func update_player_list(players):
 	var sender_id = get_tree().get_rpc_sender_id()
-	if connections.has(sender_id):
-		for player in connections[sender_id].values():
-			get_player_slot(player.number).update_data(null)
-	connections[sender_id] = new_player_list
-	for player in connections[sender_id].values():
-		get_player_slot(player.number).update_data(player)
 	
-func add_existing_connections(conns):
-	connections = conns
-	for conn in connections.keys():
-		for player in connections[conn].values():
-			get_player_slot(player.number).update_data(player)
+	if connections.has(sender_id):
+		for player in connections[sender_id]:
+			get_player_slot(player).reset()
+
+	connections[sender_id] = players
+	for player in connections[sender_id]:
+		get_player_slot(player).load_player(player)
+		get_player_slot(player).set_network_master(sender_id)
+
+
+# Load players from connections that existed before joining
+func load_existing_connections():
+	var net_id = get_tree().get_network_unique_id()
+	
+	for connection in connections.keys():
+		if connection == net_id:
+			continue
+		for player in connections[connection]:
+			get_player_slot(player).load_player(player)
+			get_player_slot(player).set_network_master(connection)
+
 
 # Get associated player slot
 func get_player_slot(num):
 	return player_container.get_child(num - 1)
-	
+
+
+# Update UI for being a client
 func _joined_lobby():
 	toggle_ui_visibility("client_ui", true)
 	toggle_ui_visibility("host_ui", false)
 	toggle_ui_visibility("disconnected_ui", false)
 	toggle_ui_visibility("multiplayer_ui", true)
-	
+
+
 # Disconnect self from server
 func _disconnect():
-	get_tree().set_deferred("network_peer", null)
 	connections.clear()
 	reset_to_local()
+	get_tree().set_deferred("network_peer", null)
 	toggle_ui_visibility("multiplayer_ui", false)
 	toggle_ui_visibility("host_ui", true)
-	$HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton.visible = false
+	button_container.get_node("CloseMultiplayerButton").visible = false
 	toggle_ui_visibility("client_ui", false)
 	toggle_ui_visibility("disconnected_ui", true)
 
-# Determine if player number is available
-func is_slot_taken(i, conns):
-	for conn in conns.keys():
-		if conns[conn].keys().has(i):
-			return true
-	return false
-	
-func get_next_available_slot():
+
+# Determine next available player number, returns -1 if none available
+func get_next_open_position():
 	for i in range(1, 5):
-		if connections and !is_slot_taken(i, connections):
+		if slot_is_open(i):
 			return i
-		elif !connections and !local_players.has(i):
-			return i
-	return false
-	
+	return -1
+
+
+# Determine if player number is available
+func slot_is_open(i):
+	if !connections and !local_players.has(i):
+		return true
+	for connection in connections:
+		if connections[connection].has(i):
+			return false
+	return true
+
+
 # Toggle the visibility of all ui in a group
 func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
-		
+
+
 # Reset the player slots to be only local players
 func reset_to_local():
 	for i in range(1, 5):
-		get_player_slot(i).update_data(null)
+		get_player_slot(i).reset()
 		
 	var new_local_players = {}
-	var i = 1
 	for key in local_players.keys():
-		new_local_players[i] = local_players[key]
-		get_player_slot(i).update_data(new_local_players[i])
-		i += 1
+		var pos = get_next_open_position()
+		new_local_players[pos] = local_players[key]
+		get_player_slot(pos).load_player(pos, local_players[key])
+		get_player_slot(pos).set_network_master(1)
 	local_players = new_local_players
+
 
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
-	
-func connections_dict_to_string():
-	var connections_dict = {}
-	for connection in connections.keys():
-		var player_dict = connections[connection]
-		connections_dict[connection] = player_dict_to_string(player_dict)
-	return to_json(connections_dict)
-
-func string_to_connections(string):
-	var new_connections = {}
-	var outer = parse_json(string)
-	for connection in outer.keys():
-		new_connections[connection] = string_to_player_dict(outer[connection])
-	return new_connections
-	
-	
-func player_dict_to_string(players):
-	var dict_players = {}
-	for player in players.keys():
-		dict_players[player] = to_json(players[player].to_dict())
-	return to_json(dict_players)
-	
-func string_to_player_dict(string):
-	var players = {}
-	var outer = parse_json(string)
-	if typeof(outer) != TYPE_DICTIONARY:
-		return {}
-	for player in outer.keys():
-		var data = Player.new()
-		data.from_dict(parse_json(outer[player]))
-		players[player] = data
-	return players
