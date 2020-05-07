@@ -46,7 +46,7 @@ func _input(event):
 			connections[net_id] = local_players.keys()
 			get_player_slot(pos).set_network_master(net_id)
 
-		get_player_slot(pos).load_player(pos, device)
+		get_player_slot(pos).load_player(pos, {"device_id" : device})
 
 
 # Open to multiplayer and update UI
@@ -132,10 +132,8 @@ remote func join(existing_connections):
 	var net_id = get_tree().get_network_unique_id()
 	connections[net_id] = []
 	var new_local_players = {}
+	var player_data = {}
 	
-	for player in local_players.keys():
-		get_player_slot(player).reset()
-		
 	for player in local_players.keys():
 		var pos = get_next_open_position()
 		if pos == -1:
@@ -144,6 +142,7 @@ remote func join(existing_connections):
 			return
 		else:
 			new_local_players[pos] = local_players[player]
+			player_data[pos] = get_player_slot(player).get_player_data()
 			connections[net_id].append(pos)
 		
 	_joined_lobby()
@@ -151,7 +150,7 @@ remote func join(existing_connections):
 	load_existing_connections()
 	rpc("update_player_list", local_players)
 	for player in local_players.keys():
-		get_player_slot(player).load_player(player, local_players[player])
+		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
 
 
@@ -206,6 +205,24 @@ func _disconnect():
 	toggle_ui_visibility("disconnected_ui", true)
 
 
+# Reset the player slots to be only local players
+func reset_to_local():
+	var old_local_players = local_players.duplicate()
+	var player_data = {}
+	local_players = {}
+	
+	for key in old_local_players.keys():
+		var pos = get_next_open_position()
+		local_players[pos] = old_local_players[key]
+		player_data[pos] = get_player_slot(key).get_player_data()
+		
+	for i in range(1, 5):
+		if player_data.has(i):
+			get_player_slot(i).load_player(i, player_data)
+		else:
+			get_player_slot(i).reset()
+
+
 # Determine next available player number, returns -1 if none available
 func get_next_open_position():
 	for i in range(1, 5):
@@ -216,8 +233,11 @@ func get_next_open_position():
 
 # Determine if player number is available
 func slot_is_open(i):
-	if !connections and !local_players.has(i):
-		return true
+	if !connections:
+		if local_players.has(i):
+			return false
+		else:
+			return true
 	for connection in connections:
 		if connections[connection].has(i):
 			return false
@@ -228,20 +248,6 @@ func slot_is_open(i):
 func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
-
-
-# Reset the player slots to be only local players
-func reset_to_local():
-	for i in range(1, 5):
-		get_player_slot(i).reset()
-		
-	var new_local_players = {}
-	for key in local_players.keys():
-		var pos = get_next_open_position()
-		new_local_players[pos] = local_players[key]
-		get_player_slot(pos).load_player(pos, local_players[key])
-		get_player_slot(pos).set_network_master(1)
-	local_players = new_local_players
 
 
 # Exit game (this will eventually lead back to main menu)

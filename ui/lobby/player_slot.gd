@@ -27,6 +27,8 @@ func _input(event):
 			return
 
 	if device != device_id:
+		if color != DEFAULT_COLOR:
+			print("Wrong device")
 		return
 		
 	if event.is_action("ui_right") and event.pressed:
@@ -36,17 +38,23 @@ func _input(event):
 		color = COLORS[color_i]
 
 
-func load_player(number, device=null):
-	$CenterContainer/Name.text = "Player " + str(number)
-	color_i = 0
+func load_player(number, player_data={}):
+	update_player_number(number)
+	color_i = player_data.get("color_i", 0)
 	color = COLORS[color_i]
-	device_id = device
+	device_id = player_data.get("device_id", 0)
+	
+func update_player_number(number):
+	$CenterContainer/Name.text = "Player " + str(number)
 
 func reset():
 	$CenterContainer/Name.text = "Press A to join"
 	color_i = -1
 	color = DEFAULT_COLOR
 	device_id = null
+	
+func get_player_data():
+	return { "device_id" : device_id, "color_i" : color_i}
 
 remote func update_color(i):
 	color_i = i
