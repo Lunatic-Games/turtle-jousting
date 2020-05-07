@@ -2,6 +2,7 @@ extends ColorRect
 
 var player
 onready var DEFAULT_COLOR = color
+onready var Player = preload("res://ui/lobby/player_data.gd")
 const COLORS = [Color.red, Color.blue, Color.green, Color.yellow]
 
 func _ready():
@@ -22,12 +23,19 @@ func _input(event):
 		if player.color_i >= len(COLORS):
 			player.color_i = 0
 		if get_tree().network_peer:
-			rpc("update_data", player)
+			rpc("update_data_js", to_json(player.to_dict))
 		else:
 			update_data(player)
 	
-remotesync func update_data(player_data):
-	player = player_data
+remotesync func update_data_js(player_data_js):
+	var player_data = parse_json(player_data_js)
+	var player = Player.new()
+	player.from_dict(player_data)
+	update_data(player)
+
+func update_data(player_data):
+	var player = Player.new()
+	player.from_dict(parse_json(player_data))
 	if player == null or !player.color_i:
 		color = DEFAULT_COLOR
 	else:

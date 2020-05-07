@@ -134,12 +134,11 @@ remote func register_connection(existing_connections_js):
 	_joined_lobby()
 	local_players = new_local_players
 	add_existing_connections(existing_connections)
-	rpc("update_player", player_dict_to_string(local_players))
+	rpc("update_players", player_dict_to_string(local_players))
 		
 # Update connection player numbers and player slots
 remotesync func update_players(new_player_list_js):
 	var new_player_list = string_to_player_dict(new_player_list_js)
-	print("Player list: ", new_player_list)
 	var sender_id = get_tree().get_rpc_sender_id()
 	if connections.has(sender_id):
 		for player in connections[sender_id].values():
@@ -231,7 +230,7 @@ func player_dict_to_string(players):
 	var dict_players = {}
 	for player in players.keys():
 		dict_players[player] = to_json(players[player].to_dict())
-	return to_json(players)
+	return to_json(dict_players)
 	
 func string_to_player_dict(string):
 	var players = {}
