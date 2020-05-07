@@ -47,7 +47,8 @@ func _physics_process(_delta):
 		movement.x -= 1
 	var _vel = move_and_slide(movement.normalized() * SPEED)
 	if get_tree().network_peer:
-		rset("position", position)
+		rset_unreliable("position", position)
+		$ColorRect.rset_unreliable("color", $ColorRect.color)
 	
 func check_for_move_event(event, direction):
 	if event.is_action("move_" + direction):

@@ -23,12 +23,10 @@ func _input(event):
 	var device = event.device
 	if event is InputEventKey or event is InputEventMouse:
 		device = "keyboard"
-		if typeof(device_id) == TYPE_INT:
-			return
 
+	if typeof(device) != typeof(device_id):
+		return			
 	if device != device_id:
-		if color != DEFAULT_COLOR:
-			print("Wrong device")
 		return
 		
 	if event.is_action("ui_right") and event.pressed:

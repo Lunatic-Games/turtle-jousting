@@ -28,13 +28,11 @@ func _ready():
 func _input(event):
 	if event.is_action("ui_accept") and event.pressed:
 		var device = event.device
-		if event is InputEventKey:
+		if event is InputEventKey or event is InputEventMouse:
 			device = "keyboard"
-			
-		for device_id in local_players.values():
-			if device == device_id:
-				return
-				
+		if device in local_players.values():
+			return
+
 		var pos = get_next_open_position()
 		if pos == -1:
 			print("Lobby full")
