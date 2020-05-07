@@ -218,7 +218,8 @@ func reset_to_local():
 		
 	for i in range(1, 5):
 		if player_data.has(i):
-			get_player_slot(i).load_player(i, player_data)
+			print("Loading player data: ", player_data[i])
+			get_player_slot(i).load_player(i, player_data[i])
 		else:
 			get_player_slot(i).reset()
 
