@@ -136,7 +136,6 @@ remote func join(existing_connections):
 	for player in local_players.keys():
 		var pos = get_next_open_position()
 		if pos == -1:
-			print("Room full")
 			connections.clear()
 			connections[1] = local_players.keys()
 			get_tree().set_deferred("network_peer", null)
@@ -225,6 +224,7 @@ func reset_to_local():
 			get_player_slot(i).load_player(i, player_data[i])
 		else:
 			get_player_slot(i).reset()
+		get_player_slot(i).set_network_master(1)
 
 
 # Determine next available player number, returns -1 if none available
