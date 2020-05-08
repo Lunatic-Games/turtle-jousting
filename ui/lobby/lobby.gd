@@ -1,6 +1,9 @@
 extends Control
 
 const DEFAULT_PORT = 32201
+const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 const game_scene = preload("res://game/game.tscn")
 
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
@@ -14,6 +17,7 @@ var connections = {}
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
+var valid_code_regex = RegEx.new()
 
 # Setup
 func _ready():
@@ -22,6 +26,8 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
+	valid_code_regex.compile("^([a-zA-Z0-9]+)$")
+	print(IP.get_local_addresses())
 
 
 # Register new devices
@@ -82,8 +88,10 @@ func _close_server():
 # Attempt to join using ip
 func _connect_to_server():
 	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
-	if ip == "":
+	if !valid_code_regex.search(ip):
+		print("Invalid code")
 		return
+	ip = _decode_code(ip)
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
@@ -271,5 +279,40 @@ remotesync func start():
 func _exit():
 	get_tree().quit()
 
+# Generate a base 36 code from a given ip
+func _generate_code(ip):
+	ip = ip.replace('.', '')
+	ip = int(ip)
+	
+	var digits = []
+	while true:
+		var remainder = ip % 36
+		digits.push_front(remainder)
+		ip = int(floor(ip / 36))
+		if ip < 36:
+			digits.push_front(ip)
+			break
+	var code = ""
+	for digit in digits:
+		code = code + BASE_36_DIGITS[digit]
+	return code
+
+# Generate an ip from a base 36 code
+func _decode_code(code):
+	code = code.to_lower()
+	var digits = []
+	for c in code:
+		digits.push_front(int(BASE_36_DIGITS.find(c)))
+	var multiplier = 1
+	var result = 0
+	for digit in digits:
+		result += digit * multiplier
+		multiplier *= 36
+	result = str(result)
+	for _i in range(12 - len(result)):
+		result = "0" + result
+	for i in range(len(result) - 3, 2, -3):
+		result = result.insert(i, '.')
+	return result
 
 
