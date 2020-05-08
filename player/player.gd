@@ -13,6 +13,7 @@ func _ready():
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_REMOTE)
 
+
 func _unhandled_input(event):
 	if get_tree().network_peer and !is_network_master():
 		return
@@ -31,6 +32,7 @@ func _unhandled_input(event):
 	check_for_move_event(event, "down")
 	check_for_move_event(event, "left")
 
+
 func _physics_process(_delta):
 	if get_tree().network_peer and !is_network_master():
 		return
@@ -48,6 +50,7 @@ func _physics_process(_delta):
 	if get_tree().network_peer:
 		rset_unreliable("position", position)
 
+
 func check_for_move_event(event, direction):
 	if event.is_action("move_" + direction):
 		if event is InputEventJoypadMotion:
@@ -57,6 +60,7 @@ func check_for_move_event(event, direction):
 				movement_actions[direction][1] = event.axis_value < -0.5
 		else: 
 			movement_actions[direction][0] = event.is_pressed()
+
 
 func load_data(data = {}):
 	device_id = data.get("device_id", null)
