@@ -17,6 +17,7 @@ var connections = {}
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
+var valid_code_regex = RegEx.new()
 
 # Setup
 func _ready():
@@ -25,6 +26,8 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
+	valid_code_regex.compile("^([a-zA-Z0-9]+)$")
+	print(IP.get_local_addresses())
 
 
 # Register new devices
@@ -85,8 +88,10 @@ func _close_server():
 # Attempt to join using ip
 func _connect_to_server():
 	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
-	if ip == "":
+	if !valid_code_regex.search(ip):
+		print("Invalid code")
 		return
+	ip = _decode_code(ip)
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
