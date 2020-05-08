@@ -1,6 +1,9 @@
 extends Control
 
 const DEFAULT_PORT = 32201
+const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 const game_scene = preload("res://game/game.tscn")
 
 onready var player_container = get_node("HBoxContainer/GameContainer/" +  
@@ -271,5 +274,40 @@ remotesync func start():
 func _exit():
 	get_tree().quit()
 
+# Generate a base 36 code from a given ip
+func _generate_code(ip):
+	ip = ip.replace('.', '')
+	ip = int(ip)
+	
+	var digits = []
+	while true:
+		var remainder = ip % 36
+		digits.push_front(remainder)
+		ip = int(floor(ip / 36))
+		if ip < 36:
+			digits.push_front(ip)
+			break
+	var code = ""
+	for digit in digits:
+		code = code + BASE_36_DIGITS[digit]
+	return code
+
+# Generate an ip from a base 36 code
+func _decode_code(code):
+	code = code.to_lower()
+	var digits = []
+	for c in code:
+		digits.push_front(int(BASE_36_DIGITS.find(c)))
+	var multiplier = 1
+	var result = 0
+	for digit in digits:
+		result += digit * multiplier
+		multiplier *= 36
+	result = str(result)
+	for _i in range(12 - len(result)):
+		result = "0" + result
+	for i in range(len(result) - 3, 2, -3):
+		result = result.insert(i, '.')
+	return result
 
 
