@@ -119,7 +119,7 @@ margin_right = 200.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 200, 30 )
 custom_fonts/font = SubResource( 2 )
-text = "10.0.0.231"
+text = "38v1sjh"
 context_menu_enabled = false
 
 [node name="JoinContainer" type="CenterContainer" parent="CodeSection/HBoxContainer" groups=[
@@ -374,10 +374,6 @@ __meta__ = {
 }
 
 [node name="BroadcastTimer" type="Timer" parent="."]
-
-[node name="LocalListenTimer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
 [connection signal="pressed" from="CodeSection/HBoxContainer/JoinContainer/Button" to="." method="_connect_to_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
@@ -385,4 +381,3 @@ one_shot = true
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]
 [connection signal="timeout" from="BroadcastTimer" to="." method="_on_BroadcastTimer_timeout"]
-[connection signal="timeout" from="LocalListenTimer" to="." method="_on_LocalListenTimer_timeout"]
