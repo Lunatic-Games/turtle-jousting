@@ -106,6 +106,7 @@ func _close_server():
 
 # Attempt to join using ip
 func _connect_to_server(ip):
+	print("Attempting to connect to ip ", ip)
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
@@ -315,6 +316,15 @@ func _exit():
 
 # Generate a base 36 code from a given ip
 func _generate_code(ip):
+	print("Generating code for ip ", ip)
+	var sections = ip.split('.')
+	ip = ""
+	for i in range(len(sections)):
+		for _k in range(len(sections[i]), 3):
+			sections[i] = "0" + sections[i]
+		ip += sections[i]
+		if i < len(sections) - 1:
+			ip += "."
 	ip = ip.replace('.', '')
 	ip = int(ip)
 	
