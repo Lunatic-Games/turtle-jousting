@@ -80,59 +80,69 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CodeSection" type="ColorRect" parent="."]
+[node name="ConnectionSection" type="ColorRect" parent="."]
 anchor_right = 1.0
 margin_left = 10.0
 margin_top = 10.0
 margin_right = -10.0
-margin_bottom = 62.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 64 )
 color = Color( 0.227451, 0.227451, 0.227451, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CodeSection"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 5.0
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionSection"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CodeSection/HBoxContainer"]
-margin_top = 14.0
-margin_right = 150.0
-margin_bottom = 38.0
-custom_fonts/font = SubResource( 1 )
-text = "Invite code: "
+[node name="OnlineContainer" type="HBoxContainer" parent="ConnectionSection/VBoxContainer"]
+margin_right = 470.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="CodeEditContainer" type="CenterContainer" parent="CodeSection/HBoxContainer" groups=[
+[node name="Label" type="Label" parent="ConnectionSection/VBoxContainer/OnlineContainer"]
+margin_top = 4.0
+margin_right = 155.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 1 )
+text = "Online code: "
+
+[node name="CodeEditContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/OnlineContainer" groups=[
 "disconnected_ui",
 ]]
-margin_left = 154.0
-margin_right = 354.0
-margin_bottom = 52.0
+margin_left = 159.0
+margin_right = 269.0
+margin_bottom = 32.0
 
-[node name="TextEdit" type="TextEdit" parent="CodeSection/HBoxContainer/CodeEditContainer"]
-margin_top = 11.0
-margin_right = 200.0
-margin_bottom = 41.0
-rect_min_size = Vector2( 200, 30 )
+[node name="LineEdit" type="LineEdit" parent="ConnectionSection/VBoxContainer/OnlineContainer/CodeEditContainer"]
+margin_right = 110.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 110, 30 )
 custom_fonts/font = SubResource( 2 )
 text = "38v1sjh"
+max_length = 7
 context_menu_enabled = false
 
-[node name="JoinContainer" type="CenterContainer" parent="CodeSection/HBoxContainer" groups=[
+[node name="JoinContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/OnlineContainer" groups=[
 "disconnected_ui",
 ]]
-margin_left = 358.0
-margin_right = 410.0
-margin_bottom = 52.0
+margin_left = 273.0
+margin_right = 325.0
+margin_bottom = 32.0
 
-[node name="Button" type="Button" parent="CodeSection/HBoxContainer/JoinContainer"]
-margin_top = 15.0
+[node name="Button" type="Button" parent="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer"]
+margin_top = 5.0
 margin_right = 52.0
-margin_bottom = 37.0
+margin_bottom = 27.0
 size_flags_vertical = 0
 custom_styles/hover = SubResource( 3 )
 custom_styles/pressed = SubResource( 4 )
@@ -145,7 +155,7 @@ custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Join"
 
-[node name="Code" type="Label" parent="CodeSection/HBoxContainer" groups=[
+[node name="Code" type="Label" parent="ConnectionSection/VBoxContainer/OnlineContainer" groups=[
 "multiplayer_ui",
 ]]
 visible = false
@@ -156,53 +166,119 @@ margin_bottom = 38.0
 custom_fonts/font = SubResource( 9 )
 text = "SpecialCode"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 72.0
+[node name="LocalContainer" type="HBoxContainer" parent="ConnectionSection/VBoxContainer"]
+margin_top = 36.0
+margin_right = 470.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameContainer" type="MarginContainer" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="ConnectionSection/VBoxContainer/LocalContainer"]
+margin_top = 4.0
+margin_right = 144.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 1 )
+text = "Local code: "
+
+[node name="CodeEditContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/LocalContainer" groups=[
+"disconnected_ui",
+]]
+margin_left = 148.0
+margin_right = 258.0
+margin_bottom = 32.0
+
+[node name="LineEdit" type="LineEdit" parent="ConnectionSection/VBoxContainer/LocalContainer/CodeEditContainer"]
+margin_right = 110.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 110, 30 )
+custom_fonts/font = SubResource( 2 )
+text = "38v1sjh"
+max_length = 15
+context_menu_enabled = false
+
+[node name="JoinContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/LocalContainer" groups=[
+"disconnected_ui",
+]]
+margin_left = 262.0
+margin_right = 314.0
+margin_bottom = 32.0
+
+[node name="Button" type="Button" parent="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer"]
+margin_top = 5.0
+margin_right = 52.0
+margin_bottom = 27.0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/disabled = SubResource( 6 )
+custom_styles/normal = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
+text = "Join"
+
+[node name="Code" type="Label" parent="ConnectionSection/VBoxContainer/LocalContainer" groups=[
+"multiplayer_ui",
+]]
+visible = false
+margin_left = 380.0
+margin_top = 3.0
+margin_right = 477.0
+margin_bottom = 27.0
+custom_fonts/font = SubResource( 9 )
+text = "Local IP"
+
+[node name="LobbySections" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 92.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameContainer" type="MarginContainer" parent="LobbySections"]
 margin_right = 510.0
-margin_bottom = 504.0
+margin_bottom = 484.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/GameContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbySections/GameContainer"]
 margin_left = 10.0
 margin_right = 500.0
-margin_bottom = 504.0
+margin_bottom = 484.0
 custom_constants/separation = 10
 
-[node name="PlayerContainer" type="GridContainer" parent="HBoxContainer/GameContainer/VBoxContainer"]
+[node name="PlayerContainer" type="GridContainer" parent="LobbySections/GameContainer/VBoxContainer"]
 margin_right = 490.0
 margin_bottom = 304.0
 columns = 2
 
-[node name="PlayerSlot1" parent="HBoxContainer/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
+[node name="PlayerSlot1" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
 margin_right = 243.0
 margin_bottom = 150.0
 
-[node name="PlayerSlot2" parent="HBoxContainer/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
+[node name="PlayerSlot2" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
 margin_left = 247.0
 margin_right = 490.0
 margin_bottom = 150.0
 
-[node name="PlayerSlot3" parent="HBoxContainer/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
+[node name="PlayerSlot3" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
 margin_top = 154.0
 margin_right = 243.0
 margin_bottom = 304.0
 
-[node name="PlayerSlot4" parent="HBoxContainer/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
+[node name="PlayerSlot4" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 3 )]
 margin_left = 247.0
 margin_top = 154.0
 margin_right = 490.0
 margin_bottom = 304.0
 
-[node name="OpenMultiplayerButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer" groups=[
+[node name="OpenMultiplayerButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "host_ui",
 ]]
 margin_top = 314.0
@@ -221,7 +297,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Open to multiplayer"
 align = 0
 
-[node name="CloseMultiplayerButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer" groups=[
+[node name="CloseMultiplayerButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "host_ui",
 ]]
 visible = false
@@ -241,7 +317,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Close multiplayer"
 align = 0
 
-[node name="LeaveLobbyButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer" groups=[
+[node name="LeaveLobbyButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "client_ui",
 ]]
 visible = false
@@ -261,7 +337,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Leave lobby"
 align = 0
 
-[node name="EnableTeamsButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer" groups=[
+[node name="EnableTeamsButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "host_ui",
 ]]
 margin_top = 350.0
@@ -280,7 +356,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Enable teams"
 align = 0
 
-[node name="StartButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer" groups=[
+[node name="StartButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "host_ui",
 ]]
 margin_top = 386.0
@@ -299,7 +375,7 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Start"
 align = 0
 
-[node name="BackButton" type="Button" parent="HBoxContainer/GameContainer/VBoxContainer"]
+[node name="BackButton" type="Button" parent="LobbySections/GameContainer/VBoxContainer"]
 margin_top = 422.0
 margin_right = 255.0
 margin_bottom = 448.0
@@ -316,23 +392,23 @@ custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
 text = "Return to main menu"
 align = 0
 
-[node name="TutorialContainer" type="MarginContainer" parent="HBoxContainer"]
+[node name="TutorialContainer" type="MarginContainer" parent="LobbySections"]
 margin_left = 514.0
 margin_right = 1024.0
-margin_bottom = 504.0
+margin_bottom = 484.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="Rect" type="ColorRect" parent="HBoxContainer/TutorialContainer"]
+[node name="Rect" type="ColorRect" parent="LobbySections/TutorialContainer"]
 margin_left = 10.0
 margin_right = 500.0
-margin_bottom = 494.0
+margin_bottom = 474.0
 rect_min_size = Vector2( 100, 100 )
 color = Color( 0.227451, 0.227451, 0.227451, 1 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/TutorialContainer/Rect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbySections/TutorialContainer/Rect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -344,7 +420,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="HBoxContainer/TutorialContainer/Rect/VBoxContainer"]
+[node name="Title" type="Label" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
 margin_right = 470.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 0, 22 )
@@ -353,17 +429,17 @@ custom_fonts/font = SubResource( 16 )
 text = "How to play the game"
 align = 1
 
-[node name="Video" type="ColorRect" parent="HBoxContainer/TutorialContainer/Rect/VBoxContainer"]
+[node name="Video" type="ColorRect" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
 margin_top = 32.0
 margin_right = 470.0
 margin_bottom = 332.0
 rect_min_size = Vector2( 0, 300 )
 color = Color( 0.054902, 0.054902, 0.054902, 1 )
 
-[node name="Description" type="Label" parent="HBoxContainer/TutorialContainer/Rect/VBoxContainer"]
+[node name="Description" type="Label" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
 margin_top = 342.0
 margin_right = 470.0
-margin_bottom = 474.0
+margin_bottom = 454.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 17 )
 text = "Press A to charge joust
@@ -372,12 +448,10 @@ Press X to parry"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="BroadcastTimer" type="Timer" parent="."]
-[connection signal="pressed" from="CodeSection/HBoxContainer/JoinContainer/Button" to="." method="_connect_to_server"]
-[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
-[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
-[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
-[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]
-[connection signal="timeout" from="BroadcastTimer" to="." method="_on_BroadcastTimer_timeout"]
+[connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
+[connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
+[connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_create_server"]
+[connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
+[connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
+[connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]

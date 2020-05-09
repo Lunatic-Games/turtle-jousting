@@ -1,17 +1,19 @@
 extends Control
 
 const DEFAULT_PORT = 32000
-const UDP_BROADCAST_PORT = 32100
-const BROADCAST_CODE = "TurtleJousting"
 const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
 	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 const game_scene = preload("res://game/game.tscn")
 
-onready var player_container = get_node("HBoxContainer/GameContainer/" +  
+onready var player_container = get_node("LobbySections/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
-onready var button_container = get_node("HBoxContainer/GameContainer/" +
+onready var button_container = get_node("LobbySections/GameContainer/" +
 	"VBoxContainer")
+onready var online_container = get_node("ConnectionSection/VBoxContainer/" + 
+	"OnlineContainer")
+onready var local_container = get_node("ConnectionSection/VBoxContainer/" + 
+	"LocalContainer")
 
 # Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
@@ -20,12 +22,6 @@ var connections = {}
 var local_players = {}
 
 var valid_code_regex = RegEx.new()
-var search_thread = Thread.new()
-var search_for_local_network = true
-var local_found_code
-var broadcast_socket
-var listen_socket
-
 
 # Setup
 func _ready():
@@ -35,11 +31,8 @@ func _ready():
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	valid_code_regex.compile("^([a-zA-Z0-9]+)$")
-	listen_socket = PacketPeerUDP.new()
-	if listen_socket.listen(UDP_BROADCAST_PORT) != OK:
-		print("Failed to listen for broadcast")
-	search_thread.start(self, "_search_local_network")
-	
+
+
 # Register new devices
 func _input(event):
 	if event.is_action("ui_accept") and event.pressed:
@@ -71,7 +64,6 @@ func _create_server():
 	var upnp = UPNP.new()
 	upnp.discover(2000, 2, "InternetGatewayDevice")
 	upnp.add_port_mapping(DEFAULT_PORT)
-	var code = _generate_code(upnp.query_external_address())
 	
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_server(DEFAULT_PORT, 4)
@@ -81,12 +73,20 @@ func _create_server():
 		print("Failed to create server on port ", DEFAULT_PORT)
 		return
 	get_tree().network_peer = peer
-	broadcast_socket = PacketPeerUDP.new()
-	broadcast_socket.set_dest_address("255.255.255.255", 
-		UDP_BROADCAST_PORT)
-	$BroadcastTimer.start()
 	
-	$CodeSection/HBoxContainer/Code.text = code
+	var online_ip = upnp.query_external_address()
+	if online_ip == "":
+		online_container.get_node("Code").text = "Unavailable"
+	else:
+		online_container.get_node("Code").text = _generate_code(online_ip)
+		
+	var local_ip = get_local_ip()
+	if local_ip == "":
+		local_container.get_node("Code").text = "Unavailable"
+	else:
+		local_container.get_node("Code").text = _generate_code(local_ip)
+	
+	
 	toggle_ui_visibility("multiplayer_ui", true)
 	toggle_ui_visibility("host_ui", true)
 	button_container.get_node("OpenMultiplayerButton").visible = false
@@ -105,12 +105,7 @@ func _close_server():
 
 
 # Attempt to join using ip
-func _connect_to_server():
-	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
-	if !valid_code_regex.search(ip):
-		print("Invalid code")
-		return
-	ip = _decode_code(ip)
+func _connect_to_server(ip):
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_client(ip, DEFAULT_PORT)
 	if result == OK:
@@ -119,18 +114,22 @@ func _connect_to_server():
 		print("Failed to create client")
 		return
 	get_tree().network_peer = peer
+
+
+func _connect_online():
+	var code = online_container.get_node("CodeEditContainer/LineEdit").text
+	if !valid_code_regex.search(code):
+		print("Invalid code")
+		return
+	_connect_to_server(_decode_code(code))
 	
-
-func _search_local_network(_userdata):
-	print("Imma search for local networks")
-	while search_for_local_network:
-		if listen_socket.get_available_packet_count() > 0:
-			print("Found a packet")
-			var data = JSON.parse(listen_socket.get_packet().get_string_from_ascii())
-			if data.error == OK and data.result.get("code", "") == BROADCAST_CODE:
-				print("Found a locally hosted game")
-	listen_socket.close()
-
+func _connect_local():
+	var code = local_container.get_node("CodeEditContainer/LineEdit").text
+	if !valid_code_regex.search(code):
+		print("Invalid code")
+		return
+	_connect_to_server(_decode_code(code))
+	
 
 # Tell the new client connection to add itself
 func _new_connection(id):
@@ -245,13 +244,6 @@ func _disconnect():
 
 # Reset the player slots to be only local players
 func reset_to_local():
-	if broadcast_socket:
-		broadcast_socket.close()
-	if listen_socket:
-		listen_socket.close()
-	$BroadcastTimer.stop()
-	$LocalListenTimer.stop()
-	
 	connections.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
@@ -304,7 +296,7 @@ func _on_StartButton_pressed():
 remotesync func start():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
-		broadcast_socket.close()
+
 	var new_game = game_scene.instance()
 	for connection in connections:
 		for player in connections[connection]:
@@ -359,17 +351,15 @@ func _decode_code(code):
 	return result
 
 
-func _exit_tree():
-	if search_thread.is_active():
-		search_for_local_network = false
-		search_thread.wait_to_finish()
-	if listen_socket:
-		listen_socket.close()
-	if broadcast_socket:
-		broadcast_socket.close()
+# Goes through local addresses to find a valid ipv4 address
+func get_local_ip():
+	var local_ip = "Unavailable"
+	var local_addresses = IP.get_local_addresses()
+	var ipv4_pattern = RegEx.new()
+	ipv4_pattern.compile('^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$')
+	for address in local_addresses:
+		var result = ipv4_pattern.search(address)
+		if result and result.get_string() != "127.0.0.1":
+			local_ip = result.get_string()
+	return local_ip
 
-
-func _on_BroadcastTimer_timeout():
-	print("Broadcasting data")
-	var data = {"code": BROADCAST_CODE}
-	broadcast_socket.put_packet(JSON.print(data).to_ascii())
