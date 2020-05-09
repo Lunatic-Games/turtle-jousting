@@ -1,6 +1,6 @@
 extends Control
 
-const DEFAULT_PORT = 32000
+const DEFAULT_PORT = 9000
 const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
 	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -22,6 +22,8 @@ var connections = {}
 var local_players = {}
 
 var valid_code_regex = RegEx.new()
+
+var upnp
 
 # Setup
 func _ready():
@@ -61,9 +63,10 @@ func _input(event):
 
 # Open to multiplayer and update UI
 func _create_server():
-	var upnp = UPNP.new()
+	upnp = UPNP.new()
 	upnp.discover(2000, 2, "InternetGatewayDevice")
 	upnp.add_port_mapping(DEFAULT_PORT)
+	print("Hosting online at ", upnp.query_external_address())
 	
 	var peer = NetworkedMultiplayerENet.new()
 	var result = peer.create_server(DEFAULT_PORT, 4)
@@ -245,6 +248,8 @@ func _disconnect():
 
 # Reset the player slots to be only local players
 func reset_to_local():
+	if upnp:
+		upnp.delete_port_mapping(DEFAULT_PORT)
 	connections.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
@@ -316,7 +321,6 @@ func _exit():
 
 # Generate a base 36 code from a given ip
 func _generate_code(ip):
-	print("Generating code for ip ", ip)
 	var sections = ip.split('.')
 	ip = ""
 	for i in range(len(sections)):
@@ -373,3 +377,6 @@ func get_local_ip():
 			local_ip = result.get_string()
 	return local_ip
 
+func _exit_tree():
+	if upnp:
+		upnp.delete_port_mapping(DEFAULT_PORT)
