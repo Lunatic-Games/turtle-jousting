@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
@@ -8,20 +8,25 @@
 [ext_resource path="res://player/assets/knight_parts/knight_arm_BL.png" type="Texture" id=6]
 [ext_resource path="res://player/assets/knight_parts/knight_arm_BH.png" type="Texture" id=7]
 [ext_resource path="res://player/assets/lance_green_front.png" type="Texture" id=8]
-[ext_resource path="res://player/assets/knight_parts/knight_neck.png" type="Texture" id=9]
-[ext_resource path="res://player/assets/knight_parts/knight_chest_arched.png" type="Texture" id=10]
-[ext_resource path="res://player/assets/knight_parts/knight_head.png" type="Texture" id=11]
-[ext_resource path="res://player/assets/knight_parts/knight_tear_right.png" type="Texture" id=12]
-[ext_resource path="res://player/assets/knight_parts/knight_tear_left.png" type="Texture" id=13]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FL.png" type="Texture" id=14]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FU.png" type="Texture" id=15]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FH.png" type="Texture" id=16]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FU.png" type="Texture" id=17]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FL.png" type="Texture" id=18]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FF.png" type="Texture" id=19]
-[ext_resource path="res://player/assets/knight_parts/knight_chest.png" type="Texture" id=20]
-[ext_resource path="res://player/assets/knight_parts/knight_head_hit.png" type="Texture" id=21]
-[ext_resource path="res://player/assets/knight_parts/knight_head_crying.png" type="Texture" id=22]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Lance.png" type="Texture" id=9]
+[ext_resource path="res://player/assets/knight_parts/knight_neck.png" type="Texture" id=10]
+[ext_resource path="res://player/assets/knight_parts/knight_chest.png" type="Texture" id=11]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Chest.png" type="Texture" id=12]
+[ext_resource path="res://player/assets/knight_parts/knight_head.png" type="Texture" id=13]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Eye.png" type="Texture" id=14]
+[ext_resource path="res://player/assets/knight_parts/knight_tear_right.png" type="Texture" id=15]
+[ext_resource path="res://player/assets/knight_parts/knight_tear_left.png" type="Texture" id=16]
+[ext_resource path="res://player/assets/knight_parts/knight_arm_FL.png" type="Texture" id=17]
+[ext_resource path="res://player/assets/knight_parts/knight_arm_FU.png" type="Texture" id=18]
+[ext_resource path="res://player/assets/knight_parts/knight_arm_FH.png" type="Texture" id=19]
+[ext_resource path="res://player/assets/knight_parts/knight_leg_FU.png" type="Texture" id=20]
+[ext_resource path="res://player/assets/knight_parts/knight_leg_FL.png" type="Texture" id=21]
+[ext_resource path="res://player/assets/knight_parts/knight_leg_FF.png" type="Texture" id=22]
+[ext_resource path="res://player/assets/knight_parts/knight_head_hit.png" type="Texture" id=23]
+[ext_resource path="res://player/assets/knight_parts/knight_chest_arched.png" type="Texture" id=24]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Chest_2.png" type="Texture" id=25]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Eye_Cry.png" type="Texture" id=26]
+[ext_resource path="res://player/assets/knight_parts/knight_head_crying.png" type="Texture" id=27]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 86.7604, 88.4331 )
@@ -303,7 +308,7 @@ tracks/22/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ) ]
 }
 tracks/23/type = "value"
 tracks/23/path = NodePath("Player/Knight/Main_Body/Head:texture")
@@ -315,7 +320,7 @@ tracks/23/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/24/type = "value"
 tracks/24/path = NodePath("Player/Knight/Back_Arm/Lance_Front:scale")
@@ -461,9 +466,517 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
 [sub_resource type="Animation" id=3]
-resource_name = "Dodge"
+resource_name = "Consume_Knight"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Player/Knight/Back_Arm/Lance_Front:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Player/Knight/Main_Body/Chest:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 257.456, 119.747 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Player/Knight/Main_Body/Chest:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 52.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Player/Knight/Main_Body/Chest:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 24 ), ExtResource( 11 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Player/Knight/Main_Body/Neck:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 257.456, 107.771 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Player/Knight/Main_Body/Neck:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 52.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Player/Knight/Main_Body/Head:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 263.444, 143.696 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Player/Knight/Main_Body/Head:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 44.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Player/Knight/Front_Arm/FL-Arm:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 241.362, 187.028 ), Vector2( 677.793, 189.254 ), Vector2( 397.966, -80.8643 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Player/Knight/Front_Arm/FL-Arm:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 65.1, 26.0, -81.2 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Player/Knight/Front_Arm/FU-Arm:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -46.1 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Player/Knight/Front_Arm/FU-Arm:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 646.985, 4.40137 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Player/Knight/Front_Arm/FH-Arm:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 110.031, 184.853 ), Vector2( 580.965, 237.667 ), Vector2( 531.841, -4.01611 ), Vector2( 315.795, 67.9364 ), Vector2( 122.849, 19.2539 ), Vector2( -8.49561, 11.6384 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Player/Knight/Front_Arm/FH-Arm:rotation_degrees")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 26.0, 0.0, -130.1 ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Player/Knight/Back_Arm/BU-Arm:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 228.865, 127.636 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Player/Knight/Back_Arm/BU-Arm:rotation_degrees")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 53.0 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Player/Knight/Back_Arm/BL-Arm:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 198.056, 167.248 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Player/Knight/Back_Arm/BL-Arm:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Player/Knight/Back_Arm/BH-Arm:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 250.871, 154.044 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Player/Knight/Back_Arm/BH-Arm:rotation_degrees")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Player/Knight/Back_Arm/Lance_Back:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 484.77, 117.035 ), Vector2( 718.037, 279.882 ) ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("Player/Knight/Back_Arm/Lance_Back:rotation_degrees")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/22/type = "value"
+tracks/22/path = NodePath("Player/Knight/Back_Arm/Lance_Front:position")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 624.182, 101.871 ), Vector2( 919.066, 277.921 ) ]
+}
+tracks/23/type = "value"
+tracks/23/path = NodePath("Player/Knight/Back_Arm/Lance_Front:rotation_degrees")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0 ]
+}
+tracks/24/type = "value"
+tracks/24/path = NodePath("Player/Knight/Main_Body/Head:texture")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 13 ), ExtResource( 23 ), ExtResource( 13 ) ]
+}
+tracks/25/type = "value"
+tracks/25/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/26/type = "value"
+tracks/26/path = NodePath("Player/Knight/Main_Body/Head/Tears:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("Player/Knight/Front_Leg/FF-Leg:position")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 132.038, 70.4202 ) ]
+}
+tracks/28/type = "value"
+tracks/28/path = NodePath("Player/Knight/Front_Leg/FF-Leg:rotation_degrees")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 26.0 ]
+}
+tracks/29/type = "value"
+tracks/29/path = NodePath("Player/Knight/Front_Leg/FL-Leg:position")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 158.446, 110.031 ) ]
+}
+tracks/30/type = "value"
+tracks/30/path = NodePath("Player/Knight/Front_Leg/FL-Leg:rotation_degrees")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 33.0 ]
+}
+tracks/31/type = "value"
+tracks/31/path = NodePath("Player/Knight/Front_Leg/FU-Leg:position")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 280.389, 125.621 ) ]
+}
+tracks/32/type = "value"
+tracks/32/path = NodePath("Player/Knight/Front_Leg/FU-Leg:rotation_degrees")
+tracks/32/interp = 1
+tracks/32/loop_wrap = true
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 52.0 ]
+}
+tracks/33/type = "value"
+tracks/33/path = NodePath("Player/Knight/BU-Leg:position")
+tracks/33/interp = 1
+tracks/33/loop_wrap = true
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/34/type = "value"
+tracks/34/path = NodePath("Player/Knight/BU-Leg:rotation_degrees")
+tracks/34/interp = 1
+tracks/34/loop_wrap = true
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/35/type = "value"
+tracks/35/path = NodePath("Player/Knight:scale")
+tracks/35/interp = 1
+tracks/35/loop_wrap = true
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ), ExtResource( 25 ), ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -512,7 +1025,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ), ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ), ExtResource( 11 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Player/Knight/Main_Body/Neck:position")
@@ -764,7 +1277,7 @@ tracks/24/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ), ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ), ExtResource( 13 ) ]
 }
 tracks/25/type = "value"
 tracks/25/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -946,8 +1459,44 @@ tracks/39/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 0.2 ), Vector2( 1, 1e-005 ), Vector2( 1, -0.2 ), Vector2( 1, -1.5 ), Vector2( 1, -0.2 ), Vector2( 1, 1e-005 ), Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
 }
+tracks/40/type = "value"
+tracks/40/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/42/type = "value"
+tracks/42/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -1430,9 +1979,44 @@ tracks/39/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/40/type = "value"
+tracks/40/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 26 ) ]
+}
+tracks/42/type = "value"
+tracks/42/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
-[sub_resource type="Animation" id=5]
-resource_name = "Idle_Knight"
+[sub_resource type="Animation" id=6]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -1481,7 +2065,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Player/Knight/Main_Body/Neck:position")
@@ -1733,7 +2317,7 @@ tracks/24/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/25/type = "value"
 tracks/25/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -1866,6 +2450,42 @@ tracks/35/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 1.1 ), Vector2( 1, 1 ), Vector2( 0.9, 1.1 ), Vector2( 1, 1 ) ]
+}
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -2143,7 +2763,7 @@ tracks/22/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 66.2569 ),
 "update": 1,
-"values": [ ExtResource( 20 ), ExtResource( 10 ) ]
+"values": [ ExtResource( 11 ), ExtResource( 24 ) ]
 }
 tracks/23/type = "value"
 tracks/23/path = NodePath("Player/Knight/Main_Body/Head:texture")
@@ -2155,7 +2775,7 @@ tracks/23/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/24/type = "value"
 tracks/24/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -2301,6 +2921,42 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ), ExtResource( 25 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 tracks/0/type = "value"
@@ -2313,7 +2969,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ), ExtResource( 21 ), ExtResource( 22 ) ]
+"values": [ ExtResource( 13 ), ExtResource( 23 ), ExtResource( 27 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Player/Knight/Main_Body/Head:position")
@@ -2373,7 +3029,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ), ExtResource( 10 ) ]
+"values": [ ExtResource( 11 ), ExtResource( 24 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("Player/Knight/Main_Body/Chest:position")
@@ -2735,6 +3391,42 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ), ExtResource( 25 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0, 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ), null, ExtResource( 26 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
 [sub_resource type="Animation" id=9]
 length = 2.0
@@ -2785,7 +3477,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Player/Knight/Main_Body/Neck:position")
@@ -3037,7 +3729,7 @@ tracks/24/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/25/type = "value"
 tracks/25/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -3171,9 +3863,44 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
 [sub_resource type="Animation" id=10]
-resource_name = "Move_Knight"
 length = 1.4
 loop = true
 tracks/0/type = "value"
@@ -3402,7 +4129,7 @@ tracks/18/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ) ]
 }
 tracks/19/type = "value"
 tracks/19/path = NodePath("Player/Knight/Main_Body/Head:texture")
@@ -3414,7 +4141,7 @@ tracks/19/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ) ]
 }
 tracks/20/type = "value"
 tracks/20/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -3608,8 +4335,44 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -3658,7 +4421,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ), ExtResource( 20 ) ]
+"values": [ ExtResource( 11 ), ExtResource( 11 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Player/Knight/Main_Body/Neck:position")
@@ -3910,7 +4673,7 @@ tracks/24/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ), ExtResource( 11 ) ]
+"values": [ ExtResource( 13 ), ExtResource( 13 ) ]
 }
 tracks/25/type = "value"
 tracks/25/path = NodePath("Player/Knight/Back_Arm/Lance_Back:scale")
@@ -4044,9 +4807,44 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1 ), Vector2( 0.2, 1 ), Vector2( 1e-005, 1 ), Vector2( -0.2, 1 ), Vector2( -1.5, 1 ), Vector2( -0.2, 1 ), Vector2( 1e-005, 1 ), Vector2( 0.2, 1 ), Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Player/Knight/Main_Body/Chest/Chest_Mod:texture")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 12 ) ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Player/Knight/Main_Body/Head/Head_Mod:texture")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 14 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Player/Knight/Back_Arm/Lance_Front/Lance_Mod:texture")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ) ]
+}
 
-[sub_resource type="Animation" id=13]
-resource_name = "Charging_Joust"
+[sub_resource type="Animation" id=12]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player/Turtle:scale")
@@ -4061,8 +4859,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.9, 1 ), Vector2( 0.85, 1 ) ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "Dodge"
+[sub_resource type="Animation" id=13]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -4078,8 +4875,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1, 1.5 ), Vector2( 1, 0.2 ), Vector2( 1, 1e-005 ), Vector2( 1, -0.2 ), Vector2( 1, -1.5 ), Vector2( 1, -0.2 ), Vector2( 1, 1e-005 ), Vector2( 1, 0.2 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "Idle"
+[sub_resource type="Animation" id=14]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -4095,7 +4891,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=15]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player/Turtle:scale")
 tracks/0/interp = 1
@@ -4109,8 +4905,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.85, 1 ), Vector2( 1.2, 1 ), Vector2( 1.2, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=17]
-resource_name = "Move"
+[sub_resource type="Animation" id=16]
 length = 1.2
 loop = true
 tracks/0/type = "value"
@@ -4126,7 +4921,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.8, 1.2 ), Vector2( 1, 1 ), Vector2( 0.8, 1.2 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=17]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -4159,7 +4954,6 @@ z_index = 1
 texture = ExtResource( 2 )
 
 [node name="Knight" type="Node2D" parent="Player"]
-editor/display_folded = true
 
 [node name="BU-Leg" type="Sprite" parent="Player/Knight"]
 texture = ExtResource( 3 )
@@ -4167,108 +4961,103 @@ texture = ExtResource( 3 )
 [node name="Back_Arm" type="Node2D" parent="Player/Knight"]
 
 [node name="Lance_Back" type="Sprite" parent="Player/Knight/Back_Arm"]
-position = Vector2( 1274.97, 132.466 )
-rotation = 0.0872665
+position = Vector2( 484.77, 117.035 )
 texture = ExtResource( 4 )
 
 [node name="BU-Arm" type="Sprite" parent="Player/Knight/Back_Arm"]
-position = Vector2( 679.946, 182.724 )
-rotation = -0.849975
 texture = ExtResource( 5 )
 
 [node name="BL-Arm" type="Sprite" parent="Player/Knight/Back_Arm"]
-position = Vector2( 619.459, 103.337 )
-rotation = -0.349066
 texture = ExtResource( 6 )
 
 [node name="BH-Arm" type="Sprite" parent="Player/Knight/Back_Arm"]
-position = Vector2( 647.926, 177.689 )
-rotation = -0.523599
 texture = ExtResource( 7 )
 
 [node name="Lance_Front" type="Sprite" parent="Player/Knight/Back_Arm"]
-position = Vector2( 1424.11, 107.729 )
-rotation = 0.0872665
+position = Vector2( 624.182, 101.871 )
 texture = ExtResource( 8 )
 
-[node name="Main_Body" type="Node2D" parent="Player/Knight"]
-
-[node name="Neck" type="Sprite" parent="Player/Knight/Main_Body"]
-position = Vector2( 170.573, 78.2075 )
-rotation = 0.867429
+[node name="Lance_Mod" type="Sprite" parent="Player/Knight/Back_Arm/Lance_Front"]
 texture = ExtResource( 9 )
 
-[node name="Chest" type="Sprite" parent="Player/Knight/Main_Body"]
-position = Vector2( 184.184, 104.125 )
-rotation = 0.715585
-z_index = 2
+[node name="Main_Body" type="Node2D" parent="Player/Knight"]
+editor/display_folded = true
+
+[node name="Neck" type="Sprite" parent="Player/Knight/Main_Body"]
 texture = ExtResource( 10 )
 
-[node name="Head" type="Sprite" parent="Player/Knight/Main_Body"]
-position = Vector2( 325.68, 202.909 )
-rotation = 0.349066
+[node name="Chest" type="Sprite" parent="Player/Knight/Main_Body"]
+editor/display_folded = true
+z_index = 2
 texture = ExtResource( 11 )
+
+[node name="Chest_Mod" type="Sprite" parent="Player/Knight/Main_Body/Chest"]
+texture = ExtResource( 12 )
+
+[node name="Head" type="Sprite" parent="Player/Knight/Main_Body"]
+editor/display_folded = true
+texture = ExtResource( 13 )
+
+[node name="Head_Mod" type="Sprite" parent="Player/Knight/Main_Body/Head"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 14 )
 
 [node name="Tears" type="Node2D" parent="Player/Knight/Main_Body/Head"]
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]
 position = Vector2( 9.76563, -598.45 )
-rotation = 0.921534
-scale = Vector2( 1e-005, 1e-005 )
-texture = ExtResource( 12 )
+rotation = 1.07338
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 15 )
 
 [node name="Left_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]
-position = Vector2( -495.914, -262.547 )
-rotation = -1.5132
-scale = Vector2( 1e-005, 1e-005 )
-texture = ExtResource( 13 )
+position = Vector2( -53.5557, -536.047 )
+rotation = -0.453786
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 16 )
 
 [node name="Front_Arm" type="Node2D" parent="Player/Knight"]
 z_index = 2
 
 [node name="FL-Arm" type="Sprite" parent="Player/Knight/Front_Arm"]
-position = Vector2( 175.631, -55.8186 )
-rotation = 0.610865
-texture = ExtResource( 14 )
+texture = ExtResource( 17 )
 
 [node name="FU-Arm" type="Sprite" parent="Player/Knight/Front_Arm"]
-position = Vector2( 101.373, -8.5 )
-rotation = 1.14319
-texture = ExtResource( 15 )
+texture = ExtResource( 18 )
 
 [node name="FH-Arm" type="Sprite" parent="Player/Knight/Front_Arm"]
-position = Vector2( 95.851, -69.1191 )
-rotation = 0.389208
-texture = ExtResource( 16 )
+texture = ExtResource( 19 )
 
 [node name="Front_Leg" type="Node2D" parent="Player/Knight"]
+editor/display_folded = true
 z_index = 2
 
 [node name="FU-Leg" type="Sprite" parent="Player/Knight/Front_Leg"]
-texture = ExtResource( 17 )
+texture = ExtResource( 20 )
 
 [node name="FL-Leg" type="Sprite" parent="Player/Knight/Front_Leg"]
-texture = ExtResource( 18 )
+texture = ExtResource( 21 )
 
 [node name="FF-Leg" type="Sprite" parent="Player/Knight/Front_Leg"]
-texture = ExtResource( 19 )
+texture = ExtResource( 22 )
 
 [node name="Knight_Animator" type="AnimationPlayer" parent="."]
 anims/Charging_Joust = SubResource( 2 )
-anims/Dodge = SubResource( 3 )
-anims/Drowning_Knight = SubResource( 4 )
-anims/Idle_Knight = SubResource( 5 )
+anims/Consume_Knight = SubResource( 3 )
+anims/Dodge = SubResource( 4 )
+anims/Drowning_Knight = SubResource( 5 )
+anims/Idle_Knight = SubResource( 6 )
 anims/Joust = SubResource( 7 )
 anims/Knocked_Off = SubResource( 8 )
 anims/Mount_Knight = SubResource( 9 )
 anims/Move_Knight = SubResource( 10 )
-anims/Parry = SubResource( 12 )
+anims/Parry = SubResource( 11 )
 
 [node name="Turtle_Animator" type="AnimationPlayer" parent="."]
-anims/Charging_Joust = SubResource( 13 )
-anims/Dodge = SubResource( 14 )
-anims/Idle = SubResource( 15 )
-anims/Joust = SubResource( 16 )
-anims/Move = SubResource( 17 )
-anims/Parry = SubResource( 18 )
+anims/Charging_Joust = SubResource( 12 )
+anims/Dodge = SubResource( 13 )
+anims/Idle = SubResource( 14 )
+anims/Joust = SubResource( 15 )
+anims/Move = SubResource( 16 )
+anims/Parry = SubResource( 17 )
