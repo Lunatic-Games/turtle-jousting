@@ -22,6 +22,9 @@ class Server:
 	
 class Client:
 	var peer
+	
+	func close():
+		peer.close_connection()
 
 
 # Creates a server on DEFAULT_PORT and returns the upnp instance
@@ -51,7 +54,6 @@ func create_server():
 	return server
 	
 func connect_to_server(ip):
-	print("Ip: ", ip)
 	var client = Client.new()
 	
 	client.peer = NetworkedMultiplayerENet.new()
@@ -90,9 +92,7 @@ func _generate_code(ip):
 	var sections = ip.split('.')
 	ip = ""
 	for i in range(len(sections)):
-		for _k in range(len(sections[i]), 3):
-			sections[i] = "0" + sections[i]
-		ip += sections[i]
+		ip += sections[i].pad_zeros(3)
 		if i < len(sections) - 1:
 			ip += "."
 	ip = ip.replace('.', '')
@@ -123,9 +123,7 @@ func _decode_code(code):
 	for digit in digits:
 		result += digit * multiplier
 		multiplier *= 36
-	result = str(result)
-	for _i in range(12 - len(result)):
-		result = "0" + result
+	result = str(result).pad_zeros(12)
 	for i in range(len(result) - 3, 2, -3):
 		result = result.insert(i, '.')
 	return result

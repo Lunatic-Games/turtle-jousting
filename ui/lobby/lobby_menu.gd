@@ -271,6 +271,9 @@ func _disconnect():
 func reset_to_local():
 	if server:
 		server.close()
+	if client:
+		client.close()
+	get_tree().network_peer = null
 	connections.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
