@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=1]
+
+[node name="SettingsMenu" type="Popup"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 10.0
+margin_top = -73.0
+margin_right = 177.0
+margin_bottom = 73.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 177.0
+margin_bottom = 26.0
+
+[node name="Label" parent="VBoxContainer/MusicContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 73.0
+margin_bottom = 26.0
+text = "Music"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/MusicContainer"]
+margin_left = 77.0
+margin_right = 177.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="SFXContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 30.0
+margin_right = 177.0
+margin_bottom = 56.0
+
+[node name="Label" parent="VBoxContainer/SFXContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 50.0
+margin_bottom = 26.0
+text = "SFX"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/SFXContainer"]
+margin_left = 54.0
+margin_right = 154.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="FullscreenContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 60.0
+margin_right = 177.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" parent="VBoxContainer/FullscreenContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 127.0
+margin_bottom = 26.0
+text = "Fullscreen"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/FullscreenContainer"]
+margin_left = 131.0
+margin_right = 155.0
+margin_bottom = 26.0
+
+[node name="VibrationContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 90.0
+margin_right = 177.0
+margin_bottom = 116.0
+
+[node name="Button" parent="VBoxContainer/VibrationContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 116.0
+margin_bottom = 26.0
+text = "Vibration"
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/VibrationContainer"]
+margin_left = 120.0
+margin_right = 144.0
+margin_bottom = 26.0
+
+[node name="BackButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 120.0
+margin_right = 62.0
+margin_bottom = 146.0
+text = "Back"

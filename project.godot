@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Turtle Jousting"
-run/main_scene="res://ui/lobby/lobby.tscn"
+run/main_scene="res://ui/lobby/lobby_menu.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -109,6 +109,15 @@ move_down={
 , Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":1.0,"script":null)
  ]
 }
+ui_start={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":11,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+
+[network]
+
+limits/tcp/connect_timeout_seconds=5
 
 [rendering]
 

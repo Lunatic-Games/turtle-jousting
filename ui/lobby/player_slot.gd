@@ -16,7 +16,7 @@ func _process(_delta):
 	rpc_unreliable("update_color", color_i)
 
 
-func _input(event):
+func _unhandled_input(event):
 	if get_tree().network_peer and !is_network_master():
 		return
 	

@@ -1,9 +1,6 @@
 extends Control
 
-const DEFAULT_PORT = 9000
-const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
 const game_scene = preload("res://game/game.tscn")
 
 onready var player_container = get_node("LobbySections/GameContainer/" +  
@@ -21,9 +18,13 @@ var connections = {}
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
-var valid_code_regex = RegEx.new()
+var network_handler = preload("res://ui/lobby/networking.gd").new()
 
-var upnp
+var server
+var client
+
+var focused_line_edit = null
+var server_creation_thread
 
 # Setup
 func _ready():
@@ -32,12 +33,25 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
-	valid_code_regex.compile("^([a-zA-Z0-9]+)$")
+	button_container.get_node("OpenMultiplayerButton").grab_focus()
 
 
 # Register new devices
 func _input(event):
 	if event.is_action("ui_accept") and event.pressed:
+		if (event is InputEventJoypadButton and 
+				online_container.get_node("CodeEditContainer/LineEdit").has_focus()):
+			var line_edit = online_container.get_node("CodeEditContainer/LineEdit")
+			$KeyboardPopup.display(line_edit)
+			get_tree().set_input_as_handled()
+			return
+		if (event is InputEventJoypadButton and 
+				local_container.get_node("CodeEditContainer/LineEdit").has_focus()):
+			var line_edit = local_container.get_node("CodeEditContainer/LineEdit")
+			$KeyboardPopup.display(line_edit)
+			get_tree().set_input_as_handled()
+			return
+			
 		var device = event.device
 		if event is InputEventKey or event is InputEventMouse:
 			device = "keyboard"
@@ -61,78 +75,83 @@ func _input(event):
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
 
 
-# Open to multiplayer and update UI
-func _create_server():
-	upnp = UPNP.new()
-	upnp.discover(2000, 2, "InternetGatewayDevice")
-	upnp.add_port_mapping(DEFAULT_PORT)
-	print("Hosting online at ", upnp.query_external_address())
-	
-	var peer = NetworkedMultiplayerENet.new()
-	var result = peer.create_server(DEFAULT_PORT, 4)
-	if result == OK:
-		print("Created server on port ", DEFAULT_PORT)
-	else:
-		print("Failed to create server on port ", DEFAULT_PORT)
+# Start server creation on new thread
+func _on_OpenMultiplayerButton_pressed():
+	if server_creation_thread and server_creation_thread.is_active():
+		print("waiting for thread")
 		return
-	get_tree().network_peer = peer
+	$NetworkMessagePopup.show_creating_server()
+	button_container.get_node("OpenMultiplayerButton").release_focus()
+	server_creation_thread = Thread.new()
+	server_creation_thread.start(self, "_create_server")
+
+
+# Open to multiplayer and update UI
+func _create_server(_userdata):
+	server = network_handler.create_server()
+	if !server:
+		$NetworkMessagePopup.server_creation_failed()
+		return
+	get_tree().network_peer = server.peer
 	
-	var online_ip = upnp.query_external_address()
-	if online_ip == "":
+	if server.remote_ip:
+		online_container.get_node("Code").text = server.remote_code
+	else:
 		online_container.get_node("Code").text = "Unavailable"
-	else:
-		online_container.get_node("Code").text = _generate_code(online_ip)
 		
-	var local_ip = get_local_ip()
-	if local_ip == "":
-		local_container.get_node("Code").text = "Unavailable"
+	if server.local_ip:
+		local_container.get_node("Code").text = server.local_code
 	else:
-		local_container.get_node("Code").text = _generate_code(local_ip)
-	
+		local_container.get_node("Code").text = "Unavailable"
 	
 	toggle_ui_visibility("multiplayer_ui", true)
 	toggle_ui_visibility("host_ui", true)
 	button_container.get_node("OpenMultiplayerButton").visible = false
+	button_container.get_node("CloseMultiplayerButton").grab_focus()
 	toggle_ui_visibility("disconnected_ui", false)
+	$NetworkMessagePopup.hide()
+	server_creation_thread.call_deferred("wait_to_finish")
 
 
 # Close server and update UI
 func _close_server():
+	print("Closing server")
 	get_tree().network_peer = null
 	reset_to_local()
 	
 	button_container.get_node("OpenMultiplayerButton").visible = true
+	button_container.get_node("OpenMultiplayerButton").grab_focus()
 	button_container.get_node("CloseMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", true)
 	toggle_ui_visibility("multiplayer_ui", false)
 
 
 # Attempt to join using ip
-func _connect_to_server(ip):
-	print("Attempting to connect to ip ", ip)
-	var peer = NetworkedMultiplayerENet.new()
-	var result = peer.create_client(ip, DEFAULT_PORT)
-	if result == OK:
-		print("Client succesfully created")
-	else:
-		print("Failed to create client")
+func _connect_to_server(code):
+	$NetworkMessagePopup.show_connecting()
+	online_container.get_node("JoinContainer/Button").release_focus()
+	local_container.get_node("JoinContainer/Button").release_focus()
+	if !network_handler.is_valid_code(code):
+		print("Invalid code")
+		$NetworkMessagePopup.invalid_code()
 		return
-	get_tree().network_peer = peer
+	
+	client = network_handler.connect_to_server_with_code(code)
+	if !client:
+		$NetworkMessagePopup.connection_failed()
+		return
+
+	get_tree().network_peer = client.peer
+	$ConnectionTimer.start()
 
 
 func _connect_online():
 	var code = online_container.get_node("CodeEditContainer/LineEdit").text
-	if !valid_code_regex.search(code):
-		print("Invalid code")
-		return
-	_connect_to_server(_decode_code(code))
+	_connect_to_server(code)
 	
 func _connect_local():
 	var code = local_container.get_node("CodeEditContainer/LineEdit").text
-	if !valid_code_regex.search(code):
-		print("Invalid code")
-		return
-	_connect_to_server(_decode_code(code))
+	_connect_to_server(code)
 	
 
 # Tell the new client connection to add itself
@@ -152,7 +171,8 @@ func _disconnection(id):
 
 # Called on client when connected
 func _connected_ok():
-	pass
+	$ConnectionTimer.stop()
+	$NetworkMessagePopup.hide()
 
 
 # Called if kicked by server
@@ -163,7 +183,9 @@ func _server_disconnected():
 
 # Called on client failure to connect
 func _connected_fail():
-	print("Connection failed")
+	print("Failed to connect")
+	$NetworkMessagePopup.hide()
+	$ConnectTimeout.stop()
 
 
 # Add players and register connection
@@ -180,7 +202,6 @@ remote func join(existing_connections):
 			connections.clear()
 			connections[1] = local_players.keys()
 			get_tree().set_deferred("network_peer", null)
-			print("Connections: ", connections)
 			return
 		else:
 			new_local_players[pos] = local_players[player]
@@ -248,8 +269,8 @@ func _disconnect():
 
 # Reset the player slots to be only local players
 func reset_to_local():
-	if upnp:
-		upnp.delete_port_mapping(DEFAULT_PORT)
+	if server:
+		server.close()
 	connections.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
@@ -319,64 +340,15 @@ func _exit():
 	get_tree().quit()
 
 
-# Generate a base 36 code from a given ip
-func _generate_code(ip):
-	var sections = ip.split('.')
-	ip = ""
-	for i in range(len(sections)):
-		for _k in range(len(sections[i]), 3):
-			sections[i] = "0" + sections[i]
-		ip += sections[i]
-		if i < len(sections) - 1:
-			ip += "."
-	ip = ip.replace('.', '')
-	ip = int(ip)
-	
-	var digits = []
-	while true:
-		var remainder = ip % 36
-		digits.push_front(remainder)
-		ip = int(floor(ip / 36))
-		if ip < 36:
-			digits.push_front(ip)
-			break
-	var code = ""
-	for digit in digits:
-		code = code + BASE_36_DIGITS[digit]
-	return code
-
-
-# Generate an ip from a base 36 code
-func _decode_code(code):
-	code = code.to_lower()
-	var digits = []
-	for c in code:
-		digits.push_front(int(BASE_36_DIGITS.find(c)))
-	var multiplier = 1
-	var result = 0
-	for digit in digits:
-		result += digit * multiplier
-		multiplier *= 36
-	result = str(result)
-	for _i in range(12 - len(result)):
-		result = "0" + result
-	for i in range(len(result) - 3, 2, -3):
-		result = result.insert(i, '.')
-	return result
-
-
-# Goes through local addresses to find a valid ipv4 address
-func get_local_ip():
-	var local_ip = "Unavailable"
-	var local_addresses = IP.get_local_addresses()
-	var ipv4_pattern = RegEx.new()
-	ipv4_pattern.compile('^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$')
-	for address in local_addresses:
-		var result = ipv4_pattern.search(address)
-		if result and result.get_string() != "127.0.0.1":
-			local_ip = result.get_string()
-	return local_ip
-
+# Clear used port when exiting
 func _exit_tree():
-	if upnp:
-		upnp.delete_port_mapping(DEFAULT_PORT)
+	if server_creation_thread:
+		server_creation_thread.wait_to_finish()
+	if server:
+		server.close()
+
+
+func _on_ConnectionTimer_timeout():
+	print("Failed to connect")
+	get_tree().network_peer = null
+	$NetworkMessagePopup.connection_failed()
