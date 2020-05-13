@@ -270,6 +270,7 @@ func _joined_lobby():
 	toggle_ui_visibility("host_ui", false)
 	toggle_ui_visibility("disconnected_ui", false)
 	toggle_ui_visibility("multiplayer_ui", true)
+	button_container.get_node("LeaveLobbyButton").grab_focus()
 
 
 # Disconnect self from server

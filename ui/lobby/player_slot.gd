@@ -94,6 +94,8 @@ func reset():
 	set_process_input(false)
 	color_i = 0
 	$Background/ColorName.text = COLOR_NAMES[color_i]
+	$Cover/ClosedButton.visible = false
+	$Cover/Open.visible = true
 	device_id = null
 	ready = false
 
