@@ -15,7 +15,7 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = true
+const DEBUG = false
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -197,6 +197,11 @@ func invert_start_direction():
 	$Sprite.scale.x *= -1
 	last_direction.x *= -1
 	joy_direction.x *= -1
+
+
+func set_indicator_visibility(visibility):
+	$JoustIndicator.visible = visibility
+	$JoustIndicatorBottom.visible = visibility
 
 
 func _on_Knight_Animator_animation_started(anim_name):
