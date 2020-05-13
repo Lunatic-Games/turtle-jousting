@@ -7,6 +7,7 @@ var color_i = 0
 var capturing_input = false
 var device_id
 var focused_button = null
+var ready = false
 
 
 func _ready():
@@ -84,21 +85,26 @@ func load_player(number, player_data={}):
 	color_i = player_data.get("color_i", 0)
 	$Background/ColorName.text = COLOR_NAMES[color_i]
 	device_id = player_data.get("device_id", null)
-	if device_id != null:
+	if device_id == null:
+		set_edit_button_visibility(false)
+	else:
 		focused_button = get_node("Background/ColorContainer/LeftArrowContainer/Button")
 		focused_button.texture_normal = focused_button.texture_hover
+	ready = player_data.get("ready", false)
+	if ready:
+		player_ready()
 	
 
 func reset():
 	set_process(false)
-	$CenterContainer/Name.text = "Press A to join"
 	color_i = 0
 	$Background/ColorName.text = COLOR_NAMES[color_i]
 	device_id = null
+	ready = false
 
 
 func get_player_data():
-	return { "device_id" : device_id, "color_i" : color_i}
+	return { "device_id" : device_id, "color_i" : color_i, "ready" : ready}
 
 
 remote func update_color(i):
@@ -107,12 +113,18 @@ remote func update_color(i):
 
 
 func _on_ReadyButton_pressed():
+	player_ready()
+	if get_tree().network_peer:
+		rpc("player_ready")
+
+
+remote func player_ready():
+	ready = true
 	capturing_input = false
 	set_edit_button_visibility(false)
 	$Cover/ClosedButton.visible = true
 	set_process(false)
 	set_process_input(false)
-
 
 func set_edit_button_visibility(visible):
 	for node in get_tree().get_nodes_in_group("edit_button"):
