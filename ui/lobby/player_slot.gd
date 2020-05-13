@@ -150,10 +150,10 @@ func _on_RightColorButton_pressed():
 		rpc("update_color", color_i)
 	
 
-func send_data_to_new_connection(net_id):
+func send_data():
 	if ready:
-		rpc_id(net_id, "player_ready")
-	rpc_id(net_id, "update_color", color_i)
+		rpc("player_ready")
+	rpc("update_color", color_i)
 
 
 func move_ui(direction):

@@ -219,11 +219,11 @@ remote func join(existing_connections):
 	local_players = new_local_players
 	load_existing_connections()
 	rpc("update_player_list", local_players)
-	rpc("new_connection")
 	for player in local_players.keys():
 		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
-
+		get_player_slot(player).send_data()
+	rpc("new_connection")
 
 # Update connection player numbers and player slots
 remote func update_player_list(players):
@@ -244,7 +244,7 @@ remote func new_connection():
 	var sender_id = get_tree().get_rpc_sender_id()
 	
 	for player in local_players.keys():
-		get_player_slot(player).send_data_to_new_connection(sender_id)
+		get_player_slot(player).send_data()
 
 
 # Load players from connections that existed before joining
