@@ -69,15 +69,13 @@ func _input(event):
 				get_tree().set_input_as_handled()
 
 
-func load_player(number, player_data={}):
+func load_player(_number, player_data={}):
 	capturing_input = true
 	set_process_input(true)
 	$Cover/Open.visible = false
 	set_edit_button_visibility(true)
 	color_i = player_data.get("color_i", 0)
 	$Background/ColorName.text = COLOR_NAMES[color_i]
-	#if get_tree().network_peer:
-	#	rpc("update_color", color_i)
 
 	device_id = player_data.get("device_id", null)
 	if device_id == null:

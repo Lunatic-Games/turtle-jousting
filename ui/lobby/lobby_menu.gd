@@ -164,7 +164,7 @@ func _connect_local():
 # Tell the new client connection to add itself
 func _new_connection(id):
 	if is_network_master():
-		rpc_id(id, "join", connections)
+		rpc_id(id, "join", connections, server.remote_code, server.local_code)
 
 
 # Remove associated player slots on client disconnect
@@ -196,7 +196,7 @@ func _connected_fail():
 
 
 # Add players and register connection
-remote func join(existing_connections):
+remote func join(existing_connections, remote_code, local_code):
 	connections = existing_connections
 	var net_id = get_tree().get_network_unique_id()
 	connections[net_id] = []
@@ -215,7 +215,7 @@ remote func join(existing_connections):
 			player_data[pos] = get_player_slot(player).get_player_data()
 			connections[net_id].append(pos)
 		
-	_joined_lobby()
+	_joined_lobby(remote_code, local_code)
 	local_players = new_local_players
 	load_existing_connections()
 	rpc("update_player_list", local_players)
@@ -265,12 +265,14 @@ func get_player_slot(num):
 
 
 # Update UI for being a client
-func _joined_lobby():
+func _joined_lobby(remote_code, local_code):
 	toggle_ui_visibility("client_ui", true)
 	toggle_ui_visibility("host_ui", false)
 	toggle_ui_visibility("disconnected_ui", false)
 	toggle_ui_visibility("multiplayer_ui", true)
 	button_container.get_node("LeaveLobbyButton").grab_focus()
+	online_container.get_node("Code").text = remote_code
+	local_container.get_node("Code").text = local_code
 
 
 # Disconnect self from server
