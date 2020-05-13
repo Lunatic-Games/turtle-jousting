@@ -31,6 +31,7 @@ var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 func _ready():
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_REMOTE)
+		$Sprite.rset_config("scale:x", MultiplayerAPI.RPC_MODE_REMOTE)
 	if DEBUG:
 		device_id = 0
 
@@ -86,13 +87,11 @@ func _physics_process(delta):
 	else:
 		movement = get_input_movement()
 	var vel = move_and_slide(movement)
+	update_sprite_direction(movement)
 	
 	if joust_attacking:
 		deplete_joust_charge(movement.length() * delta)
-	if vel.x > 0.2 or (charging_joust and joy_direction.x > 0):
-		$Sprite.scale.x = abs($Sprite.scale.x)
-	elif vel.x < -0.2 or (charging_joust and joy_direction.x < 0):
-		$Sprite.scale.x = -abs($Sprite.scale.x)
+	
 	if get_tree().network_peer:
 		rset_unreliable("position", position)
 
@@ -166,6 +165,15 @@ func update_joust_indicator():
 	$JoustIndicator.rotation = angle + PI / 2
 
 
+func update_sprite_direction(movement):
+	if movement.x > 0.2 or (joy_direction.x > 0.1 and movement.x > -0.2):
+		$Sprite.scale.x = abs($Sprite.scale.x)
+	elif movement.x < -0.2 or (joy_direction.x < -0.1 and movement.x < 0.2):
+		$Sprite.scale.x = -abs($Sprite.scale.x)
+	if get_tree().network_peer:
+		$Sprite.rset("scale:x", $Sprite.scale.x)
+
+
 func deplete_joust_charge(dist_travelled):
 	joust_charge -= dist_travelled
 	if joust_charge <= 0.0:
@@ -195,11 +203,14 @@ func load_data(data = {}):
 
 func invert_start_direction():
 	$Sprite.scale.x *= -1
+	update_sprite_direction(Vector2(0, 0))
 	last_direction.x *= -1
 	joy_direction.x *= -1
 
 
 func set_indicator_visibility(visibility):
+	if get_tree().network_peer and !is_network_master():
+		return
 	$JoustIndicator.visible = visibility
 	$JoustIndicatorBottom.visible = visibility
 
