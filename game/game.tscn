@@ -1,14 +1,74 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://game/game.gd" type="Script" id=1]
+[ext_resource path="res://game/assets/background.png" type="Texture" id=2]
+[ext_resource path="res://game/buoy.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 576.0
-color = Color( 0.262745, 0.305882, 0.541176, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 512, 288 )
+texture = ExtResource( 2 )
+
+[node name="Buoys" type="Node2D" parent="."]
+
+[node name="Buoy" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 20, 32 )
+
+[node name="Buoy2" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 184, 32 )
+
+[node name="Buoy3" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 348, 32 )
+
+[node name="Buoy4" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 512, 32 )
+
+[node name="Buoy5" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 676, 32 )
+
+[node name="Buoy6" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 840, 32 )
+
+[node name="Buoy7" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 1004, 32 )
+
+[node name="Buoy8" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 1004, 159 )
+
+[node name="Buoy9" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 1004, 286 )
+
+[node name="Buoy10" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 1004, 413 )
+
+[node name="Buoy11" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 1004, 540 )
+
+[node name="Buoy12" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 840, 540 )
+
+[node name="Buoy13" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 676, 540 )
+
+[node name="Buoy14" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 512, 540 )
+
+[node name="Buoy15" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 348, 540 )
+
+[node name="Buoy16" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 184, 540 )
+
+[node name="Buoy17" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 20, 540 )
+
+[node name="Buoy18" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 20, 413 )
+
+[node name="Buoy19" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 20, 286 )
+
+[node name="Buoy20" parent="Buoys" instance=ExtResource( 3 )]
+position = Vector2( 20, 159 )

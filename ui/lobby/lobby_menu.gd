@@ -43,8 +43,8 @@ func _input(event):
 	var device = event.device
 	if event is InputEventKey or event is InputEventMouse:
 		device = "keyboard"
-			
-	if event.is_action("ui_start") and event.pressed:
+	
+	if event.is_action("ui_accept") and event.pressed:
 		if (event is InputEventJoypadButton and 
 				online_container.get_node("CodeEditContainer/LineEdit").has_focus()):
 			var line_edit = online_container.get_node("CodeEditContainer/LineEdit")
@@ -57,7 +57,8 @@ func _input(event):
 			$KeyboardPopup.display(line_edit)
 			get_tree().set_input_as_handled()
 			return
-			
+
+	if event.is_action("ui_start") and event.pressed:
 		if device in local_players.values():
 			return
 
@@ -354,7 +355,9 @@ remotesync func start():
 				data = get_player_slot(player).get_player_data()
 			new_game.add_player(player, connection, data)
 	get_tree().get_root().add_child(new_game)
-	queue_free()
+	visible = false
+	set_process(false)
+	set_process_input(false)
 
 
 # Exit game (this will eventually lead back to main menu)
