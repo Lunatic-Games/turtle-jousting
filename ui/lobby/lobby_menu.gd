@@ -229,20 +229,20 @@ remote func join(existing_connections):
 remote func update_player_list(players):
 	var sender_id = get_tree().get_rpc_sender_id()
 	
+	var player_data = {}
 	if connections.has(sender_id):
 		for player in connections[sender_id]:
+			player_data[player] = get_player_slot(player).get_player_data()
 			get_player_slot(player).reset()
 
 	connections[sender_id] = players
 	for player in connections[sender_id]:
-		get_player_slot(player).load_player(player)
+		get_player_slot(player).load_player(player, player_data.get(player, {}))
 		get_player_slot(player).set_network_master(sender_id)
 		
 
 # Send existing data to the new connection
 remote func new_connection():
-	var sender_id = get_tree().get_rpc_sender_id()
-	
 	for player in local_players.keys():
 		get_player_slot(player).send_data()
 
