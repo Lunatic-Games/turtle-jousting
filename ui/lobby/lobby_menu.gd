@@ -355,6 +355,7 @@ remotesync func start():
 				data = get_player_slot(player).get_player_data()
 			new_game.add_player(player, connection, data)
 	get_tree().get_root().add_child(new_game)
+	new_game.all_players_added()
 	visible = false
 	set_process(false)
 	set_process_input(false)

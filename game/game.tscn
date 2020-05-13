@@ -72,3 +72,44 @@ position = Vector2( 20, 286 )
 
 [node name="Buoy20" parent="Buoys" instance=ExtResource( 3 )]
 position = Vector2( 20, 159 )
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+visible = false
+
+[node name="1Player" type="Node2D" parent="SpawnPositions"]
+
+[node name="Player1" type="Position2D" parent="SpawnPositions/1Player"]
+position = Vector2( 512, 288 )
+
+[node name="2Player" type="Node2D" parent="SpawnPositions"]
+
+[node name="Player1" type="Position2D" parent="SpawnPositions/2Player"]
+position = Vector2( 128, 288 )
+
+[node name="Player2" type="Position2D" parent="SpawnPositions/2Player"]
+position = Vector2( 896, 288 )
+
+[node name="3Player" type="Node2D" parent="SpawnPositions"]
+
+[node name="Player1" type="Position2D" parent="SpawnPositions/3Player"]
+position = Vector2( 128, 448 )
+
+[node name="Player2" type="Position2D" parent="SpawnPositions/3Player"]
+position = Vector2( 512, 128 )
+
+[node name="Player3" type="Position2D" parent="SpawnPositions/3Player"]
+position = Vector2( 896, 448 )
+
+[node name="4Player" type="Node2D" parent="SpawnPositions"]
+
+[node name="Player1" type="Position2D" parent="SpawnPositions/4Player"]
+position = Vector2( 128, 448 )
+
+[node name="Player2" type="Position2D" parent="SpawnPositions/4Player"]
+position = Vector2( 128, 128 )
+
+[node name="Player3" type="Position2D" parent="SpawnPositions/4Player"]
+position = Vector2( 896, 128 )
+
+[node name="Player4" type="Position2D" parent="SpawnPositions/4Player"]
+position = Vector2( 896, 448 )
