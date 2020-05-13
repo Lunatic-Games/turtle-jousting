@@ -18,12 +18,14 @@ var connections = {}
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
+# Has useful network functions
 var network_handler = preload("res://ui/lobby/networking.gd").new()
 
+# Stores data for servers and clients
 var server
 var client
 
-var focused_line_edit = null
+# Allows creation of server without stopping processing
 var server_creation_thread
 
 # Setup
@@ -36,8 +38,12 @@ func _ready():
 	button_container.get_node("OpenMultiplayerButton").grab_focus()
 
 
-# Register new devices
+# Check for keyboard popup and register new devices
 func _input(event):
+	var device = event.device
+	if event is InputEventKey or event is InputEventMouse:
+		device = "keyboard"
+			
 	if event.is_action("ui_accept") and event.pressed:
 		if (event is InputEventJoypadButton and 
 				online_container.get_node("CodeEditContainer/LineEdit").has_focus()):
@@ -52,9 +58,6 @@ func _input(event):
 			get_tree().set_input_as_handled()
 			return
 			
-		var device = event.device
-		if event is InputEventKey or event is InputEventMouse:
-			device = "keyboard"
 		if device in local_players.values():
 			return
 
@@ -73,6 +76,9 @@ func _input(event):
 			connections[1] = local_players.keys()
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
+		get_tree().set_input_as_handled()
+	#elif !(device in local_players.values()):
+		#get_tree().set_input_as_handled()
 
 
 # Start server creation on new thread
@@ -145,10 +151,13 @@ func _connect_to_server(code):
 	$ConnectionTimer.start()
 
 
+# When online join pressed
 func _connect_online():
 	var code = online_container.get_node("CodeEditContainer/LineEdit").text
 	_connect_to_server(code)
-	
+
+
+# When local join pressed
 func _connect_local():
 	var code = local_container.get_node("CodeEditContainer/LineEdit").text
 	_connect_to_server(code)

@@ -6,6 +6,8 @@ const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
 	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
 	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
+
+# Stores data for the created server
 class Server:
 	var peer
 	var upnp
@@ -15,11 +17,11 @@ class Server:
 	var local_code
 	
 	func close():
-		print("Deleting port mapping")
 		upnp.delete_port_mapping(DEFAULT_PORT)
 		peer.close_connection()
-		
-	
+
+
+# Stores data for a client
 class Client:
 	var peer
 	
@@ -52,23 +54,27 @@ func create_server():
 		server.local_code = _generate_code(server.local_ip)
 	
 	return server
-	
+
+
+# Connect to a server using an ip
 func connect_to_server(ip):
 	var client = Client.new()
 	
 	client.peer = NetworkedMultiplayerENet.new()
 	var result = client.peer.create_client(ip, DEFAULT_PORT)
 	if result != OK:
-		
 		print("Failed to create client")
 		return null
 
 	return client
-	
+
+
+# Converts a code to an ip before calling connect_to_server
 func connect_to_server_with_code(code):
 	return connect_to_server(_decode_code(code))
 
 
+# Determines if a string is a valid base 36 code
 func is_valid_code(code):
 	var reg_ex = RegEx.new()
 	reg_ex.compile("^([a-zA-Z0-9]+)$")
@@ -86,7 +92,8 @@ func _get_local_ip():
 		if result and result.get_string() != "127.0.0.1":
 			local_ip = result.get_string()
 	return local_ip
-	
+
+
 # Generate a base 36 code from a given ip
 func _generate_code(ip):
 	var sections = ip.split('.')
