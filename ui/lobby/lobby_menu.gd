@@ -1,15 +1,16 @@
 extends Control
 
-const DEFAULT_PORT = 32201
-const BASE_36_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-	'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-	'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
 const game_scene = preload("res://game/game.tscn")
 
-onready var player_container = get_node("HBoxContainer/GameContainer/" +  
+onready var player_container = get_node("LobbySections/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
-onready var button_container = get_node("HBoxContainer/GameContainer/" +
+onready var button_container = get_node("LobbySections/GameContainer/" +
 	"VBoxContainer")
+onready var online_container = get_node("ConnectionSection/VBoxContainer/" + 
+	"OnlineContainer")
+onready var local_container = get_node("ConnectionSection/VBoxContainer/" + 
+	"LocalContainer")
 
 # Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
@@ -17,7 +18,15 @@ var connections = {}
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
-var valid_code_regex = RegEx.new()
+# Has useful network functions
+var network_handler = preload("res://ui/lobby/networking.gd").new()
+
+# Stores data for servers and clients
+var server
+var client
+
+# Allows creation of server without stopping processing
+var server_creation_thread
 
 # Setup
 func _ready():
@@ -26,16 +35,29 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
-	valid_code_regex.compile("^([a-zA-Z0-9]+)$")
-	print(IP.get_local_addresses())
+	button_container.get_node("OpenMultiplayerButton").grab_focus()
 
 
-# Register new devices
+# Check for keyboard popup and register new devices
 func _input(event):
-	if event.is_action("ui_accept") and event.pressed:
-		var device = event.device
-		if event is InputEventKey or event is InputEventMouse:
-			device = "keyboard"
+	var device = event.device
+	if event is InputEventKey or event is InputEventMouse:
+		device = "keyboard"
+			
+	if event.is_action("ui_start") and event.pressed:
+		if (event is InputEventJoypadButton and 
+				online_container.get_node("CodeEditContainer/LineEdit").has_focus()):
+			var line_edit = online_container.get_node("CodeEditContainer/LineEdit")
+			$KeyboardPopup.display(line_edit)
+			get_tree().set_input_as_handled()
+			return
+		if (event is InputEventJoypadButton and 
+				local_container.get_node("CodeEditContainer/LineEdit").has_focus()):
+			var line_edit = local_container.get_node("CodeEditContainer/LineEdit")
+			$KeyboardPopup.display(line_edit)
+			get_tree().set_input_as_handled()
+			return
+			
 		if device in local_players.values():
 			return
 
@@ -54,58 +76,95 @@ func _input(event):
 			connections[1] = local_players.keys()
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
+		get_tree().set_input_as_handled()
+
+
+# Start server creation on new thread
+func _on_OpenMultiplayerButton_pressed():
+	if server_creation_thread and server_creation_thread.is_active():
+		print("waiting for thread")
+		return
+	$NetworkMessagePopup.show_creating_server()
+	button_container.get_node("OpenMultiplayerButton").release_focus()
+	server_creation_thread = Thread.new()
+	server_creation_thread.start(self, "_create_server")
 
 
 # Open to multiplayer and update UI
-func _create_server():
-	var peer = NetworkedMultiplayerENet.new()
-	var result = peer.create_server(DEFAULT_PORT, 4)
-	if result == OK:
-		print("Created server on port ", DEFAULT_PORT)
-	else:
-		print("Failed to create server on port ", DEFAULT_PORT)
+func _create_server(_userdata):
+	server = network_handler.create_server()
+	if !server:
+		$NetworkMessagePopup.server_creation_failed()
 		return
-	get_tree().network_peer = peer
+	get_tree().network_peer = server.peer
 	
-	# <-Should make a function for grabbing ip->
+	if server.remote_ip:
+		online_container.get_node("Code").text = server.remote_code
+	else:
+		online_container.get_node("Code").text = "Unavailable"
+		
+	if server.local_ip:
+		local_container.get_node("Code").text = server.local_code
+	else:
+		local_container.get_node("Code").text = "Unavailable"
+	
 	toggle_ui_visibility("multiplayer_ui", true)
 	toggle_ui_visibility("host_ui", true)
 	button_container.get_node("OpenMultiplayerButton").visible = false
+	button_container.get_node("CloseMultiplayerButton").grab_focus()
 	toggle_ui_visibility("disconnected_ui", false)
+	$NetworkMessagePopup.hide()
+	server_creation_thread.call_deferred("wait_to_finish")
 
 
 # Close server and update UI
 func _close_server():
+	print("Closing server")
 	get_tree().network_peer = null
 	reset_to_local()
 	
 	button_container.get_node("OpenMultiplayerButton").visible = true
+	button_container.get_node("OpenMultiplayerButton").grab_focus()
 	button_container.get_node("CloseMultiplayerButton").visible = false
 	toggle_ui_visibility("disconnected_ui", true)
 	toggle_ui_visibility("multiplayer_ui", false)
 
 
 # Attempt to join using ip
-func _connect_to_server():
-	var ip = $CodeSection/HBoxContainer/CodeEditContainer/TextEdit.text
-	if !valid_code_regex.search(ip):
+func _connect_to_server(code):
+	$NetworkMessagePopup.show_connecting()
+	online_container.get_node("JoinContainer/Button").release_focus()
+	local_container.get_node("JoinContainer/Button").release_focus()
+	if !network_handler.is_valid_code(code):
 		print("Invalid code")
+		$NetworkMessagePopup.invalid_code()
 		return
-	ip = _decode_code(ip)
-	var peer = NetworkedMultiplayerENet.new()
-	var result = peer.create_client(ip, DEFAULT_PORT)
-	if result == OK:
-		print("Client succesfully created")
-	else:
-		print("Failed to create client")
+	
+	client = network_handler.connect_to_server_with_code(code)
+	if !client:
+		$NetworkMessagePopup.connection_failed()
 		return
-	get_tree().network_peer = peer
 
+	get_tree().network_peer = client.peer
+	$ConnectionTimer.start()
+
+
+# When online join pressed
+func _connect_online():
+	var code = online_container.get_node("CodeEditContainer/LineEdit").text
+	_connect_to_server(code)
+
+
+# When local join pressed
+func _connect_local():
+	var code = local_container.get_node("CodeEditContainer/LineEdit").text
+	_connect_to_server(code)
+	
 
 # Tell the new client connection to add itself
 func _new_connection(id):
 	if is_network_master():
-		rpc_id(id, "join", connections)
+		rpc_id(id, "join", connections, server.remote_code, server.local_code)
 
 
 # Remove associated player slots on client disconnect
@@ -119,7 +178,8 @@ func _disconnection(id):
 
 # Called on client when connected
 func _connected_ok():
-	pass
+	$ConnectionTimer.stop()
+	$NetworkMessagePopup.hide()
 
 
 # Called if kicked by server
@@ -130,11 +190,13 @@ func _server_disconnected():
 
 # Called on client failure to connect
 func _connected_fail():
-	print("Connection failed")
+	print("Failed to connect")
+	$NetworkMessagePopup.hide()
+	$ConnectTimeout.stop()
 
 
 # Add players and register connection
-remote func join(existing_connections):
+remote func join(existing_connections, remote_code, local_code):
 	connections = existing_connections
 	var net_id = get_tree().get_network_unique_id()
 	connections[net_id] = []
@@ -147,34 +209,42 @@ remote func join(existing_connections):
 			connections.clear()
 			connections[1] = local_players.keys()
 			get_tree().set_deferred("network_peer", null)
-			print("Connections: ", connections)
 			return
 		else:
 			new_local_players[pos] = local_players[player]
 			player_data[pos] = get_player_slot(player).get_player_data()
 			connections[net_id].append(pos)
 		
-	_joined_lobby()
+	_joined_lobby(remote_code, local_code)
 	local_players = new_local_players
 	load_existing_connections()
 	rpc("update_player_list", local_players)
 	for player in local_players.keys():
 		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
-
+		get_player_slot(player).send_data()
+	rpc("new_connection")
 
 # Update connection player numbers and player slots
 remote func update_player_list(players):
 	var sender_id = get_tree().get_rpc_sender_id()
 	
+	var player_data = {}
 	if connections.has(sender_id):
 		for player in connections[sender_id]:
+			player_data[player] = get_player_slot(player).get_player_data()
 			get_player_slot(player).reset()
 
 	connections[sender_id] = players
 	for player in connections[sender_id]:
-		get_player_slot(player).load_player(player)
+		get_player_slot(player).load_player(player, player_data.get(player, {}))
 		get_player_slot(player).set_network_master(sender_id)
+		
+
+# Send existing data to the new connection
+remote func new_connection():
+	for player in local_players.keys():
+		get_player_slot(player).send_data()
 
 
 # Load players from connections that existed before joining
@@ -195,11 +265,14 @@ func get_player_slot(num):
 
 
 # Update UI for being a client
-func _joined_lobby():
+func _joined_lobby(remote_code, local_code):
 	toggle_ui_visibility("client_ui", true)
 	toggle_ui_visibility("host_ui", false)
 	toggle_ui_visibility("disconnected_ui", false)
 	toggle_ui_visibility("multiplayer_ui", true)
+	button_container.get_node("LeaveLobbyButton").grab_focus()
+	online_container.get_node("Code").text = remote_code
+	local_container.get_node("Code").text = local_code
 
 
 # Disconnect self from server
@@ -215,6 +288,11 @@ func _disconnect():
 
 # Reset the player slots to be only local players
 func reset_to_local():
+	if server:
+		server.close()
+	if client:
+		client.close()
+	get_tree().network_peer = null
 	connections.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
@@ -256,15 +334,18 @@ func toggle_ui_visibility(group_name, visibility):
 	for element in get_tree().get_nodes_in_group(group_name):
 		element.visible = visibility
 
+
 func _on_StartButton_pressed():
 	if get_tree().network_peer:
 		rpc("start")
 	else:
 		start()
-	
+
+
 remotesync func start():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
+
 	var new_game = game_scene.instance()
 	for connection in connections:
 		for player in connections[connection]:
@@ -274,45 +355,30 @@ remotesync func start():
 			new_game.add_player(player, connection, data)
 	get_tree().get_root().add_child(new_game)
 	queue_free()
-	
+
+
 # Exit game (this will eventually lead back to main menu)
 func _exit():
 	get_tree().quit()
 
-# Generate a base 36 code from a given ip
-func _generate_code(ip):
-	ip = ip.replace('.', '')
-	ip = int(ip)
-	
-	var digits = []
-	while true:
-		var remainder = ip % 36
-		digits.push_front(remainder)
-		ip = int(floor(ip / 36))
-		if ip < 36:
-			digits.push_front(ip)
-			break
-	var code = ""
-	for digit in digits:
-		code = code + BASE_36_DIGITS[digit]
-	return code
 
-# Generate an ip from a base 36 code
-func _decode_code(code):
-	code = code.to_lower()
-	var digits = []
-	for c in code:
-		digits.push_front(int(BASE_36_DIGITS.find(c)))
-	var multiplier = 1
-	var result = 0
-	for digit in digits:
-		result += digit * multiplier
-		multiplier *= 36
-	result = str(result)
-	for _i in range(12 - len(result)):
-		result = "0" + result
-	for i in range(len(result) - 3, 2, -3):
-		result = result.insert(i, '.')
-	return result
+# Clear used port when exiting
+func _exit_tree():
+	if server_creation_thread and server_creation_thread.is_active():
+		server_creation_thread.wait_to_finish()
+	if server:
+		server.close()
 
 
+func _on_ConnectionTimer_timeout():
+	print("Failed to connect")
+	get_tree().network_peer = null
+	$NetworkMessagePopup.connection_failed()
+
+
+func _on_Popup_about_to_show():
+	set_process_input(false)
+
+
+func _on_Popup_hide():
+	set_process_input(true)
