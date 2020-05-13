@@ -1,30 +1,29 @@
 [gd_scene load_steps=35 format=2]
 
-[ext_resource path="res://player/player.gd" type="Script" id=1]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_BL.png" type="Texture" id=2]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FF.png" type="Texture" id=3]
-[ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=4]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_BU.png" type="Texture" id=5]
-[ext_resource path="res://player/assets/knight_parts/knight_head.png" type="Texture" id=6]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FU.png" type="Texture" id=7]
-[ext_resource path="res://player/assets/lance_back.png" type="Texture" id=8]
-[ext_resource path="res://player/assets/lance_green_front.png" type="Texture" id=9]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_BH.png" type="Texture" id=10]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FL.png" type="Texture" id=11]
-[ext_resource path="res://player/assets/knight_parts/knight_neck.png" type="Texture" id=12]
-[ext_resource path="res://player/assets/knight_parts/knight_chest.png" type="Texture" id=13]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_BU.png" type="Texture" id=14]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FH.png" type="Texture" id=15]
-[ext_resource path="res://player/assets/knight_parts/knight_arm_FL.png" type="Texture" id=16]
-[ext_resource path="res://player/assets/knight_parts/knight_leg_FU.png" type="Texture" id=17]
-[ext_resource path="res://player/assets/knight_parts/knight_chest_arched.png" type="Texture" id=18]
-[ext_resource path="res://player/assets/knight_parts/knight_head_hit.png" type="Texture" id=19]
-[ext_resource path="res://player/assets/knight_parts/knight_head_crying.png" type="Texture" id=20]
-[ext_resource path="res://player/assets/knight_parts/knight_tear_right.png" type="Texture" id=21]
-[ext_resource path="res://player/assets/knight_parts/knight_tear_left.png" type="Texture" id=22]
+[ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-BL.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Leg-FF.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Turtle-Green.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-BU.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Head.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-FU.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Lance-Back.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Lance-Green-Front.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-BH.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Leg-FL.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Neck.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Chest.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Leg-BU.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-FH.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Arm-FL.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Leg-FU.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Chest-Arched.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Head-Hit.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Head-Crying.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Tear-Right.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Knight-Parts/Knight-Tear-Left.png" type="Texture" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 86.7604, 88.4331 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Charging_Joust"
@@ -450,7 +449,7 @@ tracks/34/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=10]
 resource_name = "Dodge"
 length = 2.0
 loop = true
@@ -947,7 +946,8 @@ tracks/40/keys = {
 "values": [ Vector2( 1e-05, 1e-05 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
+resource_name = "Drowning_Knight"
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -1419,7 +1419,7 @@ tracks/38/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -1867,7 +1867,7 @@ tracks/36/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=11]
 resource_name = "Idle_Turtle"
 length = 2.0
 loop = true
@@ -1884,7 +1884,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ), Vector2( 0.95, 1.05 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player/Knight/Main_Body/Chest:position")
 tracks/0/interp = 1
@@ -2306,7 +2306,7 @@ tracks/34/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Player/Knight/Main_Body/Head:texture")
 tracks/0/interp = 1
@@ -2728,7 +2728,8 @@ tracks/34/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=7]
+resource_name = "Mount_Knight"
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -3176,7 +3177,7 @@ tracks/36/keys = {
 "values": [ 0.0, 43.4, 0.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=8]
 length = 1.4
 loop = true
 tracks/0/type = "value"
@@ -3612,7 +3613,7 @@ tracks/35/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 resource_name = "Move_Turtle"
 length = 1.2
 loop = true
@@ -3629,7 +3630,8 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 0.8, 1.2 ), Vector2( 1, 1 ), Vector2( 0.8, 1.2 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
+resource_name = "Parry"
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -4079,7 +4081,6 @@ tracks/36/keys = {
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 position = Vector2( 507.974, 277.471 )
-scale = Vector2( 0.55, 0.55 )
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -4087,7 +4088,7 @@ shape = SubResource( 1 )
 
 [node name="Player" type="Node2D" parent="."]
 position = Vector2( 7.827, 0.592 )
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.0183889, 0.1 )
 
 [node name="Knight" type="Node2D" parent="Player"]
 
@@ -4129,9 +4130,9 @@ texture = ExtResource( 6 )
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]
-position = Vector2( 920.049, -33.3024 )
-rotation = 1.11252
-scale = Vector2( 1.22029, 0.1 )
+position = Vector2( 859.012, -60.7543 )
+rotation = 1.09002
+scale = Vector2( 1.14638, 0.1 )
 texture = ExtResource( 21 )
 
 [node name="Left_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]
@@ -4170,15 +4171,14 @@ z_index = 1
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Idle"
 anims/Charging_Joust = SubResource( 2 )
-anims/Dodge = SubResource( 3 )
-anims/Drowning_Knight = SubResource( 4 )
-anims/Idle = SubResource( 5 )
-anims/Idle_Turtle = SubResource( 6 )
-anims/Joust = SubResource( 7 )
-anims/Knocked_Off = SubResource( 8 )
-anims/Mount_Knight = SubResource( 9 )
-anims/Move = SubResource( 10 )
-anims/Move_Turtle = SubResource( 11 )
-anims/Parry = SubResource( 12 )
+anims/Dodge = SubResource( 10 )
+anims/Drowning_Knight = SubResource( 3 )
+anims/Idle = SubResource( 4 )
+anims/Idle_Turtle = SubResource( 11 )
+anims/Joust = SubResource( 5 )
+anims/Knocked_Off = SubResource( 6 )
+anims/Mount_Knight = SubResource( 7 )
+anims/Move = SubResource( 8 )
+anims/Move_Turtle = SubResource( 12 )
+anims/Parry = SubResource( 9 )
