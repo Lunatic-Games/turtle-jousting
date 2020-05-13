@@ -11,18 +11,11 @@ var ready = false
 
 
 func _ready():
-	set_process(false)
 	set_process_input(false)
 	for node in get_tree().get_nodes_in_group("edit_button"):
 		if is_a_parent_of(node):
 			node.connect("focus_entered", self, "_on_button_focus_entered",
 				[node])
-
-
-func _process(_delta):
-	if !get_tree().network_peer or !is_network_master():
-		return
-	rpc_unreliable("update_color", color_i)
 
 
 func _input(event):
@@ -78,12 +71,14 @@ func _input(event):
 
 func load_player(number, player_data={}):
 	capturing_input = true
-	set_process(true)
 	set_process_input(true)
 	$Cover/Open.visible = false
 	set_edit_button_visibility(true)
 	color_i = player_data.get("color_i", 0)
 	$Background/ColorName.text = COLOR_NAMES[color_i]
+	if get_tree().network_peer:
+		rpc("update_color", color_i)
+
 	device_id = player_data.get("device_id", null)
 	if device_id == null:
 		set_edit_button_visibility(false)
@@ -96,7 +91,7 @@ func load_player(number, player_data={}):
 	
 
 func reset():
-	set_process(false)
+	set_process_input(false)
 	color_i = 0
 	$Background/ColorName.text = COLOR_NAMES[color_i]
 	device_id = null
@@ -123,8 +118,8 @@ remote func player_ready():
 	capturing_input = false
 	set_edit_button_visibility(false)
 	$Cover/ClosedButton.visible = true
-	set_process(false)
 	set_process_input(false)
+
 
 func set_edit_button_visibility(visible):
 	for node in get_tree().get_nodes_in_group("edit_button"):
@@ -140,6 +135,8 @@ func _on_LeftColorButton_pressed():
 	if color_i < 0:
 		color_i = len(COLORS) - 1
 	$Background/ColorName.text = COLOR_NAMES[color_i]
+	if get_tree().network_peer:
+		rpc("update_color", color_i)
 
 
 func _on_RightColorButton_pressed():
@@ -147,6 +144,14 @@ func _on_RightColorButton_pressed():
 	if color_i >= len(COLORS):
 		color_i = 0
 	$Background/ColorName.text = COLOR_NAMES[color_i]
+	if get_tree().network_peer:
+		rpc("update_color", color_i)
+	
+
+func send_data_to_new_connection(net_id):
+	if ready:
+		rpc_id(net_id, "player_ready")
+	rpc_id(net_id, "update_color", color_i)
 
 
 func move_ui(direction):
@@ -157,21 +162,22 @@ func move_ui(direction):
 	var neighbour = focused_button.get_node(neighbour_path)
 	focused_button = neighbour
 	hover_button(focused_button)
-	
 
 
 func mouse_over_node(node):
 	var rect = node.get_rect()
 	rect.position = node.rect_global_position
 	return rect.has_point(get_global_mouse_position())
-	
+
+
 func unhover_button(button):
 	if "texture_normal" in button:
 		button.texture_normal = button.texture_disabled
 	elif "custom_colors/font_color" in button:
 		var normal_color = button['custom_colors/font_color_disabled']
 		button['custom_colors/font_color'] = normal_color
-		
+
+
 func hover_button(button):
 	if "texture_normal" in button:
 		button.texture_normal = button.texture_hover

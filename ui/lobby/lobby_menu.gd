@@ -44,7 +44,7 @@ func _input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		device = "keyboard"
 			
-	if event.is_action("ui_accept") and event.pressed:
+	if event.is_action("ui_start") and event.pressed:
 		if (event is InputEventJoypadButton and 
 				online_container.get_node("CodeEditContainer/LineEdit").has_focus()):
 			var line_edit = online_container.get_node("CodeEditContainer/LineEdit")
@@ -77,8 +77,6 @@ func _input(event):
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
 		get_tree().set_input_as_handled()
-	#elif !(device in local_players.values()):
-		#get_tree().set_input_as_handled()
 
 
 # Start server creation on new thread
@@ -221,6 +219,7 @@ remote func join(existing_connections):
 	local_players = new_local_players
 	load_existing_connections()
 	rpc("update_player_list", local_players)
+	rpc("new_connection")
 	for player in local_players.keys():
 		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
@@ -238,6 +237,14 @@ remote func update_player_list(players):
 	for player in connections[sender_id]:
 		get_player_slot(player).load_player(player)
 		get_player_slot(player).set_network_master(sender_id)
+		
+
+# Send existing data to the new connection
+remote func new_connection():
+	var sender_id = get_tree().get_rpc_sender_id()
+	
+	for player in local_players.keys():
+		get_player_slot(player).send_data_to_new_connection(sender_id)
 
 
 # Load players from connections that existed before joining
@@ -354,7 +361,7 @@ func _exit():
 
 # Clear used port when exiting
 func _exit_tree():
-	if server_creation_thread:
+	if server_creation_thread and server_creation_thread.is_active():
 		server_creation_thread.wait_to_finish()
 	if server:
 		server.close()
@@ -364,3 +371,11 @@ func _on_ConnectionTimer_timeout():
 	print("Failed to connect")
 	get_tree().network_peer = null
 	$NetworkMessagePopup.connection_failed()
+
+
+func _on_Popup_about_to_show():
+	set_process_input(false)
+
+
+func _on_Popup_hide():
+	set_process_input(true)

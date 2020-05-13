@@ -4129,9 +4129,9 @@ texture = ExtResource( 6 )
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]
-position = Vector2( 859.012, -60.7543 )
-rotation = 1.09002
-scale = Vector2( 1.14638, 0.1 )
+position = Vector2( 920.049, -33.3024 )
+rotation = 1.11252
+scale = Vector2( 1.22029, 0.1 )
 texture = ExtResource( 21 )
 
 [node name="Left_Tear" type="Sprite" parent="Player/Knight/Main_Body/Head/Tears"]

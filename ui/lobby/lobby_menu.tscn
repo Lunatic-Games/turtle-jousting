@@ -429,4 +429,8 @@ one_shot = true
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/BackButton" to="." method="_exit"]
+[connection signal="about_to_show" from="NetworkMessagePopup" to="." method="_on_Popup_about_to_show"]
+[connection signal="popup_hide" from="NetworkMessagePopup" to="." method="_on_Popup_hide"]
 [connection signal="timeout" from="ConnectionTimer" to="." method="_on_ConnectionTimer_timeout"]
+[connection signal="about_to_show" from="KeyboardPopup" to="." method="_on_Popup_about_to_show"]
+[connection signal="popup_hide" from="KeyboardPopup" to="." method="_on_Popup_hide"]

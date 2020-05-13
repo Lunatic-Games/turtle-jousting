@@ -15,7 +15,7 @@ func display(edit):
 	$TextPanel/Label.text = edit.text
 	popup()
 	
-func _unhandled_input(event):
+func _input(event):
 	if !visible:
 		return
 	if event.is_action("ui_cancel") and event.pressed:
