@@ -95,17 +95,23 @@ func _on_OpenMultiplayerButton_pressed():
 func _create_server(_userdata):
 	server = network_handler.create_server()
 	if !server:
+		print("Failed to create server")
 		$NetworkMessagePopup.server_creation_failed()
 		return
 	get_tree().network_peer = server.peer
-	
-	if server.remote_ip:
-		online_container.get_node("Code").text = server.remote_code
+	server_creation_thread.call_deferred("wait_to_finish")
+	call_deferred("_server_created", server.local_code, server.remote_code)
+
+
+# Set host UI
+func _server_created(local_code, remote_code):
+	if remote_code:
+		online_container.get_node("Code").text = remote_code
 	else:
 		online_container.get_node("Code").text = "Unavailable"
 		
-	if server.local_ip:
-		local_container.get_node("Code").text = server.local_code
+	if local_code:
+		local_container.get_node("Code").text = local_code
 	else:
 		local_container.get_node("Code").text = "Unavailable"
 	
@@ -115,7 +121,6 @@ func _create_server(_userdata):
 	button_container.get_node("CloseMultiplayerButton").grab_focus()
 	toggle_ui_visibility("disconnected_ui", false)
 	$NetworkMessagePopup.hide()
-	server_creation_thread.call_deferred("wait_to_finish")
 
 
 # Close server and update UI

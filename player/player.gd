@@ -30,8 +30,8 @@ var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 
 func _ready():
 	if get_tree().network_peer:
-		rset_config("position", MultiplayerAPI.RPC_MODE_REMOTE)
-		$Sprite.rset_config("scale:x", MultiplayerAPI.RPC_MODE_REMOTE)
+		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Sprite.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 	if DEBUG:
 		device_id = 0
 
@@ -171,7 +171,7 @@ func update_sprite_direction(movement):
 	elif movement.x < -0.2 or (joy_direction.x < -0.1 and movement.x < 0.2):
 		$Sprite.scale.x = -abs($Sprite.scale.x)
 	if get_tree().network_peer:
-		$Sprite.rset("scale:x", $Sprite.scale.x)
+		$Sprite.rset("scale", $Sprite.scale)
 
 
 func deplete_joust_charge(dist_travelled):
@@ -225,13 +225,13 @@ func _on_Turtle_Animator_animation_started(anim_name):
 		rpc("_set_turtle_animation", anim_name)
 		
 
-remote func _set_knight_animation(anim_name):
+puppet func _set_knight_animation(anim_name):
 	if $Knight_Animator.current_animation == anim_name:
 		return
 	$Knight_Animator.play(anim_name)
 
 
-remote func _set_turtle_animation(anim_name):
+puppet func _set_turtle_animation(anim_name):
 	if $Turtle_Animator.current_animation == anim_name:
 		return
 	$Turtle_Animator.play(anim_name)
