@@ -4,7 +4,8 @@ const player_scene = preload("res://player/player.tscn")
 
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 
 
 func add_player(number, net_id, data = {}):

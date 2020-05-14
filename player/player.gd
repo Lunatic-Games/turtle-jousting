@@ -10,6 +10,7 @@ export (float) var slowed_speed = 100
 
 const SPEED = 200
 const MOVE_AXI_THRESHOLD = 0.1
+const JOUST_AXI_THRESHOLD = 0.5
 const MOUSE_SENSITIVITY = 0.01
 const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
@@ -56,7 +57,7 @@ func _unhandled_input(event):
 	elif event is InputEventJoypadMotion:
 		var horiz = Input.get_joy_axis(device_id, JOY_AXIS_0)
 		var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
-		if abs(horiz) > MOVE_AXI_THRESHOLD or abs(vert) > MOVE_AXI_THRESHOLD:
+		if abs(horiz) > JOUST_AXI_THRESHOLD or abs(vert) > JOUST_AXI_THRESHOLD:
 			joy_direction = Vector2(horiz, vert).normalized()
 
 	if idle and event.is_action("joust") and event.pressed:
@@ -127,6 +128,8 @@ func get_input_movement():
 
 func charge_joust():
 	locked_direction = Vector2(0, 0)
+	joy_direction = last_direction
+	joust_indicator_charge = 0.0
 	update_joust_indicator()
 	$Knight_Animator.play("Charging_Joust")
 	$Turtle_Animator.play("Charging_Joust")
@@ -166,9 +169,9 @@ func update_joust_indicator():
 
 
 func update_sprite_direction(movement):
-	if movement.x > 0.2 or (joy_direction.x > 0.1 and movement.x > -0.2):
+	if (idle and movement.x > 1) or (locked and !locked_direction and joy_direction.x > 0.1):
 		$Sprite.scale.x = abs($Sprite.scale.x)
-	elif movement.x < -0.2 or (joy_direction.x < -0.1 and movement.x < 0.2):
+	elif (idle and movement.x < -1) or (locked and !locked_direction and joy_direction.x < -0.1):
 		$Sprite.scale.x = -abs($Sprite.scale.x)
 	if get_tree().network_peer:
 		$Sprite.rset("scale", $Sprite.scale)
@@ -195,6 +198,17 @@ func check_for_move_event(event, direction):
 					movement_actions[direction][1] = 0
 		else: 
 			movement_actions[direction][0] = event.is_pressed()
+			if event.pressed:
+				match direction:
+					"up":
+						joy_direction = Vector2(0, -1)
+					"right":
+						joy_direction = Vector2(1, 0)
+					"down":
+						joy_direction = Vector2(0, 1)
+					"left":
+						joy_direction = Vector2(-1, 0)
+					
 
 
 func load_data(data = {}):
@@ -225,13 +239,13 @@ func _on_Turtle_Animator_animation_started(anim_name):
 		rpc("_set_turtle_animation", anim_name)
 		
 
-puppet func _set_knight_animation(anim_name):
+remote func _set_knight_animation(anim_name):
 	if $Knight_Animator.current_animation == anim_name:
 		return
 	$Knight_Animator.play(anim_name)
 
 
-puppet func _set_turtle_animation(anim_name):
+remote func _set_turtle_animation(anim_name):
 	if $Turtle_Animator.current_animation == anim_name:
 		return
 	$Turtle_Animator.play(anim_name)
