@@ -26,5 +26,6 @@ func all_players_added():
 		player.global_position = spawn_node.global_position
 		if spawn_node.global_position.x > 1024 / 2:
 			player.invert_start_direction()
+		player.update_sprite_direction(Vector2(0, 0))
 		i += 1
 	

@@ -1,6 +1,5 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=46 format=2]
 
-[ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
 [ext_resource path="res://player/assets/knight_parts/knight_leg_BU.png" type="Texture" id=3]
 [ext_resource path="res://player/assets/lance_back.png" type="Texture" id=4]
@@ -24,8 +23,297 @@
 [ext_resource path="res://player/assets/knight_parts/knight_head_crying.png" type="Texture" id=22]
 [ext_resource path="res://player/assets/joust_indicator_bottom.png" type="Texture" id=23]
 [ext_resource path="res://player/assets/joust_indicator.png" type="Texture" id=24]
+[ext_resource path="res://player/lance_hitbox.gd" type="Script" id=25]
+[ext_resource path="res://player/turtle_hitbox.gd" type="Script" id=26]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="GDScript" id=20]
+script/source = "extends KinematicBody2D
+
+export (bool) var idle = true
+export (bool) var charging_joust = false
+export (bool) var joust_attacking = false
+export (bool) var parrying = false
+export (bool) var locked = false
+export (float) var locked_speed = 200
+export (bool) var slowed = false
+export (float) var slowed_speed = 100
+
+
+const SPEED = 200
+const MOVE_AXI_THRESHOLD = 0.1
+const JOUST_AXI_THRESHOLD = 0.5
+const MOUSE_SENSITIVITY = 0.01
+const JOUST_INDICATOR_RADIUS = 250
+const MAX_JOUST_CHARGE = 300
+const JOUST_CHARGE_RATE = 200
+const JOUST_CHARGE_DIST_MODIFIER = 1.5
+const DEBUG = false
+
+var device_id = null
+var locked_direction = Vector2(0, 0)
+var last_direction = Vector2(1, 0)
+var joy_direction = Vector2(1, 0)
+var joust_indicator_charge = 0.0
+var joust_charge = 0.0
+
+# Keeps track of movement input [button_active, joystick strength]
+var movement_actions = {\"up\" : [false, 0], \"right\" : [false, 0],
+	 \"down\" : [false, 0], \"left\" : [false, 0]}
+
+func _ready():
+	if get_tree().network_peer:
+		rset_config(\"position\", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Sprite.rset_config(\"scale\", MultiplayerAPI.RPC_MODE_PUPPET)
+	if DEBUG:
+		device_id = 0
+	make_collisions_unique()
+
+
+func _unhandled_input(event):
+	if get_tree().network_peer and !is_network_master():
+		return
+
+	if !DEBUG:
+		var device = event.device
+		if event is InputEventKey or event is InputEventMouse:
+			device = \"keyboard\"
+	
+		if typeof(device) != typeof(device_id):
+			return			
+		if device != device_id:
+			return
+	
+	if event is InputEventMouseMotion:
+		joy_direction += event.relative * MOUSE_SENSITIVITY
+		joy_direction = joy_direction.clamped(1)
+	elif event is InputEventJoypadMotion:
+		var horiz = Input.get_joy_axis(device_id, JOY_AXIS_0)
+		var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
+		if abs(horiz) > JOUST_AXI_THRESHOLD or abs(vert) > JOUST_AXI_THRESHOLD:
+			joy_direction = Vector2(horiz, vert).normalized()
+
+	if idle and event.is_action(\"joust\") and event.pressed:
+		charge_joust()
+	elif charging_joust and event.is_action(\"joust\") and !event.pressed:
+		joust_attack()
+	if idle and event.is_action(\"dodge\") and event.pressed:
+		dodge()
+	elif idle and event.is_action(\"parry\") and event.pressed:
+		parry()
+	check_for_move_event(event, \"up\")
+	check_for_move_event(event, \"right\")
+	check_for_move_event(event, \"down\")
+	check_for_move_event(event, \"left\")
+
+
+func _physics_process(delta):
+	if get_tree().network_peer and !is_network_master():
+		return
+	if charging_joust:
+		joust_indicator_charge += JOUST_CHARGE_RATE * delta
+		joust_indicator_charge = min(joust_indicator_charge, MAX_JOUST_CHARGE)
+		update_joust_indicator()
+
+	var movement
+	if locked:
+		movement = get_locked_movement()
+	else:
+		movement = get_input_movement()
+	var _vel = move_and_slide(movement)
+	update_sprite_direction(movement)
+	
+	if joust_attacking:
+		deplete_joust_charge(movement.length() * delta)
+	
+	if get_tree().network_peer:
+		rset_unreliable(\"position\", position)
+
+
+func get_locked_movement():
+	return locked_direction.normalized() * locked_speed
+
+
+func get_input_movement():
+	var movement = Vector2()
+	movement.y -= movement_actions[\"up\"][1]
+	movement.x += movement_actions[\"right\"][1]
+	movement.y += movement_actions[\"down\"][1]
+	movement.x -= movement_actions[\"left\"][1]
+	if movement_actions[\"up\"][0]:
+		movement.y -= 1
+	if movement_actions[\"right\"][0]:
+		movement.x += 1
+	if movement_actions[\"down\"][0]:
+		movement.y += 1
+	if movement_actions[\"left\"][0]:
+		movement.x -= 1
+	if movement.length() > 0:
+		last_direction = movement.normalized()
+	if movement.length() > 1:
+		movement = movement.normalized()
+	if slowed:
+		movement *= slowed_speed
+	else:
+		movement *= SPEED
+	return movement
+
+
+func charge_joust():
+	locked_direction = Vector2(0, 0)
+	joy_direction = last_direction
+	joust_indicator_charge = 0.0
+	update_joust_indicator()
+	$Knight_Animator.play(\"Charging_Joust\")
+	$Turtle_Animator.play(\"Charging_Joust\")
+
+
+func joust_attack():
+	locked_direction = joy_direction.normalized()
+	joust_charge = joust_indicator_charge * JOUST_CHARGE_DIST_MODIFIER
+	$Knight_Animator.play(\"Joust\")
+	$Turtle_Animator.play(\"Joust\")
+
+
+func dodge():
+	locked_direction = last_direction
+	$Knight_Animator.play(\"Dodge\")
+	$Knight_Animator.queue(\"Idle_Knight\")
+	$Turtle_Animator.play(\"Dodge\")
+	$Turtle_Animator.queue(\"Idle\")
+
+
+func parry():
+	locked_direction = Vector2(0, 0)
+	$Knight_Animator.play(\"Parry\")
+	$Knight_Animator.queue(\"Idle_Knight\")
+	$Turtle_Animator.play(\"Parry\")
+	$Turtle_Animator.queue(\"Idle\")
+
+
+func update_joust_indicator():
+	var direct = joy_direction.normalized()
+	var angle = direct.angle()
+	$JoustIndicatorBottom.position = direct * JOUST_INDICATOR_RADIUS
+	$JoustIndicatorBottom.rotation = angle + PI / 2
+	var tip_radius = JOUST_INDICATOR_RADIUS + joust_indicator_charge
+	$JoustIndicator.position = direct * tip_radius
+	$JoustIndicator.rotation = angle + PI / 2
+
+
+func update_sprite_direction(movement):
+	if (idle and movement.x > 1) or (locked and !locked_direction and joy_direction.x > 0.1):
+		$Sprite.scale.x = abs($Sprite.scale.x)
+		$LanceHitbox.scale.x = abs($LanceHitbox.scale.x)
+		$KnightHitbox.scale.x = abs($KnightHitbox.scale.x)
+		$TurtleHitbox.scale.x = abs($TurtleHitbox.scale.x)
+	elif (idle and movement.x < -1) or (locked and !locked_direction and joy_direction.x < -0.1):
+		$Sprite.scale.x = -abs($Sprite.scale.x)
+		$LanceHitbox.scale.x = -abs($LanceHitbox.scale.x)
+		$KnightHitbox.scale.x = -abs($KnightHitbox.scale.x)
+		$TurtleHitbox.scale.x = -abs($TurtleHitbox.scale.x)
+	if get_tree().network_peer:
+		$Sprite.rset(\"scale\", $Sprite.scale)
+
+
+func deplete_joust_charge(dist_travelled):
+	joust_charge -= dist_travelled
+	if joust_charge <= 0.0:
+		$Knight_Animator.play(\"Idle_Knight\")
+		$Turtle_Animator.play(\"Idle\")
+
+func check_for_move_event(event, direction):
+	if event.is_action(\"move_\" + direction):
+		if event is InputEventJoypadMotion:
+			if direction == \"right\" or direction == \"down\":
+				if event.axis_value > MOVE_AXI_THRESHOLD:
+					movement_actions[direction][1] = event.axis_value
+				else:
+					movement_actions[direction][1] = 0
+			else:
+				if event.axis_value < -MOVE_AXI_THRESHOLD:
+					movement_actions[direction][1] = abs(event.axis_value)
+				else:
+					movement_actions[direction][1] = 0
+		else: 
+			movement_actions[direction][0] = event.is_pressed()
+			if event.pressed:
+				match direction:
+					\"up\":
+						joy_direction = Vector2(0, -1)
+					\"right\":
+						joy_direction = Vector2(1, 0)
+					\"down\":
+						joy_direction = Vector2(0, 1)
+					\"left\":
+						joy_direction = Vector2(-1, 0)
+					
+
+
+func load_data(data = {}):
+	device_id = data.get(\"device_id\", null)
+
+
+func invert_start_direction():
+	$Sprite.scale.x *= -1
+	$LanceHitbox.scale.x *= -1
+	$KnightHitbox.scale.x *= -1
+	$TurtleHitbox.scale.x *= -1
+	update_sprite_direction(Vector2(0, 0))
+	last_direction.x *= -1
+	joy_direction.x *= -1
+
+
+func set_indicator_visibility(visibility):
+	if get_tree().network_peer and !is_network_master():
+		return
+	$JoustIndicator.visible = visibility
+	$JoustIndicatorBottom.visible = visibility
+
+
+func _on_Knight_Animator_animation_started(anim_name):
+	if get_tree().network_peer:
+		rpc(\"_set_knight_animation\", anim_name)
+
+
+func _on_Turtle_Animator_animation_started(anim_name):
+	if get_tree().network_peer:
+		rpc(\"_set_turtle_animation\", anim_name)
+		
+
+remote func _set_knight_animation(anim_name):
+	if $Knight_Animator.current_animation == anim_name:
+		return
+	$Knight_Animator.play(anim_name)
+
+
+remote func _set_turtle_animation(anim_name):
+	if $Turtle_Animator.current_animation == anim_name:
+		return
+	$Turtle_Animator.play(anim_name)
+
+
+func _on_LanceHitbox_hit_something():
+	$Knight_Animator.play(\"Idle_Knight\")
+	$Turtle_Animator.play(\"Idle\")
+
+
+func _on_hit_fellow_turtle():
+	if joust_attacking:
+		$Knight_Animator.play(\"Idle_Knight\")
+		$Turtle_Animator.play(\"Idle\")
+		
+
+func make_collisions_unique():
+	$CollisionShape2D.shape= $CollisionShape2D.shape.duplicate()
+	var lance_col = $LanceHitbox/CollisionShape2D
+	lance_col.shape = lance_col.shape.duplicate()
+	var knight_col = $KnightHitbox/CollisionShape2D
+	knight_col.shape = knight_col.shape.duplicate()
+	var turtle_col = $TurtleHitbox/CollisionShape2D
+	turtle_col.shape = turtle_col.shape.duplicate()
+"
+
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 64.8179, 34.5828 )
 
 [sub_resource type="Animation" id=2]
@@ -512,6 +800,30 @@ tracks/39/keys = {
 "args": [ true ],
 "method": "set_indicator_visibility"
 } ]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("KnightHitbox/CollisionShape2D:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.038331, -71.3297 ), Vector2( -18.7267, -71.3297 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("KnightHitbox/CollisionShape2D:shape:extents")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 29.3152, 68.2191 ), Vector2( 47.6532, 68.2191 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -2065,7 +2377,7 @@ tracks/41/keys = {
 } ]
 }
 tracks/42/type = "value"
-tracks/42/path = NodePath("JoustHitbox/CollisionShape2D:disabled")
+tracks/42/path = NodePath("LanceHitbox/CollisionShape2D:disabled")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/imported = false
@@ -2099,6 +2411,42 @@ tracks/44/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/45/type = "value"
+tracks/45/path = NodePath(".:parrying")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/46/type = "value"
+tracks/46/path = NodePath("KnightHitbox/CollisionShape2D:position")
+tracks/46/interp = 1
+tracks/46/loop_wrap = true
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.038331, -71.3297 ) ]
+}
+tracks/47/type = "value"
+tracks/47/path = NodePath("KnightHitbox/CollisionShape2D:shape:extents")
+tracks/47/interp = 1
+tracks/47/loop_wrap = true
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 29.3152, 68.2191 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -2573,7 +2921,7 @@ tracks/38/keys = {
 } ]
 }
 tracks/39/type = "value"
-tracks/39/path = NodePath("JoustHitbox/CollisionShape2D:disabled")
+tracks/39/path = NodePath("LanceHitbox/CollisionShape2D:disabled")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/imported = false
@@ -2585,7 +2933,7 @@ tracks/39/keys = {
 "values": [ false ]
 }
 tracks/40/type = "value"
-tracks/40/path = NodePath("JoustHitbox/CollisionShape2D:position")
+tracks/40/path = NodePath("LanceHitbox/CollisionShape2D:position")
 tracks/40/interp = 1
 tracks/40/loop_wrap = true
 tracks/40/imported = false
@@ -2595,6 +2943,30 @@ tracks/40/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 35.4548, -69.9294 ), Vector2( 67.1526, -67.6653 ), Vector2( 95.8314, -52.5711 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("KnightHitbox/CollisionShape2D:shape:extents")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 47.6532, 68.2191 ), Vector2( 39.3914, 68.2191 ) ]
+}
+tracks/42/type = "value"
+tracks/42/path = NodePath("KnightHitbox/CollisionShape2D:position")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -18.7267, -71.3297 ), Vector2( 26.1476, -67.0266 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -4362,6 +4734,42 @@ tracks/37/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/38/type = "value"
+tracks/38/path = NodePath(".:parrying")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0.3, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("KnightHitbox/CollisionShape2D:shape:extents")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 29.3152, 68.2191 ) ]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("KnightHitbox/CollisionShape2D:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.038331, -71.3297 ) ]
+}
 
 [sub_resource type="Animation" id=11]
 resource_name = "Charging_Joust"
@@ -4458,21 +4866,24 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1 ), Vector2( 0.2, 1 ), Vector2( 1e-05, 1 ), Vector2( -0.2, 1 ), Vector2( -1.5, 1 ), Vector2( -0.2, 1 ), Vector2( 1e-05, 1 ), Vector2( 0.2, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="ConvexPolygonShape2D" id=17]
+[sub_resource type="ConvexPolygonShape2D" id=26]
 points = PoolVector2Array( 0, 0, 150, 16, 0, 40 )
 
-[sub_resource type="RectangleShape2D" id=18]
-extents = Vector2( 60.2236, 66.397 )
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 29.3152, 68.2191 )
+
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 66.0316, 35.3948 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
 position = Vector2( 507.974, 277.471 )
 scale = Vector2( 0.5, 0.5 )
-script = ExtResource( 1 )
+script = SubResource( 20 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 25 )
 
 [node name="Sprite" type="Node2D" parent="."]
 position = Vector2( -1.18555, -46.4727 )
@@ -4480,6 +4891,7 @@ scale = Vector2( 0.1, 0.1 )
 
 [node name="Turtle" type="Sprite" parent="Sprite"]
 position = Vector2( -71.6697, -66.8503 )
+scale = Vector2( 1.5, 1 )
 z_index = 1
 texture = ExtResource( 2 )
 
@@ -4523,15 +4935,15 @@ texture = ExtResource( 11 )
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Sprite/Knight/Main_Body/Head/Tears"]
-position = Vector2( 1074.27, 36.056 )
-rotation = 1.16937
-scale = Vector2( 1.407, 0.1 )
+position = Vector2( 9.76563, -598.45 )
+rotation = 1.07338
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 12 )
 
 [node name="Left_Tear" type="Sprite" parent="Sprite/Knight/Main_Body/Head/Tears"]
-position = Vector2( -495.914, -262.547 )
-rotation = -1.5132
-scale = Vector2( 1e-05, 1e-05 )
+position = Vector2( -53.5557, -536.047 )
+rotation = -0.453786
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 13 )
 
 [node name="Front_Arm" type="Node2D" parent="Sprite/Knight"]
@@ -4593,17 +5005,34 @@ rotation = 1.55592
 scale = Vector2( 0.075, 0.1 )
 texture = ExtResource( 24 )
 
-[node name="JoustHitbox" type="Area2D" parent="."]
+[node name="LanceHitbox" type="Area2D" parent="." groups=[
+"weapon",
+]]
+script = ExtResource( 25 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="JoustHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LanceHitbox"]
 position = Vector2( 35.4548, -69.9294 )
-shape = SubResource( 17 )
+shape = SubResource( 26 )
 disabled = true
 
-[node name="KnightHitbox" type="Area2D" parent="."]
+[node name="KnightHitbox" type="Area2D" parent="." groups=[
+"knight",
+]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KnightHitbox"]
-position = Vector2( 5.27057, -82.7454 )
-shape = SubResource( 18 )
+position = Vector2( 0.038331, -71.3297 )
+shape = SubResource( 27 )
+
+[node name="TurtleHitbox" type="Area2D" parent="." groups=[
+"turtle",
+]]
+script = ExtResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TurtleHitbox"]
+shape = SubResource( 28 )
 [connection signal="animation_started" from="Knight_Animator" to="." method="_on_Knight_Animator_animation_started"]
 [connection signal="animation_started" from="Turtle_Animator" to="." method="_on_Turtle_Animator_animation_started"]
+[connection signal="area_entered" from="LanceHitbox" to="LanceHitbox" method="_on_area_entered"]
+[connection signal="hit_something" from="LanceHitbox" to="." method="_on_LanceHitbox_hit_something"]
+[connection signal="area_entered" from="TurtleHitbox" to="TurtleHitbox" method="_on_area_entered"]
+[connection signal="hit_fellow_turtle" from="TurtleHitbox" to="." method="_on_hit_fellow_turtle"]

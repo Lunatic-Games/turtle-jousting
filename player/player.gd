@@ -3,10 +3,12 @@ extends KinematicBody2D
 export (bool) var idle = true
 export (bool) var charging_joust = false
 export (bool) var joust_attacking = false
+export (bool) var parrying = false
 export (bool) var locked = false
 export (float) var locked_speed = 200
 export (bool) var slowed = false
 export (float) var slowed_speed = 100
+
 
 const SPEED = 200
 const MOVE_AXI_THRESHOLD = 0.1
@@ -16,7 +18,7 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = true
+const DEBUG = false
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -138,7 +140,6 @@ func charge_joust():
 func joust_attack():
 	locked_direction = joy_direction.normalized()
 	joust_charge = joust_indicator_charge * JOUST_CHARGE_DIST_MODIFIER
-	$JoustHitbox.scale.x = sign($Sprite.scale.x) * abs($JoustHitbox.scale.x)
 	$Knight_Animator.play("Joust")
 	$Turtle_Animator.play("Joust")
 
@@ -172,8 +173,14 @@ func update_joust_indicator():
 func update_sprite_direction(movement):
 	if (idle and movement.x > 1) or (locked and !locked_direction and joy_direction.x > 0.1):
 		$Sprite.scale.x = abs($Sprite.scale.x)
+		$LanceHitbox.scale.x = abs($LanceHitbox.scale.x)
+		$KnightHitbox.scale.x = abs($KnightHitbox.scale.x)
+		$TurtleHitbox.scale.x = abs($TurtleHitbox.scale.x)
 	elif (idle and movement.x < -1) or (locked and !locked_direction and joy_direction.x < -0.1):
 		$Sprite.scale.x = -abs($Sprite.scale.x)
+		$LanceHitbox.scale.x = -abs($LanceHitbox.scale.x)
+		$KnightHitbox.scale.x = -abs($KnightHitbox.scale.x)
+		$TurtleHitbox.scale.x = -abs($TurtleHitbox.scale.x)
 	if get_tree().network_peer:
 		$Sprite.rset("scale", $Sprite.scale)
 
@@ -218,6 +225,9 @@ func load_data(data = {}):
 
 func invert_start_direction():
 	$Sprite.scale.x *= -1
+	$LanceHitbox.scale.x *= -1
+	$KnightHitbox.scale.x *= -1
+	$TurtleHitbox.scale.x *= -1
 	update_sprite_direction(Vector2(0, 0))
 	last_direction.x *= -1
 	joy_direction.x *= -1
@@ -251,3 +261,13 @@ remote func _set_turtle_animation(anim_name):
 		return
 	$Turtle_Animator.play(anim_name)
 
+
+func _on_LanceHitbox_hit_something():
+	$Knight_Animator.play("Idle_Knight")
+	$Turtle_Animator.play("Idle")
+
+
+func _on_hit_fellow_turtle():
+	if joust_attacking:
+		$Knight_Animator.play("Idle_Knight")
+		$Turtle_Animator.play("Idle")
