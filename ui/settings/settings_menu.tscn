@@ -1,14 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/settings/settings_menu.gd" type="Script" id=2]
+[ext_resource path="res://settings_slider.tscn" type="PackedScene" id=3]
 
 [node name="SettingsMenu" type="Popup"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 0.5
@@ -21,52 +20,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MusicContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 177.0
+[node name="MusicContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 0.0
+margin_right = 196.0
 margin_bottom = 26.0
 
-[node name="Label" parent="VBoxContainer/MusicContainer" instance=ExtResource( 1 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 73.0
-margin_bottom = 26.0
-text = "Music"
+[node name="SFXContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 196.0
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/MusicContainer"]
-margin_left = 77.0
-margin_right = 177.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 100, 0 )
-
-[node name="SFXContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 30.0
-margin_right = 177.0
-margin_bottom = 56.0
-
-[node name="Label" parent="VBoxContainer/SFXContainer" instance=ExtResource( 1 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 0.0
+[node name="Label" parent="VBoxContainer/SFXContainer" index="0"]
 margin_right = 50.0
-margin_bottom = 26.0
 text = "SFX"
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/SFXContainer"]
+[node name="Slider" parent="VBoxContainer/SFXContainer" index="1"]
 margin_left = 54.0
 margin_right = 154.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 100, 0 )
 
 [node name="FullscreenContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 60.0
-margin_right = 177.0
+margin_right = 196.0
 margin_bottom = 86.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -87,10 +59,13 @@ text = "Fullscreen"
 margin_left = 131.0
 margin_right = 155.0
 margin_bottom = 26.0
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
 
 [node name="VibrationContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 90.0
-margin_right = 177.0
+margin_right = 196.0
 margin_bottom = 116.0
 
 [node name="Button" parent="VBoxContainer/VibrationContainer" instance=ExtResource( 1 )]
@@ -108,6 +83,9 @@ text = "Vibration"
 margin_left = 120.0
 margin_right = 144.0
 margin_bottom = 26.0
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
 
 [node name="BackButton" parent="VBoxContainer" instance=ExtResource( 1 )]
 anchor_left = 0.0
@@ -119,3 +97,10 @@ margin_top = 120.0
 margin_right = 62.0
 margin_bottom = 146.0
 text = "Back"
+[connection signal="pressed" from="VBoxContainer/FullscreenContainer/Button" to="." method="_on_FullscreenButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/VibrationContainer/Button" to="." method="_on_VibrationButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+
+[editable path="VBoxContainer/MusicContainer"]
+
+[editable path="VBoxContainer/SFXContainer"]

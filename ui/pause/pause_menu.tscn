@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/pause/pause_menu.gd" type="Script" id=2]
+
+[node name="PausedMenu" type="Popup"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+popup_exclusive = true
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.176471, 0.176471, 0.176471, 0.584314 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 18.0
+margin_top = -58.0
+margin_right = 273.0
+margin_bottom = 58.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContinueButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 112.0
+margin_bottom = 26.0
+text = "Continue"
+
+[node name="SettingsButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 30.0
+margin_right = 105.0
+margin_bottom = 56.0
+text = "Settings"
+
+[node name="ReturnToLobbyButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 60.0
+margin_right = 190.0
+margin_bottom = 86.0
+text = "Return to lobby"
+
+[node name="ReturnToMainMenuButton" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 90.0
+margin_right = 255.0
+margin_bottom = 116.0
+text = "Return to main menu"
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]

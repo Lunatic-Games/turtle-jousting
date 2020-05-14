@@ -43,7 +43,7 @@ func _ready():
 		device_id = 0
 
 
-func _unhandled_input(event):
+func _input(event):
 	if get_tree().network_peer and !is_network_master():
 		return
 
@@ -287,3 +287,14 @@ func make_collisions_unique():
 	knight_col.shape = knight_col.shape.duplicate()
 	var turtle_col = $TurtleHitbox/CollisionShape2D
 	turtle_col.shape = turtle_col.shape.duplicate()
+	
+	
+func set_process_input(process):
+	if process:
+		.set_process_input(true)
+	else:
+		.set_process_input(false)
+		movement_actions["up"] = [false, 0]
+		movement_actions["right"] = [false, 0]
+		movement_actions["down"] = [false, 0]
+		movement_actions["left"] = [false, 0]
