@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
@@ -1045,6 +1045,30 @@ tracks/43/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/44/type = "value"
+tracks/44/path = NodePath("KnightHitbox/CollisionShape2D:disabled")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/keys = {
+"times": PoolRealArray( 0.3, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/45/type = "value"
+tracks/45/path = NodePath("CollisionShape2D:disabled")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/keys = {
+"times": PoolRealArray( 0.3, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=4]
 length = 0.8
@@ -2040,6 +2064,42 @@ tracks/41/keys = {
 "method": "set_indicator_visibility"
 } ]
 }
+tracks/42/type = "value"
+tracks/42/path = NodePath("JoustHitbox/CollisionShape2D:disabled")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/43/type = "value"
+tracks/43/path = NodePath("KnightHitbox/CollisionShape2D:disabled")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/44/type = "value"
+tracks/44/path = NodePath("CollisionShape2D:disabled")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=6]
 tracks/0/type = "value"
@@ -2512,16 +2572,29 @@ tracks/38/keys = {
 "method": "set_indicator_visibility"
 } ]
 }
-tracks/39/type = "method"
-tracks/39/path = NodePath(".")
+tracks/39/type = "value"
+tracks/39/path = NodePath("JoustHitbox/CollisionShape2D:disabled")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/imported = false
 tracks/39/enabled = true
 tracks/39/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("JoustHitbox/CollisionShape2D:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 35.4548, -69.9294 ), Vector2( 67.1526, -67.6653 ), Vector2( 95.8314, -52.5711 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -4385,15 +4458,18 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1 ), Vector2( 0.2, 1 ), Vector2( 1e-05, 1 ), Vector2( -0.2, 1 ), Vector2( -1.5, 1 ), Vector2( -0.2, 1 ), Vector2( 1e-05, 1 ), Vector2( 0.2, 1 ), Vector2( 1, 1 ) ]
 }
 
+[sub_resource type="ConvexPolygonShape2D" id=17]
+points = PoolVector2Array( 0, 0, 150, 16, 0, 40 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 60.2236, 66.397 )
+
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
 position = Vector2( 507.974, 277.471 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 1 )
-idle = false
-joust_attacking = true
-locked = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -4404,7 +4480,6 @@ scale = Vector2( 0.1, 0.1 )
 
 [node name="Turtle" type="Sprite" parent="Sprite"]
 position = Vector2( -71.6697, -66.8503 )
-scale = Vector2( 0.85, 1 )
 z_index = 1
 texture = ExtResource( 2 )
 
@@ -4416,46 +4491,32 @@ texture = ExtResource( 3 )
 [node name="Back_Arm" type="Node2D" parent="Sprite/Knight"]
 
 [node name="Lance_Back" type="Sprite" parent="Sprite/Knight/Back_Arm"]
-position = Vector2( -1.98047, 50.7864 )
-rotation = -0.0872665
+position = Vector2( 484.77, 117.035 )
 texture = ExtResource( 4 )
 
 [node name="BU-Arm" type="Sprite" parent="Sprite/Knight/Back_Arm"]
-position = Vector2( -489.18, -183.592 )
-rotation = 1.0472
 texture = ExtResource( 5 )
 
 [node name="BL-Arm" type="Sprite" parent="Sprite/Knight/Back_Arm"]
-position = Vector2( -586.078, 47.6597 )
-rotation = -0.349066
 texture = ExtResource( 6 )
 
 [node name="BH-Arm" type="Sprite" parent="Sprite/Knight/Back_Arm"]
-position = Vector2( -553.41, 93.6936 )
-rotation = -0.436332
 texture = ExtResource( 7 )
 
 [node name="Lance_Front" type="Sprite" parent="Sprite/Knight/Back_Arm"]
-position = Vector2( 115.855, -1.80591 )
-rotation = -0.0872665
+position = Vector2( 624.182, 101.871 )
 texture = ExtResource( 8 )
 
 [node name="Main_Body" type="Node2D" parent="Sprite/Knight"]
 
 [node name="Neck" type="Sprite" parent="Sprite/Knight/Main_Body"]
-position = Vector2( -66.1587, -14.7021 )
-rotation = -0.349066
 texture = ExtResource( 9 )
 
 [node name="Chest" type="Sprite" parent="Sprite/Knight/Main_Body"]
-position = Vector2( -58.8071, -22.0532 )
-rotation = -0.349066
 z_index = 2
 texture = ExtResource( 20 )
 
 [node name="Head" type="Sprite" parent="Sprite/Knight/Main_Body"]
-position = Vector2( -117.615, 14.7017 )
-rotation = -0.349066
 texture = ExtResource( 11 )
 
 [node name="Tears" type="Node2D" parent="Sprite/Knight/Main_Body/Head"]
@@ -4477,17 +4538,12 @@ texture = ExtResource( 13 )
 z_index = 2
 
 [node name="FL-Arm" type="Sprite" parent="Sprite/Knight/Front_Arm"]
-position = Vector2( -32.4302, 4.63354 )
 texture = ExtResource( 14 )
 
 [node name="FU-Arm" type="Sprite" parent="Sprite/Knight/Front_Arm"]
-position = Vector2( -43.8545, -38.1182 )
-rotation = -0.326377
 texture = ExtResource( 15 )
 
 [node name="FH-Arm" type="Sprite" parent="Sprite/Knight/Front_Arm"]
-position = Vector2( -78.7598, 115.823 )
-rotation = -0.610865
 texture = ExtResource( 16 )
 
 [node name="Front_Leg" type="Node2D" parent="Sprite/Knight"]
@@ -4536,5 +4592,18 @@ position = Vector2( 372.587, 1.58936 )
 rotation = 1.55592
 scale = Vector2( 0.075, 0.1 )
 texture = ExtResource( 24 )
+
+[node name="JoustHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JoustHitbox"]
+position = Vector2( 35.4548, -69.9294 )
+shape = SubResource( 17 )
+disabled = true
+
+[node name="KnightHitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnightHitbox"]
+position = Vector2( 5.27057, -82.7454 )
+shape = SubResource( 18 )
 [connection signal="animation_started" from="Knight_Animator" to="." method="_on_Knight_Animator_animation_started"]
 [connection signal="animation_started" from="Turtle_Animator" to="." method="_on_Turtle_Animator_animation_started"]

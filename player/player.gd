@@ -16,7 +16,7 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = false
+const DEBUG = true
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -87,7 +87,7 @@ func _physics_process(delta):
 		movement = get_locked_movement()
 	else:
 		movement = get_input_movement()
-	var vel = move_and_slide(movement)
+	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
 	if joust_attacking:
@@ -138,6 +138,7 @@ func charge_joust():
 func joust_attack():
 	locked_direction = joy_direction.normalized()
 	joust_charge = joust_indicator_charge * JOUST_CHARGE_DIST_MODIFIER
+	$JoustHitbox.scale.x = sign($Sprite.scale.x) * abs($JoustHitbox.scale.x)
 	$Knight_Animator.play("Joust")
 	$Turtle_Animator.play("Joust")
 
