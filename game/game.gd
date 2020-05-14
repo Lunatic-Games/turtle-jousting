@@ -13,7 +13,7 @@ func add_player(number, net_id, data = {}):
 	new_player.name = "Player" + str(number)
 	new_player.load_data(data)
 	new_player.set_network_master(net_id)
-	add_child(new_player)
+	$YSort.add_child(new_player)
 
 
 func all_players_added():

@@ -18,7 +18,7 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = true
+const DEBUG = false
 
 var device_id = null
 var locked_direction = Vector2(0, 0)

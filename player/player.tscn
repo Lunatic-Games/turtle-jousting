@@ -4607,12 +4607,12 @@ scale = Vector2( 0.1, 0.1 )
 [node name="Turtle" type="Sprite" parent="Sprite"]
 position = Vector2( -71.6697, -66.8503 )
 scale = Vector2( 1.5, 1 )
-z_index = 1
 texture = ExtResource( 2 )
 
 [node name="Knight" type="Node2D" parent="Sprite"]
 
 [node name="BU-Leg" type="Sprite" parent="Sprite/Knight"]
+z_index = -1
 texture = ExtResource( 3 )
 
 [node name="Back_Arm" type="Node2D" parent="Sprite/Knight"]
@@ -4640,7 +4640,6 @@ texture = ExtResource( 8 )
 texture = ExtResource( 9 )
 
 [node name="Chest" type="Sprite" parent="Sprite/Knight/Main_Body"]
-z_index = 2
 texture = ExtResource( 20 )
 
 [node name="Head" type="Sprite" parent="Sprite/Knight/Main_Body"]
@@ -4662,7 +4661,6 @@ scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 13 )
 
 [node name="Front_Arm" type="Node2D" parent="Sprite/Knight"]
-z_index = 2
 
 [node name="FL-Arm" type="Sprite" parent="Sprite/Knight/Front_Arm"]
 texture = ExtResource( 14 )
@@ -4674,7 +4672,6 @@ texture = ExtResource( 15 )
 texture = ExtResource( 16 )
 
 [node name="Front_Leg" type="Node2D" parent="Sprite/Knight"]
-z_index = 2
 
 [node name="FU-Leg" type="Sprite" parent="Sprite/Knight/Front_Leg"]
 texture = ExtResource( 17 )
