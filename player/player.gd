@@ -18,7 +18,7 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = false
+const DEBUG = true
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -32,9 +32,13 @@ var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 	 "down" : [false, 0], "left" : [false, 0]}
 
 func _ready():
+	make_collisions_unique()
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
 		$Sprite.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$LanceHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$KnightHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$TurtleHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 	if DEBUG:
 		device_id = 0
 
@@ -43,15 +47,14 @@ func _unhandled_input(event):
 	if get_tree().network_peer and !is_network_master():
 		return
 
-	if !DEBUG:
-		var device = event.device
-		if event is InputEventKey or event is InputEventMouse:
-			device = "keyboard"
-	
-		if typeof(device) != typeof(device_id):
-			return			
-		if device != device_id:
-			return
+	var device = event.device
+	if event is InputEventKey or event is InputEventMouse:
+		device = "keyboard"
+
+	if typeof(device) != typeof(device_id):
+		return			
+	if device != device_id:
+		return
 	
 	if event is InputEventMouseMotion:
 		joy_direction += event.relative * MOUSE_SENSITIVITY
@@ -183,6 +186,9 @@ func update_sprite_direction(movement):
 		$TurtleHitbox.scale.x = -abs($TurtleHitbox.scale.x)
 	if get_tree().network_peer:
 		$Sprite.rset("scale", $Sprite.scale)
+		$LanceHitbox.rset("scale", $LanceHitbox.scale)
+		$KnightHitbox.rset("scale", $KnightHitbox.scale)
+		$TurtleHitbox.rset("scale", $TurtleHitbox.scale)
 
 
 func deplete_joust_charge(dist_travelled):
@@ -271,3 +277,13 @@ func _on_hit_fellow_turtle():
 	if joust_attacking:
 		$Knight_Animator.play("Idle_Knight")
 		$Turtle_Animator.play("Idle")
+		
+
+func make_collisions_unique():
+	$CollisionShape2D.shape= $CollisionShape2D.shape.duplicate()
+	var lance_col = $LanceHitbox/CollisionShape2D
+	lance_col.shape = lance_col.shape.duplicate()
+	var knight_col = $KnightHitbox/CollisionShape2D
+	knight_col.shape = knight_col.shape.duplicate()
+	var turtle_col = $TurtleHitbox/CollisionShape2D
+	turtle_col.shape = turtle_col.shape.duplicate()
