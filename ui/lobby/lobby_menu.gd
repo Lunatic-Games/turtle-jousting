@@ -86,6 +86,7 @@ func _input(event):
 	elif event.is_action("ui_cancel") and event.pressed:
 		_on_BackButton_pressed()
 
+
 # Start server creation on new thread
 func _on_OpenMultiplayerButton_pressed():
 	if server_creation_thread and server_creation_thread.is_active():
@@ -360,6 +361,7 @@ func _call_start():
 
 
 remotesync func start():
+	get_tree().paused = true
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
 
@@ -375,6 +377,15 @@ remotesync func start():
 	visible = false
 	set_process(false)
 	set_process_input(false)
+
+
+func return_to():
+	if get_tree().network_peer and is_network_master():
+		get_tree().refuse_new_network_connections = false
+	$VisorTransition.lift_up()
+	visible = true
+	set_process(true)
+	set_process_input(true)
 
 
 func _on_BackButton_pressed():
@@ -393,6 +404,10 @@ func _exit_tree():
 		server_creation_thread.wait_to_finish()
 	if server:
 		server.close()
+	if client:
+		client.close()
+	if get_tree().network_peer:
+		get_tree().network_peer = null
 
 
 func _on_ConnectionTimer_timeout():
@@ -401,17 +416,20 @@ func _on_ConnectionTimer_timeout():
 	$NetworkMessagePopup.connection_failed()
 
 
+func _on_VisorTransition_lifted_up():
+	if button_container.get_node("OpenMultiplayerButton").visible:
+		button_container.get_node("OpenMultiplayerButton").grab_focus()
+	else:
+		button_container.get_node("CloseMultiplayerButton").grab_focus()
+
+
+func _on_VisorTransition_brought_down():
+	call(visor_brought_down_method)
+
+
 func _on_Popup_about_to_show():
 	set_process_input(false)
 
 
 func _on_Popup_hide():
 	set_process_input(true)
-
-
-func _on_VisorTransition_lifted_up():
-	button_container.get_node("OpenMultiplayerButton").grab_focus()
-
-
-func _on_VisorTransition_brought_down():
-	call(visor_brought_down_method)

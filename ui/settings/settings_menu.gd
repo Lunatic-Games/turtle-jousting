@@ -9,7 +9,7 @@ func _ready():
 
 
 func _input(event):
-	if event.is_action("ui_cancel") and event.pressed:
+	if visible and event.is_action("ui_cancel") and event.pressed:
 		_on_BackButton_pressed()
 
 func _on_BackButton_pressed():
