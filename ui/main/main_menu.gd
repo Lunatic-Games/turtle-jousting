@@ -41,7 +41,6 @@ func _on_ExitButton_pressed():
 
 
 func _on_SettingsMenu_go_back():
-	print("Returning from settings")
 	$SettingsMenu.hide()
 	$Title.visible = true
 	$ButtonContainer.visible = true

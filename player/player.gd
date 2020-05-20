@@ -1,8 +1,7 @@
 extends KinematicBody2D
 
-export (bool) var idle = true
-export (bool) var charging_joust = false
-export (bool) var joust_attacking = false
+
+export (bool) var charging_up_joust = false
 export (bool) var parrying = false
 export (bool) var locked = false
 export (float) var locked_speed = 200
@@ -18,7 +17,9 @@ const JOUST_INDICATOR_RADIUS = 250
 const MAX_JOUST_CHARGE = 300
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = false
+const DEBUG = true
+
+onready var dropped_knight_scene = preload("res://player/dropped_knight.tscn")
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -31,8 +32,10 @@ var joust_charge = 0.0
 var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 	 "down" : [false, 0], "left" : [false, 0]}
 
+"""
 func _ready():
 	make_collisions_unique()
+	$AnimationTree.active = true
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
 		$Sprite.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
@@ -65,24 +68,28 @@ func _input(event):
 		if abs(horiz) > JOUST_AXI_THRESHOLD or abs(vert) > JOUST_AXI_THRESHOLD:
 			joy_direction = Vector2(horiz, vert).normalized()
 
-	if idle and event.is_action("joust") and event.pressed:
-		charge_joust()
-	elif charging_joust and event.is_action("joust") and !event.pressed:
-		joust_attack()
-	if idle and event.is_action("dodge") and event.pressed:
-		dodge()
-	elif idle and event.is_action("parry") and event.pressed:
-		parry()
+	if $AnimationTree.is_in_state("idle") and $Knight.visible:
+		if event.is_action_pressed("joust"):
+			charge_joust()
+		elif event.is_action_pressed("dodge"):
+			dodge()
+		elif event.is_action_pressed("parry"):
+			#parry()
+			drop_knight()
+	elif charging_up_joust:
+		if event.is_action_released("joust"):
+			joust_attack()
+
 	check_for_move_event(event, "up")
 	check_for_move_event(event, "right")
 	check_for_move_event(event, "down")
 	check_for_move_event(event, "left")
-
-
+	
+	
 func _physics_process(delta):
 	if get_tree().network_peer and !is_network_master():
 		return
-	if charging_joust:
+	if charging_up_joust:
 		joust_indicator_charge += JOUST_CHARGE_RATE * delta
 		joust_indicator_charge = min(joust_indicator_charge, MAX_JOUST_CHARGE)
 		update_joust_indicator()
@@ -92,10 +99,14 @@ func _physics_process(delta):
 		movement = get_locked_movement()
 	else:
 		movement = get_input_movement()
+	if movement and $AnimationTree.is_resting():
+		$AnimationTree.move()
+	elif !movement and $AnimationTree.is_moving():
+		$AnimationTree.stop_moving()
 	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
-	if joust_attacking:
+	if $AnimationTree.is_in_state("jousting"):
 		deplete_joust_charge(movement.length() * delta)
 	
 	if get_tree().network_peer:
@@ -120,7 +131,7 @@ func get_input_movement():
 		movement.y += 1
 	if movement_actions["left"][0]:
 		movement.x -= 1
-	if movement.length() > 0:
+	if movement.length() > 0.001:
 		last_direction = movement.normalized()
 	if movement.length() > 1:
 		movement = movement.normalized()
@@ -136,31 +147,23 @@ func charge_joust():
 	joy_direction = last_direction
 	joust_indicator_charge = 0.0
 	update_joust_indicator()
-	$Knight_Animator.play("Charging_Joust")
-	$Turtle_Animator.play("Charging_Joust")
+	$AnimationTree.charge_joust()
 
 
 func joust_attack():
 	locked_direction = joy_direction.normalized()
 	joust_charge = joust_indicator_charge * JOUST_CHARGE_DIST_MODIFIER
-	$Knight_Animator.play("Joust")
-	$Turtle_Animator.play("Joust")
+	$AnimationTree.begin_joust()
 
 
 func dodge():
 	locked_direction = last_direction
-	$Knight_Animator.play("Dodge")
-	$Knight_Animator.queue("Idle_Knight")
-	$Turtle_Animator.play("Dodge")
-	$Turtle_Animator.queue("Idle")
+	$AnimationTree.dodge()
 
 
 func parry():
 	locked_direction = Vector2(0, 0)
-	$Knight_Animator.play("Parry")
-	$Knight_Animator.queue("Idle_Knight")
-	$Turtle_Animator.play("Parry")
-	$Turtle_Animator.queue("Idle")
+	$AnimationTree.parry()
 
 
 func update_joust_indicator():
@@ -174,6 +177,7 @@ func update_joust_indicator():
 
 
 func update_sprite_direction(movement):
+	var idle = $AnimationTree.is_in_state("idle")
 	if (idle and movement.x > 1) or (locked and !locked_direction and joy_direction.x > 0.1):
 		$Sprite.scale.x = abs($Sprite.scale.x)
 		$LanceHitbox.scale.x = abs($LanceHitbox.scale.x)
@@ -194,8 +198,8 @@ func update_sprite_direction(movement):
 func deplete_joust_charge(dist_travelled):
 	joust_charge -= dist_travelled
 	if joust_charge <= 0.0:
-		$Knight_Animator.play("Idle_Knight")
-		$Turtle_Animator.play("Idle")
+		$AnimationTree.idle()
+		$AnimationTree.rest()
 
 func check_for_move_event(event, direction):
 	if event.is_action("move_" + direction):
@@ -222,7 +226,19 @@ func check_for_move_event(event, direction):
 						joy_direction = Vector2(0, 1)
 					"left":
 						joy_direction = Vector2(-1, 0)
-					
+
+
+func drop_knight():
+	var dropped_knight = dropped_knight_scene.instance()
+	dropped_knight.scale = scale
+	dropped_knight.add_child(get_node("Sprite").duplicate())
+	dropped_knight.get_node("Sprite/Turtle").visible = false
+	dropped_knight.add_child(get_node("Knight_Animator").duplicate())
+	dropped_knight.get_node("Knight_Animator").play("Drowning_Knight")
+	dropped_knight.global_position = global_position
+	get_parent().add_child(dropped_knight)
+	$Sprite/Knight.visible = false
+	$KnightHitbox/CollisionShape2D.disabled = true
 
 
 func load_data(data = {}):
@@ -269,14 +285,12 @@ remote func _set_turtle_animation(anim_name):
 
 
 func _on_LanceHitbox_hit_something():
-	$Knight_Animator.play("Idle_Knight")
-	$Turtle_Animator.play("Idle")
+	$AnimationTree.idle()
 
 
 func _on_hit_fellow_turtle():
-	if joust_attacking:
-		$Knight_Animator.play("Idle_Knight")
-		$Turtle_Animator.play("Idle")
+	if $AnimationTree.is_in_state("jousting"):
+		$AnimationTree.idle()
 		
 
 func make_collisions_unique():
@@ -298,3 +312,4 @@ func set_process_input(process):
 		movement_actions["right"] = [false, 0]
 		movement_actions["down"] = [false, 0]
 		movement_actions["left"] = [false, 0]
+"""

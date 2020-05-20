@@ -6,6 +6,7 @@ const player_scene = preload("res://player/player.tscn")
 
 remote var visor_brought_down_method = "_return_to_main_menu"
 
+
 func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if MENU_VERSION:
@@ -19,10 +20,10 @@ func _ready():
 		$VisorTransition.lift_up()
 		$VisorTransition.rpc_config("bring_down", MultiplayerAPI.RPC_MODE_REMOTE)
 
+
 func _process(delta):
 	if MENU_VERSION:
 		return
-	
 	$GameTimerLabel.text = str(ceil($GameTimer.time_left))
 	
 	
@@ -34,6 +35,7 @@ func _input(event):
 		$PausedMenu.set_process_input(true)
 		$PausedMenu.popup_centered(Vector2(1024, 576))
 		get_tree().set_input_as_handled()
+
 
 func add_player(number, net_id, data = {}):
 	var new_player = player_scene.instance()
