@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/orb_bottom.png-913cee3d95df2fa1a833abf8f017aa5c.stex"
+path="res://.import/orb_glow_inner.png-aa09d0aaa827ec54a6d07e445fcb4f6a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/powerup_assets/orb_bottom.png"
-dest_files=[ "res://.import/orb_bottom.png-913cee3d95df2fa1a833abf8f017aa5c.stex" ]
+source_file="res://powerups/assets/orb_glow_inner.png"
+dest_files=[ "res://.import/orb_glow_inner.png-aa09d0aaa827ec54a6d07e445fcb4f6a.stex" ]
 
 [params]
 
