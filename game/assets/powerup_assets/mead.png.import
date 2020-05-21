@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex"
+path="res://.import/mead.png-25c4bca923a07e29dae8820590a6ebae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/bouy.png"
-dest_files=[ "res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex" ]
+source_file="res://game/assets/powerup_assets/mead.png"
+dest_files=[ "res://.import/mead.png-25c4bca923a07e29dae8820590a6ebae.stex" ]
 
 [params]
 
