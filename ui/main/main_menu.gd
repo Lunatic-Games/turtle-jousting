@@ -15,6 +15,7 @@ func _input(event):
 		$ButtonContainer/CreditsButton.grab_focus()
 		showing_credits = false
 
+
 func _on_PvpButton_pressed():
 	$VisorTransition.bring_down()
 

@@ -4735,101 +4735,101 @@ tracks/37/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=12]
 animation = "charging_joust"
 
-[sub_resource type="AnimationNodeAnimation" id=17]
+[sub_resource type="AnimationNodeAnimation" id=13]
 animation = "dodging"
 
-[sub_resource type="AnimationNodeAnimation" id=36]
+[sub_resource type="AnimationNodeAnimation" id=14]
 animation = "drowning"
 
-[sub_resource type="AnimationNodeAnimation" id=34]
+[sub_resource type="AnimationNodeAnimation" id=15]
 animation = "flying_off"
 
-[sub_resource type="AnimationNodeAnimation" id=28]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "moving"
 
-[sub_resource type="AnimationNodeAnimation" id=27]
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "idling"
 
-[sub_resource type="AnimationNodeAnimation" id=29]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "moving_stop"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=32]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=33]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachine" id=12]
-states/idle_moving/node = SubResource( 28 )
-states/idle_moving/position = Vector2( 532, 258 )
-states/idle_resting/node = SubResource( 27 )
-states/idle_resting/position = Vector2( 532, 162 )
-states/idle_stop_moving/node = SubResource( 29 )
-states/idle_stop_moving/position = Vector2( 301, 207 )
-transitions = [ "idle_resting", "idle_moving", SubResource( 30 ), "idle_moving", "idle_resting", SubResource( 31 ), "idle_moving", "idle_stop_moving", SubResource( 32 ), "idle_stop_moving", "idle_resting", SubResource( 33 ) ]
-start_node = "idle_resting"
-
-[sub_resource type="AnimationNodeAnimation" id=18]
-animation = "jousting"
-
-[sub_resource type="AnimationNodeAnimation" id=19]
-animation = "parrying"
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
-switch_mode = 2
-auto_advance = true
+[sub_resource type="AnimationNodeStateMachine" id=23]
+states/idle_moving/node = SubResource( 16 )
+states/idle_moving/position = Vector2( 532, 258 )
+states/idle_resting/node = SubResource( 17 )
+states/idle_resting/position = Vector2( 532, 162 )
+states/idle_stop_moving/node = SubResource( 18 )
+states/idle_stop_moving/position = Vector2( 301, 207 )
+transitions = [ "idle_resting", "idle_moving", SubResource( 19 ), "idle_moving", "idle_resting", SubResource( 20 ), "idle_moving", "idle_stop_moving", SubResource( 21 ), "idle_stop_moving", "idle_resting", SubResource( 22 ) ]
+start_node = "idle_resting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "jousting"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "parrying"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=26]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=13]
-states/charging_joust/node = SubResource( 16 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachine" id=36]
+states/charging_joust/node = SubResource( 12 )
 states/charging_joust/position = Vector2( 724, 68 )
-states/dodging/node = SubResource( 17 )
+states/dodging/node = SubResource( 13 )
 states/dodging/position = Vector2( 224, 172 )
-states/drowning/node = SubResource( 36 )
+states/drowning/node = SubResource( 14 )
 states/drowning/position = Vector2( 412, -65 )
-states/flying_off/node = SubResource( 34 )
+states/flying_off/node = SubResource( 15 )
 states/flying_off/position = Vector2( 515, 19 )
-states/idle/node = SubResource( 12 )
+states/idle/node = SubResource( 23 )
 states/idle/position = Vector2( 449, 172 )
-states/jousting/node = SubResource( 18 )
+states/jousting/node = SubResource( 24 )
 states/jousting/position = Vector2( 724, 172 )
-states/parrying/node = SubResource( 19 )
+states/parrying/node = SubResource( 25 )
 states/parrying/position = Vector2( 449, 301 )
-transitions = [ "idle", "parrying", SubResource( 20 ), "idle", "dodging", SubResource( 21 ), "idle", "charging_joust", SubResource( 22 ), "parrying", "idle", SubResource( 23 ), "dodging", "idle", SubResource( 24 ), "charging_joust", "jousting", SubResource( 25 ), "jousting", "idle", SubResource( 26 ), "idle", "flying_off", SubResource( 35 ), "flying_off", "drowning", SubResource( 37 ), "drowning", "idle", SubResource( 38 ) ]
+transitions = [ "idle", "parrying", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "idle", "charging_joust", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "dodging", "idle", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 32 ), "idle", "flying_off", SubResource( 33 ), "flying_off", "drowning", SubResource( 34 ), "drowning", "idle", SubResource( 35 ) ]
 start_node = "idle"
-graph_offset = Vector2( -44, -109 )
+graph_offset = Vector2( -88, -149 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=37]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=15]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=38]
 
 [sub_resource type="DynamicFont" id=39]
 font_data = ExtResource( 23 )
@@ -4852,19 +4852,25 @@ texture = ExtResource( 9 )
 
 [node name="Lance_Back" type="Sprite" parent="Reversable/Sprite/Back_Arm"]
 position = Vector2( 484.77, 117.035 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 14 )
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/Back_Arm"]
+position = Vector2( 263.445, -119.748 )
+rotation = -1.05941
 texture = ExtResource( 10 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/Back_Arm"]
+position = Vector2( 83.8232, -347.268 )
 texture = ExtResource( 12 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/Back_Arm"]
+position = Vector2( 53.8867, -371.217 )
 texture = ExtResource( 2 )
 
 [node name="Lance_Front" type="Sprite" parent="Reversable/Sprite/Back_Arm"]
 position = Vector2( 624.182, 101.871 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 6 )
 
 [node name="Main_Body" type="Node2D" parent="Reversable/Sprite"]
@@ -4890,18 +4896,23 @@ texture = ExtResource( 11 )
 [node name="Left_Tear" type="Sprite" parent="Reversable/Sprite/Main_Body/Head/Tears"]
 position = Vector2( -53.5557, -536.047 )
 rotation = -0.453786
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 4 )
 
 [node name="Front_Arm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FL-Arm" type="Sprite" parent="Reversable/Sprite/Front_Arm"]
+position = Vector2( -155.671, -251.47 )
+rotation = -0.151844
 texture = ExtResource( 5 )
 
 [node name="FU-Arm" type="Sprite" parent="Reversable/Sprite/Front_Arm"]
+position = Vector2( -239.495, -101.785 )
+rotation = 1.05941
 texture = ExtResource( 17 )
 
 [node name="FH-Arm" type="Sprite" parent="Reversable/Sprite/Front_Arm"]
+position = Vector2( -179.622, -275.419 )
 texture = ExtResource( 8 )
 
 [node name="Front_Leg" type="Node2D" parent="Reversable/Sprite"]
@@ -4916,12 +4927,13 @@ texture = ExtResource( 15 )
 texture = ExtResource( 1 )
 
 [node name="Lance" parent="Reversable" instance=ExtResource( 22 )]
+visible = false
 position = Vector2( 57.5231, 4.98306 )
 rotation = 0.00853279
-scale = Vector2( 1, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 2 )
@@ -4936,10 +4948,10 @@ anims/moving_stop = SubResource( 10 )
 anims/parrying = SubResource( 11 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 13 )
+tree_root = SubResource( 36 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 14 )
-parameters/idle/playback = SubResource( 15 )
+parameters/playback = SubResource( 37 )
+parameters/idle/playback = SubResource( 38 )
 
 [node name="HealthLabel" type="Label" parent="."]
 margin_left = -49.7346
