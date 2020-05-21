@@ -1,8 +1,10 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
 [ext_resource path="res://player/knight.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Joust_Indicator.png" type="Texture" id=4]
+[ext_resource path="res://player/assets/Modulated_Bits/Mod_Joust_Bar.png" type="Texture" id=5]
 [ext_resource path="res://player/assets/joust_indicator_bottom.png" type="Texture" id=23]
 [ext_resource path="res://player/assets/joust_indicator.png" type="Texture" id=24]
 [ext_resource path="res://player/turtle_hitbox.gd" type="Script" id=26]
@@ -576,12 +578,19 @@ rotation = 1.55939
 scale = Vector2( 0.1, 0.05 )
 texture = ExtResource( 23 )
 
+[node name="Modulate" type="Sprite" parent="JoustIndicatorBottom"]
+position = Vector2( 2.42432, 79.6396 )
+texture = ExtResource( 5 )
+
 [node name="JoustIndicator" type="Sprite" parent="."]
 visible = false
 position = Vector2( 179.857, -28.9873 )
 rotation = 1.55592
 scale = Vector2( 0.025, 0.05 )
 texture = ExtResource( 24 )
+
+[node name="Modulate" type="Sprite" parent="JoustIndicator"]
+texture = ExtResource( 4 )
 
 [node name="Knight" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -26.706 )
