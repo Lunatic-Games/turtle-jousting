@@ -204,13 +204,42 @@ position = Vector2( 896, 128 )
 [node name="Player4" type="Position2D" parent="SpawnPositions/4Player"]
 position = Vector2( 896, 448 )
 
+[node name="PowerupPositions" type="Node2D" parent="."]
+
+[node name="Position1" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 148.621, 126.651 )
+
+[node name="Position2" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 509.189, 129.236 )
+
+[node name="Position3" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 860.71, 131.82 )
+
+[node name="Position4" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 143.452, 299.827 )
+
+[node name="Position5" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 507.896, 298.535 )
+
+[node name="Position6" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 869.756, 299.827 )
+
+[node name="Position7" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 142.159, 471.71 )
+
+[node name="Position8" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 506.604, 467.833 )
+
+[node name="Position9" type="Position2D" parent="PowerupPositions"]
+position = Vector2( 873.633, 469.126 )
+
 [node name="GameTimerLabel" type="Label" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 452.0
-margin_top = -30.0
+margin_top = -20.0
 margin_right = 572.0
-margin_bottom = -12.0
+margin_bottom = -2.0
 custom_fonts/font = SubResource( 1 )
 text = "120"
 align = 1
@@ -227,7 +256,7 @@ margin_bottom = 352.0
 rect_min_size = Vector2( 256, 128 )
 rect_pivot_offset = Vector2( 128, 64 )
 custom_fonts/font = SubResource( 2 )
-text = "FIGHT"
+text = "3"
 align = 1
 valign = 1
 __meta__ = {
@@ -247,15 +276,16 @@ margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )
 
 [node name="VisorTransition" parent="." instance=ExtResource( 4 )]
+visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 30.1816, 45.8783, 101.262, 57.1676, 175.687, 46.7146 )
-width = 2.0
-default_color = Color( 0.847059, 0.847059, 0.847059, 1 )
+[node name="PowerupSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="_on_PausedMenu_return_to_lobby"]
 [connection signal="return_to_main_menu" from="PausedMenu" to="." method="_on_PausedMenu_return_to_main_menu"]
 [connection signal="brought_down" from="VisorTransition" to="." method="_on_VisorTransition_brought_down"]
+[connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_powerup"]

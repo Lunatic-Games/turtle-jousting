@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mead.png-25c4bca923a07e29dae8820590a6ebae.stex"
+path="res://.import/judgement.png-c1c1595d00fc0f25be4f635893f271f0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/powerup_assets/mead.png"
-dest_files=[ "res://.import/mead.png-25c4bca923a07e29dae8820590a6ebae.stex" ]
+source_file="res://powerups/assets/judgement.png"
+dest_files=[ "res://.import/judgement.png-c1c1595d00fc0f25be4f635893f271f0.stex" ]
 
 [params]
 

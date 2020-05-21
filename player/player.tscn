@@ -603,6 +603,7 @@ parameters/idle/playback = SubResource( 30 )
 script = ExtResource( 27 )
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
 [connection signal="hit_fellow_turtle" from="Hitbox" to="." method="_on_hit_fellow_turtle"]
+[connection signal="picked_up_powerup" from="Hitbox" to="." method="_on_Hitbox_picked_up_powerup"]
 [connection signal="animation_started" from="Animator" to="." method="_on_Animator_animation_started"]
 [connection signal="knocked_off" from="Knight" to="." method="_on_Knight_knocked_off"]
 [connection signal="stop_joust" from="Knight" to="." method="_on_Knight_stop_joust"]

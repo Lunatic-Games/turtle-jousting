@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightning_rod.png-542094a22ffa205273d7bcd696e0865f.stex"
+path="res://.import/orb_bottom.png-4f294d2936976f4297af386076abc574.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/powerup_assets/lightning_rod.png"
-dest_files=[ "res://.import/lightning_rod.png-542094a22ffa205273d7bcd696e0865f.stex" ]
+source_file="res://powerups/assets/orb_bottom.png"
+dest_files=[ "res://.import/orb_bottom.png-4f294d2936976f4297af386076abc574.stex" ]
 
 [params]
 

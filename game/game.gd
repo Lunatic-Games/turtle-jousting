@@ -3,6 +3,9 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
+const powerup_scenes = [preload("res://powerups/judgement.tscn"),
+	preload("res://powerups/lightning_rod.tscn"),
+	preload("res://powerups/mead.tscn")]
 
 remote var visor_brought_down_method = "_return_to_main_menu"
 
@@ -21,7 +24,7 @@ func _ready():
 		$VisorTransition.rpc_config("bring_down", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
-func _process(delta):
+func _process(_delta):
 	if MENU_VERSION:
 		return
 	$GameTimerLabel.text = str(ceil($GameTimer.time_left))
@@ -67,6 +70,7 @@ func start():
 	set_player_process_input(true)
 	set_process(true)
 	$GameTimer.start()
+	$PowerupSpawnTimer.start()
 	
 	
 func set_player_process_input(process):
@@ -110,3 +114,22 @@ func _return_to_main_menu():
 		get_tree().paused = false
 	var _err = get_tree().change_scene("res://ui/main/main_menu.tscn")
 	queue_free()
+
+
+func _spawn_powerup():
+	var values = []
+	for spawn in $PowerupPositions.get_children():
+		var v = 0
+		for player in get_tree().get_nodes_in_group("player"):
+			v += abs((player.global_position - spawn.global_position).length())
+		values.append(v)
+	if !values:
+		print("No players to determine spawn location")
+		return
+	var i = values.find(values.max())
+	var powerup_position = $PowerupPositions.get_child(i).global_position
+	var powerup_scene = powerup_scenes[randi() % len(powerup_scenes)]
+	var powerup = powerup_scene.instance()
+	$YSort.add_child(powerup)
+	powerup.global_position = powerup_position
+	powerup.connect("picked_up", $PowerupSpawnTimer, "start")
