@@ -1,7 +1,9 @@
 extends Area2D
 
 
-signal hit_something
+signal hit_weapon
+signal hit_player
+signal parried
 
 
 func _ready():
@@ -9,12 +11,10 @@ func _ready():
 
 
 func _on_area_entered(area):
-	if area.is_in_group("knight") and area.get_parent() != get_parent():
-		emit_signal("hit_something")
-		var player = area.get_parent()
-		if player.parrying:
-			print("ITS A TRAP")
+	if area.is_in_group("knight") and area != get_parent():
+		if area.parrying:
+			emit_signal("parried")
 		else:
-			print("Rekt")
+			area.hit(1)
 	elif area.is_in_group("weapon"):
-		emit_signal("hit_something")
+		emit_signal("hit_weapon")

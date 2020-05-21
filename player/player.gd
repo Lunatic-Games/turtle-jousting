@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 
 export (bool) var charging_up_joust = false
-export (bool) var parrying = false
 export (bool) var locked = false
 export (float) var locked_speed = 200
 export (bool) var slowed = false
@@ -13,18 +12,16 @@ const SPEED = 200
 const MOVE_AXI_THRESHOLD = 0.1
 const JOUST_AXI_THRESHOLD = 0.5
 const MOUSE_SENSITIVITY = 0.01
-const JOUST_INDICATOR_RADIUS = 250
-const MAX_JOUST_CHARGE = 300
+const JOUST_INDICATOR_RADIUS = 150
+const MAX_JOUST_CHARGE = 150
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = true
-
-onready var dropped_knight_scene = preload("res://player/dropped_knight.tscn")
+const DEBUG = false
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
-var joy_direction = Vector2(1, 0)
+var joust_direction = Vector2(1, 0)
 var joust_indicator_charge = 0.0
 var joust_charge = 0.0
 
@@ -32,16 +29,16 @@ var joust_charge = 0.0
 var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 	 "down" : [false, 0], "left" : [false, 0]}
 
-"""
+
 func _ready():
 	make_collisions_unique()
 	$AnimationTree.active = true
+	$Knight/AnimationTree.active = true
+	
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
 		$Sprite.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
-		$LanceHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
-		$KnightHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
-		$TurtleHitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Hitbox/CollisionShape2D.rset_config("points", MultiplayerAPI.RPC_MODE_PUPPET)
 	if DEBUG:
 		device_id = 0
 
@@ -60,22 +57,16 @@ func _input(event):
 		return
 	
 	if event is InputEventMouseMotion:
-		joy_direction += event.relative * MOUSE_SENSITIVITY
-		joy_direction = joy_direction.clamped(1)
-	elif event is InputEventJoypadMotion:
-		var horiz = Input.get_joy_axis(device_id, JOY_AXIS_0)
-		var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
-		if abs(horiz) > JOUST_AXI_THRESHOLD or abs(vert) > JOUST_AXI_THRESHOLD:
-			joy_direction = Vector2(horiz, vert).normalized()
+		joust_direction += event.relative * MOUSE_SENSITIVITY
+		joust_direction = joust_direction.clamped(1)
 
-	if $AnimationTree.is_in_state("idle") and $Knight.visible:
+	if $AnimationTree.is_in_state("idle") and has_node("Knight"):
 		if event.is_action_pressed("joust"):
 			charge_joust()
 		elif event.is_action_pressed("dodge"):
 			dodge()
 		elif event.is_action_pressed("parry"):
-			#parry()
-			drop_knight()
+			parry()
 	elif charging_up_joust:
 		if event.is_action_released("joust"):
 			joust_attack()
@@ -144,14 +135,14 @@ func get_input_movement():
 
 func charge_joust():
 	locked_direction = Vector2(0, 0)
-	joy_direction = last_direction
+	joust_direction = last_direction
 	joust_indicator_charge = 0.0
 	update_joust_indicator()
 	$AnimationTree.charge_joust()
 
 
 func joust_attack():
-	locked_direction = joy_direction.normalized()
+	locked_direction = joust_direction.normalized()
 	joust_charge = joust_indicator_charge * JOUST_CHARGE_DIST_MODIFIER
 	$AnimationTree.begin_joust()
 
@@ -167,32 +158,40 @@ func parry():
 
 
 func update_joust_indicator():
-	var direct = joy_direction.normalized()
-	var angle = direct.angle()
-	$JoustIndicatorBottom.position = direct * JOUST_INDICATOR_RADIUS
+	var h = movement_actions["right"][1] - movement_actions["left"][1]
+	var v = movement_actions["down"][1] - movement_actions["up"][1]
+	var direction = Vector2(h, v).normalized()
+	if direction.length() > JOUST_AXI_THRESHOLD:
+		joust_direction = direction
+	var angle = joust_direction.angle()
+	$JoustIndicatorBottom.position = joust_direction.normalized() * JOUST_INDICATOR_RADIUS
 	$JoustIndicatorBottom.rotation = angle + PI / 2
 	var tip_radius = JOUST_INDICATOR_RADIUS + joust_indicator_charge
-	$JoustIndicator.position = direct * tip_radius
+	$JoustIndicator.position = joust_direction.normalized() * tip_radius
 	$JoustIndicator.rotation = angle + PI / 2
 
 
 func update_sprite_direction(movement):
 	var idle = $AnimationTree.is_in_state("idle")
-	if (idle and movement.x > 1) or (locked and !locked_direction and joy_direction.x > 0.1):
-		$Sprite.scale.x = abs($Sprite.scale.x)
-		$LanceHitbox.scale.x = abs($LanceHitbox.scale.x)
-		$KnightHitbox.scale.x = abs($KnightHitbox.scale.x)
-		$TurtleHitbox.scale.x = abs($TurtleHitbox.scale.x)
-	elif (idle and movement.x < -1) or (locked and !locked_direction and joy_direction.x < -0.1):
-		$Sprite.scale.x = -abs($Sprite.scale.x)
-		$LanceHitbox.scale.x = -abs($LanceHitbox.scale.x)
-		$KnightHitbox.scale.x = -abs($KnightHitbox.scale.x)
-		$TurtleHitbox.scale.x = -abs($TurtleHitbox.scale.x)
+	if ((idle and movement.x > 1) or 
+			(locked and !locked_direction and joust_direction.x > 0.1)):
+		set_direction(1)
+	elif ((idle and movement.x < -1) or 
+			(locked and !locked_direction and joust_direction.x < -0.1)):
+		set_direction(-1)
 	if get_tree().network_peer:
 		$Sprite.rset("scale", $Sprite.scale)
 		$LanceHitbox.rset("scale", $LanceHitbox.scale)
 		$KnightHitbox.rset("scale", $KnightHitbox.scale)
 		$TurtleHitbox.rset("scale", $TurtleHitbox.scale)
+		
+func set_direction(dir_sign):
+	$Sprite.flip_h = dir_sign != 1
+	$Sprite.offset.x = -dir_sign * abs($Sprite.offset.x)
+	$CollisionShape2D.scale.x = dir_sign * abs($CollisionShape2D.scale.x)
+	$Hitbox.scale.x = dir_sign * abs($Hitbox.scale.x)
+	if has_node("Knight"):
+		$Knight.set_direction(dir_sign)
 
 
 func deplete_joust_charge(dist_travelled):
@@ -204,41 +203,10 @@ func deplete_joust_charge(dist_travelled):
 func check_for_move_event(event, direction):
 	if event.is_action("move_" + direction):
 		if event is InputEventJoypadMotion:
-			if direction == "right" or direction == "down":
-				if event.axis_value > MOVE_AXI_THRESHOLD:
-					movement_actions[direction][1] = event.axis_value
-				else:
-					movement_actions[direction][1] = 0
-			else:
-				if event.axis_value < -MOVE_AXI_THRESHOLD:
-					movement_actions[direction][1] = abs(event.axis_value)
-				else:
-					movement_actions[direction][1] = 0
+			var strength = event.get_action_strength("move_" + direction)
+			movement_actions[direction][1] = strength
 		else: 
 			movement_actions[direction][0] = event.is_pressed()
-			if event.pressed:
-				match direction:
-					"up":
-						joy_direction = Vector2(0, -1)
-					"right":
-						joy_direction = Vector2(1, 0)
-					"down":
-						joy_direction = Vector2(0, 1)
-					"left":
-						joy_direction = Vector2(-1, 0)
-
-
-func drop_knight():
-	var dropped_knight = dropped_knight_scene.instance()
-	dropped_knight.scale = scale
-	dropped_knight.add_child(get_node("Sprite").duplicate())
-	dropped_knight.get_node("Sprite/Turtle").visible = false
-	dropped_knight.add_child(get_node("Knight_Animator").duplicate())
-	dropped_knight.get_node("Knight_Animator").play("Drowning_Knight")
-	dropped_knight.global_position = global_position
-	get_parent().add_child(dropped_knight)
-	$Sprite/Knight.visible = false
-	$KnightHitbox/CollisionShape2D.disabled = true
 
 
 func load_data(data = {}):
@@ -246,13 +214,9 @@ func load_data(data = {}):
 
 
 func invert_start_direction():
-	$Sprite.scale.x *= -1
-	$LanceHitbox.scale.x *= -1
-	$KnightHitbox.scale.x *= -1
-	$TurtleHitbox.scale.x *= -1
-	update_sprite_direction(Vector2(0, 0))
+	set_direction(-1)
 	last_direction.x *= -1
-	joy_direction.x *= -1
+	joust_direction.x *= -1
 
 
 func set_indicator_visibility(visibility):
@@ -262,29 +226,16 @@ func set_indicator_visibility(visibility):
 	$JoustIndicatorBottom.visible = visibility
 
 
-func _on_Knight_Animator_animation_started(anim_name):
-	if get_tree().network_peer:
-		rpc("_set_knight_animation", anim_name)
+func _on_Animator_animation_started(anim_name):
+	if get_tree().network_peer and is_network_master():
+		rpc("_set_animation", anim_name)
 
 
-func _on_Turtle_Animator_animation_started(anim_name):
-	if get_tree().network_peer:
-		rpc("_set_turtle_animation", anim_name)
-		
-
-remote func _set_knight_animation(anim_name):
-	if $Knight_Animator.current_animation == anim_name:
-		return
-	$Knight_Animator.play(anim_name)
+puppet func _set_animation(anim_name):
+	$Animator.play(anim_name)
 
 
-remote func _set_turtle_animation(anim_name):
-	if $Turtle_Animator.current_animation == anim_name:
-		return
-	$Turtle_Animator.play(anim_name)
-
-
-func _on_LanceHitbox_hit_something():
+func _on_Knight_stop_joust():
 	$AnimationTree.idle()
 
 
@@ -293,14 +244,24 @@ func _on_hit_fellow_turtle():
 		$AnimationTree.idle()
 		
 
+func _on_Knight_knocked_off():
+	if !has_node("Knight"):
+		return
+	var knight = get_node("Knight")
+	call_deferred("remove_child", knight)
+	get_parent().call_deferred("add_child", knight)
+	knight.set_deferred("global_position", global_position)
+	$AnimationTree.knight_flying_off()
+	
+	
 func make_collisions_unique():
-	$CollisionShape2D.shape= $CollisionShape2D.shape.duplicate()
-	var lance_col = $LanceHitbox/CollisionShape2D
+	$CollisionShape2D.shape = $CollisionShape2D.shape.duplicate()
+	var hitbox_col = $Hitbox/CollisionShape2D
+	hitbox_col.shape = hitbox_col.shape.duplicate()
+	var lance_col = $Knight/Reversable/Lance/CollisionShape2D
 	lance_col.shape = lance_col.shape.duplicate()
-	var knight_col = $KnightHitbox/CollisionShape2D
+	var knight_col = $Knight/CollisionShape2D
 	knight_col.shape = knight_col.shape.duplicate()
-	var turtle_col = $TurtleHitbox/CollisionShape2D
-	turtle_col.shape = turtle_col.shape.duplicate()
 	
 	
 func set_process_input(process):
@@ -312,4 +273,4 @@ func set_process_input(process):
 		movement_actions["right"] = [false, 0]
 		movement_actions["down"] = [false, 0]
 		movement_actions["left"] = [false, 0]
-"""
+

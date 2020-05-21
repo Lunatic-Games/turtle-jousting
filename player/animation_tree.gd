@@ -3,6 +3,10 @@ extends AnimationTree
 
 onready var playback = get("parameters/playback")
 onready var idle_playback = get("parameters/idle/playback")
+onready var knight_tree = get_node("../Knight/AnimationTree")
+onready var knight_playback = knight_tree.get("parameters/playback")
+onready var knight_idle_playback = knight_tree.get("parameters/idle/playback")
+var knight_on = true
 
 
 func _ready():
@@ -30,39 +34,54 @@ func is_moving():
 
 
 func idle():
-	playback.travel("idle")
+	travel_both("idle")
 	
 	
 func rest():
-	playback.travel("idle")
-	idle_playback.travel("idle_resting")
-	
+	travel_both("idle")
+	travel_both("idle_resting", true)
+
 
 func move():
-	playback.travel("idle")
-	idle_playback.travel("idle_moving")
+	travel_both("idle")
+	travel_both("idle_moving", true)
 
 
 func stop_moving():
-	playback.travel("idle")
-	idle_playback.travel("idle_stop_moving")
+	travel_both("idle")
+	travel_both("idle_stop_moving", true)
 
 
 func charge_joust():
-	playback.travel("charging_joust")
+	travel_both("charging_joust")
 
 
 func begin_joust():
-	playback.travel("jousting")
+	travel_both("jousting")
 	
 
 func joust_ended():
 	playback.travel("joust_ended")
+	knight_playback.travel("joust_ended")
 
 
 func parry():
-	playback.travel("parrying")
+	travel_both("parrying")
 
 
 func dodge():
-	playback.travel("dodging")
+	travel_both("dodging")
+	
+func knight_flying_off():
+	knight_playback.travel("flying_off")
+	knight_on = false
+
+func travel_both(name, idle_pb=false):
+	if idle_pb:
+		idle_playback.travel(name)
+	else:
+		playback.travel(name)
+	if knight_on and idle_pb:
+		knight_idle_playback.travel(name)
+	elif knight_on:
+		knight_playback.travel(name)
