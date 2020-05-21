@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex"
+path="res://.import/light_large.png-61d57408b32ff9a9cfd23b28c922e0fb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/bouy.png"
-dest_files=[ "res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex" ]
+source_file="res://game/assets/powerup_assets/light_large.png"
+dest_files=[ "res://.import/light_large.png-61d57408b32ff9a9cfd23b28c922e0fb.stex" ]
 
 [params]
 
