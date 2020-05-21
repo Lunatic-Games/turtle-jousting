@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://settings_slider.gd" type="Script" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="DynamicFont" id=6]
+size = 24
+extra_spacing_top = 2
+extra_spacing_bottom = 12
+font_data = ExtResource( 2 )
+
+[node name="SettingsSlider" type="HBoxContainer"]
+margin_top = 30.0
+margin_right = 177.0
+margin_bottom = 56.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" parent="." instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 92.0
+margin_bottom = 26.0
+focus_mode = 0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+toggle_mode = true
+button_mask = 0
+enabled_focus_mode = 0
+text = "Setting"
+
+[node name="Slider" type="HSlider" parent="."]
+margin_left = 96.0
+margin_right = 196.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 100, 0 )
+
+[node name="HoldTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="focus_entered" from="Slider" to="." method="_on_Slider_focus_entered"]
+[connection signal="focus_exited" from="Slider" to="." method="_on_Slider_focus_exited"]
+[connection signal="gui_input" from="Slider" to="." method="_on_Slider_gui_input"]
+[connection signal="mouse_entered" from="Slider" to="." method="_on_Slider_focus_entered"]
+[connection signal="mouse_exited" from="Slider" to="." method="_on_Slider_focus_exited"]
+[connection signal="timeout" from="HoldTimer" to="." method="_on_HoldTimer_timeout"]

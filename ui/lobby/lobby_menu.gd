@@ -28,6 +28,10 @@ var client
 # Allows creation of server without stopping processing
 var server_creation_thread
 
+# Call method when visor brought down
+var visor_brought_down_method
+
+
 # Setup
 func _ready():
 	var _err = get_tree().connect("network_peer_connected", self, "_new_connection")
@@ -35,7 +39,7 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
-	button_container.get_node("OpenMultiplayerButton").grab_focus()
+	$VisorTransition.lift_up()
 
 
 # Check for keyboard popup and register new devices
@@ -58,7 +62,7 @@ func _input(event):
 			get_tree().set_input_as_handled()
 			return
 
-	if event.is_action("ui_start") and event.pressed:
+	elif event.is_action("ui_start") and event.pressed:
 		if device in local_players.values():
 			return
 
@@ -78,6 +82,9 @@ func _input(event):
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
 		get_tree().set_input_as_handled()
+
+	elif event.is_action("ui_cancel") and event.pressed:
+		_on_BackButton_pressed()
 
 
 # Start server creation on new thread
@@ -342,6 +349,11 @@ func toggle_ui_visibility(group_name, visibility):
 
 
 func _on_StartButton_pressed():
+	visor_brought_down_method = "_call_start"
+	$VisorTransition.bring_down()
+
+
+func _call_start():
 	if get_tree().network_peer:
 		rpc("start")
 	else:
@@ -349,6 +361,7 @@ func _on_StartButton_pressed():
 
 
 remotesync func start():
+	get_tree().paused = true
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
 
@@ -366,9 +379,23 @@ remotesync func start():
 	set_process_input(false)
 
 
+func return_to():
+	if get_tree().network_peer and is_network_master():
+		get_tree().refuse_new_network_connections = false
+	$VisorTransition.lift_up()
+	visible = true
+	set_process(true)
+	set_process_input(true)
+
+
+func _on_BackButton_pressed():
+	visor_brought_down_method = "_go_back"
+	$VisorTransition.bring_down()
+	
+
 # Exit game (this will eventually lead back to main menu)
-func _exit():
-	get_tree().quit()
+func _go_back():
+	var _err= get_tree().change_scene("res://ui/main/main_menu.tscn")
 
 
 # Clear used port when exiting
@@ -377,12 +404,27 @@ func _exit_tree():
 		server_creation_thread.wait_to_finish()
 	if server:
 		server.close()
+	if client:
+		client.close()
+	if get_tree().network_peer:
+		get_tree().network_peer = null
 
 
 func _on_ConnectionTimer_timeout():
 	print("Failed to connect")
 	get_tree().network_peer = null
 	$NetworkMessagePopup.connection_failed()
+
+
+func _on_VisorTransition_lifted_up():
+	if button_container.get_node("OpenMultiplayerButton").visible:
+		button_container.get_node("OpenMultiplayerButton").grab_focus()
+	else:
+		button_container.get_node("CloseMultiplayerButton").grab_focus()
+
+
+func _on_VisorTransition_brought_down():
+	call(visor_brought_down_method)
 
 
 func _on_Popup_about_to_show():
