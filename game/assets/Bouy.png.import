@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex"
+path="res://.import/Bouy.png-189174570f4aeaab77a7647e94673ac8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/assets/bouy.png"
-dest_files=[ "res://.import/bouy.png-2b6cf35fbcb634c5698b21839d59c332.stex" ]
+source_file="res://game/assets/Bouy.png"
+dest_files=[ "res://.import/Bouy.png-189174570f4aeaab77a7647e94673ac8.stex" ]
 
 [params]
 
