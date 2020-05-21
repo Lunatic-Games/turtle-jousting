@@ -16,7 +16,7 @@ const JOUST_INDICATOR_RADIUS = 150
 const MAX_JOUST_CHARGE = 150
 const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
-const DEBUG = false
+const DEBUG = true
 
 var device_id = null
 var locked_direction = Vector2(0, 0)
@@ -41,6 +41,7 @@ func _ready():
 		$Hitbox/CollisionShape2D.rset_config("points", MultiplayerAPI.RPC_MODE_PUPPET)
 	if DEBUG:
 		device_id = 0
+		set_color(Color.aquamarine)
 
 
 func _input(event):
@@ -211,6 +212,8 @@ func check_for_move_event(event, direction):
 
 func load_data(data = {}):
 	device_id = data.get("device_id", null)
+	if data.get("color", null):
+		set_color(data["color"])
 
 
 func invert_start_direction():
@@ -274,3 +277,8 @@ func set_process_input(process):
 		movement_actions["down"] = [false, 0]
 		movement_actions["left"] = [false, 0]
 
+
+func set_color(color):
+	$JoustIndicator/Modulate.modulate = color
+	$JoustIndicatorBottom/Modulate.modulate = color
+	$Knight.set_color(color)

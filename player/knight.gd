@@ -35,3 +35,9 @@ func _on_Lance_hit_weapon():
 func set_direction(dir_sign):
 	$Reversable.scale.x = dir_sign * abs($Reversable.scale.x)
 	$CollisionShape2D.scale.x = dir_sign * abs($CollisionShape2D.scale.x)
+	
+	
+func set_color(color):
+	$Reversable/Sprite/Back_Arm/Lance_Front/Modulate.modulate = color
+	$Reversable/Sprite/Main_Body/Chest/Modulate.modulate = color
+	$Reversable/Sprite/Main_Body/Head/Modulate.modulate = color

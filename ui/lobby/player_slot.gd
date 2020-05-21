@@ -1,7 +1,7 @@
 extends Control
 
 const COLOR_NAMES = ["Red", "Blue", "Green", "Yellow"]
-const COLORS = [Color.red, Color.blue, Color.green, Color.yellow]
+const COLORS = [Color("ac4141"), Color("1a7586"), Color("299e57"), Color("b0a335")]
 
 var color_i = 0
 var capturing_input = false
@@ -99,7 +99,8 @@ func reset():
 
 
 func get_player_data():
-	return { "device_id" : device_id, "color_i" : color_i, "ready" : ready}
+	return { "device_id" : device_id, "color_i" : color_i, 
+		"color" : COLORS[color_i], "ready" : ready}
 
 
 remote func update_color(i):
