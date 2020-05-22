@@ -6,9 +6,13 @@ signal knocked_off
 signal stop_joust
 
 export (bool) var parrying = false
+export (bool) var in_water = true
 
 const MAX_HEALTH = 100
+const KNOCKED_OFF_DISTANCE = 100
 var health = MAX_HEALTH
+var number
+
 
 func _ready():
 	$HealthLabel.text = str(health)
@@ -24,8 +28,9 @@ func hit(damage):
 
 
 
-func _on_Lance_parried():
-	emit_signal("knocked_off")
+func _on_Lance_parried(knockback_direction):
+	var new_pos = global_position + knockback_direction * KNOCKED_OFF_DISTANCE
+	emit_signal("knocked_off", new_pos)
 
 
 func _on_Lance_hit_weapon():

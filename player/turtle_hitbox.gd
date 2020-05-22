@@ -3,6 +3,7 @@ extends Area2D
 
 signal hit_fellow_turtle
 signal picked_up_powerup
+signal picked_up_knight
 
 
 func _ready():
@@ -15,4 +16,7 @@ func _on_area_entered(area):
 	if area.is_in_group("powerup"):
 		emit_signal("picked_up_powerup", area)
 		area.picked_up()
+	if area.is_in_group("knight") and area.in_water:
+		if area.number == get_parent().number:
+			emit_signal("picked_up_knight", area)
 		
