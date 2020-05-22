@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=71 format=2]
 
 [ext_resource path="res://player/assets/knight_parts/knight_leg_FF.png" type="Texture" id=1]
 [ext_resource path="res://player/assets/knight_parts/knight_arm_BH.png" type="Texture" id=2]
@@ -1556,6 +1556,18 @@ tracks/41/keys = {
 "update": 1,
 "values": [ ExtResource( 27 ) ]
 }
+tracks/42/type = "value"
+tracks/42/path = NodePath(".:in_water")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "flying_off"
@@ -2534,6 +2546,18 @@ tracks/42/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ ExtResource( 27 ) ]
+}
+tracks/43/type = "value"
+tracks/43/path = NodePath(".:in_water")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -5012,6 +5036,9 @@ start_node = "idle_resting"
 [sub_resource type="AnimationNodeAnimation" id=24]
 animation = "jousting"
 
+[sub_resource type="AnimationNodeAnimation" id=40]
+animation = "mounting"
+
 [sub_resource type="AnimationNodeAnimation" id=25]
 animation = "parrying"
 
@@ -5041,24 +5068,32 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=36]
 states/charging_joust/node = SubResource( 12 )
 states/charging_joust/position = Vector2( 724, 68 )
 states/dodging/node = SubResource( 13 )
-states/dodging/position = Vector2( 224, 172 )
+states/dodging/position = Vector2( 162, 275 )
 states/drowning/node = SubResource( 14 )
 states/drowning/position = Vector2( 412, -65 )
 states/flying_off/node = SubResource( 15 )
-states/flying_off/position = Vector2( 515, 19 )
+states/flying_off/position = Vector2( 529, 19 )
 states/idle/node = SubResource( 23 )
 states/idle/position = Vector2( 449, 172 )
 states/jousting/node = SubResource( 24 )
 states/jousting/position = Vector2( 724, 172 )
+states/mounting/node = SubResource( 40 )
+states/mounting/position = Vector2( 210, 19 )
 states/parrying/node = SubResource( 25 )
 states/parrying/position = Vector2( 449, 301 )
-transitions = [ "idle", "parrying", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "idle", "charging_joust", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "dodging", "idle", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 32 ), "idle", "flying_off", SubResource( 33 ), "flying_off", "drowning", SubResource( 34 ), "drowning", "idle", SubResource( 35 ) ]
+transitions = [ "idle", "parrying", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "idle", "charging_joust", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "dodging", "idle", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 32 ), "idle", "flying_off", SubResource( 33 ), "flying_off", "drowning", SubResource( 34 ), "drowning", "idle", SubResource( 35 ), "idle", "mounting", SubResource( 41 ), "mounting", "idle", SubResource( 42 ) ]
 start_node = "idle"
-graph_offset = Vector2( -88, -149 )
+graph_offset = Vector2( -60, -170 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=37]
 
@@ -5071,6 +5106,7 @@ font_data = ExtResource( 23 )
 "knight",
 ]]
 script = ExtResource( 21 )
+in_water = false
 
 [node name="Reversable" type="Node2D" parent="."]
 
@@ -5102,7 +5138,6 @@ texture = ExtResource( 6 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/Back_Arm/Lance_Front"]
 position = Vector2( 0.263245, -0.317726 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 26 )
 
 [node name="Main_Body" type="Node2D" parent="Reversable/Sprite"]
@@ -5114,14 +5149,12 @@ texture = ExtResource( 3 )
 texture = ExtResource( 18 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/Main_Body/Chest"]
-modulate = Color( 0, 1, 0.501961, 1 )
 texture = ExtResource( 24 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/Main_Body"]
 texture = ExtResource( 7 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/Main_Body/Head"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 27 )
 
 [node name="Tears" type="Node2D" parent="Reversable/Sprite/Main_Body/Head"]
@@ -5168,7 +5201,6 @@ rotation = -0.167575
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 2 )

@@ -8,6 +8,7 @@ var capturing_input = false
 var device_id
 var focused_button = null
 var ready = false
+var player_number
 
 
 func _ready():
@@ -69,7 +70,8 @@ func _input(event):
 				get_tree().set_input_as_handled()
 
 
-func load_player(_number, player_data={}):
+func load_player(number, player_data={}):
+	player_number = number
 	capturing_input = true
 	set_process_input(true)
 	$Cover/Open.visible = false
@@ -94,13 +96,14 @@ func reset():
 	$Background/ColorName.text = COLOR_NAMES[color_i]
 	$Cover/ClosedButton.visible = false
 	$Cover/Open.visible = true
+	player_number = null
 	device_id = null
 	ready = false
 
 
 func get_player_data():
-	return { "device_id" : device_id, "color_i" : color_i, 
-		"color" : COLORS[color_i], "ready" : ready}
+	return { "device_id" : device_id, "number": player_number,
+		"color_i" : color_i, "color" : COLORS[color_i], "ready" : ready}
 
 
 remote func update_color(i):

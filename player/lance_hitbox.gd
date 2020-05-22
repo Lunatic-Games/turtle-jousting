@@ -13,7 +13,8 @@ func _ready():
 func _on_area_entered(area):
 	if area.is_in_group("knight") and area != get_parent():
 		if area.parrying:
-			emit_signal("parried")
+			var backwards = global_position - area.global_position
+			emit_signal("parried", backwards.normalized())
 		else:
 			area.hit(1)
 	elif area.is_in_group("weapon"):

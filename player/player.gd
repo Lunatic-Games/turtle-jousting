@@ -18,7 +18,8 @@ const JOUST_CHARGE_RATE = 200
 const JOUST_CHARGE_DIST_MODIFIER = 1.5
 const DEBUG = false
 
-var device_id = null
+var number
+var device_id
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
 var joust_direction = Vector2(1, 0)
@@ -173,7 +174,7 @@ func update_joust_indicator():
 
 
 func update_sprite_direction(movement):
-	var idle = $AnimationTree.is_in_state("idle")
+	var idle = $AnimationTree.is_in_state("idle") or $AnimationTree.is_in_state("mounting")
 	if ((idle and movement.x > 1) or 
 			(locked and !locked_direction and joust_direction.x > 0.1)):
 		set_direction(1)
@@ -212,6 +213,8 @@ func check_for_move_event(event, direction):
 
 func load_data(data = {}):
 	device_id = data.get("device_id", null)
+	number = data.get("number", null)
+	$Knight.number = number
 	if data.get("color", null):
 		set_color(data["color"])
 
@@ -240,22 +243,34 @@ puppet func _set_animation(anim_name):
 
 func _on_Knight_stop_joust():
 	$AnimationTree.idle()
+	$AnimationTree.rest()
 
 
 func _on_hit_fellow_turtle():
 	if $AnimationTree.is_in_state("jousting"):
-		$AnimationTree.idle()
+		_on_Knight_stop_joust()
 		
 
-func _on_Knight_knocked_off():
+func _on_Knight_knocked_off(knight_pos):
 	if !has_node("Knight"):
 		return
 	var knight = get_node("Knight")
 	call_deferred("remove_child", knight)
 	get_parent().call_deferred("add_child", knight)
-	knight.set_deferred("global_position", global_position)
+	knight.set_deferred("global_position", knight_pos)
 	$AnimationTree.knight_flying_off()
 	
+func _pick_up_knight(knight):
+	var dup = knight.duplicate()
+	dup.name = "Knight"
+	dup.in_water = false
+	dup.position = $KnightPosition.position
+	dup.number = knight.number
+	dup.health = knight.health
+	knight.queue_free()
+	call_deferred("add_child", dup)
+	$AnimationTree.call_deferred("knight_picked_up")
+
 	
 func make_collisions_unique():
 	$CollisionShape2D.shape = $CollisionShape2D.shape.duplicate()

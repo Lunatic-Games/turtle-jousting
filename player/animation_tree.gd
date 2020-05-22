@@ -71,10 +71,20 @@ func parry():
 
 func dodge():
 	travel_both("dodging")
+
+
+func knight_picked_up():
+	knight_tree = get_node("../Knight/AnimationTree")
+	knight_playback = knight_tree.get("parameters/playback")
+	knight_idle_playback = knight_tree.get("parameters/idle/playback")
+	knight_on = true
+	travel_both("mounting")
 	
+
 func knight_flying_off():
 	knight_playback.travel("flying_off")
 	knight_on = false
+
 
 func travel_both(name, idle_pb=false):
 	if idle_pb:
