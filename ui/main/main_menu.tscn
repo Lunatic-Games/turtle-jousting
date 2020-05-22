@@ -22,7 +22,7 @@ __meta__ = {
 [node name="Game" parent="." instance=ExtResource( 2 )]
 MENU_VERSION = true
 
-[node name="VisorTransition" parent="Game" index="8"]
+[node name="VisorTransition" parent="Game" index="9"]
 visible = false
 
 [node name="Title" type="Label" parent="."]

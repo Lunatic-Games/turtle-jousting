@@ -18,4 +18,4 @@ func _on_area_entered(area):
 		else:
 			area.hit(1)
 	elif area.is_in_group("weapon"):
-		emit_signal("hit_weapon")
+		emit_signal("hit_weapon", area)

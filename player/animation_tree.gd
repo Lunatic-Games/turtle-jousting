@@ -59,6 +59,9 @@ func charge_joust():
 func begin_joust():
 	travel_both("jousting")
 	
+func duel():
+	travel_both("dueling")
+	
 
 func joust_ended():
 	playback.travel("joust_ended")
@@ -84,6 +87,7 @@ func knight_picked_up():
 func knight_flying_off():
 	knight_playback.travel("flying_off")
 	knight_on = false
+	rest()
 
 
 func travel_both(name, idle_pb=false):

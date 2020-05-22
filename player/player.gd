@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
 
+signal dueling
+
+
 export (bool) var charging_up_joust = false
 export (bool) var locked = false
 export (float) var locked_speed = 200
@@ -8,14 +11,15 @@ export (bool) var slowed = false
 export (float) var slowed_speed = 100
 
 
-const SPEED = 200
+const SPEED = 100
 const MOVE_AXI_THRESHOLD = 0.1
-const JOUST_AXI_THRESHOLD = 0.5
+const JOUST_AXI_THRESHOLD = 0.7
 const MOUSE_SENSITIVITY = 0.01
 const JOUST_INDICATOR_RADIUS = 150
-const MAX_JOUST_CHARGE = 150
-const JOUST_CHARGE_RATE = 200
-const JOUST_CHARGE_DIST_MODIFIER = 1.5
+const MAX_JOUST_CHARGE = 200
+const JOUST_CHARGE_RATE = 150
+const JOUST_CHARGE_DIST_MODIFIER = 2.5
+const KNOCKED_OFF_DISTANCE = 100
 const DEBUG = false
 
 var number
@@ -25,6 +29,7 @@ var last_direction = Vector2(1, 0)
 var joust_direction = Vector2(1, 0)
 var joust_indicator_charge = 0.0
 var joust_charge = 0.0
+var started_duel = false
 
 # Keeps track of movement input [button_active, joystick strength]
 var movement_actions = {"up" : [false, 0], "right" : [false, 0],
@@ -162,9 +167,9 @@ func parry():
 func update_joust_indicator():
 	var h = movement_actions["right"][1] - movement_actions["left"][1]
 	var v = movement_actions["down"][1] - movement_actions["up"][1]
-	var direction = Vector2(h, v).normalized()
+	var direction = Vector2(h, v)
 	if direction.length() > JOUST_AXI_THRESHOLD:
-		joust_direction = direction
+		joust_direction = direction.normalized()
 	var angle = joust_direction.angle()
 	$JoustIndicatorBottom.position = joust_direction.normalized() * JOUST_INDICATOR_RADIUS
 	$JoustIndicatorBottom.rotation = angle + PI / 2
@@ -186,7 +191,8 @@ func update_sprite_direction(movement):
 		$LanceHitbox.rset("scale", $LanceHitbox.scale)
 		$KnightHitbox.rset("scale", $KnightHitbox.scale)
 		$TurtleHitbox.rset("scale", $TurtleHitbox.scale)
-		
+
+
 func set_direction(dir_sign):
 	$Sprite.flip_h = dir_sign != 1
 	$Sprite.offset.x = -dir_sign * abs($Sprite.offset.x)
@@ -201,6 +207,7 @@ func deplete_joust_charge(dist_travelled):
 	if joust_charge <= 0.0:
 		$AnimationTree.idle()
 		$AnimationTree.rest()
+
 
 func check_for_move_event(event, direction):
 	if event.is_action("move_" + direction):
@@ -241,25 +248,27 @@ puppet func _set_animation(anim_name):
 	$Animator.play(anim_name)
 
 
-func _on_Knight_stop_joust():
-	$AnimationTree.idle()
-	$AnimationTree.rest()
+func _on_Knight_lance_duel(other_player):
+	emit_signal("dueling", self, other_player)
+	$AnimationTree.duel()
 
 
 func _on_hit_fellow_turtle():
 	if $AnimationTree.is_in_state("jousting"):
-		_on_Knight_stop_joust()
+		$AnimationTree.rest()
 		
 
-func _on_Knight_knocked_off(knight_pos):
+func _knock_knight_off(direction):
 	if !has_node("Knight"):
 		return
 	var knight = get_node("Knight")
 	call_deferred("remove_child", knight)
 	get_parent().call_deferred("add_child", knight)
-	knight.set_deferred("global_position", knight_pos)
+	knight.set_deferred("global_position", 
+		knight.global_position + direction * KNOCKED_OFF_DISTANCE)
 	$AnimationTree.knight_flying_off()
-	
+
+
 func _pick_up_knight(knight):
 	var dup = knight.duplicate()
 	dup.name = "Knight"
@@ -270,6 +279,14 @@ func _pick_up_knight(knight):
 	knight.queue_free()
 	call_deferred("add_child", dup)
 	$AnimationTree.call_deferred("knight_picked_up")
+
+
+func won_duel():
+	$AnimationTree.rest()
+
+
+func lost_duel(knocked_off_direction):
+	_knock_knight_off(knocked_off_direction)
 
 	
 func make_collisions_unique():

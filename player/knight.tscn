@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://player/assets/knight_parts/knight_leg_FF.png" type="Texture" id=1]
 [ext_resource path="res://player/assets/knight_parts/knight_arm_BH.png" type="Texture" id=2]
@@ -994,7 +994,7 @@ tracks/40/loop_wrap = true
 tracks/40/imported = false
 tracks/40/enabled = true
 tracks/40/keys = {
-"times": PoolRealArray( 0.3, 1.1 ),
+"times": PoolRealArray( 0.1, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -1568,6 +1568,9 @@ tracks/42/keys = {
 "update": 1,
 "values": [ true ]
 }
+
+[sub_resource type="Animation" id=43]
+resource_name = "dueling"
 
 [sub_resource type="Animation" id=5]
 resource_name = "flying_off"
@@ -5001,6 +5004,9 @@ animation = "dodging"
 [sub_resource type="AnimationNodeAnimation" id=14]
 animation = "drowning"
 
+[sub_resource type="AnimationNodeAnimation" id=44]
+animation = "dueling"
+
 [sub_resource type="AnimationNodeAnimation" id=15]
 animation = "flying_off"
 
@@ -5074,6 +5080,10 @@ auto_advance = true
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
+
 [sub_resource type="AnimationNodeStateMachine" id=36]
 states/charging_joust/node = SubResource( 12 )
 states/charging_joust/position = Vector2( 724, 68 )
@@ -5081,6 +5091,8 @@ states/dodging/node = SubResource( 13 )
 states/dodging/position = Vector2( 162, 275 )
 states/drowning/node = SubResource( 14 )
 states/drowning/position = Vector2( 412, -65 )
+states/dueling/node = SubResource( 44 )
+states/dueling/position = Vector2( 645, 275 )
 states/flying_off/node = SubResource( 15 )
 states/flying_off/position = Vector2( 529, 19 )
 states/idle/node = SubResource( 23 )
@@ -5088,12 +5100,12 @@ states/idle/position = Vector2( 449, 172 )
 states/jousting/node = SubResource( 24 )
 states/jousting/position = Vector2( 724, 172 )
 states/mounting/node = SubResource( 40 )
-states/mounting/position = Vector2( 210, 19 )
+states/mounting/position = Vector2( 153, 98 )
 states/parrying/node = SubResource( 25 )
 states/parrying/position = Vector2( 449, 301 )
-transitions = [ "idle", "parrying", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "idle", "charging_joust", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "dodging", "idle", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 32 ), "idle", "flying_off", SubResource( 33 ), "flying_off", "drowning", SubResource( 34 ), "drowning", "idle", SubResource( 35 ), "idle", "mounting", SubResource( 41 ), "mounting", "idle", SubResource( 42 ) ]
+transitions = [ "idle", "parrying", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "idle", "charging_joust", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "dodging", "idle", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 32 ), "idle", "flying_off", SubResource( 33 ), "flying_off", "drowning", SubResource( 34 ), "drowning", "idle", SubResource( 35 ), "idle", "mounting", SubResource( 41 ), "mounting", "idle", SubResource( 42 ), "jousting", "dueling", SubResource( 45 ), "dueling", "idle", SubResource( 46 ) ]
 start_node = "idle"
-graph_offset = Vector2( -60, -170 )
+graph_offset = Vector2( -132, -97 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=37]
 
@@ -5161,8 +5173,8 @@ texture = ExtResource( 27 )
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Reversable/Sprite/Main_Body/Head/Tears"]
-position = Vector2( 9.76563, -598.45 )
-rotation = 1.07338
+position = Vector2( -5.27344, -449.453 )
+rotation = 0.771436
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 11 )
 
@@ -5201,11 +5213,13 @@ rotation = -0.167575
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 2 )
 anims/dodging = SubResource( 3 )
 anims/drowning = SubResource( 4 )
+anims/dueling = SubResource( 43 )
 anims/flying_off = SubResource( 5 )
 anims/idling = SubResource( 6 )
 anims/jousting = SubResource( 7 )

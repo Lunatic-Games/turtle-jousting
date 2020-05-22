@@ -3,12 +3,14 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
+const duel_indicator_scene = preload("res://player/duel_indicator.tscn")
 const powerup_scenes = [preload("res://powerups/judgement.tscn"),
 	preload("res://powerups/lightning_rod.tscn"),
 	preload("res://powerups/mead.tscn")]
 
 remote var visor_brought_down_method = "_return_to_main_menu"
 
+var duels = []
 
 func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -17,6 +19,7 @@ func _ready():
 		set_process_input(false)
 	else:
 		#get_tree().paused = true
+		randomize()
 		set_process(false)
 		$GameTimerLabel.text = str($GameTimer.wait_time)
 		$AnimationPlayer.play("countdown")
@@ -45,6 +48,7 @@ func add_player(number, net_id, data = {}):
 	new_player.name = "Player" + str(number)
 	new_player.load_data(data)
 	new_player.set_network_master(net_id)
+	new_player.connect("dueling", self, "duel_started")
 	$YSort.add_child(new_player)
 
 
@@ -133,3 +137,28 @@ func _spawn_powerup():
 	$YSort.add_child(powerup)
 	powerup.global_position = powerup_position
 	powerup.connect("picked_up", $PowerupSpawnTimer, "start")
+
+
+func duel_started(p1, p2):
+	if duels.has([p1, p2]) or duels.has([p2, p1]):
+		print("Duplicate duel")
+		return
+	var duel_indicator = duel_indicator_scene.instance()
+	var pos = p1.global_position
+	pos += (p2.global_position - p1.global_position) / 2
+	pos += Vector2(-16, -100)
+	duel_indicator.set_global_position(pos)
+	duel_indicator.random_button(p1, p2)
+	duel_indicator.connect("decided", self, "_on_DuelIndicator_decided")
+	add_child(duel_indicator)
+	duels.append([p1, p2])
+
+
+func _on_DuelIndicator_decided(indicator):
+	var p1 = indicator.player_1
+	var p2 = indicator.player_2
+	if duels.has([p1, p2]):
+		duels.remove(duels.find([p1, p2]))
+	elif duels.has([p2, p1]):
+		duels.remove(duels.find([p2, p1]))
+	indicator.queue_free()
