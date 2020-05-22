@@ -1,15 +1,531 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://powerups/assets/orb_top.png" type="Texture" id=1]
-[ext_resource path="res://powerups/assets/orb_bottom.png" type="Texture" id=2]
-[ext_resource path="res://powerups/assets/light_small.png" type="Texture" id=3]
-[ext_resource path="res://powerups/assets/light_large.png" type="Texture" id=4]
-[ext_resource path="res://powerups/powerup.gd" type="Script" id=5]
+[ext_resource path="res://powerups/powerup.gd" type="Script" id=1]
+[ext_resource path="res://powerups/assets/orb_top.png" type="Texture" id=2]
+[ext_resource path="res://powerups/assets/orb_bottom.png" type="Texture" id=3]
+[ext_resource path="res://powerups/assets/orb_glow_outer.png" type="Texture" id=4]
+[ext_resource path="res://powerups/assets/orb_glow_inner.png" type="Texture" id=5]
+[ext_resource path="res://powerups/assets/light_small.png" type="Texture" id=6]
+[ext_resource path="res://powerups/assets/light_large.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 [sub_resource type="Animation" id=2]
-resource_name = "Spawn"
+resource_name = "open_tier1"
+tracks/0/type = "value"
+tracks/0/path = NodePath("orb/orb_top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -8.99338, -8.99341 ), Vector2( -131.903, -5.99567 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("orb/orb_top:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -26.0, -52.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("orb/opening_light:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("orb/opening_light/small_light:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("orb/opening_light/large_light:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("orb/orb_glow:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("orb/orb_bottom:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 17.9868, 32.9758 ), Vector2( -0.000488281, 167.877 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("orb/orb_bottom:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 5.0, 57.0, 83.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("orb/opening_light/small_light:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 1e-005 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("orb/opening_light/small_light:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 104.1, 32.0, -26.0, 0.0 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("orb/opening_light/small_light:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 98.9272, 36 ), Vector2( 175.168, 32.3545 ), Vector2( 322.617, 19.8733 ), Vector2( 471.444, -208.267 ), Vector2( 623.75, -618.368 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("orb/orb_top:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("orb/orb_bottom:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "open_tier2"
+tracks/0/type = "value"
+tracks/0/path = NodePath("orb/orb_top:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -8.99338, -8.99341 ), Vector2( -131.903, -5.99567 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("orb/orb_top:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -26.0, -52.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("orb/opening_light:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("orb/opening_light/large_light:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("orb/orb_glow:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("orb/orb_bottom:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 17.9868, 32.9758 ), Vector2( -0.000488281, 167.877 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("orb/orb_bottom:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 5.0, 57.0, 83.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("orb/opening_light/small_light:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 1e-005 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("orb/opening_light/small_light:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 104.1, 32.0, -26.0, 0.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("orb/opening_light/small_light:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 98.9272, 36 ), Vector2( 175.168, 32.3545 ), Vector2( 322.617, 19.8733 ), Vector2( 471.444, -208.267 ), Vector2( 623.75, -618.368 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("orb/orb_top:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("orb/orb_bottom:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("orb/opening_light/large_light:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -21.8, -21.8, -25.0, 27.0, 53.0 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("orb/opening_light/large_light:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 0.2 ), Vector2( 1.4, 1 ), Vector2( 2, 1.5 ), Vector2( 0.5, 0.5 ), Vector2( 1e-005, 1e-005 ) ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("orb/opening_light/large_light:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -38.8345, 127.599 ), Vector2( -68.7295, 120.956 ), Vector2( -161.59, 220.362 ), Vector2( -61.4524, 170.293 ), Vector2( -80, 224 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("orb/orb_glow:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.4, 0.4 ), Vector2( 1, 1 ) ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("orb/orb_glow:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0.3, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("orb/orb_glow:z_index")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ -1 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("orb/orb_glow/outer_glow:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 10.0137, -65.0894 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("orb/orb_glow/outer_glow:rotation_degrees")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 20.0 ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("orb/orb_glow/inner_glow:position")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("orb/orb_glow/inner_glow:rotation_degrees")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -10.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "shine"
+length = 4.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("orb/orb_glow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("orb/orb_glow/outer_glow:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 10.0137, -65.0894 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("orb/orb_glow/outer_glow:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 20.0, 40.0, 65.0, 95.0, 120.0, 140.0, 165.0, 195.0, 220.0, 240.0, 265.0, 295.0, 320.0, 340.0, 380.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("orb/orb_glow/outer_glow:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("orb/orb_glow/inner_glow:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("orb/orb_glow/inner_glow:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -10.0 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("orb/orb_glow/inner_glow:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../orb:scale")
 tracks/0/interp = 1
@@ -20,7 +536,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0.05, 0.05 ) ]
+"values": [ Vector2( 1e-005, 1e-005 ), Vector2( 0.05, 0.05 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../orb:position")
@@ -58,43 +574,108 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("orb/orb_bottom:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("orb/orb_bottom:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("orb/orb_top:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("orb/orb_top:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [node name="Powerup" type="Area2D" groups=[
 "powerup",
 ]]
-script = ExtResource( 5 )
+script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="orb" type="Node2D" parent="."]
-visible = false
 scale = Vector2( 0.05, 0.05 )
 
 [node name="orb_top" type="Sprite" parent="orb"]
-texture = ExtResource( 1 )
-
-[node name="orb_bottom" type="Sprite" parent="orb"]
+position = Vector2( -131.903, -5.99567 )
+rotation = -0.907571
+scale = Vector2( 1e-005, 1e-005 )
 texture = ExtResource( 2 )
 
-[node name="orb_glow" type="Node2D" parent="orb"]
-
-[node name="outer_glow" type="Sprite" parent="orb/orb_glow"]
-
-[node name="inner_glow" type="Sprite" parent="orb/orb_glow"]
-
-[node name="opening_light" type="Node2D" parent="orb"]
-visible = false
-
-[node name="small_light" type="Sprite" parent="orb/opening_light"]
+[node name="orb_bottom" type="Sprite" parent="orb"]
+position = Vector2( -0.000488281, 167.877 )
+rotation = 1.44862
+scale = Vector2( 1e-005, 1e-005 )
 texture = ExtResource( 3 )
 
-[node name="large_light" type="Sprite" parent="orb/opening_light"]
-position = Vector2( -38.8345, 127.599 )
-rotation = -0.380482
+[node name="orb_glow" type="Node2D" parent="orb"]
+z_index = -1
+
+[node name="outer_glow" type="Sprite" parent="orb/orb_glow"]
+position = Vector2( 10.0137, -65.0894 )
+rotation = 0.349066
 texture = ExtResource( 4 )
+
+[node name="inner_glow" type="Sprite" parent="orb/orb_glow"]
+rotation = -0.174533
+texture = ExtResource( 5 )
+
+[node name="opening_light" type="Node2D" parent="orb"]
+
+[node name="small_light" type="Sprite" parent="orb/opening_light"]
+visible = false
+position = Vector2( 623.75, -618.368 )
+scale = Vector2( 1e-005, 1e-005 )
+texture = ExtResource( 6 )
+
+[node name="large_light" type="Sprite" parent="orb/opening_light"]
+position = Vector2( -80, 224 )
+rotation = 0.925025
+scale = Vector2( 1e-005, 1e-005 )
+texture = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Spawn = SubResource( 2 )
+anims/open_tier1 = SubResource( 2 )
+anims/open_tier2 = SubResource( 5 )
+anims/shine = SubResource( 6 )
+anims/spawn = SubResource( 4 )
