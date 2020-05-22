@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
@@ -85,10 +85,10 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ true ]
 }
 tracks/6/type = "method"
 tracks/6/path = NodePath(".")
@@ -97,7 +97,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 1.5 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ true ],
@@ -192,6 +192,34 @@ tracks/6/keys = {
 "values": [ 100.0 ]
 }
 
+[sub_resource type="Animation" id=35]
+resource_name = "dueling"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:locked")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:locked_speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
 [sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
@@ -265,6 +293,30 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( -30, 1.5, -8, 15, 14, 7, 44, -5, 24, -15, -11, -11 ), PoolVector2Array( -28, 3.5, -8, 17, 14, 9, 41.5, -5, 19, -15, -11, -11 ), PoolVector2Array( -30, 1.5, -8, 15, 14, 7, 44, -5, 24, -15, -11, -11 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("CollisionShape2D:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -352,7 +404,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 200.0 ]
+"values": [ 400.0 ]
 }
 
 [sub_resource type="Animation" id=31]
@@ -528,6 +580,9 @@ animation = "charging_joust"
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "dodging"
 
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "dueling"
+
 [sub_resource type="AnimationNodeAnimation" id=11]
 animation = "moving"
 
@@ -591,11 +646,17 @@ auto_advance = true
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
 [sub_resource type="AnimationNodeStateMachine" id=28]
 states/charging_joust/node = SubResource( 9 )
 states/charging_joust/position = Vector2( 605, 76.3057 )
 states/dodging/node = SubResource( 10 )
 states/dodging/position = Vector2( -9, 198 )
+states/dueling/node = SubResource( 36 )
+states/dueling/position = Vector2( 536, 297.306 )
 states/idle/node = SubResource( 18 )
 states/idle/position = Vector2( 314, 198 )
 states/jousting/node = SubResource( 19 )
@@ -604,9 +665,9 @@ states/mounting/node = SubResource( 32 )
 states/mounting/position = Vector2( 314, 38.3057 )
 states/parrying/node = SubResource( 20 )
 states/parrying/position = Vector2( 314, 369 )
-transitions = [ "jousting", "idle", SubResource( 21 ), "idle", "parrying", SubResource( 22 ), "parrying", "idle", SubResource( 23 ), "idle", "dodging", SubResource( 24 ), "dodging", "idle", SubResource( 25 ), "idle", "charging_joust", SubResource( 26 ), "charging_joust", "jousting", SubResource( 27 ), "idle", "mounting", SubResource( 33 ), "mounting", "idle", SubResource( 34 ) ]
+transitions = [ "jousting", "idle", SubResource( 21 ), "idle", "parrying", SubResource( 22 ), "parrying", "idle", SubResource( 23 ), "idle", "dodging", SubResource( 24 ), "dodging", "idle", SubResource( 25 ), "idle", "charging_joust", SubResource( 26 ), "charging_joust", "jousting", SubResource( 27 ), "idle", "mounting", SubResource( 33 ), "mounting", "idle", SubResource( 34 ), "dueling", "idle", SubResource( 38 ), "jousting", "dueling", SubResource( 39 ) ]
 start_node = "idle"
-graph_offset = Vector2( -180, -86.6943 )
+graph_offset = Vector2( -140, -14.6943 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=29]
 
@@ -617,7 +678,7 @@ graph_offset = Vector2( -180, -86.6943 )
 ]]
 position = Vector2( 507.974, 277.471 )
 script = ExtResource( 1 )
-locked_speed = 0.0
+locked = true
 slowed = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -628,6 +689,7 @@ offset = Vector2( -50, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "turtle",
@@ -637,10 +699,12 @@ script = ExtResource( 26 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource( 2 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 3 )
 anims/dodging = SubResource( 4 )
+anims/dueling = SubResource( 35 )
 anims/idling = SubResource( 5 )
 anims/jousting = SubResource( 6 )
 anims/mounting = SubResource( 31 )
@@ -685,5 +749,5 @@ script = ExtResource( 27 )
 [connection signal="picked_up_knight" from="Hitbox" to="." method="_pick_up_knight"]
 [connection signal="picked_up_powerup" from="Hitbox" to="." method="_on_Hitbox_picked_up_powerup"]
 [connection signal="animation_started" from="Animator" to="." method="_on_Animator_animation_started"]
-[connection signal="knocked_off" from="Knight" to="." method="_on_Knight_knocked_off"]
-[connection signal="stop_joust" from="Knight" to="." method="_on_Knight_stop_joust"]
+[connection signal="knocked_off" from="Knight" to="." method="_knock_knight_off"]
+[connection signal="lance_duel" from="Knight" to="." method="_on_Knight_lance_duel"]

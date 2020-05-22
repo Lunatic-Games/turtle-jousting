@@ -3,13 +3,12 @@ extends Area2D
 
 signal dead
 signal knocked_off
-signal stop_joust
+signal lance_duel
 
 export (bool) var parrying = false
 export (bool) var in_water = true
 
 const MAX_HEALTH = 100
-const KNOCKED_OFF_DISTANCE = 100
 var health = MAX_HEALTH
 var number
 
@@ -29,12 +28,19 @@ func hit(damage):
 
 
 func _on_Lance_parried(knockback_direction):
-	var new_pos = global_position + knockback_direction * KNOCKED_OFF_DISTANCE
-	emit_signal("knocked_off", new_pos)
+	emit_signal("knocked_off", knockback_direction)
 
 
-func _on_Lance_hit_weapon():
-	emit_signal("stop_joust")
+func _on_Lance_hit_weapon(other_weapon):
+	var other_player
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.is_a_parent_of(other_weapon):
+			other_player = player
+			break
+	if !other_player:
+		print("Couldn't find owner of weapon")
+		return
+	emit_signal("lance_duel", other_player)
 	
 
 func set_direction(dir_sign):
