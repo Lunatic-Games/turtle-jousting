@@ -437,5 +437,4 @@ one_shot = true
 [connection signal="timeout" from="ConnectionTimer" to="." method="_on_ConnectionTimer_timeout"]
 [connection signal="about_to_show" from="KeyboardPopup" to="." method="_on_Popup_about_to_show"]
 [connection signal="popup_hide" from="KeyboardPopup" to="." method="_on_Popup_hide"]
-[connection signal="brought_down" from="VisorTransition" to="." method="_on_VisorTransition_brought_down"]
 [connection signal="lifted_up" from="VisorTransition" to="." method="_on_VisorTransition_lifted_up"]

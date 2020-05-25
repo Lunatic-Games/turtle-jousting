@@ -16,6 +16,17 @@ func _input(event):
 		check_for_press(event, player_2, player_1)
 
 
+func display(p1, p2):
+	player_1 = p1
+	player_2 = p2
+	
+	var pos = p1.global_position
+	pos += (p2.global_position - p1.global_position) / 2
+	pos += Vector2(-16, -100)
+	set_global_position(pos)
+	random_button()
+
+
 func check_for_press(event, player, other_player):
 	var device = event.device
 	if event is InputEventKey or event is InputEventMouse:
@@ -42,9 +53,7 @@ func winning_press(winner, loser):
 	emit_signal("decided", self)
 
 
-func random_button(p1, p2):
-	player_1 = p1
-	player_2 = p2
+func random_button():
 	displayed_button = CONTROL_BUTTONS[randi() % len(CONTROL_BUTTONS)]
 	$Label.text = displayed_button
 

@@ -109,8 +109,7 @@ text = "Exit"
 [connection signal="pressed" from="ButtonContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
-[connection signal="go_back" from="SettingsMenu" to="." method="_on_SettingsMenu_go_back"]
-[connection signal="brought_down" from="VisorTransition" to="." method="_on_VisorTransition_brought_down"]
+[connection signal="popup_hide" from="SettingsMenu" to="." method="_on_SettingsMenu_popup_hide"]
 [connection signal="lifted_up" from="VisorTransition" to="." method="_on_VisorTransition_lifted_up"]
 
 [editable path="Game"]

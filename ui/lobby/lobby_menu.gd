@@ -28,9 +28,6 @@ var client
 # Allows creation of server without stopping processing
 var server_creation_thread
 
-# Call method when visor brought down
-var visor_brought_down_method
-
 
 # Setup
 func _ready():
@@ -349,8 +346,7 @@ func toggle_ui_visibility(group_name, visibility):
 
 
 func _on_StartButton_pressed():
-	visor_brought_down_method = "_call_start"
-	$VisorTransition.bring_down()
+	$VisorTransition.bring_down(self, "_call_start")
 
 
 func _call_start():
@@ -389,8 +385,7 @@ func return_to():
 
 
 func _on_BackButton_pressed():
-	visor_brought_down_method = "_go_back"
-	$VisorTransition.bring_down()
+	$VisorTransition.bring_down(self, "_go_back")
 	
 
 # Exit game (this will eventually lead back to main menu)
@@ -411,7 +406,6 @@ func _exit_tree():
 
 
 func _on_ConnectionTimer_timeout():
-	print("Failed to connect")
 	get_tree().network_peer = null
 	$NetworkMessagePopup.connection_failed()
 
@@ -421,10 +415,6 @@ func _on_VisorTransition_lifted_up():
 		button_container.get_node("OpenMultiplayerButton").grab_focus()
 	else:
 		button_container.get_node("CloseMultiplayerButton").grab_focus()
-
-
-func _on_VisorTransition_brought_down():
-	call(visor_brought_down_method)
 
 
 func _on_Popup_about_to_show():
