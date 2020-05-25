@@ -79,4 +79,4 @@ text = "Return to main menu"
 [connection signal="pressed" from="ButtonContainer/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/ReturnToLobbyButton" to="." method="_on_ReturnToLobbyButton_pressed"]
 [connection signal="pressed" from="ButtonContainer/ReturnToMainMenuButton" to="." method="_on_ReturnToMainMenuButton_pressed"]
-[connection signal="go_back" from="SettingsMenu" to="." method="_on_SettingsMenu_go_back"]
+[connection signal="popup_hide" from="SettingsMenu" to="." method="_on_SettingsMenu_popup_hide"]

@@ -237,9 +237,9 @@ position = Vector2( 873.633, 469.126 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 452.0
-margin_top = -20.0
+margin_top = -9.99999
 margin_right = 572.0
-margin_bottom = -2.0
+margin_bottom = 8.00001
 custom_fonts/font = SubResource( 1 )
 text = "120"
 align = 1
@@ -254,6 +254,7 @@ margin_top = 224.0
 margin_right = 640.0
 margin_bottom = 352.0
 rect_min_size = Vector2( 256, 128 )
+rect_scale = Vector2( 2, 3 )
 rect_pivot_offset = Vector2( 128, 64 )
 custom_fonts/font = SubResource( 2 )
 text = "3"
@@ -286,5 +287,4 @@ one_shot = true
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="_on_PausedMenu_return_to_lobby"]
 [connection signal="return_to_main_menu" from="PausedMenu" to="." method="_on_PausedMenu_return_to_main_menu"]
-[connection signal="brought_down" from="VisorTransition" to="." method="_on_VisorTransition_brought_down"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_powerup"]

@@ -118,7 +118,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.5, 1e-005 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 0.5, 1e-05 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("orb/opening_light/small_light:rotation_degrees")
@@ -154,7 +154,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/12/type = "value"
 tracks/12/path = NodePath("orb/orb_bottom:scale")
@@ -166,10 +166,10 @@ tracks/12/keys = {
 "times": PoolRealArray( 0, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "open_tier2"
 tracks/0/type = "value"
 tracks/0/path = NodePath("orb/orb_top:position")
@@ -265,7 +265,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.5, 1e-005 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 0.5, 1e-05 ), Vector2( 0.5, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1.5, 1 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("orb/opening_light/small_light:rotation_degrees")
@@ -301,7 +301,7 @@ tracks/10/keys = {
 "times": PoolRealArray( 0, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/11/type = "value"
 tracks/11/path = NodePath("orb/orb_bottom:scale")
@@ -313,7 +313,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.8 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/12/type = "value"
 tracks/12/path = NodePath("orb/opening_light/large_light:rotation_degrees")
@@ -337,7 +337,7 @@ tracks/13/keys = {
 "times": PoolRealArray( 0.2, 0.4, 0.6, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 0.2 ), Vector2( 1.4, 1 ), Vector2( 2, 1.5 ), Vector2( 0.5, 0.5 ), Vector2( 1e-005, 1e-005 ) ]
+"values": [ Vector2( 1, 0.2 ), Vector2( 1.4, 1 ), Vector2( 2, 1.5 ), Vector2( 0.5, 0.5 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/14/type = "value"
 tracks/14/path = NodePath("orb/opening_light/large_light:position")
@@ -436,7 +436,7 @@ tracks/21/keys = {
 "values": [ 0.0, -10.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "shine"
 length = 4.2
 loop = true
@@ -525,7 +525,7 @@ tracks/6/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("../orb:scale")
 tracks/0/interp = 1
@@ -536,7 +536,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1e-005, 1e-005 ), Vector2( 0.05, 0.05 ) ]
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0.05, 0.05 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../orb:position")
@@ -637,13 +637,13 @@ scale = Vector2( 0.05, 0.05 )
 [node name="orb_top" type="Sprite" parent="orb"]
 position = Vector2( -131.903, -5.99567 )
 rotation = -0.907571
-scale = Vector2( 1e-005, 1e-005 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 2 )
 
 [node name="orb_bottom" type="Sprite" parent="orb"]
 position = Vector2( -0.000488281, 167.877 )
 rotation = 1.44862
-scale = Vector2( 1e-005, 1e-005 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 3 )
 
 [node name="orb_glow" type="Node2D" parent="orb"]
@@ -663,19 +663,19 @@ texture = ExtResource( 5 )
 [node name="small_light" type="Sprite" parent="orb/opening_light"]
 visible = false
 position = Vector2( 623.75, -618.368 )
-scale = Vector2( 1e-005, 1e-005 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 6 )
 
 [node name="large_light" type="Sprite" parent="orb/opening_light"]
 position = Vector2( -80, 224 )
 rotation = 0.925025
-scale = Vector2( 1e-005, 1e-005 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/open_tier1 = SubResource( 2 )
-anims/open_tier2 = SubResource( 5 )
-anims/shine = SubResource( 6 )
-anims/spawn = SubResource( 4 )
+anims/open_tier2 = SubResource( 3 )
+anims/shine = SubResource( 4 )
+anims/spawn = SubResource( 5 )

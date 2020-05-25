@@ -37,6 +37,7 @@ var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 
 
 func _ready():
+	set_process_input(false)
 	make_collisions_unique()
 	$AnimationTree.active = true
 	$Knight/AnimationTree.active = true
