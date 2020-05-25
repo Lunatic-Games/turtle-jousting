@@ -2,7 +2,6 @@ extends Area2D
 
 
 signal hit_weapon
-signal hit_player
 signal parried
 
 
