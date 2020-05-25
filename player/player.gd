@@ -20,7 +20,7 @@ const MAX_JOUST_CHARGE = 200
 const JOUST_CHARGE_RATE = 150
 const JOUST_CHARGE_DIST_MODIFIER = 2.5
 const KNOCKED_OFF_DISTANCE = 100
-const DEBUG = false
+const DEBUG = true
 
 var number
 var device_id
@@ -37,18 +37,22 @@ var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 
 
 func _ready():
-	set_process_input(false)
 	make_collisions_unique()
 	$AnimationTree.active = true
 	$Knight/AnimationTree.active = true
 	
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
-		$Sprite.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
-		$Hitbox/CollisionShape2D.rset_config("points", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Sprite.rset_config("flip_h", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Sprite.rset_config("offset", MultiplayerAPI.RPC_MODE_PUPPET)
+		$CollisionShape2D.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Hitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		
 	if DEBUG:
 		device_id = 0
 		set_color(Color.aquamarine)
+	else:
+		set_process_input(false)
 
 
 func _input(event):
@@ -63,7 +67,7 @@ func _input(event):
 		return			
 	if device != device_id:
 		return
-	
+
 	if event is InputEventMouseMotion:
 		joust_direction += event.relative * MOUSE_SENSITIVITY
 		joust_direction = joust_direction.clamped(1)
@@ -187,11 +191,6 @@ func update_sprite_direction(movement):
 	elif ((idle and movement.x < -1) or 
 			(locked and !locked_direction and joust_direction.x < -0.1)):
 		set_direction(-1)
-	if get_tree().network_peer:
-		$Sprite.rset("scale", $Sprite.scale)
-		$LanceHitbox.rset("scale", $LanceHitbox.scale)
-		$KnightHitbox.rset("scale", $KnightHitbox.scale)
-		$TurtleHitbox.rset("scale", $TurtleHitbox.scale)
 
 
 func set_direction(dir_sign):
@@ -199,6 +198,11 @@ func set_direction(dir_sign):
 	$Sprite.offset.x = -dir_sign * abs($Sprite.offset.x)
 	$CollisionShape2D.scale.x = dir_sign * abs($CollisionShape2D.scale.x)
 	$Hitbox.scale.x = dir_sign * abs($Hitbox.scale.x)
+	if get_tree().network_peer:
+		$Sprite.rset("flip_h", $Sprite.flip_h)
+		$Sprite.rset("offset", $Sprite.offset)
+		$CollisionShape2D.rset("scale", $CollisionShape2D.scale)
+		$Hitbox.rset("scale", $Hitbox.scale)
 	if has_node("Knight"):
 		$Knight.set_direction(dir_sign)
 
@@ -238,15 +242,6 @@ func set_indicator_visibility(visibility):
 		return
 	$JoustIndicator.visible = visibility
 	$JoustIndicatorBottom.visible = visibility
-
-
-func _on_Animator_animation_started(anim_name):
-	if get_tree().network_peer and is_network_master():
-		rpc("_set_animation", anim_name)
-
-
-puppet func _set_animation(anim_name):
-	$Animator.play(anim_name)
 
 
 func _on_Knight_lance_duel(other_player):

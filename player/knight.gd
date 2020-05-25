@@ -15,6 +15,9 @@ var number
 
 func _ready():
 	$HealthLabel.text = str(health)
+	if get_tree().network_peer:
+		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
+		$CollisionShape2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 func hit(damage):
@@ -46,6 +49,9 @@ func _on_Lance_hit_weapon(other_weapon):
 func set_direction(dir_sign):
 	$Reversable.scale.x = dir_sign * abs($Reversable.scale.x)
 	$CollisionShape2D.scale.x = dir_sign * abs($CollisionShape2D.scale.x)
+	if get_tree().network_peer:
+		$Reversable.rset("scale", $Reversable.scale)
+		$CollisionShape2D.rset("scale", $CollisionShape2D.scale)
 	
 	
 func set_color(color):

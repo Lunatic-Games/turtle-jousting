@@ -9,10 +9,6 @@ onready var knight_idle_playback = knight_tree.get("parameters/idle/playback")
 var knight_on = true
 
 
-func _ready():
-	pass
-
-
 func _process(_delta):
 	pass
 	
@@ -64,8 +60,7 @@ func duel():
 	
 
 func joust_ended():
-	playback.travel("joust_ended")
-	knight_playback.travel("joust_ended")
+	travel_both("joust_ended")
 
 
 func parry():
@@ -93,9 +88,21 @@ func knight_flying_off():
 func travel_both(name, idle_pb=false):
 	if idle_pb:
 		idle_playback.travel(name)
+		if get_tree().network_peer:
+			playback_travel_rpc(".", "parameters/idle/playback", name)
 	else:
 		playback.travel(name)
+		if get_tree().network_peer:
+			playback_travel_rpc(".", "parameters/playback", name)
 	if knight_on and idle_pb:
 		knight_idle_playback.travel(name)
+		if get_tree().network_peer:
+			playback_travel_rpc("../Knight/AnimationTree", "parameters/idle/playback", name)
 	elif knight_on:
 		knight_playback.travel(name)
+		if get_tree().network_peer:
+			playback_travel_rpc("../Knight/AnimationTree", "parameters/playback", name)
+
+
+remote func playback_travel_rpc(node_name, playback_name, travel_to):
+	get_node(node_name).get(playback_name).travel(travel_to)
