@@ -107,5 +107,4 @@ func travel_both(name, idle_pb=false):
 
 
 remote func playback_travel_rpc(node_name, playback_name, travel_to):
-	print("rpcing animation")
 	get_node(node_name).get(playback_name).travel(travel_to)
