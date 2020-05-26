@@ -8,3 +8,8 @@ signal picked_up
 func pick_up():
 	emit_signal("picked_up")
 	call_deferred("queue_free")
+
+
+func spawn_anim_done():
+	$AnimationPlayer.play("open_tier1")
+	$AnimationPlayer.queue("shine")
