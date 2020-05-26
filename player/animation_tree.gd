@@ -88,21 +88,24 @@ func knight_flying_off():
 func travel_both(name, idle_pb=false):
 	if idle_pb:
 		idle_playback.travel(name)
-		if get_tree().network_peer:
-			playback_travel_rpc(".", "parameters/idle/playback", name)
+		if get_tree().network_peer and is_network_master():
+			rpc("playback_travel_rpc", ".", "parameters/idle/playback", name)
 	else:
 		playback.travel(name)
-		if get_tree().network_peer:
-			playback_travel_rpc(".", "parameters/playback", name)
+		if get_tree().network_peer and is_network_master():
+			rpc("playback_travel_rpc", ".", "parameters/playback", name)
 	if knight_on and idle_pb:
 		knight_idle_playback.travel(name)
-		if get_tree().network_peer:
-			playback_travel_rpc("../Knight/AnimationTree", "parameters/idle/playback", name)
+		if get_tree().network_peer and is_network_master():
+			rpc("playback_travel_rpc", "../Knight/AnimationTree", 
+				"parameters/idle/playback", name)
 	elif knight_on:
 		knight_playback.travel(name)
-		if get_tree().network_peer:
-			playback_travel_rpc("../Knight/AnimationTree", "parameters/playback", name)
+		if get_tree().network_peer and is_network_master():
+			rpc("playback_travel_rpc", "../Knight/AnimationTree", 
+				"parameters/playback", name)
 
 
 remote func playback_travel_rpc(node_name, playback_name, travel_to):
+	print("rpcing animation")
 	get_node(node_name).get(playback_name).travel(travel_to)

@@ -20,7 +20,7 @@ const MAX_JOUST_CHARGE = 200
 const JOUST_CHARGE_RATE = 150
 const JOUST_CHARGE_DIST_MODIFIER = 2.5
 const KNOCKED_OFF_DISTANCE = 100
-const DEBUG = true
+const DEBUG = false
 
 var number
 var device_id
@@ -198,7 +198,7 @@ func set_direction(dir_sign):
 	$Sprite.offset.x = -dir_sign * abs($Sprite.offset.x)
 	$CollisionShape2D.scale.x = dir_sign * abs($CollisionShape2D.scale.x)
 	$Hitbox.scale.x = dir_sign * abs($Hitbox.scale.x)
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		$Sprite.rset("flip_h", $Sprite.flip_h)
 		$Sprite.rset("offset", $Sprite.offset)
 		$CollisionShape2D.rset("scale", $CollisionShape2D.scale)
