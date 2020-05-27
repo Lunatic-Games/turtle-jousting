@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/knight_head_hit.png" type="Texture" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://player/knight/assets/knight_neck.png" type="Texture" id=23]
 [ext_resource path="res://player/knight/assets/knight_head.png" type="Texture" id=24]
 [ext_resource path="res://weapons/lance/lance.tscn" type="PackedScene" id=25]
+[ext_resource path="res://player/animation_tree.gd" type="Script" id=26]
 
 [sub_resource type="Animation" id=1]
 resource_name = "charging_joust"
@@ -5746,7 +5747,7 @@ states/slapping/node = SubResource( 31 )
 states/slapping/position = Vector2( 687, 398 )
 transitions = [ "idle", "parrying", SubResource( 32 ), "idle", "dodging", SubResource( 33 ), "idle", "charging_joust", SubResource( 34 ), "parrying", "idle", SubResource( 35 ), "dodging", "idle", SubResource( 36 ), "charging_joust", "jousting", SubResource( 37 ), "idle", "flying_off", SubResource( 38 ), "flying_off", "drowning", SubResource( 39 ), "mounting", "idle", SubResource( 40 ), "jousting", "dueling", SubResource( 41 ), "dueling", "idle", SubResource( 42 ), "jousting", "joust_ending", SubResource( 43 ), "joust_ending", "idle", SubResource( 44 ), "jousting", "slapping", SubResource( 45 ), "slapping", "idle", SubResource( 46 ), "idle", "slapping", SubResource( 47 ), "drowning", "mounting", SubResource( 48 ) ]
 start_node = "idle"
-graph_offset = Vector2( 6, -153 )
+graph_offset = Vector2( 195, 101 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=50]
 
@@ -5817,7 +5818,7 @@ texture = ExtResource( 6 )
 [node name="Left_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
 position = Vector2( -53.5557, -536.047 )
 rotation = -0.453786
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 14 )
 
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
@@ -5865,6 +5866,7 @@ tree_root = SubResource( 49 )
 anim_player = NodePath("../Animator")
 parameters/playback = SubResource( 50 )
 parameters/idle/playback = SubResource( 51 )
+script = ExtResource( 26 )
 
 [node name="HealthLabel" type="Label" parent="."]
 margin_left = -49.7346

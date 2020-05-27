@@ -11,10 +11,6 @@ var player_held_by
 var knight_held_by
 
 
-func _ready():
-	make_collisions_unique()
-
-
 # Called when weapon first picked up
 func set_player(player):
 	player_held_by = player
@@ -52,8 +48,3 @@ func _hit_weapon(weapon):
 # Hit another turtle
 func _hit_turtle(turtle):
 	emit_signal("hit_turtle", turtle)
-	
-
-# Stop weapons from sharing collision shape
-func make_collisions_unique():
-	$CollisionShape2D.polygon = $CollisionShape2D.polygon.duplicate()

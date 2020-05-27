@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
-[ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
+[ext_resource path="res://player/turtle/assets/turtle_green.png" type="Texture" id=2]
+[ext_resource path="res://player/animation_tree.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 length = 1.5
@@ -42,50 +43,24 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:charging_up_joust")
+tracks/3/path = NodePath("CollisionPolygon2D:polygon")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/4/type = "method"
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ true ],
-"method": "set_indicator_visibility"
-} ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("CollisionPolygon2D:polygon")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 0, 1, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -30.0354, 2.35007, -15.6165, -11.0744, 19.4861, -16.1459, 31.9163, -14.1571, 36.7889, -6.50015, 33.209, 0.759033, 19.2873, 5.5322, -9.1528, 15.4763 ), PoolVector2Array( -28.3449, 2.35007, -13.6277, -11.6711, 19.4861, -16.1459, 29.2313, -14.4554, 34.7006, -6.50015, 30.0269, 0.858459, 19.2873, 5.5322, -9.1528, 15.4763 ) ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
+tracks/4/type = "value"
+tracks/4/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0, 1, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
@@ -93,7 +68,7 @@ tracks/6/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-length = 2.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -203,7 +178,7 @@ tracks/8/keys = {
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
@@ -242,7 +217,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:charging_up_joust")
+tracks/3/path = NodePath("CollisionPolygon2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -254,7 +229,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CollisionPolygon2D:disabled")
+tracks/4/path = NodePath("Hitbox/CollisionPolygon2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -266,19 +241,19 @@ tracks/4/keys = {
 "values": [ false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Hitbox/CollisionPolygon2D:disabled")
+tracks/5/path = NodePath("CollisionPolygon2D:polygon")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -30.2343, 2.94669, -15.8153, -9.58282, 18.1934, -15.2509, 31.7173, -13.9582, 38.6782, -5.60519, 33.1096, 1.9523, 16.9007, 7.22269, -9.65009, 17.5645 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("CollisionPolygon2D:polygon")
+tracks/6/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -289,20 +264,8 @@ tracks/6/keys = {
 "update": 0,
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -30.2343, 2.94669, -15.8153, -9.58282, 18.1934, -15.2509, 31.7173, -13.9582, 38.6782, -5.60519, 33.1096, 1.9523, 16.9007, 7.22269, -9.65009, 17.5645 ) ]
 }
-tracks/7/type = "value"
-tracks/7/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -30.2343, 2.94669, -15.8153, -9.58282, 18.1934, -15.2509, 31.7173, -13.9582, 38.6782, -5.60519, 33.1096, 1.9523, 16.9007, 7.22269, -9.65009, 17.5645 ) ]
-}
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
@@ -316,7 +279,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.042, 0.05 ), Vector2( 0.06, 0.05 ), Vector2( 0.06, 0.05 ), Vector2( 0.05, 0.05 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:charging_up_joust")
+tracks/1/path = NodePath(".:locked")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -325,10 +288,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ true ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath(".:locked")
+tracks/2/path = NodePath(".:locked_speed")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -336,61 +299,35 @@ tracks/2/enabled = true
 tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ 400.0 ]
 }
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollisionPolygon2D:polygon")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ false ],
-"method": "set_indicator_visibility"
-} ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath(".:locked_speed")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 400.0 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("CollisionPolygon2D:polygon")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
 "times": PoolRealArray( 0, 0.2, 0.7, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( -28.3449, 2.35007, -13.6277, -11.6711, 19.4861, -16.1459, 29.2313, -14.4554, 34.7006, -6.50015, 30.0269, 0.858459, 19.2873, 5.5322, -9.1528, 15.4763 ), PoolVector2Array( -39.88, 2.15118, -17.7047, -11.7705, 19.4861, -16.1459, 41.8604, -14.2565, 49.2189, -5.9035, 41.7609, 1.35568, 21.8727, 5.33331, -12.7327, 15.6751 ), PoolVector2Array( -39.88, 2.15118, -17.7047, -11.7705, 19.4861, -16.1459, 41.8604, -14.2565, 49.2189, -5.9035, 41.7609, 1.35568, 21.8727, 5.33331, -12.7327, 15.6751 ), PoolVector2Array( -34.3113, 1.45511, -14.7215, -11.6711, 19.4861, -16.1459, 33.7062, -14.7538, 41.1642, -6.40073, 35.9933, 0.56015, 21.8727, 5.33331, -12.7327, 15.6751 ) ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
+tracks/4/type = "value"
+tracks/4/path = NodePath("Hitbox/CollisionPolygon2D:polygon")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0, 0.2, 0.7, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( -28.3449, 2.35007, -13.6277, -11.6711, 19.4861, -16.1459, 29.2313, -14.4554, 34.7006, -6.50015, 30.0269, 0.858459, 19.2873, 5.5322, -9.1528, 15.4763 ), PoolVector2Array( -39.88, 2.15118, -17.7047, -11.7705, 19.4861, -16.1459, 41.8604, -14.2565, 49.2189, -5.9035, 41.7609, 1.35568, 21.8727, 5.33331, -12.7327, 15.6751 ), PoolVector2Array( -39.88, 2.15118, -17.7047, -11.7705, 19.4861, -16.1459, 41.8604, -14.2565, 49.2189, -5.9035, 41.7609, 1.35568, 21.8727, 5.33331, -12.7327, 15.6751 ), PoolVector2Array( -34.3113, 1.45511, -14.7215, -11.6711, 19.4861, -16.1459, 33.7062, -14.7538, 41.1642, -6.40073, 35.9933, 0.56015, 21.8727, 5.33331, -12.7327, 15.6751 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -430,7 +367,7 @@ tracks/2/keys = {
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -26.8533, 8.11758, -12.9317, -9.08566, 18.0939, -14.8532, 28.1374, -11.4722, 32.9105, -2.52255, 28.038, 8.3165, 17.5967, 11.7969, -9.15283, 23.8293 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 length = 1.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
@@ -493,92 +430,93 @@ tracks/4/keys = {
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -49.4416, 2.2702, -21.455, -11.5027, 19.4861, -16.1459, 52.4784, -14.5879, 61.0728, -6.3241, 53.5803, 1.0582, 21.9574, 5.90628, -15.0643, 15.933 ), PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "charging_joust"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "dodging"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "moving"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "idling"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "idling"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
-[sub_resource type="AnimationNodeStateMachine" id=20]
-states/idle_moving/node = SubResource( 13 )
+[sub_resource type="AnimationNodeStateMachine" id=16]
+states/idle_moving/node = SubResource( 9 )
 states/idle_moving/position = Vector2( 457, 353 )
-states/idle_resting/node = SubResource( 14 )
+states/idle_resting/node = SubResource( 10 )
 states/idle_resting/position = Vector2( 457, 228 )
-states/idle_stop_moving/node = SubResource( 15 )
+states/idle_stop_moving/node = SubResource( 11 )
 states/idle_stop_moving/position = Vector2( 179, 279 )
-transitions = [ "idle_moving", "idle_stop_moving", SubResource( 16 ), "idle_resting", "idle_moving", SubResource( 17 ), "idle_stop_moving", "idle_resting", SubResource( 18 ), "idle_moving", "idle_resting", SubResource( 19 ) ]
+transitions = [ "idle_moving", "idle_stop_moving", SubResource( 12 ), "idle_resting", "idle_moving", SubResource( 13 ), "idle_stop_moving", "idle_resting", SubResource( 14 ), "idle_moving", "idle_resting", SubResource( 15 ) ]
 start_node = "idle_resting"
 graph_offset = Vector2( -132, 102 )
 
-[sub_resource type="AnimationNodeAnimation" id=22]
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "jousting"
 
-[sub_resource type="AnimationNodeAnimation" id=24]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=44]
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
 
-[sub_resource type="AnimationNodeStateMachine" id=41]
-states/charging_joust/node = SubResource( 10 )
+[sub_resource type="AnimationNodeStateMachine" id=26]
+states/charging_joust/node = SubResource( 7 )
 states/charging_joust/position = Vector2( 605, 76.3057 )
-states/dodging/node = SubResource( 11 )
+states/dodging/node = SubResource( 8 )
 states/dodging/position = Vector2( 69, 198 )
-states/idle/node = SubResource( 20 )
+states/idle/node = SubResource( 16 )
 states/idle/position = Vector2( 314, 198 )
-states/jousting/node = SubResource( 22 )
+states/jousting/node = SubResource( 17 )
 states/jousting/position = Vector2( 605, 198 )
-states/parrying/node = SubResource( 24 )
+states/parrying/node = SubResource( 18 )
 states/parrying/position = Vector2( 206, 383 )
-transitions = [ "idle", "parrying", SubResource( 26 ), "parrying", "idle", SubResource( 27 ), "idle", "dodging", SubResource( 28 ), "dodging", "idle", SubResource( 29 ), "idle", "charging_joust", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "jousting", "idle", SubResource( 44 ) ]
+transitions = [ "idle", "parrying", SubResource( 19 ), "parrying", "idle", SubResource( 20 ), "idle", "dodging", SubResource( 21 ), "dodging", "idle", SubResource( 22 ), "idle", "charging_joust", SubResource( 23 ), "charging_joust", "jousting", SubResource( 24 ), "jousting", "idle", SubResource( 25 ) ]
 start_node = "idle"
-graph_offset = Vector2( -192, 21.112 )
+graph_offset = Vector2( -161, 53.112 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=42]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=43]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
 
 [node name="Turtle" type="KinematicBody2D" groups=[
-"player",
 "turtle",
 ]]
 position = Vector2( 507.974, 277.471 )
 script = ExtResource( 1 )
-locked_speed = 0.0
+locked = true
+slowed = true
+slowed_speed = 100.0
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -27 )
@@ -588,6 +526,7 @@ offset = Vector2( -50, 0 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "turtle_hitbox",
@@ -596,18 +535,20 @@ scale = Vector2( 1.1, 1.1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 1 )
 anims/dodging = SubResource( 2 )
-anims/idling = SubResource( 4 )
-anims/jousting = SubResource( 5 )
-anims/moving = SubResource( 7 )
-anims/parrying = SubResource( 8 )
+anims/idling = SubResource( 3 )
+anims/jousting = SubResource( 4 )
+anims/moving = SubResource( 5 )
+anims/parrying = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 41 )
+tree_root = SubResource( 26 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 42 )
-parameters/idle/playback = SubResource( 43 )
-[connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
+parameters/playback = SubResource( 27 )
+parameters/idle/playback = SubResource( 28 )
+script = ExtResource( 3 )
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
