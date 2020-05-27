@@ -60,7 +60,7 @@ func duel():
 	
 
 func joust_ended():
-	travel_both("joust_ended")
+	travel_both("joust_ending")
 
 
 func parry():
@@ -69,6 +69,10 @@ func parry():
 
 func dodge():
 	travel_both("dodging")
+
+
+func slap_fight():
+	travel_both("slapping")
 
 
 func knight_picked_up():

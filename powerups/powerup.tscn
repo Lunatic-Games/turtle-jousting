@@ -731,7 +731,7 @@ texture = ExtResource( 3 )
 
 [node name="outer_glow" type="Sprite" parent="orb/orb_glow"]
 position = Vector2( 10.0137, -65.0894 )
-rotation = 1.92719
+rotation = 6.02265
 texture = ExtResource( 4 )
 
 [node name="inner_glow" type="Sprite" parent="orb/orb_glow"]

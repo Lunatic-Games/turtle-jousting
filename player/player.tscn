@@ -1,20 +1,20 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://player/player.gd" type="Script" id=1]
 [ext_resource path="res://player/assets/turtle_green.png" type="Texture" id=2]
 [ext_resource path="res://player/turtle_hitbox.gd" type="Script" id=3]
 [ext_resource path="res://player/assets/joust_indicator_bottom.png" type="Texture" id=4]
-[ext_resource path="res://player/assets/Modulated_Bits/Mod_Joust_Bar.png" type="Texture" id=5]
+[ext_resource path="res://player/assets/Mod_Joust_Bar.png" type="Texture" id=5]
 [ext_resource path="res://player/assets/joust_indicator.png" type="Texture" id=6]
-[ext_resource path="res://player/assets/Modulated_Bits/Mod_Joust_Indicator.png" type="Texture" id=7]
-[ext_resource path="res://player/knight.tscn" type="PackedScene" id=8]
+[ext_resource path="res://player/assets/Mod_Joust_Indicator.png" type="Texture" id=7]
+[ext_resource path="res://player/knight/knight.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( -30, 2, -8, 15, 14, 7, 44, -6, 24, -15, -11, -11 )
+points = PoolVector2Array( -26, 2, -7, 15, 14, 6, 36, -6, 19, -15, -11, -11 )
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
-points = PoolVector2Array( -30, 2, -8, 15, 14, 7, 44, -6, 24, -15, -11, -11 )
+points = PoolVector2Array( -26, 2, -7, 15, 14, 6, 36, -6, 19, -15, -11, -11 )
 
 [sub_resource type="Animation" id=3]
 length = 1.5
@@ -574,61 +574,122 @@ tracks/4/keys = {
 "values": [ PoolVector2Array( -30, 2, -9, 15, 14, 7, 44, -5, 24, -15, -11, -11 ), PoolVector2Array( -44, 2, -11, 15, 14, 10, 64, -5, 34, -15, -16, -11 ), PoolVector2Array( -30, 2, -9, 15, 14, 7, 44, -5, 24, -15, -11, -11 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=11]
-animation = "charging_joust"
+[sub_resource type="Animation" id=11]
+resource_name = "slapping"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape2D:shape:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ PoolVector2Array( -31, 2, -8.5, 14.75, 16.5, 6.5, 43.75, -5.5, 21.5, -15, -13.5, -11 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:shape:points")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ PoolVector2Array( -31, 2, -8.5, 14.75, 16.5, 6.5, 43.75, -5.5, 21.5, -15, -13.5, -11 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.051, 0.05 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:locked")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:locked_speed")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="AnimationNodeAnimation" id=12]
-animation = "dodging"
+animation = "charging_joust"
 
 [sub_resource type="AnimationNodeAnimation" id=13]
-animation = "dueling"
+animation = "dodging"
 
 [sub_resource type="AnimationNodeAnimation" id=14]
-animation = "moving"
+animation = "dueling"
 
 [sub_resource type="AnimationNodeAnimation" id=15]
-animation = "idling"
+animation = "moving"
 
 [sub_resource type="AnimationNodeAnimation" id=16]
 animation = "idling"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "idling"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=18]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=19]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
-states/idle_moving/node = SubResource( 14 )
+[sub_resource type="AnimationNodeStateMachine" id=22]
+states/idle_moving/node = SubResource( 15 )
 states/idle_moving/position = Vector2( 457, 353 )
-states/idle_resting/node = SubResource( 15 )
+states/idle_resting/node = SubResource( 16 )
 states/idle_resting/position = Vector2( 457, 228 )
-states/idle_stop_moving/node = SubResource( 16 )
+states/idle_stop_moving/node = SubResource( 17 )
 states/idle_stop_moving/position = Vector2( 179, 279 )
-transitions = [ "idle_moving", "idle_stop_moving", SubResource( 17 ), "idle_resting", "idle_moving", SubResource( 18 ), "idle_stop_moving", "idle_resting", SubResource( 19 ), "idle_moving", "idle_resting", SubResource( 20 ) ]
+transitions = [ "idle_moving", "idle_stop_moving", SubResource( 18 ), "idle_resting", "idle_moving", SubResource( 19 ), "idle_stop_moving", "idle_resting", SubResource( 20 ), "idle_moving", "idle_resting", SubResource( 21 ) ]
 start_node = "idle_resting"
 graph_offset = Vector2( -132, 102 )
 
-[sub_resource type="AnimationNodeAnimation" id=22]
-animation = "jousting"
-
 [sub_resource type="AnimationNodeAnimation" id=23]
-animation = "mounting"
+animation = "idling"
 
 [sub_resource type="AnimationNodeAnimation" id=24]
+animation = "jousting"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "mounting"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-switch_mode = 2
-auto_advance = true
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "slapping"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=28]
 
@@ -639,53 +700,74 @@ auto_advance = true
 [sub_resource type="AnimationNodeStateMachineTransition" id=30]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=31]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=36]
-states/charging_joust/node = SubResource( 11 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+
+[sub_resource type="AnimationNodeStateMachine" id=43]
+states/charging_joust/node = SubResource( 12 )
 states/charging_joust/position = Vector2( 605, 76.3057 )
-states/dodging/node = SubResource( 12 )
+states/dodging/node = SubResource( 13 )
 states/dodging/position = Vector2( -9, 198 )
-states/dueling/node = SubResource( 13 )
-states/dueling/position = Vector2( 536, 297.306 )
-states/idle/node = SubResource( 21 )
+states/dueling/node = SubResource( 14 )
+states/dueling/position = Vector2( 492, 274.306 )
+states/idle/node = SubResource( 22 )
 states/idle/position = Vector2( 314, 198 )
-states/jousting/node = SubResource( 22 )
-states/jousting/position = Vector2( 605, 198 )
-states/mounting/node = SubResource( 23 )
+states/joust_ending/node = SubResource( 23 )
+states/joust_ending/position = Vector2( 492, 198 )
+states/jousting/node = SubResource( 24 )
+states/jousting/position = Vector2( 672, 198 )
+states/mounting/node = SubResource( 25 )
 states/mounting/position = Vector2( 314, 38.3057 )
-states/parrying/node = SubResource( 24 )
-states/parrying/position = Vector2( 314, 369 )
-transitions = [ "jousting", "idle", SubResource( 25 ), "idle", "parrying", SubResource( 26 ), "parrying", "idle", SubResource( 27 ), "idle", "dodging", SubResource( 28 ), "dodging", "idle", SubResource( 29 ), "idle", "charging_joust", SubResource( 30 ), "charging_joust", "jousting", SubResource( 31 ), "idle", "mounting", SubResource( 32 ), "mounting", "idle", SubResource( 33 ), "dueling", "idle", SubResource( 34 ), "jousting", "dueling", SubResource( 35 ) ]
+states/parrying/node = SubResource( 26 )
+states/parrying/position = Vector2( 206, 383 )
+states/slapping/node = SubResource( 27 )
+states/slapping/position = Vector2( 492, 416.112 )
+transitions = [ "idle", "parrying", SubResource( 28 ), "parrying", "idle", SubResource( 29 ), "idle", "dodging", SubResource( 30 ), "dodging", "idle", SubResource( 31 ), "idle", "charging_joust", SubResource( 32 ), "charging_joust", "jousting", SubResource( 33 ), "idle", "mounting", SubResource( 34 ), "mounting", "idle", SubResource( 35 ), "dueling", "idle", SubResource( 36 ), "jousting", "dueling", SubResource( 37 ), "jousting", "joust_ending", SubResource( 38 ), "joust_ending", "idle", SubResource( 39 ), "jousting", "slapping", SubResource( 40 ), "slapping", "idle", SubResource( 41 ), "idle", "slapping", SubResource( 42 ) ]
 start_node = "idle"
-graph_offset = Vector2( -140, -14.6943 )
+graph_offset = Vector2( -201, 99.112 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=37]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=44]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=38]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=45]
 
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
 position = Vector2( 507.974, 277.471 )
 script = ExtResource( 1 )
-charging_up_joust = true
 locked = true
-locked_speed = 0.0
+locked_speed = 400.0
 slowed = true
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -27 )
-scale = Vector2( 0.05, 0.05 )
+scale = Vector2( 0.042, 0.05 )
 texture = ExtResource( 2 )
 offset = Vector2( -50, 0 )
 
@@ -712,6 +794,7 @@ anims/jousting = SubResource( 7 )
 anims/mounting = SubResource( 8 )
 anims/moving = SubResource( 9 )
 anims/parrying = SubResource( 10 )
+anims/slapping = SubResource( 11 )
 
 [node name="JoustIndicatorBottom" type="Sprite" parent="."]
 visible = false
@@ -738,17 +821,16 @@ texture = ExtResource( 7 )
 position = Vector2( 0, -26.706 )
 
 [node name="KnightPosition" type="Position2D" parent="."]
+visible = false
 position = Vector2( 0, -26.706 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 36 )
+tree_root = SubResource( 43 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 37 )
-parameters/idle/playback = SubResource( 38 )
+parameters/playback = SubResource( 44 )
+parameters/idle/playback = SubResource( 45 )
 script = ExtResource( 9 )
 [connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
 [connection signal="hit_fellow_turtle" from="Hitbox" to="." method="_on_hit_fellow_turtle"]
 [connection signal="picked_up_knight" from="Hitbox" to="." method="_pick_up_knight"]
 [connection signal="picked_up_powerup" from="Hitbox" to="." method="_on_Hitbox_picked_up_powerup"]
-[connection signal="knocked_off" from="Knight" to="." method="_knock_knight_off"]
-[connection signal="lance_duel" from="Knight" to="." method="_on_Knight_lance_duel"]

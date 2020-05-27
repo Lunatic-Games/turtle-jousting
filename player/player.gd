@@ -20,7 +20,7 @@ const MAX_JOUST_CHARGE = 200
 const JOUST_CHARGE_RATE = 150
 const JOUST_CHARGE_DIST_MODIFIER = 2.5
 const KNOCKED_OFF_DISTANCE = 100
-const DEBUG = false
+const DEBUG = true
 
 var number
 var device_id
@@ -49,7 +49,7 @@ func _ready():
 		$Hitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 		
 	if DEBUG:
-		device_id = 0
+		device_id = "keyboard"
 		set_color(Color.aquamarine)
 	else:
 		set_process_input(false)
@@ -210,8 +210,7 @@ func set_direction(dir_sign):
 func deplete_joust_charge(dist_travelled):
 	joust_charge -= dist_travelled
 	if joust_charge <= 0.0:
-		$AnimationTree.idle()
-		$AnimationTree.rest()
+		$AnimationTree.joust_ended()
 
 
 func check_for_move_event(event, direction):
@@ -249,23 +248,30 @@ func _on_Knight_lance_duel(other_player):
 	$AnimationTree.duel()
 
 
-func _on_hit_fellow_turtle():
+func _on_hit_fellow_turtle(other_player):
 	if $AnimationTree.is_in_state("jousting"):
-		$AnimationTree.rest()
+		emit_signal("dueling", self, other_player)
+		other_player.get_node("AnimationTree").slap_fight()
+		other_player.emit_signal("dueling", other_player, self)
+		$AnimationTree.slap_fight()
 		
 
 func _knock_knight_off(direction):
 	if !has_node("Knight"):
 		return
-	var knight = get_node("Knight")
-	call_deferred("remove_child", knight)
-	get_parent().call_deferred("add_child", knight)
-	knight.set_deferred("global_position", 
-		knight.global_position + direction * KNOCKED_OFF_DISTANCE)
+	var dup = get_node("Knight").duplicate()
+	get_parent().add_child(dup)
+	var knock_distance = KNOCKED_OFF_DISTANCE
+	if $AnimationTree.is_in_state("slapping"):
+		print("In slap fight when knocked off: ", direction)
+		knock_distance *= 4
+	dup.global_position += direction * knock_distance
+	print("Knocking knight off: ", direction)
 	$AnimationTree.knight_flying_off()
 
 
 func _pick_up_knight(knight):
+	print("Picking up knight")
 	var dup = knight.duplicate()
 	dup.name = "Knight"
 	dup.in_water = false
@@ -289,10 +295,6 @@ func make_collisions_unique():
 	$CollisionShape2D.shape = $CollisionShape2D.shape.duplicate()
 	var hitbox_col = $Hitbox/CollisionShape2D
 	hitbox_col.shape = hitbox_col.shape.duplicate()
-	var lance_col = $Knight/Reversable/Lance/CollisionShape2D
-	lance_col.shape = lance_col.shape.duplicate()
-	var knight_col = $Knight/CollisionShape2D
-	knight_col.shape = knight_col.shape.duplicate()
 	
 	
 func set_process_input(process):
