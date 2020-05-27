@@ -58,6 +58,7 @@ func all_players_added():
 	var players = get_tree().get_nodes_in_group("player")
 	var num = len(players)
 	if num == 0:
+		get_tree().paused = false
 		return
 
 	var spawn_positions = get_node("SpawnPositions/" + str(num) + "Player")

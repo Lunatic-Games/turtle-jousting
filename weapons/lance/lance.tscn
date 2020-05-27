@@ -19,6 +19,7 @@ position = Vector2( 300, 0 )
 texture = ExtResource( 2 )
 
 [node name="Modulation" type="Sprite" parent="." index="2"]
+position = Vector2( 301.19, 0.139786 )
 texture = ExtResource( 4 )
 
 [node name="CollisionShape2D" parent="." index="3"]

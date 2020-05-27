@@ -24,15 +24,21 @@ func set_color(_color):
 
 # Emit signals based on what entered
 func _on_area_entered(area):
+	print("area entered")
 	if !player_held_by:
 		return
 
 	if area.is_in_group("knight") and !player_held_by.is_a_parent_of(area):
+		print("hit knight")
 		_hit_knight(area)
 	elif area.is_in_group("weapon"):
+		print("hit weapon")
 		_hit_weapon(area)
 	elif area.is_in_group("turtle") and !player_held_by.is_a_parent_of(area):
+		print("hit turtle")
 		_hit_turtle(area)
+	else:
+		print("not grouped")
 
 
 # Hit another knight

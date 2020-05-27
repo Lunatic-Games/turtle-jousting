@@ -25,6 +25,7 @@ func _ready():
 
 # Take damage and update health display
 func hit(damage):
+	print("Taken damage")
 	health -= damage
 	health = max(health, 0)
 	$HealthLabel.text = str(health)

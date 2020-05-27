@@ -479,7 +479,7 @@ tracks/37/path = NodePath("CollisionPolygon2D:polygon")
 tracks/37/interp = 1
 tracks/37/loop_wrap = true
 tracks/37/imported = false
-tracks/37/enabled = true
+tracks/37/enabled = false
 tracks/37/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
@@ -2430,12 +2430,24 @@ tracks/40/path = NodePath("CollisionPolygon2D:polygon")
 tracks/40/interp = 1
 tracks/40/loop_wrap = true
 tracks/40/imported = false
-tracks/40/enabled = true
+tracks/40/enabled = false
 tracks/40/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 ), PoolVector2Array( -12.4834, -42.545, -3.44589, -50.6311, 8.68332, -30.6536, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -1.30545, 37.3652, -15.3373, 32.133, -10.6964, -1.44644, -7.43686, -17.5586 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance/CollisionShape2D:disabled")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -2885,6 +2897,18 @@ tracks/36/keys = {
 "update": 0,
 "values": [ PoolVector2Array( 16.0272, -32.6108, 28.9818, -35.4343, 34.9608, -18.1615, 32.9676, -7.03391, 55.5551, 3.92761, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -0.406494, -9.43445, 14.6837, -16.9796 ), PoolVector2Array( 0.520325, -36.3398, 11.5343, -41.4098, 23.5972, -21.8293, 17.6532, -11.6895, 39.856, 5.79303, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -6.12305, -6.96918, 3.66718, -17.9832 ), PoolVector2Array( -15.0573, -39.5676, -4.45413, -46.5005, 9.61551, -29.3722, 5.33344, -19.1768, 21.8499, 6.71945, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -10.9792, -1.02902, -8.53229, -20.6042 ) ]
 }
+tracks/37/type = "value"
+tracks/37/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance/CollisionShape2D:disabled")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 0.5
@@ -3313,7 +3337,7 @@ tracks/35/path = NodePath("CollisionPolygon2D:polygon")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/imported = false
-tracks/35/enabled = true
+tracks/35/enabled = false
 tracks/35/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
@@ -3331,6 +3355,18 @@ tracks/36/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/37/type = "value"
+tracks/37/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance/CollisionShape2D:disabled")
+tracks/37/interp = 1
+tracks/37/loop_wrap = true
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -5788,6 +5824,9 @@ position = Vector2( 400.92, 133.002 )
 
 [node name="Lance" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 25 )]
 
+[node name="CollisionShape2D" parent="Reversable/Sprite/BackArm/WeaponHandle/Lance" index="3"]
+disabled = true
+
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
@@ -5810,9 +5849,9 @@ visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
 modulate = Color( 1, 1, 1, 0.833333 )
-position = Vector2( 9.76563, -598.45 )
-rotation = 1.07338
-scale = Vector2( 0.1, 0.1 )
+position = Vector2( 148.016, -293.443 )
+rotation = -0.237365
+scale = Vector2( 0.566667, 0.366667 )
 texture = ExtResource( 6 )
 
 [node name="Left_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
@@ -5844,7 +5883,7 @@ texture = ExtResource( 8 )
 texture = ExtResource( 16 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
+polygon = PoolVector2Array( -34.6326, -31.2073, -25.2528, -41.8105, -3.8425, -27.537, 7.78024, -6.3306, 11.6545, 2.23352, 13.6936, 11.4094, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -24.0294, 1.0101, -21.9903, -16.526 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 1 )
@@ -5881,3 +5920,5 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[editable path="Reversable/Sprite/BackArm/WeaponHandle/Lance"]
