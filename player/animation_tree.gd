@@ -26,7 +26,6 @@ remote func travel(name):
 
 # Travel to idle and travel to name within idle
 remote func travel_idle(name):
-	playback.travel("idle")
 	idle_playback.travel(name)
 	if get_tree().network_peer and is_network_master():
 		rpc("travel_idle", name)

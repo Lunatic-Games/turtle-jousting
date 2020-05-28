@@ -37,7 +37,7 @@ func _on_area_entered(area):
 		_hit_knight(area)
 	elif area.is_in_group("weapon"):
 		_hit_weapon(area)
-	elif area.is_in_group("turtle") and !player_held_by.is_a_parent_of(area):
+	elif area.is_in_group("turtle_hitbox") and !player_held_by.is_a_parent_of(area):
 		_hit_turtle(area)
 
 

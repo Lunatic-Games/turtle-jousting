@@ -9,7 +9,8 @@ export (bool) var in_water = true
 const MAX_HEALTH = 100
 
 var health = MAX_HEALTH
-var number
+var player_number
+onready var held_weapon = $Reversable/Sprite/BackArm/WeaponHandle/Lance
 
 
 # Setup
@@ -41,6 +42,17 @@ func set_direction(dir_sign):
 		$Reversable.rset("scale", $Reversable.scale)
 		$CollisionPolygon2D.rset("scale", $CollisionPolygon2D.scale)
 	
+
+# Update idle state based on movement
+func moved(movement):
+	if movement and $AnimationTree.is_in_state("idle"):
+		$AnimationTree.travel_idle("idle_moving")
+	elif !movement and $AnimationTree.is_in_state("idle"):
+		if $AnimationTree.is_in_idle_state("idle_moving"):
+			$AnimationTree.travel_idle("idle_stop_moving")
+		else:
+			$AnimationTree.travel_idle("idle_resting")
+
 
 # Modulates pieces for team color
 func set_color(color):

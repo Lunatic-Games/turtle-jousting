@@ -2,6 +2,7 @@ extends "res://weapons/weapon.gd"
 
 
 const DAMAGE = 10
+const KNOCKBACK = 150
 
 
 # Modulate piece on lance
@@ -14,12 +15,12 @@ func _hit_knight(knight):
 	._hit_knight(knight)
 	if knight.parrying:
 		var backwards = knight_held_by.global_position - knight.global_position
-		backwards = backwards.normalized()
-		player_held_by.knock_knight_off(backwards)
+		var knockback = backwards.normalized() * KNOCKBACK
+		player_held_by.call_deferred("knock_knight_off", knockback)
 	else:
-		knight.hit(DAMAGE)
+		knight.call_deferred("hit", DAMAGE)
 
 
 # Start a duel between the two players
 func _hit_weapon(weapon):
-	player_held_by.duel(weapon.player_held_by)
+	player_held_by.call_deferred("duel", weapon.player_held_by)
