@@ -4,7 +4,6 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
-const duel_indicator_scene = preload("res://game/duel_indicator/duel_indicator.tscn")
 const powerup_scenes = [preload("res://powerups/judgement.tscn"),
 	preload("res://powerups/lightning_rod.tscn"),
 	preload("res://powerups/mead.tscn")]
@@ -102,29 +101,6 @@ func furthest_powerup_spawn_position():
 		return
 	var i = values.find(values.max())
 	return $PowerupPositions.get_child(i).global_position
-
-
-# Show duel indicator
-func duel_started(p1, p2):
-	if duels.has([p1, p2]) or duels.has([p2, p1]):
-		print("Duplicate duel")
-		return
-	var duel_indicator = duel_indicator_scene.instance()
-	duel_indicator.display(p1, p2)
-	duel_indicator.connect("decided", self, "_on_DuelIndicator_decided")
-	add_child(duel_indicator)
-	duels.append([p1, p2])
-
-
-# Hide duel indicator
-func _on_DuelIndicator_decided(indicator):
-	var p1 = indicator.player_1
-	var p2 = indicator.player_2
-	if duels.has([p1, p2]):
-		duels.remove(duels.find([p1, p2]))
-	elif duels.has([p2, p1]):
-		duels.remove(duels.find([p2, p1]))
-	indicator.queue_free()
 
 
 # Resume handling player input

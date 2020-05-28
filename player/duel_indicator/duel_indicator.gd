@@ -1,4 +1,4 @@
-extends ColorRect
+extends Popup
 
 
 const CONTROL_BUTTONS = ["A", "B", "X", "Y"]
@@ -8,23 +8,28 @@ var displayed_button
 var player_1
 var player_2
 
+
+# Check both players for presses
 func _input(event):
 	if event.get("pressed"):
 		check_for_press(event, player_1, player_2)
 		check_for_press(event, player_2, player_1)
 
 
+# Set players and display the indicator
 func display(p1, p2):
 	player_1 = p1
 	player_2 = p2
 	
 	var pos = p1.global_position
 	pos += (p2.global_position - p1.global_position) / 2
-	pos += Vector2(-16, -100)
+	pos += Vector2(-32, -100)
 	set_global_position(pos)
 	random_button()
+	popup()
 
 
+# Check for correct button press
 func check_for_press(event, player, other_player):
 	var device = event.device
 	if event is InputEventKey or event is InputEventMouse:
@@ -45,17 +50,22 @@ func check_for_press(event, player, other_player):
 		winning_press(player, other_player)
 
 
+# Correct button pressed
 func winning_press(winner, loser):
 	winner.won_duel()
 	loser.lost_duel((loser.global_position - winner.global_position).normalized())
 	queue_free()
 
 
+# Change displayed button to be a new random one
 func random_button():
+	if displayed_button:
+		get_node(displayed_button + "Button").visible = false
 	displayed_button = CONTROL_BUTTONS[randi() % len(CONTROL_BUTTONS)]
-	$Label.text = displayed_button
+	get_node(displayed_button + "Button").visible = true
 
 
+# Neither player pressed the correct button, so both lose
 func _on_Timer_timeout():
 	var p1_gb = player_1.global_position
 	var p2_gb = player_2.global_position

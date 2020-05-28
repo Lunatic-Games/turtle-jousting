@@ -8,7 +8,7 @@ const JOUST_INDICATOR_RATIO = 0.5  # Ratio of indic. length to charge amount
 const JOUST_INDICATOR_INNER_RADIUS = 150
 const MOUSE_SENSITIVITY = 0.01
 const LOST_DUEL_KNOCKBACK = 100
-const duel_indicator_scene = preload("res://game/duel_indicator/duel_indicator.tscn")
+const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
 
 var joust_charge = 0.0
 var joust_direction = Vector2(0, 0)
@@ -189,7 +189,7 @@ func pick_up_knight(knight):
 	knight.get_parent().remove_child(knight)
 	add_child(knight)
 	knight.name = "Knight"
-	knight.position = $KnightPosition.position
+	knight.position = $Reversable/KnightPosition.position
 
 
 # Load player data
