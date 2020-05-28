@@ -29,8 +29,7 @@ func _ready():
 	
 	if get_tree().network_peer:
 		rset_config("position", MultiplayerAPI.RPC_MODE_PUPPET)
-		$Sprite.rset_config("flip_h", MultiplayerAPI.RPC_MODE_PUPPET)
-		$Sprite.rset_config("offset", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 		$Hitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 
@@ -116,13 +115,11 @@ func update_sprite_direction(movement):
 
 # Set the facing direction of sprite and components
 func set_direction(dir_sign):
-	$Sprite.flip_h = dir_sign != 1
-	$Sprite.offset.x = -dir_sign * abs($Sprite.offset.x)
+	$Reversable.scale.x = dir_sign * abs($Reversable.scale.x)
 	$CollisionPolygon2D.scale.x = dir_sign * abs($CollisionPolygon2D.scale.x)
 	$Hitbox.scale.x = dir_sign * abs($Hitbox.scale.x)
 	if get_tree().network_peer and is_network_master():
-		$Sprite.rset("flip_h", $Sprite.flip_h)
-		$Sprite.rset("offset", $Sprite.offset)
+		$Reversable.rset("scale", $Reversable.scale)
 		$CollisionPolygon2D.rset("scale", $CollisionPolygon2D.scale)
 		$Hitbox.rset("scale", $Hitbox.scale)
 

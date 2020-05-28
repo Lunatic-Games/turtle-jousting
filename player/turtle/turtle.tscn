@@ -1,13 +1,47 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
 [ext_resource path="res://player/turtle/assets/turtle_green.png" type="Texture" id=2]
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=3]
+[ext_resource path="res://player/turtle/assets/water_animation_turtle_frame2.png" type="Texture" id=4]
+[ext_resource path="res://player/turtle/assets/water_animation_turtle_frame1.png" type="Texture" id=5]
+[ext_resource path="res://player/turtle/assets/water_animation_turtle.png" type="Texture" id=6]
+[ext_resource path="res://player/turtle/assets/water_animation_turtle2.png" type="Texture" id=7]
+
+[sub_resource type="Gradient" id=37]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=38]
+gradient = SubResource( 37 )
+
+[sub_resource type="ParticlesMaterial" id=36]
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.05
+color_ramp = SubResource( 38 )
+
+[sub_resource type="SpriteFrames" id=34]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=35]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="Animation" id=1]
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -70,7 +104,7 @@ tracks/4/keys = {
 [sub_resource type="Animation" id=2]
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -181,7 +215,7 @@ tracks/8/keys = {
 [sub_resource type="Animation" id=26]
 resource_name = "dueling"
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -256,7 +290,7 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=3]
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -339,10 +373,22 @@ tracks/6/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -30.2343, 2.94669, -15.8153, -9.58282, 18.1934, -15.2509, 31.7173, -13.9582, 38.6782, -5.60519, 33.1096, 1.9523, 16.9007, 7.22269, -9.65009, 17.5645 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("Reversable/WaterWakeAnimation:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -406,7 +452,7 @@ tracks/4/keys = {
 length = 0.6
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -441,11 +487,23 @@ tracks/2/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -26.8533, 8.11758, -12.9317, -9.08566, 18.0939, -14.8532, 28.1374, -11.4722, 32.9105, -2.52255, 28.038, 8.3165, 17.5967, 11.7969, -9.15283, 23.8293 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Reversable/WaterWakeAnimation:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=6]
 length = 1.7
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
+tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -595,15 +653,45 @@ graph_offset = Vector2( -129, -75.888 )
 ]]
 position = Vector2( 507.974, 277.471 )
 script = ExtResource( 1 )
-locked = true
 locked_speed = 0.0
 slowed_speed = 100.0
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Reversable" type="Node2D" parent="."]
+
+[node name="Particles2D" type="Particles2D" parent="Reversable"]
+visible = false
+position = Vector2( 61.1112, -33.6046 )
+scale = Vector2( 1, 1 )
+emitting = false
+amount = 20
+lifetime = 2.0
+speed_scale = 2.0
+local_coords = false
+process_material = SubResource( 36 )
+texture = ExtResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Reversable"]
 position = Vector2( 0, -27 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 2 )
 offset = Vector2( -50, 0 )
+
+[node name="KnightPosition" type="Position2D" parent="Reversable"]
+position = Vector2( 1.38699, -28.294 )
+
+[node name="WaterAnimation" type="AnimatedSprite" parent="Reversable"]
+modulate = Color( 0.854902, 0.854902, 0.854902, 0.890196 )
+position = Vector2( -4.88184, -28.3438 )
+scale = Vector2( 0.05, 0.05 )
+frames = SubResource( 34 )
+playing = true
+
+[node name="WaterWakeAnimation" type="AnimatedSprite" parent="Reversable"]
+modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
+position = Vector2( -5.23145, -23.5454 )
+scale = Vector2( 0.05, 0.05 )
+frames = SubResource( 35 )
+playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
@@ -631,7 +719,4 @@ anim_player = NodePath("../Animator")
 parameters/playback = SubResource( 24 )
 parameters/idle/playback = SubResource( 25 )
 script = ExtResource( 3 )
-
-[node name="KnightPosition" type="Position2D" parent="."]
-position = Vector2( 1.387, -28.294 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
