@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
 [ext_resource path="res://player/turtle/assets/turtle_green.png" type="Texture" id=2]
@@ -7,9 +7,11 @@
 [ext_resource path="res://player/turtle/assets/water_animation_turtle_frame1.png" type="Texture" id=5]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle.png" type="Texture" id=6]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle2.png" type="Texture" id=7]
+[ext_resource path="res://player/turtle/assets/water_particle.png" type="Texture" id=8]
 
 [sub_resource type="Gradient" id=37]
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+offsets = PoolRealArray( 0, 0.152672, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.411765, 1, 1, 1, 0 )
 
 [sub_resource type="GradientTexture" id=38]
 gradient = SubResource( 37 )
@@ -487,18 +489,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 ), PoolVector2Array( -26.8533, 8.11758, -12.9317, -9.08566, 18.0939, -14.8532, 28.1374, -11.4722, 32.9105, -2.52255, 28.038, 8.3165, 17.5967, 11.7969, -9.15283, 23.8293 ) ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Reversable/WaterWakeAnimation:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
 
 [sub_resource type="Animation" id=6]
 length = 1.7
@@ -653,22 +643,19 @@ graph_offset = Vector2( -111, -199.888 )
 ]]
 position = Vector2( 507.974, 277.471 )
 script = ExtResource( 1 )
+locked = true
 locked_speed = 0.0
 slowed_speed = 100.0
 
 [node name="Reversable" type="Node2D" parent="."]
 
 [node name="Particles2D" type="Particles2D" parent="Reversable"]
-visible = false
-position = Vector2( 61.1112, -33.6046 )
-scale = Vector2( 1, 1 )
-emitting = false
 amount = 20
-lifetime = 2.0
+lifetime = 3.0
 speed_scale = 2.0
 local_coords = false
 process_material = SubResource( 36 )
-texture = ExtResource( 6 )
+texture = ExtResource( 8 )
 
 [node name="Sprite" type="Sprite" parent="Reversable"]
 position = Vector2( 0, -27 )
@@ -684,13 +671,16 @@ modulate = Color( 0.854902, 0.854902, 0.854902, 0.890196 )
 position = Vector2( -4.88184, -28.3438 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 34 )
+frame = 1
 playing = true
 
 [node name="WaterWakeAnimation" type="AnimatedSprite" parent="Reversable"]
+visible = false
 modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 35 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

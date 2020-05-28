@@ -41,7 +41,7 @@ func set_direction(dir_sign):
 	if get_tree().network_peer and is_network_master():
 		$Reversable.rset("scale", $Reversable.scale)
 		$CollisionPolygon2D.rset("scale", $CollisionPolygon2D.scale)
-	
+
 
 # Update idle state based on movement
 func moved(movement):
