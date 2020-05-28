@@ -54,7 +54,7 @@ position = Vector2( -1, 14.8 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -0.126504 )
+position = Vector2( 0, -1.19273 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 2 )
 offset = Vector2( 95, 0 )
@@ -62,7 +62,7 @@ region_rect = Rect2( 0, 0, 1920, 1080 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 0.85098, 0.85098, 0.85098, 0.760784 )
-position = Vector2( 3.94879, 8.64446 )
+position = Vector2( 3.8669, 7.97882 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
 playing = true
