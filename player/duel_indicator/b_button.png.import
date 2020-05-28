@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/buoy_splash1.png-63a5e6bf0cd3a9c5f7d1937ffe54b033.stex"
+path="res://.import/b_button.png-2c7ad9247654c08cdfcbfd321acccb9b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/buoy/assets/buoy_splash1.png"
-dest_files=[ "res://.import/buoy_splash1.png-63a5e6bf0cd3a9c5f7d1937ffe54b033.stex" ]
+source_file="res://player/duel_indicator/b_button.png"
+dest_files=[ "res://.import/b_button.png-2c7ad9247654c08cdfcbfd321acccb9b.stex" ]
 
 [params]
 

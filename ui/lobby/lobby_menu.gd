@@ -1,7 +1,7 @@
 extends Control
 
 
-const game_scene = preload("res://game/game.tscn")
+const arena_scene = preload("res://arena/arena.tscn")
 
 onready var player_container = get_node("LobbySections/GameContainer/" +  
 	"VBoxContainer/PlayerContainer")
@@ -361,15 +361,15 @@ remotesync func start():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
 
-	var new_game = game_scene.instance()
+	var new_arena = arena_scene.instance()
 	for connection in connections:
 		for player in connections[connection]:
 			var data = {}
 			if player in local_players.keys():
 				data = get_player_slot(player).get_player_data()
-			new_game.add_player(player, connection, data)
-	get_tree().get_root().add_child(new_game)
-	new_game.all_players_added()
+			new_arena.add_player(player, connection, data)
+	get_tree().get_root().add_child(new_arena)
+	new_arena.all_players_added()
 	visible = false
 	set_process(false)
 	set_process_input(false)

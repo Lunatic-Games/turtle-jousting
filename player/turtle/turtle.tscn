@@ -642,7 +642,7 @@ states/parrying/node = SubResource( 15 )
 states/parrying/position = Vector2( 69, 373 )
 transitions = [ "idle", "parrying", SubResource( 16 ), "parrying", "idle", SubResource( 17 ), "idle", "dodging", SubResource( 18 ), "dodging", "idle", SubResource( 19 ), "idle", "charging_joust", SubResource( 20 ), "charging_joust", "jousting", SubResource( 21 ), "jousting", "idle", SubResource( 22 ), "idle", "dueling", SubResource( 28 ), "dueling", "idle", SubResource( 29 ), "dodging", "dueling", SubResource( 30 ), "charging_joust", "dueling", SubResource( 31 ), "jousting", "dueling", SubResource( 32 ), "parrying", "dueling", SubResource( 33 ) ]
 start_node = "idle"
-graph_offset = Vector2( -129, -75.888 )
+graph_offset = Vector2( -111, -199.888 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 

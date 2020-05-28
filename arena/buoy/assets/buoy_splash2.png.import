@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/buoy.png-9aab16bbbd3cde2374a1b0bc12c531fd.stex"
+path="res://.import/buoy_splash2.png-b9422c67d142627d04e4681db6064e6c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/buoy/assets/buoy.png"
-dest_files=[ "res://.import/buoy.png-9aab16bbbd3cde2374a1b0bc12c531fd.stex" ]
+source_file="res://arena/buoy/assets/buoy_splash2.png"
+dest_files=[ "res://.import/buoy_splash2.png-b9422c67d142627d04e4681db6064e6c.stex" ]
 
 [params]
 
