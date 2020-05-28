@@ -76,6 +76,7 @@ func _physics_process(_delta):
 			movement *= slowed_speed
 		else:
 			movement *= SPEED
+	moved(movement)
 	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
@@ -154,5 +155,24 @@ func set_process_input(process):
 		movement_actions["left"] = [false, 0]
 
 
-func _on_Hitbox_area_entered(_area):
+# Checks for running into another turtle or a knight
+func _on_Hitbox_area_entered(area):
+	if area.is_in_group("turtle_hitbox"):
+		hit_turtle(area)
+	elif area.is_in_group("knight") and !is_a_parent_of(area):
+		hit_knight(area)
+
+
+# Hit another turtle
+func hit_turtle(_turtle):
+	pass
+
+
+# Hit another turtle's knight
+func hit_knight(_knight):
+	pass
+
+
+# Will be extended by player
+func moved(_movement):
 	pass

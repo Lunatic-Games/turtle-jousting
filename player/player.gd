@@ -6,9 +6,14 @@ const JOUST_CHARGE_RATE = 250
 const MAX_JOUST_CHARGE = 500
 const JOUST_INDICATOR_RATIO = 0.5  # Ratio of indic. length to charge amount
 const JOUST_INDICATOR_INNER_RADIUS = 150
+const MOUSE_SENSITIVITY = 0.01
+const LOST_DUEL_KNOCKBACK = 100
+const duel_indicator_scene = preload("res://game/duel_indicator/duel_indicator.tscn")
 
 var joust_charge = 0.0
-var joust_direction
+var joust_direction = Vector2(0, 0)
+var dueling = false
+var number
 
 
 func _ready():
@@ -21,6 +26,9 @@ func _input(event):
 	if !_should_handle_event(event):
 		return false
 	
+	if !has_node("Knight"):
+		return
+	
 	if $Knight/AnimationTree.is_in_state("idle"):
 		if event.is_action_pressed("joust"):
 			begin_charging_joust()
@@ -31,6 +39,9 @@ func _input(event):
 	elif $Knight/AnimationTree.is_in_state("charging_joust"):
 		if event.is_action_released("joust"):
 			release_joust()
+		elif event is InputEventMouseMotion:
+			joust_direction += event.relative * MOUSE_SENSITIVITY
+			joust_direction = joust_direction.clamped(1)
 
 
 # Update jousting mechanics
@@ -82,6 +93,42 @@ func parry():
 	$AnimationTree.travel("parrying")
 
 
+# Duel with an enemy
+func duel(opponent, slapping=false):
+	if opponent.dueling or !has_node("Knight") or !opponent.has_node("Knight"):
+		return
+	var duel_indicator = duel_indicator_scene.instance()
+	get_parent().add_child(duel_indicator)
+	duel_indicator.display(self, opponent)
+	begin_dueling(slapping)
+	opponent.begin_dueling(slapping)
+
+
+# Setup required for both players of a duel
+func begin_dueling(slapping):
+	dueling = true
+	$AnimationTree.travel("dueling")
+	if slapping:
+		$Knight/AnimationTree.travel("slapping")
+	else:
+		$Knight/AnimationTree.travel("dueling")
+	$JoustIndicatorBase.visible = false
+	$JoustIndicatorPoint.visible = false
+
+
+# Player won the duel, just go back to idle
+func won_duel():
+	dueling = false
+	$Knight/AnimationTree.travel("idle")
+	$AnimationTree.travel("idle")
+
+
+# Player lost the duel, knock them off
+func lost_duel(knockback_dir):
+	dueling = false
+	knock_knight_off(knockback_dir * LOST_DUEL_KNOCKBACK)
+
+
 # Update position and rotation of joust indicator while charging joust
 func update_joust_indicator():
 	var h = movement_actions["right"][1] - movement_actions["left"][1]
@@ -101,9 +148,55 @@ func update_joust_indicator():
 	$JoustIndicatorPoint.rotation = angle + PI / 2
 
 
+# Extend update_sprite_direction to consider joust direction
+func update_sprite_direction(movement):
+	var jousting = false
+	if has_node("Knight"):
+		jousting = $Knight/AnimationTree.is_in_state("charging_joust")
+	if movement.x > 1 or (jousting and sign(joust_direction.x) == 1):
+		set_direction(1)
+	elif movement.x < -1 or (jousting and sign(joust_direction.x) == -1):
+		set_direction(-1)
+
+
+# Check to move between idle and moving animation
+func moved(movement):
+	if has_node("Knight"):
+		$Knight.moved(movement)
+	
+	if movement and $AnimationTree.is_in_state("idle"):
+		$AnimationTree.travel_idle("idle_moving")
+	elif !movement and $AnimationTree.is_in_state("idle"):
+		$AnimationTree.travel_idle("idle_resting")
+
+
+# Remove knight from self
+func knock_knight_off(knockback):
+	if !has_node("Knight"):
+		return
+	var knight = get_node("Knight")
+	remove_child(knight)
+	get_parent().add_child(knight)
+	knight.global_position = global_position + knockback
+	knight.get_node("AnimationTree").travel("flying_off")
+	$AnimationTree.travel("idle")
+	
+
+# Add knight back
+func pick_up_knight(knight):
+	knight.in_water = false
+	knight.get_node("AnimationTree").travel("mounting")
+	knight.get_parent().remove_child(knight)
+	add_child(knight)
+	knight.name = "Knight"
+	knight.position = $KnightPosition.position
+
+
 # Load player data
 func load_data(data = {}):
 	device_id = data.get("device_id", null)
+	number = data.get("number", null)
+	$Knight.player_number = number
 	if data.get("color", null):
 		set_color(data["color"])
 
@@ -111,8 +204,30 @@ func load_data(data = {}):
 # Set facing direction
 func set_direction(dir_sign):
 	.set_direction(dir_sign)
-	$Knight.set_direction(dir_sign)
+	if has_node("Knight"):
+		$Knight.set_direction(dir_sign)
+
+
+# Stop joust when hit another turtle
+func hit_turtle(turtle):
+	if !has_node("Knight") or !turtle.has_node("../Knight"):
+		return
+
+	var other_knight = turtle.get_node("../Knight")
+	if other_knight.get_node("AnimationTree").is_in_state("mounting"):
+		return
+	if $Knight.held_weapon.areas_hit.has(other_knight):
+		return
 	
+	if $Knight/AnimationTree.is_in_state("jousting"):
+		call_deferred("duel", turtle.get_parent(), true)
+
+
+# Pickup knight if hit and in water
+func hit_knight(knight):
+	if knight.in_water and number == knight.player_number:
+		call_deferred("pick_up_knight", knight)
+
 
 # Set color modulation for team color
 func set_color(color):

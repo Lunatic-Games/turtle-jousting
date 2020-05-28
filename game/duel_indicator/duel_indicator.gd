@@ -1,8 +1,6 @@
 extends ColorRect
 
 
-signal decided
-
 const CONTROL_BUTTONS = ["A", "B", "X", "Y"]
 const KEYBOARD_BUTTONS = ["A", "W", "S", "D"]
 
@@ -50,7 +48,7 @@ func check_for_press(event, player, other_player):
 func winning_press(winner, loser):
 	winner.won_duel()
 	loser.lost_duel((loser.global_position - winner.global_position).normalized())
-	emit_signal("decided", self)
+	queue_free()
 
 
 func random_button():
@@ -63,4 +61,4 @@ func _on_Timer_timeout():
 	var p2_gb = player_2.global_position
 	player_1.lost_duel((p1_gb - p2_gb).normalized())
 	player_2.lost_duel((p2_gb - p1_gb).normalized())
-	emit_signal("decided", self)
+	queue_free()
