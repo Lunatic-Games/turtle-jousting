@@ -11,7 +11,6 @@ func set_color(color):
 
 # Deal damage to knight on hit (if not parried)
 func _hit_knight(knight):
-	print("Lance hit knight")
 	._hit_knight(knight)
 	if knight.parrying:
 		var backwards = knight_held_by.global_position - knight.global_position

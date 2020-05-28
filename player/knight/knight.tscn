@@ -479,12 +479,26 @@ tracks/37/path = NodePath("CollisionPolygon2D:polygon")
 tracks/37/interp = 1
 tracks/37/loop_wrap = true
 tracks/37/imported = false
-tracks/37/enabled = false
+tracks/37/enabled = true
 tracks/37/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 ), PoolVector2Array( -32.2231, -31.6049, -24.6126, -42.545, -7.48895, -29.7023, -4.15936, -21.6161, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -19.3803, -16.1461 ), PoolVector2Array( -32.2231, -31.6049, -24.6126, -42.545, -7.48895, -29.7023, -4.15936, -21.6161, 9.15842, -4.19019, 14.0419, 4.80573, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -13.5884, 0.0507202, -19.3803, -16.1461 ), PoolVector2Array( -32.2231, -31.6049, -24.6126, -42.545, -7.48895, -29.7023, -4.15936, -21.6161, 9.15842, -4.19019, 13.354, 5.8363, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -25.4677, 1.78925, -19.3803, -16.1461 ) ]
+}
+tracks/38/type = "method"
+tracks/38/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "reset_areas_hit"
+} ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -1490,7 +1504,7 @@ tracks/39/enabled = true
 tracks/39/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 17.1013, -41.6791, 20.5488, -23.2426, 21.9436, -10.7247, 21.468, 7.58801, 14.7564, 14.3315, -2.69614, 17.155, -10.5021, 14.6637, -10.6964, -1.44644, -8.49396, -22.5062 ) ]
 }
 
@@ -2430,11 +2444,11 @@ tracks/40/path = NodePath("CollisionPolygon2D:polygon")
 tracks/40/interp = 1
 tracks/40/loop_wrap = true
 tracks/40/imported = false
-tracks/40/enabled = false
+tracks/40/enabled = true
 tracks/40/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 ), PoolVector2Array( -12.4834, -42.545, -3.44589, -50.6311, 8.68332, -30.6536, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -1.30545, 37.3652, -15.3373, 32.133, -10.6964, -1.44644, -7.43686, -17.5586 ) ]
 }
 tracks/41/type = "value"
@@ -2894,7 +2908,7 @@ tracks/36/enabled = true
 tracks/36/keys = {
 "times": PoolRealArray( 0, 0.2, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( 16.0272, -32.6108, 28.9818, -35.4343, 34.9608, -18.1615, 32.9676, -7.03391, 55.5551, 3.92761, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -0.406494, -9.43445, 14.6837, -16.9796 ), PoolVector2Array( 0.520325, -36.3398, 11.5343, -41.4098, 23.5972, -21.8293, 17.6532, -11.6895, 39.856, 5.79303, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -6.12305, -6.96918, 3.66718, -17.9832 ), PoolVector2Array( -15.0573, -39.5676, -4.45413, -46.5005, 9.61551, -29.3722, 5.33344, -19.1768, 21.8499, 6.71945, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -10.9792, -1.02902, -8.53229, -20.6042 ) ]
 }
 tracks/37/type = "value"
@@ -3337,11 +3351,11 @@ tracks/35/path = NodePath("CollisionPolygon2D:polygon")
 tracks/35/interp = 1
 tracks/35/loop_wrap = true
 tracks/35/imported = false
-tracks/35/enabled = false
+tracks/35/enabled = true
 tracks/35/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -34.6326, -31.2073, -25.2528, -41.8105, -3.8425, -27.537, 7.78024, -6.3306, 11.6545, 2.23352, 13.6936, 11.4094, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -24.0294, 1.0101, -21.9903, -16.526 ), PoolVector2Array( -10.1637, -39.5676, 1.45901, -44.4613, 13.8974, -25.0901, 21.442, -5.31104, 31.8413, -0.621155, 15.2249, 12.5356, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -9.552, -3.27197, -5.67776, -19.9924 ), PoolVector2Array( 2.47855, -39.9754, 15.3247, -42.8301, 22.0537, -22.6432, 30.8217, -8.77747, 45.2992, -3.06805, 15.9905, 13.0987, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -6.5035, -5.32613, 2.07074, -19.5846 ), PoolVector2Array( 16.0272, -32.6108, 28.9818, -35.4343, 34.9608, -18.1615, 32.9676, -7.03391, 55.5551, 3.92761, 17.5218, 14.2248, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -0.406494, -9.43445, 14.6837, -16.9796 ) ]
 }
 tracks/36/type = "value"
@@ -4259,7 +4273,7 @@ tracks/36/enabled = true
 tracks/36/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -14.8297, -38.6909, -4.88956, -46.8955, 10.4151, -31.433, 5.20834, -18.9684, 14.9907, 0.280701, 21.9331, 6.74966, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -9.30753, -0.981506, -8.83417, -21.3351 ), PoolVector2Array( -6.78302, -34.5886, 1.10599, -45.1599, 19.2507, -30.6441, 15.6217, -21.0195, 25.5619, 1.0697, 35.9753, 5.96088, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -9.30753, -0.981506, 3.47269, -18.3373 ) ]
 }
 
@@ -4706,7 +4720,7 @@ tracks/36/enabled = true
 tracks/36/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
+"update": 1,
 "values": [ PoolVector2Array( -7.30881, -35.5149, 2.37683, -44.4257, 19.4235, -30.091, 16.9052, -18.4682, 24.6537, -0.840363, 35.6953, 6.1333, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -4.57004, -8.94611, 1.88449, -20.3184 ), PoolVector2Array( -14.4761, -38.6142, -4.7905, -45.7816, 10.1253, -30.2846, 5.08884, -18.8556, 14.5807, -0.452881, 24.0727, 8.26416, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -11.7641, -1.034, -8.08362, -21.5675 ) ]
 }
 
@@ -5797,7 +5811,6 @@ font_data = ExtResource( 12 )
 ]]
 position = Vector2( 503.375, 293.431 )
 script = ExtResource( 1 )
-in_water = false
 
 [node name="Reversable" type="Node2D" parent="."]
 
@@ -5824,9 +5837,6 @@ position = Vector2( 400.92, 133.002 )
 
 [node name="Lance" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 25 )]
 
-[node name="CollisionShape2D" parent="Reversable/Sprite/BackArm/WeaponHandle/Lance" index="3"]
-disabled = true
-
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
@@ -5849,15 +5859,15 @@ visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
 modulate = Color( 1, 1, 1, 0.833333 )
-position = Vector2( 148.016, -293.443 )
-rotation = -0.237365
-scale = Vector2( 0.566667, 0.366667 )
+position = Vector2( 9.76563, -598.45 )
+rotation = 1.07338
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 6 )
 
 [node name="Left_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
 position = Vector2( -53.5557, -536.047 )
 rotation = -0.453786
-scale = Vector2( 1e-05, 1e-05 )
+scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 14 )
 
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
@@ -5883,7 +5893,8 @@ texture = ExtResource( 8 )
 texture = ExtResource( 16 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -34.6326, -31.2073, -25.2528, -41.8105, -3.8425, -27.537, 7.78024, -6.3306, 11.6545, 2.23352, 13.6936, 11.4094, 17.2057, 22.4697, -2.03233, 34.7836, -16.5249, 29.2241, -24.0294, 1.0101, -21.9903, -16.526 )
+polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 1 )

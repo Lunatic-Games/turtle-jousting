@@ -16,7 +16,15 @@
 "player",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+locked = false
 locked_speed = 0.0
+slowed = false
+
+[node name="CollisionPolygon2D" parent="." index="1"]
+disabled = false
+
+[node name="CollisionPolygon2D" parent="Hitbox" index="0"]
+disabled = false
 
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )

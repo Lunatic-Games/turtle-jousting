@@ -10,9 +10,3 @@ script = ExtResource( 2 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 290.541, 282.114 )
-
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 865.201, 273.436 )
-
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -94.313, -100.89, 62.1306, -104.972, 78.4551, 70.5173, -114.719, 81.4003 )
