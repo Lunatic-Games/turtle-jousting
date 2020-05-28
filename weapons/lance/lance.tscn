@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://weapons/weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/lance/assets/lance_front.png" type="Texture" id=2]
+[ext_resource path="res://weapons/lance/assets/lance_back.png" type="Texture" id=3]
+[ext_resource path="res://weapons/lance/assets/lance_mod.png" type="Texture" id=4]
+[ext_resource path="res://weapons/lance/lance.gd" type="Script" id=5]
+
+[node name="Lance" instance=ExtResource( 1 )]
+script = ExtResource( 5 )
+can_joust = true
+
+[node name="Back" type="Sprite" parent="." index="0"]
+position = Vector2( 300, 0 )
+texture = ExtResource( 3 )
+
+[node name="Front" type="Sprite" parent="." index="1"]
+position = Vector2( 300, 0 )
+texture = ExtResource( 2 )
+
+[node name="Modulation" type="Sprite" parent="." index="2"]
+position = Vector2( 301.19, 0.139786 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2( 288.855, -2.65009 )
+polygon = PoolVector2Array( 928.387, -80.3078, -345.53, 264.774, -351.095, -150.795 )

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://game/buoy/assets/Bouy.png" type="Texture" id=1]
+
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16.3856, 12.0474 )
+
+[node name="Buoy" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 14.8 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 1 )
+offset = Vector2( 95, 0 )
+region_rect = Rect2( 0, 0, 1920, 1080 )

@@ -4,7 +4,7 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
-const duel_indicator_scene = preload("res://player/duel_indicator.tscn")
+const duel_indicator_scene = preload("res://game/duel_indicator/duel_indicator.tscn")
 const powerup_scenes = [preload("res://powerups/judgement.tscn"),
 	preload("res://powerups/lightning_rod.tscn"),
 	preload("res://powerups/mead.tscn")]
@@ -22,7 +22,6 @@ func _ready():
 		randomize()
 		set_process(false)
 		$GameTimerLabel.text = str($GameTimer.wait_time)
-		$AnimationPlayer.play("countdown")
 		$VisorTransition.rpc_config("bring_down", MultiplayerAPI.RPC_MODE_REMOTE)
 		$VisorTransition.lift_up()
 
@@ -51,7 +50,6 @@ func add_player(number, net_id, data = {}):
 	new_player.name = "Player" + str(number)
 	new_player.load_data(data)
 	new_player.set_network_master(net_id)
-	new_player.connect("dueling", self, "duel_started")
 	$YSort.add_child(new_player)
 
 
@@ -60,6 +58,7 @@ func all_players_added():
 	var players = get_tree().get_nodes_in_group("player")
 	var num = len(players)
 	if num == 0:
+		get_tree().paused = false
 		return
 
 	var spawn_positions = get_node("SpawnPositions/" + str(num) + "Player")
@@ -166,3 +165,7 @@ func _return_to_main_menu():
 func set_player_process_input(process):
 	for player in get_tree().get_nodes_in_group("player"):
 		player.set_process_input(process)
+
+
+func _on_VisorTransition_lifted_up():
+	$AnimationPlayer.play("countdown")
