@@ -1,14 +1,13 @@
 extends Area2D
 
 
-signal died
-
 export (bool) var parrying = false
 export (bool) var in_water = true
 
 const MAX_HEALTH = 100
 
 var health = MAX_HEALTH
+var alive = true
 var player_number
 onready var held_weapon = $Reversable/Sprite/BackArm/WeaponHandle/Lance
 
@@ -25,13 +24,19 @@ func _ready():
 
 
 # Take damage and update health display
-func hit(damage):
+func hit(damage, knockback_on_death):
+	if !alive:
+		return
 	health -= damage
 	health = max(health, 0)
 	$HealthLabel.text = str(health)
 	if health == 0:
-		print("Ooof, I'm dead")
-		emit_signal("died")
+		if in_water:
+			print("I died while in the water")
+		else:
+			print("I died while on a turtle")
+			get_parent().knock_knight_off(knockback_on_death)
+		alive = false
 	
 
 # Sets facing direction (+1 right, -1 left)

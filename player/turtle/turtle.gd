@@ -8,7 +8,7 @@ export (float) var slowed_speed = 50
 
 const SPEED = 100
 const MOVE_THRESHOLD = 0.45
-const DEBUG = true
+const DEBUG = false
 
 var device_id
 var locked_direction = Vector2(0, 0)

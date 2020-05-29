@@ -225,8 +225,9 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight):
-	if knight.in_water and number == knight.player_number:
+	if knight.in_water and knight.alive and number == knight.player_number:
 		call_deferred("pick_up_knight", knight)
+
 
 
 # Set color modulation for team color
@@ -234,3 +235,6 @@ func set_color(color):
 	$JoustIndicatorBase/Modulate.modulate = color
 	$JoustIndicatorPoint/Modulate.modulate = color
 	$Knight.set_color(color)
+
+
+
