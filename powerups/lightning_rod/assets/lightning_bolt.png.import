@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/mead.png-16b2af8088fecabb283b251eff1aa902.stex"
+path="res://.import/lightning_bolt.png-e4126bb1033c52a3cf1e2f7b5ca7e416.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://powerups/assets/mead.png"
-dest_files=[ "res://.import/mead.png-16b2af8088fecabb283b251eff1aa902.stex" ]
+source_file="res://powerups/lightning_rod/assets/lightning_bolt.png"
+dest_files=[ "res://.import/lightning_bolt.png-e4126bb1033c52a3cf1e2f7b5ca7e416.stex" ]
 
 [params]
 

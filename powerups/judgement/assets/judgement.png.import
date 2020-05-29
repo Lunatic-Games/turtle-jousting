@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lightning_bolt.png-53ec043f65826ef11be69c2eb4cbc337.stex"
+path="res://.import/judgement.png-156b99809b753ac13e719b90d3584898.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://powerups/assets/lightning_bolt.png"
-dest_files=[ "res://.import/lightning_bolt.png-53ec043f65826ef11be69c2eb4cbc337.stex" ]
+source_file="res://powerups/judgement/assets/judgement.png"
+dest_files=[ "res://.import/judgement.png-156b99809b753ac13e719b90d3584898.stex" ]
 
 [params]
 

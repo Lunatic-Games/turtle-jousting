@@ -146,10 +146,15 @@ func set_process_input(process):
 		.set_process_input(true)
 	else:
 		.set_process_input(false)
-		movement_actions["up"] = [false, 0]
-		movement_actions["right"] = [false, 0]
-		movement_actions["down"] = [false, 0]
-		movement_actions["left"] = [false, 0]
+		reset_movement_presses()
+		
+
+# Clears saved states of buttons and joystick direction
+func reset_movement_presses():
+	movement_actions["up"] = [false, 0]
+	movement_actions["right"] = [false, 0]
+	movement_actions["down"] = [false, 0]
+	movement_actions["left"] = [false, 0]
 
 
 # Checks for running into another turtle or a knight
@@ -158,6 +163,8 @@ func _on_Hitbox_area_entered(area):
 		hit_turtle(area)
 	elif area.is_in_group("knight") and !is_a_parent_of(area):
 		hit_knight(area)
+	elif area.is_in_group("powerup"):
+		area.pick_up(self)
 
 
 # Hit another turtle

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/judgement.png-c1c1595d00fc0f25be4f635893f271f0.stex"
+path="res://.import/mead.png-dc02dbcdf87f04628e9ee641c785e98d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://powerups/assets/judgement.png"
-dest_files=[ "res://.import/judgement.png-c1c1595d00fc0f25be4f635893f271f0.stex" ]
+source_file="res://powerups/mead/assets/mead.png"
+dest_files=[ "res://.import/mead.png-dc02dbcdf87f04628e9ee641c785e98d.stex" ]
 
 [params]
 
