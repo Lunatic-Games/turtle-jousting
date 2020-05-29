@@ -180,6 +180,18 @@ tracks/13/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/14/type = "value"
+tracks/14/path = NodePath("CollisionShape2D:disabled")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0.9 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "open_tier2"
@@ -717,6 +729,7 @@ script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="orb" type="Node2D" parent="."]
 scale = Vector2( 0.05, 0.05 )
@@ -728,6 +741,7 @@ texture = ExtResource( 2 )
 texture = ExtResource( 3 )
 
 [node name="orb_glow" type="Node2D" parent="orb"]
+visible = false
 
 [node name="outer_glow" type="Sprite" parent="orb/orb_glow"]
 position = Vector2( 10.0137, -65.0894 )
@@ -741,8 +755,9 @@ texture = ExtResource( 5 )
 [node name="opening_light" type="Node2D" parent="orb"]
 
 [node name="small_light" type="Sprite" parent="orb/opening_light"]
-position = Vector2( 623.75, -618.368 )
-scale = Vector2( 1e-05, 1e-05 )
+position = Vector2( 547.597, -413.318 )
+rotation = -0.226893
+scale = Vector2( 0.750005, 0.500005 )
 texture = ExtResource( 6 )
 
 [node name="large_light" type="Sprite" parent="orb/opening_light"]

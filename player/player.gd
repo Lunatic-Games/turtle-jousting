@@ -6,14 +6,12 @@ signal lost
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
 const JOUST_CHARGE_RATE = 250
 const MAX_JOUST_CHARGE = 500
-const JOUST_INDICATOR_RATIO = 0.5  # Ratio of indic. length to charge amount
-const JOUST_INDICATOR_INNER_RADIUS = 150
 const MOUSE_SENSITIVITY = 0.01
 const LOST_DUEL_KNOCKBACK = 100
 const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
 
 var joust_charge = 0.0
-var joust_direction = Vector2(0, 0)
+var joust_direction = Vector2(1, 0)
 var dueling = false
 var number
 
@@ -68,8 +66,8 @@ func begin_charging_joust():
 	$AnimationTree.travel("charging_joust")
 	joust_charge = 0.0
 	joust_direction = last_direction
-	$JoustIndicatorBase.visible = true
-	$JoustIndicatorPoint.visible = true
+	reset_movement_presses()
+	$JoustIndicator.visible = true
 	update_joust_indicator()
 
 
@@ -77,8 +75,7 @@ func begin_charging_joust():
 func release_joust():
 	$Knight/AnimationTree.travel("jousting")
 	$AnimationTree.travel("jousting")
-	$JoustIndicatorBase.visible = false
-	$JoustIndicatorPoint.visible = false
+	$JoustIndicator.visible = false
 	locked_direction = joust_direction
 
 
@@ -114,8 +111,7 @@ func begin_dueling(slapping):
 		$Knight/AnimationTree.travel("slapping")
 	else:
 		$Knight/AnimationTree.travel("dueling")
-	$JoustIndicatorBase.visible = false
-	$JoustIndicatorPoint.visible = false
+	$JoustIndicator.visible = false
 
 
 # Player won the duel, just go back to idle
@@ -141,13 +137,7 @@ func update_joust_indicator():
 	if dir.length() > JOUST_DEADZONE:
 		joust_direction = dir.normalized()
 	
-	var angle = joust_direction.angle()
-	var dist = JOUST_INDICATOR_INNER_RADIUS
-	$JoustIndicatorBase.position = joust_direction.normalized() * dist
-	$JoustIndicatorBase.rotation = angle + PI / 2
-	dist += joust_charge * JOUST_INDICATOR_RATIO
-	$JoustIndicatorPoint.position = joust_direction.normalized() * dist
-	$JoustIndicatorPoint.rotation = angle + PI / 2
+	$JoustIndicator.update_indicator(joust_direction, joust_charge)
 
 
 # Extend update_sprite_direction to consider joust direction
@@ -168,6 +158,7 @@ func moved(movement):
 	
 	if movement and $AnimationTree.is_in_state("idle"):
 		$AnimationTree.travel_idle("idle_moving")
+		last_direction = movement.normalized()
 	elif !movement and $AnimationTree.is_in_state("idle"):
 		$AnimationTree.travel_idle("idle_resting")
 
@@ -234,8 +225,7 @@ func hit_knight(knight):
 
 # Set color modulation for team color
 func set_color(color):
-	$JoustIndicatorBase/Modulate.modulate = color
-	$JoustIndicatorPoint/Modulate.modulate = color
+	$JoustIndicator.set_color(color)
 	$Knight.set_color(color)
 
 
