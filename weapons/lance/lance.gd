@@ -1,7 +1,7 @@
 extends "res://weapons/weapon.gd"
 
 
-const DAMAGE = 10
+const DAMAGE = 20
 const KNOCKBACK = 150
 
 
@@ -13,12 +13,12 @@ func set_color(color):
 # Deal damage to knight on hit (if not parried)
 func _hit_knight(knight):
 	._hit_knight(knight)
+	var backwards = knight.global_position - knight_held_by.global_position
+	var knockback = backwards.normalized() * KNOCKBACK
 	if knight.parrying:
-		var backwards = knight_held_by.global_position - knight.global_position
-		var knockback = backwards.normalized() * KNOCKBACK
-		player_held_by.call_deferred("knock_knight_off", knockback)
+		player_held_by.call_deferred("knock_knight_off", -knockback)
 	else:
-		knight.call_deferred("hit", DAMAGE)
+		knight.call_deferred("hit", DAMAGE, knockback)
 
 
 # Start a duel between the two players

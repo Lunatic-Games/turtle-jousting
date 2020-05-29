@@ -44,3 +44,4 @@ texture = ExtResource( 3 )
 
 [node name="Modulate" type="Sprite" parent="JoustIndicatorPoint" index="0"]
 texture = ExtResource( 6 )
+[connection signal="died" from="Knight" to="." method="_on_Knight_died"]

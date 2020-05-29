@@ -1,6 +1,8 @@
 extends "res://player/turtle/turtle.gd"
 
 
+signal lost
+
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
 const JOUST_CHARGE_RATE = 250
 const MAX_JOUST_CHARGE = 500
@@ -225,8 +227,9 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight):
-	if knight.in_water and number == knight.player_number:
+	if knight.in_water and knight.alive and number == knight.player_number:
 		call_deferred("pick_up_knight", knight)
+
 
 
 # Set color modulation for team color
@@ -234,3 +237,9 @@ func set_color(color):
 	$JoustIndicatorBase/Modulate.modulate = color
 	$JoustIndicatorPoint/Modulate.modulate = color
 	$Knight.set_color(color)
+
+
+func _on_Knight_died():
+	set_process_input(false)
+	remove_from_group("player")
+	emit_signal("lost")

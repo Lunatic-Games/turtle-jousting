@@ -5701,71 +5701,69 @@ animation = "moving_stop"
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
 
-[sub_resource type="AnimationNodeStateMachine" id=25]
+[sub_resource type="AnimationNodeStateMachine" id=26]
 states/idle_moving/node = SubResource( 19 )
 states/idle_moving/position = Vector2( 532, 258 )
 states/idle_resting/node = SubResource( 20 )
 states/idle_resting/position = Vector2( 532, 162 )
 states/idle_stop_moving/node = SubResource( 21 )
 states/idle_stop_moving/position = Vector2( 301, 207 )
-transitions = [ "idle_resting", "idle_moving", SubResource( 22 ), "idle_moving", "idle_stop_moving", SubResource( 23 ), "idle_stop_moving", "idle_resting", SubResource( 24 ), "idle_moving", "idle_resting", SubResource( 52 ) ]
+transitions = [ "idle_resting", "idle_moving", SubResource( 22 ), "idle_moving", "idle_stop_moving", SubResource( 23 ), "idle_stop_moving", "idle_resting", SubResource( 24 ), "idle_moving", "idle_resting", SubResource( 25 ) ]
 start_node = "idle_resting"
 graph_offset = Vector2( -16, 117 )
 
-[sub_resource type="AnimationNodeAnimation" id=26]
+[sub_resource type="AnimationNodeAnimation" id=27]
 animation = "joust_ending"
 
-[sub_resource type="AnimationNodeAnimation" id=27]
+[sub_resource type="AnimationNodeAnimation" id=28]
 animation = "jousting"
 
-[sub_resource type="AnimationNodeAnimation" id=28]
+[sub_resource type="AnimationNodeAnimation" id=29]
 animation = "mounting"
 
-[sub_resource type="AnimationNodeAnimation" id=29]
+[sub_resource type="AnimationNodeAnimation" id=30]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeAnimation" id=30]
+[sub_resource type="AnimationNodeAnimation" id=31]
 animation = "slapping"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=34]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
 switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=36]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=38]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=39]
 switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=40]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=41]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=42]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=43]
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=44]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=45]
 
@@ -5773,17 +5771,19 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=47]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=53]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=54]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=55]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=56]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=57]
-
-[sub_resource type="AnimationNodeStateMachine" id=48]
+[sub_resource type="AnimationNodeStateMachine" id=54]
 states/charging_joust/node = SubResource( 14 )
 states/charging_joust/position = Vector2( 694, 28 )
 states/dodging/node = SubResource( 15 )
@@ -5794,27 +5794,27 @@ states/dueling/node = SubResource( 17 )
 states/dueling/position = Vector2( 687, 247 )
 states/flying_off/node = SubResource( 18 )
 states/flying_off/position = Vector2( 449, 28 )
-states/idle/node = SubResource( 25 )
+states/idle/node = SubResource( 26 )
 states/idle/position = Vector2( 449, 172 )
-states/joust_ending/node = SubResource( 26 )
+states/joust_ending/node = SubResource( 27 )
 states/joust_ending/position = Vector2( 687, 172 )
-states/jousting/node = SubResource( 27 )
+states/jousting/node = SubResource( 28 )
 states/jousting/position = Vector2( 898, 172 )
-states/mounting/node = SubResource( 28 )
+states/mounting/node = SubResource( 29 )
 states/mounting/position = Vector2( 235, 172 )
-states/parrying/node = SubResource( 29 )
+states/parrying/node = SubResource( 30 )
 states/parrying/position = Vector2( 444, 491 )
-states/slapping/node = SubResource( 30 )
+states/slapping/node = SubResource( 31 )
 states/slapping/position = Vector2( 648, 398 )
-transitions = [ "idle", "parrying", SubResource( 31 ), "idle", "dodging", SubResource( 32 ), "idle", "charging_joust", SubResource( 33 ), "parrying", "idle", SubResource( 34 ), "dodging", "idle", SubResource( 35 ), "charging_joust", "jousting", SubResource( 36 ), "idle", "flying_off", SubResource( 37 ), "flying_off", "drowning", SubResource( 38 ), "mounting", "idle", SubResource( 39 ), "jousting", "dueling", SubResource( 40 ), "dueling", "idle", SubResource( 41 ), "jousting", "joust_ending", SubResource( 42 ), "joust_ending", "idle", SubResource( 43 ), "jousting", "slapping", SubResource( 44 ), "slapping", "idle", SubResource( 45 ), "idle", "slapping", SubResource( 46 ), "drowning", "mounting", SubResource( 47 ), "jousting", "flying_off", SubResource( 53 ), "parrying", "slapping", SubResource( 54 ), "dodging", "slapping", SubResource( 55 ), "joust_ending", "slapping", SubResource( 56 ), "charging_joust", "slapping", SubResource( 57 ) ]
+transitions = [ "idle", "parrying", SubResource( 32 ), "idle", "dodging", SubResource( 33 ), "idle", "charging_joust", SubResource( 34 ), "parrying", "idle", SubResource( 35 ), "dodging", "idle", SubResource( 36 ), "charging_joust", "jousting", SubResource( 37 ), "idle", "flying_off", SubResource( 38 ), "flying_off", "drowning", SubResource( 39 ), "mounting", "idle", SubResource( 40 ), "jousting", "dueling", SubResource( 41 ), "dueling", "idle", SubResource( 42 ), "jousting", "joust_ending", SubResource( 43 ), "joust_ending", "idle", SubResource( 44 ), "jousting", "slapping", SubResource( 45 ), "slapping", "idle", SubResource( 46 ), "idle", "slapping", SubResource( 47 ), "drowning", "mounting", SubResource( 48 ), "jousting", "flying_off", SubResource( 49 ), "parrying", "slapping", SubResource( 50 ), "dodging", "slapping", SubResource( 51 ), "joust_ending", "slapping", SubResource( 52 ), "charging_joust", "slapping", SubResource( 53 ) ]
 start_node = "idle"
 graph_offset = Vector2( 81, -157 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=49]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=55]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=50]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=56]
 
-[sub_resource type="DynamicFont" id=51]
+[sub_resource type="DynamicFont" id=57]
 font_data = ExtResource( 12 )
 
 [node name="Knight" type="Area2D" groups=[
@@ -5939,10 +5939,10 @@ anims/parrying = SubResource( 12 )
 anims/slapping = SubResource( 13 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 48 )
+tree_root = SubResource( 54 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 49 )
-parameters/idle/playback = SubResource( 50 )
+parameters/playback = SubResource( 55 )
+parameters/idle/playback = SubResource( 56 )
 script = ExtResource( 26 )
 
 [node name="HealthLabel" type="Label" parent="."]
@@ -5952,7 +5952,7 @@ margin_right = 50.2654
 margin_bottom = -56.8608
 rect_min_size = Vector2( 100, 0 )
 rect_pivot_offset = Vector2( 50, 0 )
-custom_fonts/font = SubResource( 51 )
+custom_fonts/font = SubResource( 57 )
 text = "100"
 align = 1
 __meta__ = {

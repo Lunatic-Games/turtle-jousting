@@ -49,6 +49,7 @@ func add_player(number, net_id, data = {}):
 	new_player.name = "Player" + str(number)
 	new_player.load_data(data)
 	new_player.set_network_master(net_id)
+	new_player.connect("lost", self, "_on_Player_lost")
 	$YSort.add_child(new_player)
 
 
@@ -101,6 +102,20 @@ func furthest_powerup_spawn_position():
 		return
 	var i = values.find(values.max())
 	return $PowerupPositions.get_child(i).global_position
+
+
+# Check if there is only one player remaining
+func _on_Player_lost():
+	if len(get_tree().get_nodes_in_group("player")) == 1:
+		$AnimationPlayer.play("end_game")
+
+
+# Begin transition to return to the lobby
+func begin_return_to_lobby():
+	set_player_process_input(false)
+	$VisorTransition.bring_down(self, "_return_to_lobby")
+	if get_tree().network_peer:
+		$VisorTransition.rpc("bring_down")
 
 
 # Resume handling player input
