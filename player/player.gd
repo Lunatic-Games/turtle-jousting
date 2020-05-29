@@ -1,6 +1,8 @@
 extends "res://player/turtle/turtle.gd"
 
 
+signal lost
+
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
 const JOUST_CHARGE_RATE = 250
 const MAX_JOUST_CHARGE = 500
@@ -237,4 +239,7 @@ func set_color(color):
 	$Knight.set_color(color)
 
 
-
+func _on_Knight_died():
+	set_process_input(false)
+	remove_from_group("player")
+	emit_signal("lost")

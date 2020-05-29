@@ -1,6 +1,8 @@
 extends Area2D
 
 
+signal died
+
 export (bool) var parrying = false
 export (bool) var in_water = true
 
@@ -37,6 +39,7 @@ func hit(damage, knockback_on_death):
 			print("I died while on a turtle")
 			get_parent().knock_knight_off(knockback_on_death)
 		alive = false
+		emit_signal("died")
 	
 
 # Sets facing direction (+1 right, -1 left)

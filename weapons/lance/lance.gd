@@ -1,7 +1,7 @@
 extends "res://weapons/weapon.gd"
 
 
-const DAMAGE = 50
+const DAMAGE = 20
 const KNOCKBACK = 150
 
 
