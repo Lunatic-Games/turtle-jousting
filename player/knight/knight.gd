@@ -25,22 +25,27 @@ func _ready():
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
-# Take damage and update health display
+# Reduce health
 func hit(damage, knockback_on_death):
 	if !alive:
 		return
 	health -= damage
 	health = max(health, 0)
+	set_health(health, knockback_on_death)
+
+
+# Set health to a value
+func set_health(new_health, knockback_on_death=Vector2(0,0)):
+	if !alive:
+		return
+	health = new_health
 	$HealthLabel.text = str(health)
 	if health == 0:
-		if in_water:
-			print("I died while in the water")
-		else:
-			print("I died while on a turtle")
+		if !in_water:
 			get_parent().knock_knight_off(knockback_on_death)
 		alive = false
 		emit_signal("died")
-	
+
 
 # Sets facing direction (+1 right, -1 left)
 func set_direction(dir_sign):

@@ -4,7 +4,8 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
-const powerup_scenes = [preload("res://powerups/lightning_rod/lightning_rod.tscn")]
+const powerup_scenes = [preload("res://powerups/lightning_rod/lightning_rod.tscn"),
+	preload("res://powerups/judgement/judgement.tscn")]
 
 var duels = []
 
