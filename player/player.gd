@@ -16,11 +16,6 @@ var dueling = false
 var number
 
 
-func _ready():
-	if DEBUG:
-		set_color(Color.aquamarine)
-
-
 # Handle different actions
 func _input(event):
 	if !_should_handle_event(event):
@@ -222,13 +217,13 @@ func hit_knight(knight):
 		call_deferred("pick_up_knight", knight)
 
 
-
 # Set color modulation for team color
 func set_color(color):
 	$JoustIndicator.set_color(color)
 	$Knight.set_color(color)
 
 
+# Stop taking input and don't count self as player
 func _on_Knight_died():
 	set_process_input(false)
 	remove_from_group("player")

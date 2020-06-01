@@ -25,4 +25,6 @@ position = Vector2( 1.38696, -28.2939 )
 [node name="JoustIndicator" parent="." index="6" instance=ExtResource( 3 )]
 visible = false
 position = Vector2( 1.19751, -22.1533 )
+
+[node name="Effects" type="Node2D" parent="." index="7"]
 [connection signal="died" from="Knight" to="." method="_on_Knight_died"]
