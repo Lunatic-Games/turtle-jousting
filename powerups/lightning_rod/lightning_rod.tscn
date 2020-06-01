@@ -10,5 +10,5 @@ script = ExtResource( 3 )
 status = ExtResource( 4 )
 
 [node name="Sprite" parent="." index="2"]
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2( 0.075, 0.075 )
 texture = ExtResource( 2 )

@@ -6,11 +6,11 @@ export (float) var locked_speed = 200
 export (bool) var slowed = false
 export (float) var slowed_speed = 50
 
-const BASE_SPEED = 100
+const SPEED = 100
 const MOVE_THRESHOLD = 0.45
 const DEBUG = false
 
-var speed = BASE_SPEED
+var speed_modifier = 1
 var device_id
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
@@ -75,7 +75,7 @@ func _physics_process(_delta):
 		if slowed:
 			movement *= slowed_speed
 		else:
-			movement *= speed
+			movement *= SPEED * speed_modifier
 	moved(movement)
 	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
