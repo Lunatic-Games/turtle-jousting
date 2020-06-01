@@ -8,4 +8,5 @@
 status = ExtResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
+scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 2 )

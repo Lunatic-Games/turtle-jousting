@@ -14,7 +14,7 @@ func refresh():
 
 
 func _on_DurationTimer_timeout():
-	player.speed = player.BASE_SPEED
+	player.speed_modifier = 1
 
 
 func _on_StrikeTimer_timeout():
@@ -27,4 +27,4 @@ func _set_lightning_position():
 
 func _begin_speed_up():
 	$DurationTimer.start(0)
-	player.speed = player.BASE_SPEED * STRUCK_SPEED_MODIFIER
+	player.speed_modifier = STRUCK_SPEED_MODIFIER
