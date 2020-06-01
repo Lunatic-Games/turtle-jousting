@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://powerups/powerup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://powerups/invis_potion/assets/invis_potion.png" type="Texture" id=2]
+[ext_resource path="res://powerups/invis_potion/invisible.tscn" type="PackedScene" id=3]
+
+[node name="InvisPotion" instance=ExtResource( 1 )]
+status = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 2 )
