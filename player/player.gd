@@ -228,3 +228,11 @@ func _on_Knight_died():
 	set_process_input(false)
 	remove_from_group("player")
 	emit_signal("lost")
+
+
+# Add a status to the player
+func add_status(status):
+	if $Statuses.has_node(status.name):
+		$Statuses.get_node(status.name).refresh()
+	else:
+		$Statuses.add_child(status)

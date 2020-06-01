@@ -4,9 +4,7 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
-const powerup_scenes = [] #[preload("res://powerups/judgement.tscn"),
-	#preload("res://powerups/lightning_rod.tscn"),
-	#preload("res://powerups/mead.tscn")]
+const powerup_scenes = [preload("res://powerups/lightning_rod/lightning_rod.tscn")]
 
 var duels = []
 
@@ -82,7 +80,6 @@ func start():
 
 # Spawn a powerup
 func _spawn_powerup():
-	return
 	var powerup_scene = powerup_scenes[randi() % len(powerup_scenes)]
 	var powerup = powerup_scene.instance()
 	$YSort.add_child(powerup)

@@ -15,6 +15,12 @@
 script = ExtResource( 2 )
 locked = false
 
+[node name="WaterAnimation" parent="Reversable/Sprite" index="0"]
+frame = 0
+
+[node name="WaterWakeAnimation" parent="Reversable" index="3"]
+frame = 0
+
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )
 parameters/idle/playback = SubResource( 2 )
@@ -26,5 +32,5 @@ position = Vector2( 1.38696, -28.2939 )
 visible = false
 position = Vector2( 1.19751, -22.1533 )
 
-[node name="Effects" type="Node2D" parent="." index="7"]
+[node name="Statuses" type="Node2D" parent="." index="7"]
 [connection signal="died" from="Knight" to="." method="_on_Knight_died"]

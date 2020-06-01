@@ -1,30 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/duel_indicator/duel_indicator.gd" type="Script" id=1]
 [ext_resource path="res://player/duel_indicator/b_button.png" type="Texture" id=2]
 [ext_resource path="res://player/duel_indicator/x_button.png" type="Texture" id=3]
 [ext_resource path="res://player/duel_indicator/y_button.png" type="Texture" id=4]
 [ext_resource path="res://player/duel_indicator/a_button.png" type="Texture" id=5]
-
-[sub_resource type="AtlasTexture" id=1]
-flags = 4
-atlas = ExtResource( 5 )
-region = Rect2( 0, -1, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=3]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=4]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 64, 64 )
 
 [node name="DuelIndicator" type="Popup"]
 anchor_left = 0.5
@@ -42,7 +22,8 @@ script = ExtResource( 1 )
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
-texture = SubResource( 1 )
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -51,7 +32,8 @@ __meta__ = {
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
-texture = SubResource( 2 )
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,7 +42,8 @@ __meta__ = {
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
-texture = SubResource( 3 )
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -69,7 +52,8 @@ __meta__ = {
 visible = false
 margin_right = 64.0
 margin_bottom = 64.0
-texture = SubResource( 4 )
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
