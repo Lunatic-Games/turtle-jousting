@@ -23,7 +23,7 @@ func display(p1, p2):
 	
 	var pos = p1.global_position
 	pos += (p2.global_position - p1.global_position) / 2
-	pos += Vector2(-32, -100)
+	pos += Vector2(-18, -100)
 	set_global_position(pos)
 	random_button()
 	popup()

@@ -5827,7 +5827,7 @@ auto_advance = true
 states/charging_joust/node = SubResource( 15 )
 states/charging_joust/position = Vector2( 694, 28 )
 states/dodging/node = SubResource( 16 )
-states/dodging/position = Vector2( 164, 398 )
+states/dodging/position = Vector2( 210, 440 )
 states/drowning/node = SubResource( 17 )
 states/drowning/position = Vector2( 235, 28 )
 states/dueling/node = SubResource( 18 )
@@ -5843,12 +5843,12 @@ states/jousting/position = Vector2( 898, 172 )
 states/mounting/node = SubResource( 30 )
 states/mounting/position = Vector2( 235, 172 )
 states/parrying/node = SubResource( 31 )
-states/parrying/position = Vector2( 444, 491 )
+states/parrying/position = Vector2( 449, 508 )
 states/slapping/node = SubResource( 32 )
-states/slapping/position = Vector2( 648, 398 )
+states/slapping/position = Vector2( 728, 440 )
 transitions = [ "idle", "parrying", SubResource( 33 ), "idle", "dodging", SubResource( 34 ), "idle", "charging_joust", SubResource( 35 ), "parrying", "idle", SubResource( 36 ), "dodging", "idle", SubResource( 37 ), "charging_joust", "jousting", SubResource( 38 ), "idle", "flying_off", SubResource( 39 ), "flying_off", "drowning", SubResource( 40 ), "mounting", "idle", SubResource( 41 ), "jousting", "dueling", SubResource( 42 ), "dueling", "idle", SubResource( 43 ), "jousting", "joust_ending", SubResource( 44 ), "joust_ending", "idle", SubResource( 45 ), "jousting", "slapping", SubResource( 46 ), "slapping", "idle", SubResource( 47 ), "idle", "slapping", SubResource( 48 ), "drowning", "mounting", SubResource( 49 ), "jousting", "flying_off", SubResource( 50 ), "parrying", "slapping", SubResource( 51 ), "dodging", "slapping", SubResource( 52 ), "joust_ending", "slapping", SubResource( 53 ), "charging_joust", "slapping", SubResource( 54 ) ]
 start_node = "idle"
-graph_offset = Vector2( 81, -157 )
+graph_offset = Vector2( 120, -104 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=56]
 
