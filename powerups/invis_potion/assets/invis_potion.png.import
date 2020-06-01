@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/invis_potion.png-f166bbae75083f70924f836cf27c6d31.stex"
+path="res://.import/invis_potion.png-49b51203f7d65ff0aef37b0ae094f757.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://powerups/invis_potion/invis_potion.png"
-dest_files=[ "res://.import/invis_potion.png-f166bbae75083f70924f836cf27c6d31.stex" ]
+source_file="res://powerups/invis_potion/assets/invis_potion.png"
+dest_files=[ "res://.import/invis_potion.png-49b51203f7d65ff0aef37b0ae094f757.stex" ]
 
 [params]
 

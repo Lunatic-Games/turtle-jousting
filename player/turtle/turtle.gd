@@ -164,7 +164,7 @@ func _on_Hitbox_area_entered(area):
 		hit_turtle(area)
 	elif area.is_in_group("knight") and !is_a_parent_of(area):
 		hit_knight(area)
-	elif area.is_in_group("powerup"):
+	elif area.is_in_group("powerup") and has_node("Knight"):
 		area.pick_up(self)
 
 
