@@ -1,13 +1,13 @@
 [gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
-[ext_resource path="res://player/turtle/assets/turtle_green.png" type="Texture" id=2]
-[ext_resource path="res://player/animation_tree.gd" type="Script" id=3]
+[ext_resource path="res://player/turtle/assets/water_particle.png" type="Texture" id=2]
+[ext_resource path="res://player/turtle/assets/turtle_green.png" type="Texture" id=3]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle_frame2.png" type="Texture" id=4]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle_frame1.png" type="Texture" id=5]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle.png" type="Texture" id=6]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle2.png" type="Texture" id=7]
-[ext_resource path="res://player/turtle/assets/water_particle.png" type="Texture" id=8]
+[ext_resource path="res://player/animation_tree.gd" type="Script" id=8]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.152672, 1 )
@@ -112,6 +112,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=9]
 length = 1.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
@@ -119,7 +120,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.1 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.45, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.05, 0.05 ), Vector2( 0.05, 0.075 ), Vector2( 0.05, 0.01 ), Vector2( 0.05, 0 ), Vector2( 0.05, -0.01 ), Vector2( 0.05, -0.075 ), Vector2( 0.05, -0.01 ), Vector2( 0.05, 0 ), Vector2( 0.05, 0.01 ), Vector2( 0.05, 0.05 ) ]
@@ -650,7 +651,7 @@ graph_offset = Vector2( -111, -199.888 )
 position = Vector2( 516.15, 290.027 )
 script = ExtResource( 1 )
 locked = true
-locked_speed = 0.0
+slowed = true
 slowed_speed = 100.0
 
 [node name="Reversable" type="Node2D" parent="."]
@@ -660,12 +661,12 @@ lifetime = 3.0
 speed_scale = 2.0
 local_coords = false
 process_material = SubResource( 5 )
-texture = ExtResource( 8 )
+texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Reversable"]
 position = Vector2( 0, -27 )
-scale = Vector2( 0.0465, 0.05 )
-texture = ExtResource( 2 )
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 3 )
 offset = Vector2( -50, 0 )
 
 [node name="WaterAnimation" type="AnimatedSprite" parent="Reversable/Sprite"]
@@ -673,7 +674,6 @@ modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
 position = Vector2( -104.985, -26.8765 )
 scale = Vector2( 1.07527, 1 )
 frames = SubResource( 6 )
-frame = 1
 playing = true
 
 [node name="KnightPosition" type="Position2D" parent="Reversable"]
@@ -685,11 +685,11 @@ modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 7 )
-frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
+disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "turtle_hitbox",
@@ -698,6 +698,7 @@ scale = Vector2( 1.2, 1.2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
+disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 8 )
@@ -713,5 +714,5 @@ tree_root = SubResource( 38 )
 anim_player = NodePath("../Animator")
 parameters/playback = SubResource( 39 )
 parameters/idle/playback = SubResource( 40 )
-script = ExtResource( 3 )
+script = ExtResource( 8 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
