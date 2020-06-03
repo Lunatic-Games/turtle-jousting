@@ -58,10 +58,13 @@ func set_direction(dir_sign):
 
 # Update idle state based on movement
 func moved(movement):
-	if movement and $AnimationTree.is_in_state("controlling/waiting/idling"):
-		$AnimationTree.travel("controlling/waiting/moving")
-	elif !movement and $AnimationTree.is_in_state("controlling/waiting/moving"):
-		$AnimationTree.travel("controlling/waiting/moving_stop")
+	if movement and $AnimationTree.is_in_state("idle"):
+		$AnimationTree.travel_idle("idle_moving")
+	elif !movement and $AnimationTree.is_in_state("idle"):
+		if $AnimationTree.is_in_idle_state("idle_moving"):
+			$AnimationTree.travel_idle("idle_stop_moving")
+		else:
+			$AnimationTree.travel_idle("idle_resting")
 
 
 # Modulates pieces for team color
