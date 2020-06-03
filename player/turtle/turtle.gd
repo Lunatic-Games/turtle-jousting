@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+signal movement_actions_changed
+
 export (bool) var locked = false
 export (float) var locked_speed = 200
 export (bool) var slowed = false
@@ -130,8 +132,11 @@ func check_for_move_event(event, direction):
 		if event is InputEventJoypadMotion:
 			var strength = event.get_action_strength("move_" + direction)
 			movement_actions[direction][1] = strength
+			emit_signal("movement_actions_changed", direction, 1, strength)
 		else:
 			movement_actions[direction][0] = event.is_pressed()
+			emit_signal("movement_actions_changed", direction, 0, event.is_pressed())
+		
 
 
 # Start facing the opposite direction

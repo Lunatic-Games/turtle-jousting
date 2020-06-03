@@ -12,6 +12,7 @@ const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator
 
 var joust_charge = 0.0
 var joust_direction = Vector2(1, 0)
+var joust_move_actions
 var dueling = false
 var number
 
@@ -63,7 +64,8 @@ func begin_charging_joust():
 	$AnimationTree.travel("controlling/jousting/charging_joust")
 	joust_charge = 0.0
 	joust_direction = last_direction
-	reset_movement_presses()
+	joust_move_actions = {"up": [false, 0], "right": [false, 0],
+		"down": [false, 0], "left": [false, 0]}
 	$JoustIndicator.visible = true
 	update_joust_indicator()
 
@@ -126,10 +128,10 @@ func lost_duel(knockback_dir):
 
 # Update position and rotation of joust indicator while charging joust
 func update_joust_indicator():
-	var h = movement_actions["right"][1] - movement_actions["left"][1]
-	h += int(movement_actions["right"][0]) - int(movement_actions["left"][0])
-	var v = movement_actions["down"][1] - movement_actions["up"][1]
-	v += int(movement_actions["down"][0]) - int(movement_actions["up"][0])
+	var h = joust_move_actions["right"][1] - joust_move_actions["left"][1]
+	h += int(joust_move_actions["right"][0]) - int(joust_move_actions["left"][0])
+	var v = joust_move_actions["down"][1] - joust_move_actions["up"][1]
+	v += int(joust_move_actions["down"][0]) - int(joust_move_actions["up"][0])
 	var dir = Vector2(h, v)
 	if dir.length() > JOUST_DEADZONE:
 		joust_direction = dir.normalized()
@@ -240,3 +242,8 @@ func add_status(status):
 		$Statuses.get_node(status.name).refresh()
 	else:
 		$Statuses.add_child(status)
+
+
+func _on_movement_actions_changed(direction, type, value):
+	if joust_move_actions:
+		joust_move_actions[direction][type] = value

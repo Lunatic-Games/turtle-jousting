@@ -33,4 +33,5 @@ visible = false
 position = Vector2( 1.19751, -22.1533 )
 
 [node name="Statuses" type="Node2D" parent="." index="7"]
+[connection signal="movement_actions_changed" from="." to="." method="_on_movement_actions_changed"]
 [connection signal="died" from="Knight" to="." method="_on_Knight_died"]
