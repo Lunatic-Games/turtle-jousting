@@ -561,96 +561,106 @@ tracks/4/keys = {
 }
 
 [sub_resource type="AnimationNodeAnimation" id=15]
-animation = "charging_joust"
-
-[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "dodging"
 
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "charging_joust"
+
 [sub_resource type="AnimationNodeAnimation" id=17]
-animation = "dueling"
-
-[sub_resource type="AnimationNodeAnimation" id=18]
-animation = "moving"
-
-[sub_resource type="AnimationNodeAnimation" id=19]
-animation = "idling"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=21]
-
-[sub_resource type="AnimationNodeStateMachine" id=22]
-states/idle_moving/node = SubResource( 18 )
-states/idle_moving/position = Vector2( 457, 353 )
-states/idle_resting/node = SubResource( 19 )
-states/idle_resting/position = Vector2( 457, 228 )
-transitions = [ "idle_resting", "idle_moving", SubResource( 20 ), "idle_moving", "idle_resting", SubResource( 21 ) ]
-start_node = "idle_resting"
-graph_offset = Vector2( -86, 184 )
-
-[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "jousting"
 
-[sub_resource type="AnimationNodeAnimation" id=24]
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachine" id=19]
+states/charging_joust/node = SubResource( 16 )
+states/charging_joust/position = Vector2( 508, 120 )
+states/jousting/node = SubResource( 17 )
+states/jousting/position = Vector2( 508, 203 )
+transitions = [ "charging_joust", "jousting", SubResource( 18 ) ]
+start_node = "charging_joust"
+graph_offset = Vector2( -26, 8 )
+
+[sub_resource type="AnimationNodeAnimation" id=20]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "idling"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
-switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=31]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+[sub_resource type="AnimationNodeAnimation" id=32]
+animation = "moving"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=33]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
+[sub_resource type="AnimationNodeStateMachine" id=21]
+states/idling/node = SubResource( 31 )
+states/idling/position = Vector2( 464, 120 )
+states/moving/node = SubResource( 32 )
+states/moving/position = Vector2( 464, 226 )
+transitions = [ "idling", "moving", SubResource( 33 ), "moving", "idling", SubResource( 34 ) ]
+start_node = "idling"
+graph_offset = Vector2( -76, 63 )
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=36]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=37]
 
-[sub_resource type="AnimationNodeStateMachine" id=38]
-states/charging_joust/node = SubResource( 15 )
-states/charging_joust/position = Vector2( 605, 76.3057 )
-states/dodging/node = SubResource( 16 )
-states/dodging/position = Vector2( 69, 198 )
-states/dueling/node = SubResource( 17 )
-states/dueling/position = Vector2( 314, 59.112 )
-states/idle/node = SubResource( 22 )
-states/idle/position = Vector2( 314, 198 )
-states/jousting/node = SubResource( 23 )
-states/jousting/position = Vector2( 524, 283 )
-states/parrying/node = SubResource( 24 )
-states/parrying/position = Vector2( 69, 373 )
-transitions = [ "idle", "parrying", SubResource( 25 ), "parrying", "idle", SubResource( 26 ), "idle", "dodging", SubResource( 27 ), "dodging", "idle", SubResource( 28 ), "idle", "charging_joust", SubResource( 29 ), "charging_joust", "jousting", SubResource( 30 ), "jousting", "idle", SubResource( 31 ), "idle", "dueling", SubResource( 32 ), "dueling", "idle", SubResource( 33 ), "dodging", "dueling", SubResource( 34 ), "charging_joust", "dueling", SubResource( 35 ), "jousting", "dueling", SubResource( 36 ), "parrying", "dueling", SubResource( 37 ) ]
-start_node = "idle"
-graph_offset = Vector2( -111, -199.888 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=39]
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=40]
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+
+[sub_resource type="AnimationNodeStateMachine" id=22]
+states/dodging/node = SubResource( 15 )
+states/dodging/position = Vector2( 287, 184 )
+states/jousting/node = SubResource( 19 )
+states/jousting/position = Vector2( 497, 86 )
+states/parrying/node = SubResource( 20 )
+states/parrying/position = Vector2( 714, 184 )
+states/waiting/node = SubResource( 21 )
+states/waiting/position = Vector2( 497, 184 )
+transitions = [ "dodging", "waiting", SubResource( 35 ), "waiting", "dodging", SubResource( 36 ), "waiting", "parrying", SubResource( 37 ), "parrying", "waiting", SubResource( 38 ), "waiting", "jousting", SubResource( 39 ), "jousting", "waiting", SubResource( 40 ) ]
+start_node = "waiting"
+graph_offset = Vector2( -47, 12 )
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "dueling"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachine" id=26]
+states/controlling/node = SubResource( 22 )
+states/controlling/position = Vector2( 400, 164.112 )
+states/dueling/node = SubResource( 23 )
+states/dueling/position = Vector2( 174, 164.112 )
+transitions = [ "dueling", "controlling", SubResource( 24 ), "controlling", "dueling", SubResource( 25 ) ]
+start_node = "controlling"
+graph_offset = Vector2( -196, -24.888 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=27]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=29]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=30]
 
 [node name="Turtle" type="KinematicBody2D" groups=[
 "turtle",
 ]]
 position = Vector2( 516.15, 290.027 )
 script = ExtResource( 1 )
-locked = true
+locked_speed = 0.0
 slowed = true
 slowed_speed = 100.0
 
@@ -674,6 +684,7 @@ modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
 position = Vector2( -104.985, -26.8765 )
 scale = Vector2( 1.07527, 1 )
 frames = SubResource( 6 )
+frame = 1
 playing = true
 
 [node name="KnightPosition" type="Position2D" parent="Reversable"]
@@ -685,11 +696,11 @@ modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 7 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
-disabled = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=[
 "turtle_hitbox",
@@ -698,7 +709,6 @@ scale = Vector2( 1.2, 1.2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
-disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 8 )
@@ -710,9 +720,11 @@ anims/moving = SubResource( 13 )
 anims/parrying = SubResource( 14 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 38 )
+tree_root = SubResource( 26 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 39 )
-parameters/idle/playback = SubResource( 40 )
+parameters/playback = SubResource( 27 )
+parameters/controlling/playback = SubResource( 28 )
+parameters/controlling/jousting/playback = SubResource( 29 )
+parameters/controlling/waiting/playback = SubResource( 30 )
 script = ExtResource( 8 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

@@ -24,14 +24,14 @@ func _input(event):
 	if !has_node("Knight"):
 		return
 	
-	if $Knight/AnimationTree.is_in_state("idle"):
+	if $Knight/AnimationTree.is_in_state("controlling/waiting"):
 		if event.is_action_pressed("joust"):
 			begin_charging_joust()
 		if event.is_action_pressed("dodge"):
 			dodge()
 		if event.is_action_pressed("parry"):
 			parry()
-	elif $Knight/AnimationTree.is_in_state("charging_joust"):
+	elif $AnimationTree.is_in_state("controlling/jousting/charging_joust"):
 		if event.is_action_released("joust"):
 			release_joust()
 		elif event is InputEventMouseMotion:
@@ -44,21 +44,22 @@ func _physics_process(delta):
 	if !_should_process():
 		return
 	
-	if $AnimationTree.is_in_state("charging_joust"):
+	if $AnimationTree.is_in_state("controlling/jousting/charging_joust"):
 		joust_charge += JOUST_CHARGE_RATE * delta
 		joust_charge = min(joust_charge, MAX_JOUST_CHARGE)
 		update_joust_indicator()
-	elif $AnimationTree.is_in_state("jousting"):
+	elif $AnimationTree.is_in_state("controlling/jousting/jousting"):
 		joust_charge -= locked_speed * delta
 		if joust_charge <= 0.0:
-			$AnimationTree.travel("idle")
-			$Knight/AnimationTree.travel("joust_ending")
+			$AnimationTree.travel("controlling/waiting/idling")
+			if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
+				$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
 
 
 # Begin to charge up joust
 func begin_charging_joust():
-	$Knight/AnimationTree.travel("charging_joust")
-	$AnimationTree.travel("charging_joust")
+	$Knight/AnimationTree.travel("controlling/jousting/charging_joust")
+	$AnimationTree.travel("controlling/jousting/charging_joust")
 	joust_charge = 0.0
 	joust_direction = last_direction
 	reset_movement_presses()
@@ -68,23 +69,23 @@ func begin_charging_joust():
 
 # Joust attack
 func release_joust():
-	$Knight/AnimationTree.travel("jousting")
-	$AnimationTree.travel("jousting")
+	$Knight/AnimationTree.travel("controlling/jousting/jousting")
+	$AnimationTree.travel("controlling/jousting/jousting")
 	$JoustIndicator.visible = false
 	locked_direction = joust_direction
 
 
 # Dodge out of the way
 func dodge():
-	$Knight/AnimationTree.travel("dodging")
-	$AnimationTree.travel("dodging")
+	$Knight/AnimationTree.travel("controlling/dodging")
+	$AnimationTree.travel("controlling/dodging")
 	locked_direction = last_direction
 
 
 # Parry oncoming attacks
 func parry():
-	$Knight/AnimationTree.travel("parrying")
-	$AnimationTree.travel("parrying")
+	$Knight/AnimationTree.travel("controlling/parrying")
+	$AnimationTree.travel("controlling/parrying")
 
 
 # Duel with an enemy
@@ -105,15 +106,15 @@ func begin_dueling(slapping):
 	if slapping:
 		$Knight/AnimationTree.travel("slapping")
 	else:
-		$Knight/AnimationTree.travel("dueling")
+		$Knight/AnimationTree.travel("controlling/jousting/dueling")
 	$JoustIndicator.visible = false
 
 
 # Player won the duel, just go back to idle
 func won_duel():
 	dueling = false
-	$Knight/AnimationTree.travel("idle")
-	$AnimationTree.travel("idle")
+	$Knight/AnimationTree.travel("controlling/waiting")
+	$AnimationTree.travel("controlling/waiting")
 
 
 # Player lost the duel, knock them off
@@ -139,7 +140,7 @@ func update_joust_indicator():
 func update_sprite_direction(movement):
 	var jousting = false
 	if has_node("Knight"):
-		jousting = $Knight/AnimationTree.is_in_state("charging_joust")
+		jousting = $Knight/AnimationTree.is_in_state("controlling/jousting/charging_joust")
 	if movement.x > 1 or (jousting and sign(joust_direction.x) == 1):
 		set_direction(1)
 	elif movement.x < -1 or (jousting and sign(joust_direction.x) == -1):
@@ -151,11 +152,11 @@ func moved(movement):
 	if has_node("Knight"):
 		$Knight.moved(movement)
 	
-	if movement and $AnimationTree.is_in_state("idle"):
-		$AnimationTree.travel_idle("idle_moving")
+	if movement and $AnimationTree.is_in_state("controlling/waiting/idling"):
+		$AnimationTree.travel("controlling/waiting/moving")
 		last_direction = movement.normalized()
-	elif !movement and $AnimationTree.is_in_state("idle"):
-		$AnimationTree.travel_idle("idle_resting")
+	elif !movement and $AnimationTree.is_in_state("controlling/waiting/moving"):
+		$AnimationTree.travel("controlling/waiting/idling")
 
 
 # Remove knight from self
@@ -167,13 +168,13 @@ func knock_knight_off(knockback):
 	get_parent().add_child(knight)
 	knight.global_position = global_position + knockback
 	knight.get_node("AnimationTree").travel("flying_off")
-	$AnimationTree.travel("idle")
+	$AnimationTree.travel("controlling/waiting")
 	
 
 # Add knight back
 func pick_up_knight(knight):
 	knight.in_water = false
-	knight.get_node("AnimationTree").travel("mounting")
+	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
 	add_child(knight)
 	knight.name = "Knight"
@@ -202,12 +203,12 @@ func hit_turtle(turtle):
 		return
 
 	var other_knight = turtle.get_node("../Knight")
-	if other_knight.get_node("AnimationTree").is_in_state("mounting"):
+	if other_knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
 		return
 	if $Knight.held_weapon.areas_hit.has(other_knight):
 		return
 	
-	if $Knight/AnimationTree.is_in_state("jousting"):
+	if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
 		call_deferred("duel", turtle.get_parent(), true)
 
 
