@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/blow_off.wav-cd9ac254e882e384a1e43456c99d23de.sample"
+
+[deps]
+
+source_file="res://powerups/audio_files/blow_off.wav"
+dest_files=[ "res://.import/blow_off.wav-cd9ac254e882e384a1e43456c99d23de.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
