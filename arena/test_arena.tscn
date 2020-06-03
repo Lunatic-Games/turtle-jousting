@@ -25,12 +25,6 @@ locked = true
 position = Vector2( 703.077, 287.125 )
 locked = true
 
-[node name="WaterAnimation" parent="Player2/Reversable/Sprite" index="0"]
-frame = 0
-
-[node name="WaterWakeAnimation" parent="Player2/Reversable" index="3"]
-frame = 0
-
 [node name="CollisionPolygon2D" parent="Player2" index="1"]
 disabled = true
 
