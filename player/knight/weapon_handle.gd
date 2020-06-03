@@ -7,17 +7,15 @@ var player_owned_by
 
 func set_player(player):
 	player_owned_by = player
-	weapon.set_player(player)
+	weapon.pick_up(player)
 
 
 func equip(new_weapon):
 	if weapon == $Lance:
 		weapon.put_away()
 	weapon = new_weapon
-	weapon.set_player(player_owned_by)
-	disable_hitbox()
+	weapon.pick_up(player_owned_by)
 	add_child(weapon)
-	weapon.pick_up()
 
 
 func unequip_held_weapon():
@@ -25,7 +23,7 @@ func unequip_held_weapon():
 		return
 	weapon.queue_free()
 	weapon = $Lance
-	weapon.pick_up()
+	weapon.pick_up(player_owned_by)
 
 
 func new_attack():
