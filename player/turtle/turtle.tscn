@@ -583,77 +583,77 @@ graph_offset = Vector2( -26, 8 )
 [sub_resource type="AnimationNodeAnimation" id=20]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeAnimation" id=31]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "idling"
 
-[sub_resource type="AnimationNodeAnimation" id=32]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "moving"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
 
-[sub_resource type="AnimationNodeStateMachine" id=21]
-states/idling/node = SubResource( 31 )
+[sub_resource type="AnimationNodeStateMachine" id=25]
+states/idling/node = SubResource( 21 )
 states/idling/position = Vector2( 464, 120 )
-states/moving/node = SubResource( 32 )
+states/moving/node = SubResource( 22 )
 states/moving/position = Vector2( 464, 226 )
-transitions = [ "idling", "moving", SubResource( 33 ), "moving", "idling", SubResource( 34 ) ]
+transitions = [ "idling", "moving", SubResource( 23 ), "moving", "idling", SubResource( 24 ) ]
 start_node = "idling"
 graph_offset = Vector2( -76, 63 )
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
-[sub_resource type="AnimationNodeStateMachine" id=22]
+[sub_resource type="AnimationNodeStateMachine" id=32]
 states/dodging/node = SubResource( 15 )
 states/dodging/position = Vector2( 287, 184 )
 states/jousting/node = SubResource( 19 )
 states/jousting/position = Vector2( 497, 86 )
 states/parrying/node = SubResource( 20 )
 states/parrying/position = Vector2( 714, 184 )
-states/waiting/node = SubResource( 21 )
+states/waiting/node = SubResource( 25 )
 states/waiting/position = Vector2( 497, 184 )
-transitions = [ "dodging", "waiting", SubResource( 35 ), "waiting", "dodging", SubResource( 36 ), "waiting", "parrying", SubResource( 37 ), "parrying", "waiting", SubResource( 38 ), "waiting", "jousting", SubResource( 39 ), "jousting", "waiting", SubResource( 40 ) ]
+transitions = [ "dodging", "waiting", SubResource( 26 ), "waiting", "dodging", SubResource( 27 ), "waiting", "parrying", SubResource( 28 ), "parrying", "waiting", SubResource( 29 ), "waiting", "jousting", SubResource( 30 ), "jousting", "waiting", SubResource( 31 ) ]
 start_node = "waiting"
-graph_offset = Vector2( -47, 12 )
+graph_offset = Vector2( -26, 48 )
 
-[sub_resource type="AnimationNodeAnimation" id=23]
+[sub_resource type="AnimationNodeAnimation" id=33]
 animation = "dueling"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
 
-[sub_resource type="AnimationNodeStateMachine" id=26]
-states/controlling/node = SubResource( 22 )
+[sub_resource type="AnimationNodeStateMachine" id=36]
+states/controlling/node = SubResource( 32 )
 states/controlling/position = Vector2( 400, 164.112 )
-states/dueling/node = SubResource( 23 )
+states/dueling/node = SubResource( 33 )
 states/dueling/position = Vector2( 174, 164.112 )
-transitions = [ "dueling", "controlling", SubResource( 24 ), "controlling", "dueling", SubResource( 25 ) ]
+transitions = [ "dueling", "controlling", SubResource( 34 ), "controlling", "dueling", SubResource( 35 ) ]
 start_node = "controlling"
-graph_offset = Vector2( -196, -24.888 )
+graph_offset = Vector2( -188, 33.112 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=27]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=37]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=38]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=29]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=39]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=30]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
 [node name="Turtle" type="KinematicBody2D" groups=[
 "turtle",
@@ -720,11 +720,11 @@ anims/moving = SubResource( 13 )
 anims/parrying = SubResource( 14 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 26 )
+tree_root = SubResource( 36 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 27 )
-parameters/controlling/playback = SubResource( 28 )
-parameters/controlling/jousting/playback = SubResource( 29 )
-parameters/controlling/waiting/playback = SubResource( 30 )
+parameters/playback = SubResource( 37 )
+parameters/controlling/playback = SubResource( 38 )
+parameters/controlling/jousting/playback = SubResource( 39 )
+parameters/controlling/waiting/playback = SubResource( 40 )
 script = ExtResource( 8 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

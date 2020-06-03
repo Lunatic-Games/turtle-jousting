@@ -25,7 +25,8 @@ func _input(event):
 		return
 	
 	if $Knight/AnimationTree.is_in_state("controlling/waiting"):
-		if event.is_action_pressed("joust"):
+		if (event.is_action_pressed("joust") 
+				and $Knight.weapon_handle.weapon.can_joust):
 			begin_charging_joust()
 		if event.is_action_pressed("dodge"):
 			dodge()
@@ -113,8 +114,8 @@ func begin_dueling(slapping):
 # Player won the duel, just go back to idle
 func won_duel():
 	dueling = false
-	$Knight/AnimationTree.travel("controlling/waiting")
-	$AnimationTree.travel("controlling/waiting")
+	$Knight/AnimationTree.travel("controlling/waiting/idling")
+	$AnimationTree.travel("controlling/waiting/idling")
 
 
 # Player lost the duel, knock them off
@@ -164,16 +165,17 @@ func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
 	var knight = get_node("Knight")
+	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
-	knight.global_position = global_position + knockback
-	knight.get_node("AnimationTree").travel("flying_off")
+	knight.global_position = prev_pos
+	knight.fly_off(knockback)
 	$AnimationTree.travel("controlling/waiting")
 	
 
 # Add knight back
 func pick_up_knight(knight):
-	knight.in_water = false
+	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
 	add_child(knight)
@@ -205,7 +207,7 @@ func hit_turtle(turtle):
 	var other_knight = turtle.get_node("../Knight")
 	if other_knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
 		return
-	if $Knight.held_weapon.areas_hit.has(other_knight):
+	if $Knight.weapon_handle.weapon.areas_hit.has(other_knight):
 		return
 	
 	if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
@@ -214,7 +216,8 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight):
-	if knight.in_water and knight.alive and number == knight.player_number:
+	if !knight.on_turtle and knight.alive and number == knight.player_number:
+		print("Picking up knight")
 		call_deferred("pick_up_knight", knight)
 
 

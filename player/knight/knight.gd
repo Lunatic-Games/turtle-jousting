@@ -4,19 +4,23 @@ extends Area2D
 signal died
 
 export (bool) var parrying = false
-export (bool) var in_water = true
+export (bool) var on_turtle = true
+export (Curve) var flying_velocity
 
 const MAX_HEALTH = 100
+const MAX_FLY_DISTANCE = 1024
 
 var health = MAX_HEALTH
 var alive = true
 var player_number
-onready var held_weapon = $Reversable/Sprite/BackArm/WeaponHandle/Lance
+var flying_knockback
+var flying_dist_travelled = 0
+onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
 
 
 # Setup
 func _ready():
-	$Reversable/Sprite/BackArm/WeaponHandle/Lance.set_player(get_parent())
+	$Reversable/Sprite/BackArm/WeaponHandle.set_player(get_parent())
 	$AnimationTree.active = true
 	$HealthLabel.text = str(health)
 	
@@ -25,8 +29,22 @@ func _ready():
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
+func _physics_process(delta):
+	if ($AnimationTree.is_in_state("flying_off/flying_off") or
+			$AnimationTree.is_in_state("flying_off/flying")):
+		var dist_ratio = flying_dist_travelled / MAX_FLY_DISTANCE
+		var vel = flying_velocity.interpolate(dist_ratio)
+		var movement = flying_knockback.normalized() * vel * delta
+		flying_dist_travelled += movement.length()
+		if flying_dist_travelled > flying_knockback.length():
+			movement.clamped(max(0, flying_knockback.length() - flying_dist_travelled))
+			$AnimationTree.travel("flying_off/drowning")
+		position += movement
+		
+
+
 # Reduce health
-func hit(damage, knockback_on_death):
+func hit(damage, knockback_on_death=Vector2(0, 0)):
 	if !alive:
 		return
 	health -= damage
@@ -41,7 +59,7 @@ func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	health = new_health
 	$HealthLabel.text = str(health)
 	if health == 0:
-		if !in_water:
+		if on_turtle:
 			get_parent().knock_knight_off(knockback_on_death)
 		alive = false
 		emit_signal("died")
@@ -62,6 +80,12 @@ func moved(movement):
 		$AnimationTree.travel("controlling/waiting/moving")
 	elif !movement and $AnimationTree.is_in_state("controlling/waiting/moving"):
 		$AnimationTree.travel("controlling/waiting/moving_stop")
+
+
+func fly_off(knockback):
+	$AnimationTree.travel("flying_off/flying_off")
+	flying_knockback = knockback
+	flying_dist_travelled = 0
 
 
 # Modulates pieces for team color

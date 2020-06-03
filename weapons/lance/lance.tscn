@@ -9,6 +9,7 @@
 [node name="Lance" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
 can_joust = true
+can_duel = true
 
 [node name="Back" type="Sprite" parent="." index="0"]
 position = Vector2( 300, 0 )

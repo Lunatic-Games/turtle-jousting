@@ -8,7 +8,7 @@ export (float) var slowed_speed = 50
 
 const SPEED = 100
 const MOVE_THRESHOLD = 0.45
-const DEBUG = true
+const DEBUG = false
 
 var speed_modifier = 1
 var device_id
@@ -67,7 +67,6 @@ func _physics_process(_delta):
 	if !_should_process():
 		return
 
-	print(movement_actions)
 	var movement
 	if locked:
 		movement = locked_direction.normalized() * locked_speed
@@ -131,9 +130,6 @@ func check_for_move_event(event, direction):
 		if event is InputEventJoypadMotion:
 			var strength = event.get_action_strength("move_" + direction)
 			movement_actions[direction][1] = strength
-		elif event.echo:
-			print("Echoing: ", direction)
-			movement_actions[direction][0] = true
 		else:
 			movement_actions[direction][0] = event.is_pressed()
 

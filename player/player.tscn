@@ -17,12 +17,7 @@
 "player",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-
-[node name="WaterAnimation" parent="Reversable/Sprite" index="0"]
-frame = 1
-
-[node name="WaterWakeAnimation" parent="Reversable" index="3"]
-frame = 1
+locked = true
 
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )
