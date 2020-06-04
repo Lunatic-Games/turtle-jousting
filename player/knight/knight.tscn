@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=2]
+[gd_scene load_steps=109 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/knight_leg_BU.png" type="Texture" id=2]
@@ -29,7 +29,6 @@
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=27]
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=28]
 [ext_resource path="res://player/knight/weapon_handle.gd" type="Script" id=29]
-[ext_resource path="res://weapons/leech/leech.tscn" type="PackedScene" id=30]
 
 [sub_resource type="Curve" id=1]
 max_value = 400.0
@@ -3990,6 +3989,18 @@ tracks/44/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/45/type = "value"
+tracks/45/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
+tracks/45/interp = 1
+tracks/45/loop_wrap = true
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=12]
 length = 0.5
@@ -7236,7 +7247,7 @@ tracks/38/keys = {
 "values": [ PoolVector2Array( -14.4761, -38.6142, -4.7905, -45.7816, 10.1253, -30.2846, 5.08884, -18.8556, 14.5807, -0.452881, 11.1052, 9.49542, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -11.7641, -1.034, -8.08362, -21.5675 ) ]
 }
 
-[sub_resource type="Animation" id=20]
+[sub_resource type="Animation" id=19]
 resource_name = "throw_ending"
 length = 0.2
 step = 0.005
@@ -7696,8 +7707,8 @@ tracks/37/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 ) ]
 }
-tracks/38/type = "method"
-tracks/38/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance")
+tracks/38/type = "value"
+tracks/38/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
 tracks/38/interp = 1
 tracks/38/loop_wrap = true
 tracks/38/imported = false
@@ -7705,38 +7716,37 @@ tracks/38/enabled = true
 tracks/38/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "reset_areas_hit"
-} ]
+"update": 1,
+"values": [ Vector2( 1, 1 ) ]
 }
 tracks/39/type = "value"
-tracks/39/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
+tracks/39/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/imported = false
 tracks/39/enabled = true
 tracks/39/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ Vector2( 1, 1 ) ]
-}
-tracks/40/type = "value"
-tracks/40/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
-tracks/40/interp = 1
-tracks/40/loop_wrap = true
-tracks/40/imported = false
-tracks/40/enabled = true
-tracks/40/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.1, 0.1 ), Vector2( 1, 1 ) ]
 }
+tracks/40/type = "method"
+tracks/40/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show_held_weapon"
+} ]
+}
 
-[sub_resource type="Animation" id=19]
-resource_name = "throwing"
+[sub_resource type="Animation" id=20]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -8906,7 +8916,7 @@ flying_velocity = SubResource( 1 )
 [node name="Reversable" type="Node2D" parent="."]
 
 [node name="Sprite" type="Node2D" parent="Reversable"]
-scale = Vector2( 0.0480174, 0.0519826 )
+scale = Vector2( 0.05, 0.05 )
 
 [node name="BU-Leg" type="Sprite" parent="Reversable/Sprite"]
 z_index = -1
@@ -8915,35 +8925,45 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 192.486, -551.6 )
+rotation = -2.42775
+scale = Vector2( -1, 1 )
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 525.356, -615.08 )
+rotation = -3.63378
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 550.505, -420.938 )
+rotation = -3.17999
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 400.92, 133.002 )
+position = Vector2( 6.58789, -612.646 )
+rotation = -2.72446
 script = ExtResource( 29 )
 
 [node name="Lance" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 6 )]
 visible = false
 
-[node name="Leech" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 30 )]
-
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -50.1865, 7.16943 )
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -7.16895, 0 )
+rotation = -0.118682
 texture = ExtResource( 8 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Chest"]
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -35.8486, 14.3389 )
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -8996,7 +9016,7 @@ playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false
-polygon = PoolVector2Array( -12.4834, -42.545, -3.44589, -50.6311, 8.68332, -30.6536, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -1.30545, 37.3652, -15.3373, 32.133, -10.6964, -1.44644, -7.43686, -17.5586 )
+polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 3 )
@@ -9015,8 +9035,8 @@ anims/moving = SubResource( 15 )
 anims/moving_stop = SubResource( 16 )
 anims/parrying = SubResource( 17 )
 anims/slapping = SubResource( 18 )
-anims/throw_ending = SubResource( 20 )
-anims/throwing = SubResource( 19 )
+anims/throw_ending = SubResource( 19 )
+anims/throwing = SubResource( 20 )
 anims/turning_to_stone = SubResource( 21 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

@@ -8,6 +8,8 @@ signal hit_turtle
 export (bool) var can_joust
 export (bool) var can_duel
 
+const DEFAULT_KNOCKBACK = 200
+
 var player_held_by
 var knight_held_by
 var areas_hit = []

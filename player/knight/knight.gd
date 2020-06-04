@@ -29,6 +29,7 @@ func _ready():
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
+# Fly self through air if flying
 func _physics_process(delta):
 	if ($AnimationTree.is_in_state("flying_off/flying_off") or
 			$AnimationTree.is_in_state("flying_off/flying")):
@@ -50,6 +51,13 @@ func hit(damage, knockback_on_death=Vector2(0, 0)):
 	health -= damage
 	health = max(health, 0)
 	set_health(health, knockback_on_death)
+
+
+func heal(amount):
+	if !alive:
+		return
+	health += amount
+	health = min(health, 100)
 
 
 # Set health to a value
@@ -82,6 +90,7 @@ func moved(movement):
 		$AnimationTree.travel("controlling/waiting/moving_stop")
 
 
+# Begin flying off the turtle
 func fly_off(knockback):
 	$AnimationTree.travel("flying_off/flying_off")
 	flying_knockback = knockback
