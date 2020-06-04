@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Leech.png-65c26157a0f7f51fdcfafc1a2939a7ff.stex"
+path="res://.import/leech.png-a9b2989b94c804676b68a5010abeca76.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/leech/Leech.png"
-dest_files=[ "res://.import/Leech.png-65c26157a0f7f51fdcfafc1a2939a7ff.stex" ]
+source_file="res://weapons/leech/leech.png"
+dest_files=[ "res://.import/leech.png-a9b2989b94c804676b68a5010abeca76.stex" ]
 
 [params]
 

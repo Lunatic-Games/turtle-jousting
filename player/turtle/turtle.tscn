@@ -660,6 +660,7 @@ graph_offset = Vector2( -188, 33.112 )
 ]]
 position = Vector2( 516.15, 290.027 )
 script = ExtResource( 1 )
+locked = true
 locked_speed = 0.0
 slowed = true
 slowed_speed = 100.0
@@ -684,7 +685,6 @@ modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
 position = Vector2( -104.985, -26.8765 )
 scale = Vector2( 1.07527, 1 )
 frames = SubResource( 6 )
-frame = 1
 playing = true
 
 [node name="KnightPosition" type="Position2D" parent="Reversable"]
@@ -696,7 +696,6 @@ modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 7 )
-frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

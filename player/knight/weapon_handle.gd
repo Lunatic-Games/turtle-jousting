@@ -7,17 +7,15 @@ var player_owned_by
 
 func set_player(player):
 	player_owned_by = player
-	weapon.set_player(player)
+	weapon.pick_up(player)
 
 
 func equip(new_weapon):
 	if weapon == $Lance:
 		weapon.put_away()
 	weapon = new_weapon
-	weapon.set_player(player_owned_by)
-	disable_hitbox()
+	weapon.pick_up(player_owned_by)
 	add_child(weapon)
-	weapon.pick_up()
 
 
 func unequip_held_weapon():
@@ -25,7 +23,17 @@ func unequip_held_weapon():
 		return
 	weapon.queue_free()
 	weapon = $Lance
-	weapon.pick_up()
+	weapon.pick_up(player_owned_by)
+
+
+func throw_held_weapon(charge, dir_sign):
+	var prev_position = weapon.global_position
+	remove_child(weapon)
+	player_owned_by.get_parent().add_child(weapon)
+	weapon.global_position = prev_position
+	weapon.scale = Vector2(0.05, 0.05)
+	weapon.throw(charge, dir_sign)
+	weapon = $Lance
 
 
 func new_attack():
@@ -41,3 +49,8 @@ func enable_hitbox():
 func disable_hitbox():
 	assert(weapon != null)
 	weapon.get_node("CollisionShape2D").disabled = true
+
+
+func show_held_weapon():
+	weapon.visible = true
+
