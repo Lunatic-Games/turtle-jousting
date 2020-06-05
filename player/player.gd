@@ -210,6 +210,10 @@ func knock_knight_off(knockback):
 	knight.global_position = prev_pos
 	knight.fly_off(knockback)
 	$AnimationTree.travel("controlling/waiting")
+	$JoustIndicator.visible = false
+	$ThrowIndicator.visible = false
+	if has_status("Drunk"):
+		remove_status("Drunk")
 	
 
 # Add knight back
@@ -257,7 +261,6 @@ func hit_turtle(turtle):
 # Pickup knight if hit and in water
 func hit_knight(knight):
 	if !knight.on_turtle and knight.alive and number == knight.player_number:
-		print("Picking up knight")
 		call_deferred("pick_up_knight", knight)
 
 
@@ -280,6 +283,16 @@ func add_status(status):
 		$Statuses.get_node(status.name).refresh()
 	else:
 		$Statuses.add_child(status)
+
+
+# Remove a status from the player
+func remove_status(status_name):
+	$Statuses.get_node(status_name).queue_free()
+
+
+# Return true if you have a status
+func has_status(status_name):
+	return $Statuses.has_node(status_name)
 
 
 # Update joust move actions when changed

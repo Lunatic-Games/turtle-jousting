@@ -38,7 +38,8 @@ func _physics_process(delta):
 		var movement = flying_knockback.normalized() * vel * delta
 		flying_dist_travelled += movement.length()
 		if flying_dist_travelled > flying_knockback.length():
-			movement.clamped(max(0, flying_knockback.length() - flying_dist_travelled))
+			var diff = flying_knockback.length() - flying_dist_travelled
+			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
 		

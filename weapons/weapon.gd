@@ -10,6 +10,7 @@ export (bool) var can_duel
 
 const DEFAULT_KNOCKBACK = 200
 
+var damage_mod = 1
 var player_held_by
 var knight_held_by
 var areas_hit = []
@@ -69,3 +70,26 @@ func _hit_turtle(turtle):
 func put_away():
 	visible = false
 	$CollisionShape2D.set_deferred("disabled", true)
+
+
+# Damage knight by given damage and apply damage mod
+func _damage_knight(knight, damage, knockback=Vector2(0, 0)):
+	knight.call_deferred("hit", damage*damage_mod, knockback)
+
+
+# Knock knight off of player with given knockback
+func _knock_off_knight(knight, knockback):
+	var player = knight.get_parent()
+	if !player:
+		return
+	player.call_deferred("knock_knight_off", knockback)
+
+
+# Tell weapon to unequp this weapon
+func _unequp():
+	get_parent().call_deferred("unequp_held_weapon")
+
+
+# Duel another player
+func _duel_player(player):
+	player_held_by.call_deferred("duel", player)

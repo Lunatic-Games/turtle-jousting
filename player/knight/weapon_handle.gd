@@ -3,6 +3,7 @@ extends Node2D
 
 onready var weapon = $Lance
 var player_owned_by
+var damage_mod = 1
 
 
 func set_player(player):
@@ -15,6 +16,7 @@ func equip(new_weapon):
 		weapon.put_away()
 	weapon = new_weapon
 	weapon.pick_up(player_owned_by)
+	weapon.damage_mod = damage_mod
 	add_child(weapon)
 
 
@@ -49,6 +51,11 @@ func enable_hitbox():
 func disable_hitbox():
 	assert(weapon != null)
 	weapon.get_node("CollisionShape2D").disabled = true
+
+
+func set_damage_mod(mod):
+	damage_mod = mod
+	weapon.damage_mod = mod
 
 
 func show_held_weapon():
