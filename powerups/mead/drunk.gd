@@ -7,6 +7,8 @@ const susceptible_states = ["controlling/waiting",
 	"controlling/throwing/charging_throw", "controlling/jousting/charging_joust",
 	"controlling/throwing/throw_ending", "controlling/jousting/joust_ending"]
 
+onready var chance_per_frame = fall_chance_per_second / 60
+
 
 func _physics_process(delta):
 	var anim_tree = knight.get_node("AnimationTree")
@@ -16,6 +18,4 @@ func _physics_process(delta):
 			in_susceptible_state = true
 	if !in_susceptible_state:
 		return
-	
-	var chance_per_frame = fall_chance_per_second / 60
-	
+
