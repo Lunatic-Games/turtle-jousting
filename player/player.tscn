@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/turtle/turtle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 [ext_resource path="res://player/joust_indicator/joust_indicator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/throw_indicator/throw_indicator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/knight/knight.tscn" type="PackedScene" id=8]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
@@ -13,11 +14,28 @@
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=4]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
 [node name="Player" groups=[
 "player",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-locked = true
+
+[node name="WaterAnimation" parent="Reversable/Sprite" index="0"]
+frame = 1
+
+[node name="WaterWakeAnimation" parent="Reversable" index="3"]
+frame = 1
 
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )
@@ -28,10 +46,23 @@ parameters/controlling/waiting/playback = SubResource( 4 )
 [node name="Knight" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 1.38696, -28.2939 )
 
+[node name="AnimationTree" parent="Knight" index="3"]
+parameters/playback = SubResource( 5 )
+parameters/controlling/playback = SubResource( 6 )
+parameters/controlling/jousting/playback = SubResource( 7 )
+parameters/controlling/throwing/playback = SubResource( 8 )
+parameters/controlling/waiting/playback = SubResource( 9 )
+parameters/flying_off/playback = SubResource( 10 )
+
 [node name="JoustIndicator" parent="." index="6" instance=ExtResource( 3 )]
 visible = false
 position = Vector2( 1.19751, -22.1533 )
 
-[node name="Statuses" type="Node2D" parent="." index="7"]
+[node name="ThrowIndicator" parent="." index="7" instance=ExtResource( 4 )]
+position = Vector2( 5.1994, -57.3379 )
+
+[node name="Statuses" type="Node2D" parent="." index="8"]
 [connection signal="movement_actions_changed" from="." to="." method="_on_movement_actions_changed"]
 [connection signal="died" from="Knight" to="." method="_on_Knight_died"]
+
+[editable path="Knight"]

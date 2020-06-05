@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/who_drew_that.wav-3dc8a2e517a9da06771af2d115a4ff73.sample"
+
+[deps]
+
+source_file="res://powerups/audio_files/leech/who_drew_that.wav"
+dest_files=[ "res://.import/who_drew_that.wav-3dc8a2e517a9da06771af2d115a4ff73.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

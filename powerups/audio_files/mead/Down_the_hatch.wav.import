@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Down_the_hatch.wav-08ef2af73746a7188791ea044708d94e.sample"
+
+[deps]
+
+source_file="res://powerups/audio_files/mead/Down_the_hatch.wav"
+dest_files=[ "res://.import/Down_the_hatch.wav-08ef2af73746a7188791ea044708d94e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

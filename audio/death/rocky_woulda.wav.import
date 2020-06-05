@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/rocky_woulda.wav-ff34736784c8200d0f879e3b5fd3ae5a.sample"
+
+[deps]
+
+source_file="res://audio/death/rocky_woulda.wav"
+dest_files=[ "res://.import/rocky_woulda.wav-ff34736784c8200d0f879e3b5fd3ae5a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

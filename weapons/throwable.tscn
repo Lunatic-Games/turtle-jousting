@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://weapons/weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/throwable.gd" type="Script" id=2]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -0.00801659, -0.00139046, -79.0753, 7.91347, 79.0753, -7.91347, 214.899, -25.5871, -66.9873, -0.704477, 66.9873, 0.704477, 417.117, -35.6013, -78.7227, -11.6383, 78.7227, 11.6383, 642.577, -20.9395, -88.7944, -46.963, 88.7944, 46.963, 900.089, 60.5872 )
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[node name="Throwable" groups=[
+"throwable",
+] instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Trajectory" type="Path2D" parent="." index="1"]
+position = Vector2( 0, -0.41342 )
+curve = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+anims/fade = SubResource( 2 )

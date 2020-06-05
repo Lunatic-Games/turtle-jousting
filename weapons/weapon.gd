@@ -8,15 +8,20 @@ signal hit_turtle
 export (bool) var can_joust
 export (bool) var can_duel
 
+const DEFAULT_KNOCKBACK = 200
+
 var player_held_by
 var knight_held_by
 var areas_hit = []
 
 
 # Called when weapon first picked up
-func set_player(player):
+func pick_up(player):
 	player_held_by = player
-	knight_held_by = player.get_node("Knight")
+	if player.has_node("Knight"):
+		knight_held_by = player.get_node("Knight")
+	visible = true
+	$CollisionShape2D.disabled = true
 
 
 # Remove all areas hit, useful for when starting a new attack
@@ -64,8 +69,3 @@ func _hit_turtle(turtle):
 func put_away():
 	visible = false
 	$CollisionShape2D.set_deferred("disabled", true)
-
-
-# Show and enable
-func pick_up():
-	visible = true

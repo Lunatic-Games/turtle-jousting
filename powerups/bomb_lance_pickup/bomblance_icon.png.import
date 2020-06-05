@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/leech_icon.png-537605f01e4ecaa8894ee4fc319b3f51.stex"
+path="res://.import/bomblance_icon.png-89fc016b86d18761d681afec095c0498.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/leech/leech_icon.png"
-dest_files=[ "res://.import/leech_icon.png-537605f01e4ecaa8894ee4fc319b3f51.stex" ]
+source_file="res://powerups/bomb_lance_pickup/bomblance_icon.png"
+dest_files=[ "res://.import/bomblance_icon.png-89fc016b86d18761d681afec095c0498.stex" ]
 
 [params]
 

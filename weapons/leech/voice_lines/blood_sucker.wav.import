@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/blood_sucker.wav-1c494f5eca68979c3668c1aa7c353712.sample"
+
+[deps]
+
+source_file="res://weapons/leech/voice_lines/blood_sucker.wav"
+dest_files=[ "res://.import/blood_sucker.wav-1c494f5eca68979c3668c1aa7c353712.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

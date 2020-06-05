@@ -2,7 +2,7 @@ extends Node2D
 
 
 const INNER_RADIUS = 80
-const CHARGE_RATIO = 0.5
+const CHARGE_RATIO = 0.25
 
 
 # Update rotation of indicator
