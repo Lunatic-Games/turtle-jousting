@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/maybe_next.wav-f2a4cc1376ddf5edee86baf49d58d133.sample"
+
+[deps]
+
+source_file="res://audio/death/maybe_next.wav"
+dest_files=[ "res://.import/maybe_next.wav-f2a4cc1376ddf5edee86baf49d58d133.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

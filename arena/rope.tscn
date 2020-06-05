@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://arena/rope.gd" type="Script" id=1]
+[ext_resource path="res://rope_curve.tres" type="Curve2D" id=2]
+
+[node name="Rope" type="Path2D"]
+modulate = Color( 0.831373, 0.8, 0.803922, 0.815686 )
+self_modulate = Color( 1, 1, 1, 1 )
+curve = ExtResource( 2 )
+script = ExtResource( 1 )

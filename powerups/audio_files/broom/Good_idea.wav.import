@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Good_idea.wav-7100aecb5244856ce94b713d7b80107d.sample"
+
+[deps]
+
+source_file="res://powerups/audio_files/broom/Good_idea.wav"
+dest_files=[ "res://.import/Good_idea.wav-7100aecb5244856ce94b713d7b80107d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/not_a_good_look.wav-60f0a2a0968af8e6b778a99a1bf778af.sample"
+
+[deps]
+
+source_file="res://weapons/leech/voice_lines/not_a_good_look.wav"
+dest_files=[ "res://.import/not_a_good_look.wav-60f0a2a0968af8e6b778a99a1bf778af.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

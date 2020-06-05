@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://arena/arena.gd" type="Script" id=2]
@@ -6,8 +6,109 @@
 [ext_resource path="res://ui/visor_transition.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/pause/pause_menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://arena/buoy/buoy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://arena/rope.tscn" type="PackedScene" id=7]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="Curve2D" id=7]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=9]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=11]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=13]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=15]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=17]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.098, 30.3517 )
+}
+
+[sub_resource type="Curve2D" id=19]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=21]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=23]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=25]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=35]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+}
+
+[sub_resource type="Curve2D" id=37]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 18.2028, 29.454, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 181.556, 29.9181 )
+}
+
+[sub_resource type="Curve2D" id=39]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 16.4042, 30.4409, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 180.597, 29.3628 )
+}
+
+[sub_resource type="Curve2D" id=41]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 15.9194, 29.1827, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.739, 29.5886 )
+}
+
+[sub_resource type="Curve2D" id=43]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 15.7211, 28.9399, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.676, 28.8046 )
+}
+
+[sub_resource type="Curve2D" id=45]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 10.8088, 29.1826, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 184.098, 29.3178 )
+}
+
+[sub_resource type="Curve2D" id=27]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 186.036, 161.268 )
+}
+
+[sub_resource type="Curve2D" id=29]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=31]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="Curve2D" id=33]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+}
+
+[sub_resource type="DynamicFont" id=6]
 size = 36
 font_data = ExtResource( 1 )
 
@@ -16,12 +117,12 @@ size = 64
 extra_spacing_bottom = 18
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 64
 extra_spacing_bottom = 20
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 5.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CountdownLabel:rect_scale")
@@ -166,62 +267,189 @@ texture = ExtResource( 3 )
 [node name="Buoy" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 10.8641, 32 )
 
+[node name="Rope" parent="YSort" instance=ExtResource( 7 )]
+curve = SubResource( 7 )
+buoy1 = NodePath("../Buoy")
+buoy2 = NodePath("../Buoy2")
+
 [node name="Buoy2" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 184, 32 )
+
+[node name="Rope2" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 170.939, -0.359985 )
+curve = SubResource( 9 )
+buoy1 = NodePath("../Buoy2")
+buoy2 = NodePath("../Buoy3")
 
 [node name="Buoy3" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 348, 32 )
 
+[node name="Rope3" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 333.108, 0.698334 )
+curve = SubResource( 11 )
+buoy1 = NodePath("../Buoy3")
+buoy2 = NodePath("../Buoy4")
+
 [node name="Buoy4" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 512, 32 )
+
+[node name="Rope4" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 496.661, 0.939705 )
+curve = SubResource( 13 )
+buoy1 = NodePath("../Buoy4")
+buoy2 = NodePath("../Buoy5")
 
 [node name="Buoy5" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 676, 32 )
 
+[node name="Rope5" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 661.192, 0.939705 )
+curve = SubResource( 15 )
+buoy1 = NodePath("../Buoy5")
+buoy2 = NodePath("../Buoy6")
+
 [node name="Buoy6" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 840, 32 )
+
+[node name="Rope6" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.61, 0.939705 )
+curve = SubResource( 17 )
+buoy1 = NodePath("../Buoy6")
+buoy2 = NodePath("../Buoy7")
 
 [node name="Buoy7" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 1014.83, 32 )
 
+[node name="Rope7" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.61, 0.939705 )
+z_index = 1
+curve = SubResource( 19 )
+buoy1 = NodePath("../Buoy7")
+buoy2 = NodePath("../Buoy8")
+
 [node name="Buoy8" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 1014.83, 159 )
+
+[node name="Rope8" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.471, 129.092 )
+z_index = 1
+curve = SubResource( 21 )
+buoy1 = NodePath("../Buoy8")
+buoy2 = NodePath("../Buoy9")
 
 [node name="Buoy9" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 1014.83, 286 )
 
+[node name="Rope9" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.43, 257.032 )
+z_index = 1
+curve = SubResource( 23 )
+buoy1 = NodePath("../Buoy9")
+buoy2 = NodePath("../Buoy10")
+
 [node name="Buoy10" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 1014.83, 413 )
+
+[node name="Rope10" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.417, 384.886 )
+z_index = 1
+curve = SubResource( 25 )
+buoy1 = NodePath("../Buoy10")
+buoy2 = NodePath("../Buoy11")
 
 [node name="Buoy11" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 1014.83, 546.257 )
 
+[node name="Rope11" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 830.735, 515.409 )
+curve = SubResource( 35 )
+buoy1 = NodePath("../Buoy12")
+buoy2 = NodePath("../Buoy11")
+
 [node name="Buoy12" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 840, 546.257 )
+
+[node name="Rope12" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 659.411, 515.911 )
+curve = SubResource( 37 )
+buoy1 = NodePath("../Buoy13")
+buoy2 = NodePath("../Buoy12")
 
 [node name="Buoy13" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 676, 546.257 )
 
+[node name="Rope13" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 497.016, 515.553 )
+curve = SubResource( 39 )
+buoy1 = NodePath("../Buoy14")
+buoy2 = NodePath("../Buoy13")
+
 [node name="Buoy14" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 512, 546.257 )
+
+[node name="Rope14" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 333.547, 516.27 )
+curve = SubResource( 41 )
+buoy1 = NodePath("../Buoy15")
+buoy2 = NodePath("../Buoy14")
 
 [node name="Buoy15" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 348, 546.257 )
 
+[node name="Rope15" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 169.79, 516.783 )
+curve = SubResource( 43 )
+buoy1 = NodePath("../Buoy16")
+buoy2 = NodePath("../Buoy15")
+
 [node name="Buoy16" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 184, 546.257 )
+
+[node name="Rope16" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 1.41342, 516.27 )
+curve = SubResource( 45 )
+buoy1 = NodePath("../Buoy17")
+buoy2 = NodePath("../Buoy16")
 
 [node name="Buoy17" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 10.8641, 546.257 )
 
+[node name="Rope17" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( -173.678, 383.644 )
+z_index = 1
+curve = SubResource( 27 )
+buoy1 = NodePath("../Buoy17")
+buoy2 = NodePath("../Buoy18")
+
 [node name="Buoy18" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 10.8641, 413 )
+
+[node name="Rope18" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( -173.595, 255.966 )
+z_index = 1
+curve = SubResource( 29 )
+buoy1 = NodePath("../Buoy18")
+buoy2 = NodePath("../Buoy19")
 
 [node name="Buoy19" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 10.8641, 286 )
 
+[node name="Rope19" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( -173.465, 130.471 )
+z_index = 1
+curve = SubResource( 31 )
+buoy1 = NodePath("../Buoy19")
+buoy2 = NodePath("../Buoy20")
+
 [node name="Buoy20" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 10.8641, 159 )
+
+[node name="Rope20" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( -173.387, 2.60485 )
+z_index = 1
+curve = SubResource( 33 )
+buoy1 = NodePath("../Buoy20")
+buoy2 = NodePath("../Buoy")
 
 [node name="SpawnPositions" type="Node2D" parent="."]
 visible = false
@@ -294,13 +522,14 @@ position = Vector2( 506.604, 467.833 )
 position = Vector2( 873.633, 469.126 )
 
 [node name="GameTimerLabel" type="Label" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 452.0
 margin_top = 10.0
 margin_right = 572.0
 margin_bottom = 28.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 text = "120"
 align = 1
 __meta__ = {
@@ -337,7 +566,7 @@ margin_bottom = 309.0
 rect_min_size = Vector2( 430, 0 )
 rect_scale = Vector2( 0.8, 0.9 )
 rect_pivot_offset = Vector2( 215, 26 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "VICTORIOUS"
 __meta__ = {
@@ -349,7 +578,7 @@ wait_time = 300.0
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/countdown = SubResource( 3 )
+anims/countdown = SubResource( 4 )
 anims/end_game = SubResource( 5 )
 
 [node name="PausedMenu" parent="." instance=ExtResource( 5 )]
@@ -358,6 +587,7 @@ margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )
 
 [node name="VisorTransition" parent="." instance=ExtResource( 4 )]
+visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )

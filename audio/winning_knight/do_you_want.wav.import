@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/do_you_want.wav-549ad4156fb5223f7e6e0eccf32de369.sample"
+
+[deps]
+
+source_file="res://audio/winning_knight/do_you_want.wav"
+dest_files=[ "res://.import/do_you_want.wav-549ad4156fb5223f7e6e0eccf32de369.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
