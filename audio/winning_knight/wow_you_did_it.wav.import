@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/wow_you_did_it.wav-b6b07449c2028792148e56837df3589a.sample"
+
+[deps]
+
+source_file="res://audio/winning_knight/wow_you_did_it.wav"
+dest_files=[ "res://.import/wow_you_did_it.wav-b6b07449c2028792148e56837df3589a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

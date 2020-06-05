@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/least_worst.wav-f3b59fa8db7a441bd0d705235624d3f5.sample"
+
+[deps]
+
+source_file="res://audio/winning_knight/least_worst.wav"
+dest_files=[ "res://.import/least_worst.wav-f3b59fa8db7a441bd0d705235624d3f5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

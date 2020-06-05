@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/release_the_dogs.wav-5638c1463e2639c81a93896985a7aa37.sample"
+
+[deps]
+
+source_file="res://audio/no_recent_damage/release_the_dogs.wav"
+dest_files=[ "res://.import/release_the_dogs.wav-5638c1463e2639c81a93896985a7aa37.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

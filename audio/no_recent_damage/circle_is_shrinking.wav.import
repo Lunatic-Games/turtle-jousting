@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/circle_is_shrinking.wav-be6e762958d027dffbf7e3919c65c226.sample"
+
+[deps]
+
+source_file="res://audio/no_recent_damage/circle_is_shrinking.wav"
+dest_files=[ "res://.import/circle_is_shrinking.wav-be6e762958d027dffbf7e3919c65c226.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
