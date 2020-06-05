@@ -8725,7 +8725,7 @@ states/jousting/node = SubResource( 27 )
 states/jousting/position = Vector2( 444, 258 )
 transitions = [ "charging_joust", "jousting", SubResource( 28 ), "jousting", "joust_ending", SubResource( 29 ), "jousting", "dueling", SubResource( 30 ) ]
 start_node = "charging_joust"
-graph_offset = Vector2( -31, 211 )
+graph_offset = Vector2( -61, 287 )
 
 [sub_resource type="AnimationNodeAnimation" id=32]
 animation = "parrying"
@@ -8755,6 +8755,7 @@ states/throwing/position = Vector2( 453, 253 )
 transitions = [ "charging_throw", "throwing", SubResource( 36 ), "throwing", "throw_ending", SubResource( 37 ) ]
 start_node = "charging_throw"
 end_node = "throw_ending"
+graph_offset = Vector2( -17, 213 )
 
 [sub_resource type="AnimationNodeAnimation" id=39]
 animation = "idling"
@@ -8827,7 +8828,7 @@ states/waiting/node = SubResource( 45 )
 states/waiting/position = Vector2( 425, 184 )
 transitions = [ "waiting", "parrying", SubResource( 46 ), "parrying", "waiting", SubResource( 47 ), "waiting", "dodging", SubResource( 48 ), "dodging", "waiting", SubResource( 49 ), "waiting", "consuming", SubResource( 50 ), "consuming", "waiting", SubResource( 51 ), "waiting", "throwing", SubResource( 52 ), "throwing", "waiting", SubResource( 53 ), "waiting", "jousting", SubResource( 54 ), "jousting", "waiting", SubResource( 55 ) ]
 start_node = "waiting"
-graph_offset = Vector2( -32, -20 )
+graph_offset = Vector2( -160, 119 )
 
 [sub_resource type="AnimationNodeAnimation" id=57]
 animation = "drowning"
@@ -8889,7 +8890,7 @@ states/slapping/node = SubResource( 65 )
 states/slapping/position = Vector2( 292.661, 329 )
 transitions = [ "controlling", "flying_off", SubResource( 66 ), "flying_off", "controlling", SubResource( 67 ), "controlling", "slapping", SubResource( 68 ), "slapping", "controlling", SubResource( 69 ), "slapping", "flying_off", SubResource( 70 ), "flying_off", "slapping", SubResource( 71 ) ]
 start_node = "controlling"
-graph_offset = Vector2( -183.339, 86 )
+graph_offset = Vector2( -193.339, 146 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=73]
 
@@ -9012,6 +9013,7 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Bouy.png-95f12ea9c4a07681b45d21eff5a6a84b.stex"
+path="res://.import/buoy_top.png-cee5f4baf3fa1ec361cece0acf9f3cfe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://arena/buoy/assets/Bouy.png"
-dest_files=[ "res://.import/Bouy.png-95f12ea9c4a07681b45d21eff5a6a84b.stex" ]
+source_file="res://arena/buoy/assets/buoy_top.png"
+dest_files=[ "res://.import/buoy_top.png-cee5f4baf3fa1ec361cece0acf9f3cfe.stex" ]
 
 [params]
 

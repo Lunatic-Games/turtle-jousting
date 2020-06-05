@@ -9,9 +9,11 @@ export (PackedScene) var weapon
 
 # Players will call this when they pick it up
 func pick_up(player):
+	assert(player.has_node("Knight"))
 	if status:
 		var new_status = status.instance()
 		new_status.player = player
+		new_status.knight = player.get_node("Knight")
 		player.add_status(new_status)
 	if weapon:
 		var new_weapon = weapon.instance()
