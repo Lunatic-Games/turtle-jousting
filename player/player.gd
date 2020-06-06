@@ -12,6 +12,7 @@ const MAX_THROW_CHARGE = 800
 const MOUSE_SENSITIVITY = 0.01
 const LOST_DUEL_KNOCKBACK = 100
 const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
+const bot_ai_scene = preload("res://player/bot_ai.tscn")
 
 var joust_charge = 0.0
 var joust_direction = Vector2(1, 0)
@@ -36,10 +37,15 @@ func _input(event):
 		if (event.is_action_pressed("joust") 
 				and $Knight.weapon_handle.weapon.is_in_group("throwable")):
 			begin_charging_throw()
+		if (event.is_action_pressed("joust")
+				and $Knight.weapon_handle.weapon.can_sweep):
+			$Knight/AnimationTree.travel("controlling/sweeping")
 		if event.is_action_pressed("dodge"):
 			dodge()
 		if event.is_action_pressed("parry"):
 			parry()
+	elif has_status("Stoned") and event.is_action_pressed("joust"):
+		begin_charging_joust()
 	elif $AnimationTree.is_in_state("controlling/jousting/charging_joust"):
 		if event.is_action_released("joust"):
 			release_joust()
@@ -71,13 +77,16 @@ func _physics_process(delta):
 		joust_charge -= locked_speed * delta
 		if joust_charge <= 0.0:
 			$AnimationTree.travel("controlling/waiting/idling")
+			if has_status("Stoned"):
+				$Knight.weapon_handle.disable_hitbox()
 			if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
 				$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
 
 
 # Begin to charge up joust
 func begin_charging_joust():
-	$Knight/AnimationTree.travel("controlling/jousting/charging_joust")
+	if !has_status("Stoned"):
+		$Knight/AnimationTree.travel("controlling/jousting/charging_joust")
 	$AnimationTree.travel("controlling/jousting/charging_joust")
 	joust_charge = 0.0
 	joust_direction = last_direction
@@ -89,9 +98,15 @@ func begin_charging_joust():
 
 # Joust attack
 func release_joust():
-	$Knight/AnimationTree.travel("controlling/jousting/jousting")
+	if has_status("Stoned"):
+		$Knight.weapon_handle.enable_hitbox()
+		$Knight.weapon_handle.new_attack()
+	else:
+		$Knight/AnimationTree.travel("controlling/jousting/jousting")
 	$AnimationTree.travel("controlling/jousting/jousting")
 	$JoustIndicator.visible = false
+	if $Knight.weapon_handle.weapon.name == "Lance":
+		$Knight.weapon_handle.weapon.charge = joust_charge / MAX_JOUST_CHARGE
 	locked_direction = joust_direction
 
 
@@ -178,9 +193,7 @@ func update_joust_indicator():
 func update_sprite_direction(movement):
 	if has_node("Knight") and $Knight/AnimationTree.is_in_state("controlling/throwing"):
 		return
-	var jousting = false
-	if has_node("Knight"):
-		jousting = $Knight/AnimationTree.is_in_state("controlling/jousting/charging_joust")
+	var jousting = $AnimationTree.is_in_state("controlling/jousting/charging_joust")
 	if movement.x > 1 or (jousting and sign(joust_direction.x) == 1):
 		set_direction(1)
 	elif movement.x < -1 or (jousting and sign(joust_direction.x) == -1):
@@ -210,6 +223,12 @@ func knock_knight_off(knockback):
 	knight.global_position = prev_pos
 	knight.fly_off(knockback)
 	$AnimationTree.travel("controlling/waiting")
+	$JoustIndicator.visible = false
+	$ThrowIndicator.visible = false
+	if has_status("Drunk"):
+		remove_status("Drunk")
+	elif has_status("Stoned"):
+		knight.hit(100)
 	
 
 # Add knight back
@@ -224,7 +243,11 @@ func pick_up_knight(knight):
 
 # Load player data
 func load_data(data = {}):
-	device_id = data.get("device_id", null)
+	if data.get("bot_id", null) != null:
+		device_id = data.get("bot_id", null)
+		add_child(bot_ai_scene.instance())
+	else:
+		device_id = data.get("device_id", null)
 	number = data.get("number", null)
 	$Knight.player_number = number
 	if data.get("color", null):
@@ -257,8 +280,21 @@ func hit_turtle(turtle):
 # Pickup knight if hit and in water
 func hit_knight(knight):
 	if !knight.on_turtle and knight.alive and number == knight.player_number:
-		print("Picking up knight")
 		call_deferred("pick_up_knight", knight)
+
+
+# Stop joust if hit a wall
+func hit_wall(_wall):
+	if $AnimationTree.is_in_state("controlling/jousting/jousting"):
+		$AnimationTree.travel("controlling/waiting/idling")
+		if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
+			$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
+
+
+# Pick up a powerup, if able
+func hit_powerup(powerup):
+	if has_node("Knight") and !has_status("Stoned"):
+		powerup.pick_up(self)
 
 
 # Set color modulation for team color
@@ -280,6 +316,16 @@ func add_status(status):
 		$Statuses.get_node(status.name).refresh()
 	else:
 		$Statuses.add_child(status)
+
+
+# Remove a status from the player
+func remove_status(status_name):
+	$Statuses.get_node(status_name).queue_free()
+
+
+# Return true if you have a status
+func has_status(status_name):
+	return $Statuses.has_node(status_name)
 
 
 # Update joust move actions when changed

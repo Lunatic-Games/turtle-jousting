@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/broom_icon.png-8101ff5ec70a75f6c1f87b22fe34253d.stex"
+path="res://.import/joust_bar_outline.png-b2384638595601f0f6a06859ba089c46.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/broom/broom_icon.png"
-dest_files=[ "res://.import/broom_icon.png-8101ff5ec70a75f6c1f87b22fe34253d.stex" ]
+source_file="res://player/joust_indicator/joust_bar_outline.png"
+dest_files=[ "res://.import/joust_bar_outline.png-b2384638595601f0f6a06859ba089c46.stex" ]
 
 [params]
 

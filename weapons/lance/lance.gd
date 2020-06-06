@@ -1,8 +1,12 @@
 extends "res://weapons/weapon.gd"
 
 
+export (Curve) var damage_curve
+
 const DAMAGE = 20
 const KNOCKBACK = 150
+
+var charge = 0  # Value between 0 and 1 for damage curve
 
 
 # Modulate piece on lance
@@ -16,12 +20,13 @@ func _hit_knight(knight):
 	var backwards = knight.global_position - knight_held_by.global_position
 	var knockback = backwards.normalized() * KNOCKBACK
 	if knight.parrying:
-		player_held_by.call_deferred("knock_knight_off", -knockback)
+		_knock_off_knight(knight_held_by, -knockback)
 	else:
-		knight.call_deferred("hit", DAMAGE, knockback)
+		_damage_knight(knight, int(DAMAGE * damage_curve.interpolate(charge)),
+			knockback)
 
 
 # Start a duel between the two players
 func _hit_weapon(weapon):
 	if weapon.can_duel:
-		player_held_by.call_deferred("duel", weapon.player_held_by)
+		_duel_player(weapon.player_held_by)

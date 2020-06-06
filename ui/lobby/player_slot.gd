@@ -5,6 +5,7 @@ const COLORS = [Color("ac4141"), Color("1a7586"), Color("299e57"), Color("b0a335
 
 var color_i = 0
 var capturing_input = false
+var bot_id
 var device_id
 var focused_button = null
 var ready = false
@@ -85,6 +86,7 @@ func load_player(number, player_data={}):
 	else:
 		focused_button = get_node("Background/ColorContainer/LeftArrowContainer/Button")
 		focused_button.texture_normal = focused_button.texture_hover
+	bot_id = player_data.get("bot_id", null)
 	ready = player_data.get("ready", false)
 	if ready:
 		player_ready()
@@ -98,11 +100,12 @@ func reset():
 	$Cover/Open.visible = true
 	player_number = null
 	device_id = null
+	bot_id = null
 	ready = false
 
 
 func get_player_data():
-	return { "device_id" : device_id, "number": player_number,
+	return { "device_id" : device_id, "bot_id": bot_id, "number": player_number,
 		"color_i" : color_i, "color" : COLORS[color_i], "ready" : ready}
 
 

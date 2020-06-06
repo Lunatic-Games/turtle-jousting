@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://arena/arena.gd" type="Script" id=2]
@@ -107,6 +107,24 @@ _data = {
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
 }
+
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 512, 70 )
+
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 512, 64 )
+
+[sub_resource type="RectangleShape2D" id=30]
+extents = Vector2( 512, 21 )
+
+[sub_resource type="RectangleShape2D" id=31]
+extents = Vector2( 512, 15 )
+
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 20, 288 )
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 24, 288 )
 
 [sub_resource type="DynamicFont" id=21]
 size = 36
@@ -519,6 +537,60 @@ position = Vector2( 506.604, 467.833 )
 
 [node name="Position9" type="Position2D" parent="PowerupPositions"]
 position = Vector2( 873.633, 469.126 )
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="NorthWall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 512, 0 )
+
+[node name="Area2D" type="Area2D" parent="Walls/NorthWall" groups=[
+"wall",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/NorthWall/Area2D"]
+shape = SubResource( 26 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/NorthWall"]
+shape = SubResource( 27 )
+
+[node name="SouthWall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 512, 576 )
+
+[node name="Area2D" type="Area2D" parent="Walls/SouthWall" groups=[
+"wall",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/SouthWall/Area2D"]
+shape = SubResource( 30 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/SouthWall"]
+shape = SubResource( 31 )
+
+[node name="EastWall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 1024, 288 )
+
+[node name="Area2D" type="Area2D" parent="Walls/EastWall" groups=[
+"wall",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/EastWall/Area2D"]
+shape = SubResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/EastWall"]
+shape = SubResource( 29 )
+
+[node name="WestWall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 0, 288 )
+
+[node name="Area2D" type="Area2D" parent="Walls/WestWall" groups=[
+"wall",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WestWall/Area2D"]
+shape = SubResource( 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WestWall"]
+shape = SubResource( 29 )
 
 [node name="GameTimerLabel" type="Label" parent="."]
 visible = false

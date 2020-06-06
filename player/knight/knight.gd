@@ -31,14 +31,14 @@ func _ready():
 
 # Fly self through air if flying
 func _physics_process(delta):
-	if ($AnimationTree.is_in_state("flying_off/flying_off") or
-			$AnimationTree.is_in_state("flying_off/flying")):
+	if _is_flying():
 		var dist_ratio = flying_dist_travelled / MAX_FLY_DISTANCE
 		var vel = flying_velocity.interpolate(dist_ratio)
 		var movement = flying_knockback.normalized() * vel * delta
 		flying_dist_travelled += movement.length()
 		if flying_dist_travelled > flying_knockback.length():
-			movement.clamped(max(0, flying_knockback.length() - flying_dist_travelled))
+			var diff = flying_knockback.length() - flying_dist_travelled
+			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
 		
@@ -67,7 +67,7 @@ func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	health = new_health
 	$HealthLabel.text = str(health)
 	if health == 0:
-		if on_turtle:
+		if on_turtle and get_parent().is_in_group("player"):
 			get_parent().knock_knight_off(knockback_on_death)
 		alive = false
 		emit_signal("died")
@@ -102,3 +102,17 @@ func set_color(color):
 	$Reversable/Sprite/MainBody/Chest/Modulate.modulate = color
 	$Reversable/Sprite/MainBody/Head/Modulate.modulate = color
 	$Reversable/Sprite/BackArm/WeaponHandle/Lance.set_color(color)
+
+
+func _on_FlyingHitbox_area_entered(area):
+	if area.is_in_group("wall") and _is_flying():
+		$AnimationTree.travel("flying_off/drowning")
+		flying_knockback = Vector2(0, 0)
+
+
+func _is_flying():
+	return ($AnimationTree.is_in_state("flying_off/flying_off") or
+		$AnimationTree.is_in_state("flying_off/flying"))
+
+
+

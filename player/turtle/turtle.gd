@@ -168,8 +168,10 @@ func _on_Hitbox_area_entered(area):
 		hit_turtle(area)
 	elif area.is_in_group("knight") and !is_a_parent_of(area):
 		hit_knight(area)
-	elif area.is_in_group("powerup") and has_node("Knight"):
-		area.pick_up(self)
+	elif area.is_in_group("wall"):
+		hit_wall(area)
+	elif area.is_in_group("powerup"):
+		hit_powerup(area)
 
 
 # Hit another turtle
@@ -182,6 +184,19 @@ func hit_knight(_knight):
 	pass
 
 
+# Hit an arena wall
+func hit_wall(_wall):
+	pass
+
+
+# Hit a powerup
+func hit_powerup(_powerup):
+	pass
+
+
 # Will be extended by player
 func moved(_movement):
 	pass
+
+
+

@@ -13,27 +13,29 @@ func _hit_knight(knight):
 	var forwards = knight.global_position - knight_held_by.global_position
 	var medium_knockback = forwards.normalized() * MEDIUM_KNOCKBACK
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
+	
 	if knight.parrying:
-		player_held_by.call_deferred("knock_knight_off", -large_knockback)
-		knight.call_deferred("hit", SMALL_DAMAGE, medium_knockback)
+		_knock_off_knight(player_held_by, -large_knockback)
+		_damage_knight(knight, SMALL_DAMAGE, medium_knockback)
 	else:
-		player_held_by.call_deferred("knock_knight_off", -medium_knockback)
+		_knock_off_knight(player_held_by, -medium_knockback)
 		if !knight.on_turtle:
-			knight.call_deferred("hit", MAX_DAMAGE)
+			_damage_knight(knight, MAX_DAMAGE)
 		else:
-			knight.call_deferred("hit", LARGE_DAMAGE, large_knockback)
-			if knight.health > LARGE_DAMAGE:
-				knight.get_parent().call_deferred("knock_knight_off", large_knockback)
-	get_parent().call_deferred("unequip_held_weapon")
+			_damage_knight(knight, LARGE_DAMAGE, large_knockback)
+			_knock_off_knight(knight, large_knockback)
+	_unequip()
 
 
 func _hit_weapon(weapon):
+	._hit_weapon(weapon)
 	var forwards = weapon.knight_held_by.global_position - knight_held_by.global_position
 	var medium_knockback = forwards.normalized() * MEDIUM_KNOCKBACK
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
-	player_held_by.call_deferred("knock_knight_off", -medium_knockback)
-	get_parent().unequip_held_weapon()
-	weapon.knight_held_by.call_deferred("hit", LARGE_DAMAGE)
-	if weapon.knight_held_by.health > LARGE_DAMAGE:
-		weapon.player_held_by.call_deferred("knock_knight_off", large_knockback)
+	
+	_knock_off_knight(knight_held_by, -medium_knockback)
+	_unequip()
+	
+	_damage_knight(weapon.knight_held_by, LARGE_DAMAGE, large_knockback)
+	_knock_off_knight(weapon.knight_held_by, large_knockback)
 	
