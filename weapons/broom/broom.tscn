@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://weapons/weapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://weapons/broom/broom_back.png" type="Texture" id=2]
+[ext_resource path="res://weapons/broom/broom_front.png" type="Texture" id=3]
+[ext_resource path="res://weapons/broom/broom.gd" type="Script" id=4]
+
+[node name="Broom" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+can_sweep = true
+
+[node name="CollisionShape2D" parent="." index="0"]
+polygon = PoolVector2Array( -374.677, 34.5429, 909.619, -414.105, 933.593, 264.004 )
+
+[node name="Back" type="Sprite" parent="." index="1"]
+texture = ExtResource( 2 )
+
+[node name="Front" type="Sprite" parent="." index="2"]
+texture = ExtResource( 3 )

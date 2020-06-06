@@ -24,7 +24,7 @@ func _hit_knight(knight):
 		else:
 			_damage_knight(knight, LARGE_DAMAGE, large_knockback)
 			_knock_off_knight(knight, large_knockback)
-	_unequp()
+	_unequip()
 
 
 func _hit_weapon(weapon):
@@ -34,7 +34,7 @@ func _hit_weapon(weapon):
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
 	
 	_knock_off_knight(knight_held_by, -medium_knockback)
-	_unequp()
+	_unequip()
 	
 	_damage_knight(weapon.knight_held_by, LARGE_DAMAGE, large_knockback)
 	_knock_off_knight(weapon.knight_held_by, large_knockback)

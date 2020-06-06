@@ -40,9 +40,6 @@ parameters/controlling/waiting/playback = SubResource( 4 )
 [node name="Knight" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 1.38696, -28.2939 )
 
-[node name="WaterSplash" parent="Knight/Reversable" index="1"]
-frame = 1
-
 [node name="AnimationTree" parent="Knight" index="3"]
 parameters/playback = SubResource( 5 )
 parameters/controlling/playback = SubResource( 6 )

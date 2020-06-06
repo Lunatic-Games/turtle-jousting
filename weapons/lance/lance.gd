@@ -1,8 +1,12 @@
 extends "res://weapons/weapon.gd"
 
 
+export (Curve) var damage_curve
+
 const DAMAGE = 20
 const KNOCKBACK = 150
+
+var charge = 0  # Value between 0 and 1 for damage curve
 
 
 # Modulate piece on lance
@@ -18,7 +22,8 @@ func _hit_knight(knight):
 	if knight.parrying:
 		_knock_off_knight(knight_held_by, -knockback)
 	else:
-		_damage_knight(knight, DAMAGE, knockback)
+		_damage_knight(knight, int(DAMAGE * damage_curve.interpolate(charge)),
+			knockback)
 
 
 # Start a duel between the two players

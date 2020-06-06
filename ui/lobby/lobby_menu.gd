@@ -79,6 +79,25 @@ func _input(event):
 
 		get_player_slot(pos).load_player(pos, {"device_id" : device})
 		get_tree().set_input_as_handled()
+		
+	elif event.is_action("add_bot") and event.pressed:
+		var pos = get_next_open_position()
+		if pos == -1:
+			print("Lobby full")
+			return
+		
+		var bot_id = get_available_bot_id()
+		local_players[pos] = bot_id
+		if get_tree().network_peer:
+			rpc("update_player_list", local_players)
+			var net_id = get_tree().get_network_unique_id()
+			get_player_slot(pos).set_network_master(net_id)
+			connections[net_id] = local_players.keys()
+		else:
+			connections[1] = local_players.keys()
+		get_player_slot(pos).load_player(pos, {"device_id" : device,
+			"bot_id": bot_id})
+		get_tree().set_input_as_handled()
 
 	elif event.is_action("ui_cancel") and event.pressed:
 		_on_BackButton_pressed()
@@ -329,6 +348,14 @@ func get_next_open_position():
 		if slot_is_open(i):
 			return i
 	return -1
+
+
+# Determine next available bot device id
+func get_available_bot_id():
+	for i in range(999, 995, -1):
+		if !local_players.values().has(i):
+			return i
+	assert(false)
 
 
 # Determine if player number is available

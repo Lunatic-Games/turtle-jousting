@@ -7,6 +7,7 @@ signal hit_turtle
 
 export (bool) var can_joust
 export (bool) var can_duel
+export (bool) var can_sweep
 
 const DEFAULT_KNOCKBACK = 200
 
@@ -86,10 +87,20 @@ func _knock_off_knight(knight, knockback):
 
 
 # Tell weapon to unequp this weapon
-func _unequp():
-	get_parent().call_deferred("unequp_held_weapon")
+func _unequip():
+	get_parent().call_deferred("unequip_held_weapon")
 
 
 # Duel another player
 func _duel_player(player):
 	player_held_by.call_deferred("duel", player)
+
+
+# A single sweep attack, used for some weapons
+func sweep():
+	pass
+
+
+# Called at end of sweep animation
+func sweep_done():
+	pass

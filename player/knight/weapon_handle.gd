@@ -12,8 +12,8 @@ func set_player(player):
 
 
 func equip(new_weapon):
-	if weapon == $Lance:
-		weapon.put_away()
+	unequip_held_weapon()
+	$Lance.put_away()
 	weapon = new_weapon
 	weapon.pick_up(player_owned_by)
 	weapon.damage_mod = damage_mod
@@ -36,6 +36,14 @@ func throw_held_weapon(charge, dir_sign):
 	weapon.scale = Vector2(0.05, 0.05)
 	weapon.throw(charge, dir_sign)
 	weapon = $Lance
+
+
+func sweep_held_weapon():
+	weapon.sweep()
+
+
+func sweep_done():
+	weapon.sweep_done()
 
 
 func new_attack():
