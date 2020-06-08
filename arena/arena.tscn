@@ -108,39 +108,39 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
 }
 
-[sub_resource type="RectangleShape2D" id=26]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 512, 70 )
 
-[sub_resource type="RectangleShape2D" id=27]
+[sub_resource type="RectangleShape2D" id=22]
 extents = Vector2( 512, 64 )
 
-[sub_resource type="RectangleShape2D" id=30]
+[sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 512, 21 )
 
-[sub_resource type="RectangleShape2D" id=31]
+[sub_resource type="RectangleShape2D" id=24]
 extents = Vector2( 512, 15 )
 
-[sub_resource type="RectangleShape2D" id=28]
+[sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 20, 288 )
 
-[sub_resource type="RectangleShape2D" id=29]
+[sub_resource type="RectangleShape2D" id=26]
 extents = Vector2( 24, 288 )
 
-[sub_resource type="DynamicFont" id=21]
+[sub_resource type="DynamicFont" id=27]
 size = 36
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=22]
+[sub_resource type="DynamicFont" id=28]
 size = 64
 extra_spacing_bottom = 18
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="DynamicFont" id=29]
 size = 64
 extra_spacing_bottom = 20
 font_data = ExtResource( 1 )
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=30]
 length = 5.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CountdownLabel:rect_scale")
@@ -217,7 +217,7 @@ tracks/5/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=31]
 length = 2.0
 step = 0.05
 tracks/0/type = "value"
@@ -339,7 +339,6 @@ position = Vector2( 1014.83, 32 )
 
 [node name="Rope7" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 830.61, 0.939705 )
-z_index = 1
 curve = SubResource( 7 )
 buoy1 = NodePath("../Buoy7")
 buoy2 = NodePath("../Buoy8")
@@ -349,7 +348,6 @@ position = Vector2( 1014.83, 159 )
 
 [node name="Rope8" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 830.471, 129.092 )
-z_index = 1
 curve = SubResource( 8 )
 buoy1 = NodePath("../Buoy8")
 buoy2 = NodePath("../Buoy9")
@@ -359,7 +357,6 @@ position = Vector2( 1014.83, 286 )
 
 [node name="Rope9" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 830.43, 257.032 )
-z_index = 1
 curve = SubResource( 9 )
 buoy1 = NodePath("../Buoy9")
 buoy2 = NodePath("../Buoy10")
@@ -369,7 +366,6 @@ position = Vector2( 1014.83, 413 )
 
 [node name="Rope10" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 830.417, 384.886 )
-z_index = 1
 curve = SubResource( 10 )
 buoy1 = NodePath("../Buoy10")
 buoy2 = NodePath("../Buoy11")
@@ -433,7 +429,6 @@ position = Vector2( 10.8641, 546.257 )
 
 [node name="Rope17" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( -173.678, 383.644 )
-z_index = 1
 curve = SubResource( 17 )
 buoy1 = NodePath("../Buoy17")
 buoy2 = NodePath("../Buoy18")
@@ -443,7 +438,6 @@ position = Vector2( 10.8641, 413 )
 
 [node name="Rope18" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( -173.595, 255.966 )
-z_index = 1
 curve = SubResource( 18 )
 buoy1 = NodePath("../Buoy18")
 buoy2 = NodePath("../Buoy19")
@@ -453,7 +447,6 @@ position = Vector2( 10.8641, 286 )
 
 [node name="Rope19" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( -173.465, 130.471 )
-z_index = 1
 curve = SubResource( 19 )
 buoy1 = NodePath("../Buoy19")
 buoy2 = NodePath("../Buoy20")
@@ -463,7 +456,6 @@ position = Vector2( 10.8641, 159 )
 
 [node name="Rope20" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( -173.387, 2.60485 )
-z_index = 1
 curve = SubResource( 20 )
 buoy1 = NodePath("../Buoy20")
 buoy2 = NodePath("../Buoy")
@@ -548,10 +540,10 @@ position = Vector2( 512, 0 )
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/NorthWall/Area2D"]
-shape = SubResource( 26 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/NorthWall"]
-shape = SubResource( 27 )
+shape = SubResource( 22 )
 
 [node name="SouthWall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 576 )
@@ -561,10 +553,10 @@ position = Vector2( 512, 576 )
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/SouthWall/Area2D"]
-shape = SubResource( 30 )
+shape = SubResource( 23 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/SouthWall"]
-shape = SubResource( 31 )
+shape = SubResource( 24 )
 
 [node name="EastWall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 1024, 288 )
@@ -574,10 +566,10 @@ position = Vector2( 1024, 288 )
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/EastWall/Area2D"]
-shape = SubResource( 28 )
+shape = SubResource( 25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/EastWall"]
-shape = SubResource( 29 )
+shape = SubResource( 26 )
 
 [node name="WestWall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 0, 288 )
@@ -587,10 +579,10 @@ position = Vector2( 0, 288 )
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WestWall/Area2D"]
-shape = SubResource( 28 )
+shape = SubResource( 25 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WestWall"]
-shape = SubResource( 29 )
+shape = SubResource( 26 )
 
 [node name="GameTimerLabel" type="Label" parent="."]
 visible = false
@@ -600,7 +592,7 @@ margin_left = 452.0
 margin_top = 10.0
 margin_right = 572.0
 margin_bottom = 28.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 27 )
 text = "120"
 align = 1
 __meta__ = {
@@ -616,7 +608,7 @@ margin_bottom = 352.0
 rect_min_size = Vector2( 256, 128 )
 rect_scale = Vector2( 1.66667, 2.33333 )
 rect_pivot_offset = Vector2( 128, 64 )
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 28 )
 text = "2"
 align = 1
 valign = 1
@@ -637,7 +629,7 @@ margin_bottom = 309.0
 rect_min_size = Vector2( 430, 0 )
 rect_scale = Vector2( 0.8, 0.9 )
 rect_pivot_offset = Vector2( 215, 26 )
-custom_fonts/font = SubResource( 23 )
+custom_fonts/font = SubResource( 29 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "VICTORIOUS"
 __meta__ = {
@@ -649,8 +641,8 @@ wait_time = 300.0
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/countdown = SubResource( 24 )
-anims/end_game = SubResource( 25 )
+anims/countdown = SubResource( 30 )
+anims/end_game = SubResource( 31 )
 
 [node name="PausedMenu" parent="." instance=ExtResource( 5 )]
 margin_right = 1024.0

@@ -61,6 +61,15 @@ func _input(event):
 
 	elif event.is_action("ui_start") and event.pressed:
 		if device in local_players.values():
+			for player in local_players:
+				if typeof(local_players[player]) != typeof(device):
+					continue
+				if local_players[player] == device:
+					var slot = get_player_slot(player)
+					if slot.get_node("Cover/ClosedButton").has_focus():
+						_on_VisorTransition_lifted_up()
+					slot.unready()
+					break
 			return
 
 		var pos = get_next_open_position()
@@ -450,3 +459,16 @@ func _on_Popup_about_to_show():
 
 func _on_Popup_hide():
 	set_process_input(true)
+
+
+func _on_PlayerSlot_removed(slot):
+	var slot_button = slot.get_node("Cover/ClosedButton")
+	if slot_button.has_focus():
+		_on_VisorTransition_lifted_up()
+	
+	local_players.erase(slot.player_number)
+	if get_tree().network_peer:
+		rpc("update_player_list", local_players.keys())
+		connections[get_tree().get_network_unique_id()] = local_players.keys()
+	else:
+		connections[1] = local_players.keys()

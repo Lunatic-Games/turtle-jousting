@@ -31,6 +31,12 @@
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
+[node name="WaterAnimation" parent="Reversable/Sprite" index="0"]
+frame = 0
+
+[node name="WaterWakeAnimation" parent="Reversable" index="3"]
+frame = 0
+
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )
 parameters/controlling/playback = SubResource( 2 )
@@ -39,6 +45,9 @@ parameters/controlling/waiting/playback = SubResource( 4 )
 
 [node name="Knight" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 1.38696, -28.2939 )
+
+[node name="WaterSplash" parent="Knight/Reversable" index="1"]
+frame = 0
 
 [node name="AnimationTree" parent="Knight" index="3"]
 parameters/playback = SubResource( 5 )

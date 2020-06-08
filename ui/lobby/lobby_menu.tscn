@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://ui/lobby/lobby_menu.gd" type="Script" id=1]
 [ext_resource path="res://ui/lobby/network_message_popup.tscn" type="PackedScene" id=2]
@@ -14,13 +14,15 @@ extra_spacing_top = 2
 extra_spacing_bottom = 10
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 4.0
+bg_color = Color( 0.247059, 0.352941, 0.388235, 1 )
+
+[sub_resource type="DynamicFont" id=3]
 size = 24
 extra_spacing_top = 2
 extra_spacing_bottom = 8
 font_data = ExtResource( 5 )
-
-[sub_resource type="StyleBoxEmpty" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
@@ -30,23 +32,35 @@ font_data = ExtResource( 5 )
 
 [sub_resource type="StyleBoxEmpty" id=7]
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="DynamicFont" id=9]
 size = 24
 extra_spacing_top = 2
 extra_spacing_bottom = 8
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 24
 extra_spacing_top = 2
 extra_spacing_bottom = 10
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="StyleBoxFlat" id=11]
+content_margin_left = 4.0
+bg_color = Color( 0.247059, 0.352941, 0.388235, 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 24
+extra_spacing_top = 2
+extra_spacing_bottom = 8
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=13]
 size = 24
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=14]
 size = 20
 extra_spacing_top = 2
 extra_spacing_bottom = 7
@@ -56,8 +70,6 @@ font_data = ExtResource( 5 )
 pause_mode = 1
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -66,7 +78,7 @@ __meta__ = {
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.117647, 0.117647, 0.117647, 1 )
+color = Color( 0.129412, 0.223529, 0.270588, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -78,7 +90,7 @@ margin_top = 10.0
 margin_right = -10.0
 margin_bottom = 88.0
 rect_min_size = Vector2( 0, 64 )
-color = Color( 0.227451, 0.227451, 0.227451, 1 )
+color = Color( 0.180392, 0.266667, 0.309804, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -115,14 +127,16 @@ margin_right = 329.0
 margin_bottom = 32.0
 
 [node name="LineEdit" type="LineEdit" parent="ConnectionSection/VBoxContainer/OnlineContainer/CodeEditContainer"]
+margin_top = 1.0
 margin_right = 170.0
-margin_bottom = 32.0
+margin_bottom = 31.0
 rect_min_size = Vector2( 170, 30 )
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath("../../JoinContainer/Button")
 focus_neighbour_bottom = NodePath("../../../LocalContainer/CodeEditContainer/LineEdit")
-custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 max_length = 7
 context_menu_enabled = false
 
@@ -142,12 +156,12 @@ focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath(".")
 focus_neighbour_bottom = NodePath("../../../LocalContainer/JoinContainer/Button")
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 3 )
-custom_styles/pressed = SubResource( 4 )
-custom_styles/focus = SubResource( 5 )
-custom_styles/disabled = SubResource( 6 )
-custom_styles/normal = SubResource( 7 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
@@ -161,7 +175,7 @@ margin_left = 414.0
 margin_top = 14.0
 margin_right = 531.0
 margin_bottom = 38.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "SpecialCode"
 
 [node name="LocalContainer" type="HBoxContainer" parent="ConnectionSection/VBoxContainer"]
@@ -188,13 +202,15 @@ margin_right = 308.0
 margin_bottom = 32.0
 
 [node name="LineEdit" type="LineEdit" parent="ConnectionSection/VBoxContainer/LocalContainer/CodeEditContainer"]
+margin_top = 1.0
 margin_right = 160.0
-margin_bottom = 32.0
+margin_bottom = 31.0
 rect_min_size = Vector2( 160, 30 )
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath("../../../OnlineContainer/CodeEditContainer/LineEdit")
 focus_neighbour_right = NodePath("../../JoinContainer/Button")
-custom_fonts/font = SubResource( 2 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 max_length = 7
 context_menu_enabled = false
 
@@ -213,12 +229,12 @@ focus_neighbour_left = NodePath("../../CodeEditContainer/LineEdit")
 focus_neighbour_top = NodePath("../../../OnlineContainer/JoinContainer/Button")
 focus_neighbour_right = NodePath(".")
 size_flags_vertical = 0
-custom_styles/hover = SubResource( 3 )
-custom_styles/pressed = SubResource( 4 )
-custom_styles/focus = SubResource( 5 )
-custom_styles/disabled = SubResource( 6 )
-custom_styles/normal = SubResource( 7 )
-custom_fonts/font = SubResource( 8 )
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0.627451, 0.627451, 0.627451, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.470588, 0.470588, 0.470588, 1 )
@@ -232,7 +248,7 @@ margin_left = 380.0
 margin_top = 3.0
 margin_right = 477.0
 margin_bottom = 27.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Local IP"
 
 [node name="LobbySections" type="HBoxContainer" parent="."]
@@ -360,7 +376,7 @@ margin_left = 10.0
 margin_right = 500.0
 margin_bottom = 474.0
 rect_min_size = Vector2( 100, 100 )
-color = Color( 0.227451, 0.227451, 0.227451, 1 )
+color = Color( 0.180392, 0.266667, 0.309804, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LobbySections/TutorialContainer/Rect"]
 anchor_right = 1.0
@@ -379,7 +395,7 @@ margin_right = 470.0
 margin_bottom = 22.0
 rect_min_size = Vector2( 0, 22 )
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 13 )
 text = "How to play the game"
 align = 1
 
@@ -395,7 +411,7 @@ margin_top = 342.0
 margin_right = 470.0
 margin_bottom = 454.0
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 14 )
 text = "Press A to charge joust
 Press B to dodge
 Press X to parry"
@@ -416,6 +432,10 @@ one_shot = true
 [node name="VisorTransition" parent="." instance=ExtResource( 7 )]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
+[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot2" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot3" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot4" to="." method="_on_PlayerSlot_removed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_on_OpenMultiplayerButton_pressed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
