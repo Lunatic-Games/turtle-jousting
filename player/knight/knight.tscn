@@ -1,4 +1,4 @@
-[gd_scene load_steps=119 format=2]
+[gd_scene load_steps=117 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/knight_leg_BU.png" type="Texture" id=2]
@@ -27,7 +27,6 @@
 [ext_resource path="res://player/knight/assets/Mod_Eye_Cry.png" type="Texture" id=25]
 [ext_resource path="res://player/knight/assets/knight_chest_arched.png" type="Texture" id=26]
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=27]
-[ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=28]
 [ext_resource path="res://player/knight/weapon_handle.gd" type="Script" id=29]
 
 [sub_resource type="Curve" id=1]
@@ -2585,7 +2584,7 @@ tracks/41/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=90]
+[sub_resource type="Animation" id=8]
 resource_name = "drunken_fall_ending"
 length = 0.4
 tracks/0/type = "value"
@@ -3140,7 +3139,7 @@ tracks/45/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=91]
+[sub_resource type="Animation" id=9]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -3694,9 +3693,9 @@ tracks/45/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=92]
+[sub_resource type="Animation" id=10]
 
-[sub_resource type="Animation" id=93]
+[sub_resource type="Animation" id=11]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Head:texture")
@@ -4131,7 +4130,7 @@ tracks/35/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=94]
+[sub_resource type="Animation" id=12]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Head:texture")
@@ -4628,7 +4627,7 @@ tracks/40/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=95]
+[sub_resource type="Animation" id=13]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -5194,7 +5193,7 @@ tracks/46/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=96]
+[sub_resource type="Animation" id=14]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -5681,7 +5680,7 @@ tracks/39/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=97]
+[sub_resource type="Animation" id=15]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -6154,7 +6153,7 @@ tracks/38/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=98]
+[sub_resource type="Animation" id=16]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -6649,7 +6648,7 @@ tracks/40/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=99]
+[sub_resource type="Animation" id=17]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -7108,7 +7107,7 @@ tracks/37/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=100]
+[sub_resource type="Animation" id=18]
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -7567,7 +7566,7 @@ tracks/37/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=101]
+[sub_resource type="Animation" id=19]
 length = 1.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -8038,7 +8037,7 @@ tracks/38/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=102]
+[sub_resource type="Animation" id=20]
 length = 0.8
 loop = true
 step = 0.05
@@ -8523,7 +8522,7 @@ tracks/39/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=103]
+[sub_resource type="Animation" id=21]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -9035,7 +9034,7 @@ tracks/41/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=104]
+[sub_resource type="Animation" id=22]
 length = 0.2
 step = 0.005
 tracks/0/type = "value"
@@ -9533,7 +9532,7 @@ tracks/40/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=105]
+[sub_resource type="Animation" id=23]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -10018,7 +10017,7 @@ tracks/39/keys = {
 "values": [ Vector2( -1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=106]
+[sub_resource type="Animation" id=24]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite/MainBody/Chest:position")
@@ -10489,244 +10488,241 @@ tracks/38/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.294118, 0.294118, 0.294118, 1 ) ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=107]
+[sub_resource type="AnimationNodeAnimation" id=25]
 animation = "dodging"
 
-[sub_resource type="AnimationNodeAnimation" id=108]
+[sub_resource type="AnimationNodeAnimation" id=26]
 animation = "dodging"
 
-[sub_resource type="AnimationNodeAnimation" id=109]
+[sub_resource type="AnimationNodeAnimation" id=27]
 animation = "charging_joust"
 
-[sub_resource type="AnimationNodeAnimation" id=110]
+[sub_resource type="AnimationNodeAnimation" id=28]
 animation = "dueling"
 
-[sub_resource type="AnimationNodeAnimation" id=111]
+[sub_resource type="AnimationNodeAnimation" id=29]
 animation = "joust_ending"
 
-[sub_resource type="AnimationNodeAnimation" id=112]
+[sub_resource type="AnimationNodeAnimation" id=30]
 animation = "jousting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=113]
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=114]
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=115]
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
 
-[sub_resource type="AnimationNodeStateMachine" id=116]
-states/charging_joust/node = SubResource( 109 )
+[sub_resource type="AnimationNodeStateMachine" id=34]
+states/charging_joust/node = SubResource( 27 )
 states/charging_joust/position = Vector2( 444, 169 )
-states/dueling/node = SubResource( 110 )
+states/dueling/node = SubResource( 28 )
 states/dueling/position = Vector2( 591, 377 )
-states/joust_ending/node = SubResource( 111 )
+states/joust_ending/node = SubResource( 29 )
 states/joust_ending/position = Vector2( 310, 377 )
-states/jousting/node = SubResource( 112 )
+states/jousting/node = SubResource( 30 )
 states/jousting/position = Vector2( 444, 258 )
-transitions = [ "charging_joust", "jousting", SubResource( 113 ), "jousting", "joust_ending", SubResource( 114 ), "jousting", "dueling", SubResource( 115 ) ]
+transitions = [ "charging_joust", "jousting", SubResource( 31 ), "jousting", "joust_ending", SubResource( 32 ), "jousting", "dueling", SubResource( 33 ) ]
 start_node = "charging_joust"
 graph_offset = Vector2( -61, 287 )
 
-[sub_resource type="AnimationNodeAnimation" id=117]
+[sub_resource type="AnimationNodeAnimation" id=35]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeAnimation" id=87]
+[sub_resource type="AnimationNodeAnimation" id=36]
 animation = "sweep_attack"
 
-[sub_resource type="AnimationNodeAnimation" id=118]
+[sub_resource type="AnimationNodeAnimation" id=37]
 animation = "charging_throw"
 
-[sub_resource type="AnimationNodeAnimation" id=119]
+[sub_resource type="AnimationNodeAnimation" id=38]
 animation = "throw_ending"
 
-[sub_resource type="AnimationNodeAnimation" id=120]
+[sub_resource type="AnimationNodeAnimation" id=39]
 animation = "throwing"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=121]
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=122]
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=123]
-states/charging_throw/node = SubResource( 118 )
+[sub_resource type="AnimationNodeStateMachine" id=42]
+states/charging_throw/node = SubResource( 37 )
 states/charging_throw/position = Vector2( 453, 172 )
-states/throw_ending/node = SubResource( 119 )
+states/throw_ending/node = SubResource( 38 )
 states/throw_ending/position = Vector2( 453, 358 )
-states/throwing/node = SubResource( 120 )
+states/throwing/node = SubResource( 39 )
 states/throwing/position = Vector2( 453, 253 )
-transitions = [ "charging_throw", "throwing", SubResource( 121 ), "throwing", "throw_ending", SubResource( 122 ) ]
+transitions = [ "charging_throw", "throwing", SubResource( 40 ), "throwing", "throw_ending", SubResource( 41 ) ]
 start_node = "charging_throw"
 end_node = "throw_ending"
 graph_offset = Vector2( -17, 213 )
 
-[sub_resource type="AnimationNodeAnimation" id=124]
+[sub_resource type="AnimationNodeAnimation" id=43]
 animation = "idling"
 
-[sub_resource type="AnimationNodeAnimation" id=125]
+[sub_resource type="AnimationNodeAnimation" id=44]
 animation = "moving"
 
-[sub_resource type="AnimationNodeAnimation" id=126]
+[sub_resource type="AnimationNodeAnimation" id=45]
 animation = "moving_stop"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=127]
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=128]
+[sub_resource type="AnimationNodeStateMachineTransition" id=47]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=129]
+[sub_resource type="AnimationNodeStateMachineTransition" id=48]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=130]
-states/idling/node = SubResource( 124 )
+[sub_resource type="AnimationNodeStateMachine" id=49]
+states/idling/node = SubResource( 43 )
 states/idling/position = Vector2( 473, 212 )
-states/moving/node = SubResource( 125 )
+states/moving/node = SubResource( 44 )
 states/moving/position = Vector2( 608, 317 )
-states/moving_stop/node = SubResource( 126 )
+states/moving_stop/node = SubResource( 45 )
 states/moving_stop/position = Vector2( 329, 317 )
-transitions = [ "idling", "moving", SubResource( 127 ), "moving", "moving_stop", SubResource( 128 ), "moving_stop", "idling", SubResource( 129 ) ]
+transitions = [ "idling", "moving", SubResource( 46 ), "moving", "moving_stop", SubResource( 47 ), "moving_stop", "idling", SubResource( 48 ) ]
 start_node = "idling"
 graph_offset = Vector2( -19, 148 )
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=131]
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=132]
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=133]
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=134]
+[sub_resource type="AnimationNodeStateMachineTransition" id=53]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=135]
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=136]
+[sub_resource type="AnimationNodeStateMachineTransition" id=55]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=137]
+[sub_resource type="AnimationNodeStateMachineTransition" id=56]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=138]
+[sub_resource type="AnimationNodeStateMachineTransition" id=57]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=139]
+[sub_resource type="AnimationNodeStateMachineTransition" id=58]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=140]
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=88]
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=89]
+[sub_resource type="AnimationNodeStateMachineTransition" id=61]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachine" id=141]
-states/consuming/node = SubResource( 107 )
+[sub_resource type="AnimationNodeStateMachine" id=62]
+states/consuming/node = SubResource( 25 )
 states/consuming/position = Vector2( 289, 40 )
-states/dodging/node = SubResource( 108 )
+states/dodging/node = SubResource( 26 )
 states/dodging/position = Vector2( 561, 40 )
-states/jousting/node = SubResource( 116 )
+states/jousting/node = SubResource( 34 )
 states/jousting/position = Vector2( 289, 355 )
-states/parrying/node = SubResource( 117 )
+states/parrying/node = SubResource( 35 )
 states/parrying/position = Vector2( 678, 184 )
-states/sweeping/node = SubResource( 87 )
+states/sweeping/node = SubResource( 36 )
 states/sweeping/position = Vector2( 574, 355 )
-states/throwing/node = SubResource( 123 )
+states/throwing/node = SubResource( 42 )
 states/throwing/position = Vector2( 179, 184 )
-states/waiting/node = SubResource( 130 )
+states/waiting/node = SubResource( 49 )
 states/waiting/position = Vector2( 425, 184 )
-transitions = [ "waiting", "parrying", SubResource( 131 ), "parrying", "waiting", SubResource( 132 ), "waiting", "dodging", SubResource( 133 ), "dodging", "waiting", SubResource( 134 ), "waiting", "consuming", SubResource( 135 ), "consuming", "waiting", SubResource( 136 ), "waiting", "throwing", SubResource( 137 ), "throwing", "waiting", SubResource( 138 ), "waiting", "jousting", SubResource( 139 ), "jousting", "waiting", SubResource( 140 ), "waiting", "sweeping", SubResource( 88 ), "sweeping", "waiting", SubResource( 89 ) ]
+transitions = [ "waiting", "parrying", SubResource( 50 ), "parrying", "waiting", SubResource( 51 ), "waiting", "dodging", SubResource( 52 ), "dodging", "waiting", SubResource( 53 ), "waiting", "consuming", SubResource( 54 ), "consuming", "waiting", SubResource( 55 ), "waiting", "throwing", SubResource( 56 ), "throwing", "waiting", SubResource( 57 ), "waiting", "jousting", SubResource( 58 ), "jousting", "waiting", SubResource( 59 ), "waiting", "sweeping", SubResource( 60 ), "sweeping", "waiting", SubResource( 61 ) ]
 start_node = "waiting"
 graph_offset = Vector2( 9, 158 )
 
-[sub_resource type="AnimationNodeAnimation" id=142]
+[sub_resource type="AnimationNodeAnimation" id=63]
 animation = "drowning"
 
-[sub_resource type="AnimationNodeAnimation" id=143]
+[sub_resource type="AnimationNodeAnimation" id=64]
 animation = "flying"
 
-[sub_resource type="AnimationNodeAnimation" id=144]
+[sub_resource type="AnimationNodeAnimation" id=65]
 animation = "flying_off"
 
-[sub_resource type="AnimationNodeAnimation" id=145]
+[sub_resource type="AnimationNodeAnimation" id=66]
 animation = "mounting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=146]
+[sub_resource type="AnimationNodeStateMachineTransition" id=67]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=147]
+[sub_resource type="AnimationNodeStateMachineTransition" id=68]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=148]
+[sub_resource type="AnimationNodeStateMachineTransition" id=69]
 
-[sub_resource type="AnimationNodeStateMachine" id=149]
-states/drowning/node = SubResource( 142 )
+[sub_resource type="AnimationNodeStateMachine" id=70]
+states/drowning/node = SubResource( 63 )
 states/drowning/position = Vector2( 513, 344 )
-states/flying/node = SubResource( 143 )
+states/flying/node = SubResource( 64 )
 states/flying/position = Vector2( 513, 251 )
-states/flying_off/node = SubResource( 144 )
+states/flying_off/node = SubResource( 65 )
 states/flying_off/position = Vector2( 513, 131 )
-states/mounting/node = SubResource( 145 )
+states/mounting/node = SubResource( 66 )
 states/mounting/position = Vector2( 513, 464 )
-transitions = [ "drowning", "mounting", SubResource( 146 ), "flying_off", "flying", SubResource( 147 ), "flying", "drowning", SubResource( 148 ) ]
+transitions = [ "drowning", "mounting", SubResource( 67 ), "flying_off", "flying", SubResource( 68 ), "flying", "drowning", SubResource( 69 ) ]
 start_node = "flying_off"
 end_node = "mounting"
 graph_offset = Vector2( 10, 178 )
 
-[sub_resource type="AnimationNodeAnimation" id=150]
+[sub_resource type="AnimationNodeAnimation" id=71]
 animation = "slapping"
 
-[sub_resource type="AnimationNodeAnimation" id=151]
+[sub_resource type="AnimationNodeAnimation" id=72]
 animation = "turning_to_stone"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=152]
+[sub_resource type="AnimationNodeStateMachineTransition" id=73]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=153]
+[sub_resource type="AnimationNodeStateMachineTransition" id=74]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=154]
+[sub_resource type="AnimationNodeStateMachineTransition" id=75]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=155]
+[sub_resource type="AnimationNodeStateMachineTransition" id=76]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=156]
+[sub_resource type="AnimationNodeStateMachineTransition" id=77]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=157]
+[sub_resource type="AnimationNodeStateMachineTransition" id=78]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=158]
+[sub_resource type="AnimationNodeStateMachineTransition" id=79]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=159]
+[sub_resource type="AnimationNodeStateMachineTransition" id=80]
 
-[sub_resource type="AnimationNodeStateMachine" id=160]
-states/controlling/node = SubResource( 141 )
+[sub_resource type="AnimationNodeStateMachine" id=81]
+states/controlling/node = SubResource( 62 )
 states/controlling/position = Vector2( 413, 183 )
-states/flying_off/node = SubResource( 149 )
+states/flying_off/node = SubResource( 70 )
 states/flying_off/position = Vector2( 162.661, 183 )
-states/slapping/node = SubResource( 150 )
+states/slapping/node = SubResource( 71 )
 states/slapping/position = Vector2( 292.661, 329 )
-states/stoning/node = SubResource( 151 )
+states/stoning/node = SubResource( 72 )
 states/stoning/position = Vector2( 292.661, 74 )
-transitions = [ "controlling", "flying_off", SubResource( 152 ), "flying_off", "controlling", SubResource( 153 ), "controlling", "slapping", SubResource( 154 ), "slapping", "controlling", SubResource( 155 ), "slapping", "flying_off", SubResource( 156 ), "flying_off", "slapping", SubResource( 157 ), "controlling", "stoning", SubResource( 158 ), "stoning", "flying_off", SubResource( 159 ) ]
+transitions = [ "controlling", "flying_off", SubResource( 73 ), "flying_off", "controlling", SubResource( 74 ), "controlling", "slapping", SubResource( 75 ), "slapping", "controlling", SubResource( 76 ), "slapping", "flying_off", SubResource( 77 ), "flying_off", "slapping", SubResource( 78 ), "controlling", "stoning", SubResource( 79 ), "stoning", "flying_off", SubResource( 80 ) ]
 start_node = "controlling"
 graph_offset = Vector2( -246.339, 36 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=161]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=82]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=162]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=83]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=163]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=84]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=164]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=85]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=165]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=86]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=166]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=87]
 
-[sub_resource type="DynamicFont" id=82]
-font_data = ExtResource( 28 )
-
-[sub_resource type="CircleShape2D" id=83]
+[sub_resource type="CircleShape2D" id=88]
 radius = 18.4809
 
 [node name="Knight" type="Area2D" groups=[
@@ -10822,6 +10818,7 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -10834,53 +10831,43 @@ anims/charging_throw = SubResource( 4 )
 anims/consuming = SubResource( 5 )
 anims/dodging = SubResource( 6 )
 anims/drowning = SubResource( 7 )
-anims/drunken_fall_ending = SubResource( 90 )
-anims/drunken_falling = SubResource( 91 )
-anims/dueling = SubResource( 92 )
-anims/flying = SubResource( 93 )
-anims/flying_off = SubResource( 94 )
-anims/idling = SubResource( 95 )
-anims/joust_ending = SubResource( 96 )
-anims/jousting = SubResource( 97 )
-anims/mounting = SubResource( 98 )
-anims/moving = SubResource( 99 )
-anims/moving_stop = SubResource( 100 )
-anims/parrying = SubResource( 101 )
-anims/slapping = SubResource( 102 )
-anims/sweep_attack = SubResource( 103 )
-anims/throw_ending = SubResource( 104 )
-anims/throwing = SubResource( 105 )
-anims/turning_to_stone = SubResource( 106 )
+anims/drunken_fall_ending = SubResource( 8 )
+anims/drunken_falling = SubResource( 9 )
+anims/dueling = SubResource( 10 )
+anims/flying = SubResource( 11 )
+anims/flying_off = SubResource( 12 )
+anims/idling = SubResource( 13 )
+anims/joust_ending = SubResource( 14 )
+anims/jousting = SubResource( 15 )
+anims/mounting = SubResource( 16 )
+anims/moving = SubResource( 17 )
+anims/moving_stop = SubResource( 18 )
+anims/parrying = SubResource( 19 )
+anims/slapping = SubResource( 20 )
+anims/sweep_attack = SubResource( 21 )
+anims/throw_ending = SubResource( 22 )
+anims/throwing = SubResource( 23 )
+anims/turning_to_stone = SubResource( 24 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 160 )
+tree_root = SubResource( 81 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 161 )
-parameters/controlling/playback = SubResource( 162 )
-parameters/controlling/jousting/playback = SubResource( 163 )
-parameters/controlling/throwing/playback = SubResource( 164 )
-parameters/controlling/waiting/playback = SubResource( 165 )
-parameters/flying_off/playback = SubResource( 166 )
+parameters/playback = SubResource( 82 )
+parameters/controlling/playback = SubResource( 83 )
+parameters/controlling/jousting/playback = SubResource( 84 )
+parameters/controlling/throwing/playback = SubResource( 85 )
+parameters/controlling/waiting/playback = SubResource( 86 )
+parameters/flying_off/playback = SubResource( 87 )
 script = ExtResource( 27 )
-
-[node name="HealthLabel" type="Label" parent="."]
-margin_left = -49.7346
-margin_top = -70.8608
-margin_right = 50.2654
-margin_bottom = -56.8608
-rect_min_size = Vector2( 100, 0 )
-rect_pivot_offset = Vector2( 50, 0 )
-custom_fonts/font = SubResource( 82 )
-text = "100"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="FlyingHitbox" type="Area2D" parent="."]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlyingHitbox"]
 position = Vector2( -1.05411, 3.68933 )
-shape = SubResource( 83 )
+shape = SubResource( 88 )
+
+[node name="HealthBar" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
 [connection signal="area_entered" from="FlyingHitbox" to="." method="_on_FlyingHitbox_area_entered"]

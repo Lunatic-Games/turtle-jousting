@@ -1,8 +1,15 @@
 extends Control
 
-const COLOR_NAMES = ["Red", "Blue", "Green", "Yellow"]
-const COLORS = [Color("ac4141"), Color("1a7586"), Color("299e57"), Color("b0a335")]
 
+signal removed
+signal color_taken
+
+const COLORS = [["Red", Color("ac4141")], ["Blue", Color("1a7586")], 
+	["Green", Color("299e57")], ["Yellow", Color("b0a335")]]
+const FONT_COLOR = Color(1, 1, 1)
+const TAKEN_FONT_COLOR = Color(0.5, 0.5, 0.5)
+
+var taken_colors = ["Yellow"]
 var color_i = 0
 var capturing_input = false
 var bot_id
@@ -13,7 +20,6 @@ var player_number
 
 
 func _ready():
-	set_process_input(false)
 	for node in get_tree().get_nodes_in_group("edit_button"):
 		if is_a_parent_of(node):
 			node.connect("focus_entered", self, "_on_button_focus_entered",
@@ -21,64 +27,58 @@ func _ready():
 
 
 func _input(event):
-	if get_tree().network_peer and !is_network_master():
+	if !capturing_input or (get_tree().network_peer and !is_network_master()):
 		return
 	
-	var device = event.device
-	if event is InputEventKey or event is InputEventMouse:
-		device = "keyboard"
+	if !device_matches_event(event):
+		# Stop other devices from hovering self
+		if event is InputEventMouse and is_mouse_over_node(self):
+			get_tree().set_input_as_handled()
+		return
 	
-	if typeof(device) != typeof(device_id):
-		if event is InputEventMouse and mouse_over_node(self):
+	if event is InputEventJoypadButton or event is InputEventKey:
+		if focused_button:
+			if event.pressed and event.is_action("ui_up"):
+				move_ui(MARGIN_TOP)
+			elif event.pressed and event.is_action("ui_right"):
+				move_ui(MARGIN_RIGHT)
+			elif event.pressed and event.is_action("ui_down"):
+				move_ui(MARGIN_BOTTOM)
+			elif event.pressed and event.is_action("ui_left"):
+				move_ui(MARGIN_LEFT)
+			elif event.is_action("ui_accept"):
+				if event.pressed:
+					focused_button.toggle_mode = true
+					focused_button.pressed = true
+				else:
+					if focused_button.pressed:
+						focused_button.emit_signal("pressed")
+					focused_button.pressed = false
+					focused_button.toggle_mode = false
+		get_tree().set_input_as_handled()
+	elif event is InputEventMouse:
+		handle_mouse_event(event)
+
+
+func handle_mouse_event(event):
+	if !is_mouse_over_node(self):
+		get_tree().set_input_as_handled()
+	for node in get_tree().get_nodes_in_group("edit_button"):
+		if is_a_parent_of(node) and is_mouse_over_node(node):
+			if node != focused_button:
+				unhover_button(focused_button)
+				focused_button = node
+				hover_button(focused_button)
+	if event is InputEventMouseMotion:
 			get_tree().set_input_as_handled()
-		return
-	if device != device_id:
-		return
-		
-	if capturing_input:
-		if event is InputEventJoypadButton or event is InputEventKey:
-			if focused_button:
-				if event.pressed and event.is_action("ui_up"):
-					move_ui(MARGIN_TOP)
-				elif event.pressed and event.is_action("ui_right"):
-					move_ui(MARGIN_RIGHT)
-				elif event.pressed and event.is_action("ui_down"):
-					move_ui(MARGIN_BOTTOM)
-				elif event.pressed and event.is_action("ui_left"):
-					move_ui(MARGIN_LEFT)
-				elif event.is_action("ui_accept"):
-					if event.pressed:
-						focused_button.toggle_mode = true
-						focused_button.pressed = true
-					else:
-						if focused_button.pressed:
-							focused_button.emit_signal("pressed")
-						focused_button.pressed = false
-						focused_button.toggle_mode = false
-						
-			get_tree().set_input_as_handled()
-		elif event is InputEventMouse:
-			if !mouse_over_node(self):
-				get_tree().set_input_as_handled()
-			for node in get_tree().get_nodes_in_group("edit_button"):
-				if is_a_parent_of(node) and mouse_over_node(node):
-					if node != focused_button:
-						unhover_button(focused_button)
-						focused_button = node
-						hover_button(focused_button)
-						
-			if event is InputEventMouseMotion:
-				get_tree().set_input_as_handled()
 
 
 func load_player(number, player_data={}):
 	player_number = number
 	capturing_input = true
-	set_process_input(true)
 	$Cover/Open.visible = false
 	set_edit_button_visibility(true)
-	color_i = player_data.get("color_i", 0)
-	$Background/ColorName.text = COLOR_NAMES[color_i]
+	update_color(player_data.get("color_i", 0))
 
 	device_id = player_data.get("device_id", null)
 	if device_id == null:
@@ -93,11 +93,13 @@ func load_player(number, player_data={}):
 	
 
 func reset():
-	set_process_input(false)
+	if focused_button:
+		unhover_button(focused_button)
 	color_i = 0
-	$Background/ColorName.text = COLOR_NAMES[color_i]
+	$Background/ColorName.text = COLORS[color_i][0]
 	$Cover/ClosedButton.visible = false
 	$Cover/Open.visible = true
+	$Cover/EditLabel.visible = false
 	player_number = null
 	device_id = null
 	bot_id = null
@@ -106,15 +108,24 @@ func reset():
 
 func get_player_data():
 	return { "device_id" : device_id, "bot_id": bot_id, "number": player_number,
-		"color_i" : color_i, "color" : COLORS[color_i], "ready" : ready}
+		"color_i" : color_i, "color" : COLORS[color_i][1], "ready" : ready}
 
 
 remote func update_color(i):
 	color_i = i
-	$Background/ColorName.text = COLOR_NAMES[color_i]
+	$Background/ColorName.text = COLORS[color_i][0]
+	if taken_colors.has(COLORS[color_i][0]):
+		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
+	else:
+		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
+	if get_tree().network_peer and is_network_master():
+		rpc("update_color", color_i)
 
 
 func _on_ReadyButton_pressed():
+	if taken_colors.has($Background/ColorName.text):
+		return
+	emit_signal("color_taken", COLORS[color_i][0])
 	player_ready()
 	if get_tree().network_peer:
 		rpc("player_ready")
@@ -125,7 +136,18 @@ remote func player_ready():
 	capturing_input = false
 	set_edit_button_visibility(false)
 	$Cover/ClosedButton.visible = true
-	set_process_input(false)
+	if is_mouse_over_node($Cover/ClosedButton):
+		_on_ClosedButton_focus_entered()
+	else:
+		_on_ClosedButton_focus_exited()
+
+
+remote func unready():
+	ready = false
+	capturing_input = true
+	set_edit_button_visibility(true)
+	$Cover/ClosedButton.visible = false
+	$Cover/EditLabel.visible = false
 
 
 func set_edit_button_visibility(visible):
@@ -167,7 +189,7 @@ func move_ui(direction):
 	hover_button(focused_button)
 
 
-func mouse_over_node(node):
+func is_mouse_over_node(node):
 	var rect = node.get_rect()
 	rect.position = node.rect_global_position
 	return rect.has_point(get_global_mouse_position())
@@ -190,12 +212,37 @@ func hover_button(button):
 
 
 func _on_ClosedButton_pressed():
-	print("Kicking player")
+	_on_RemoveButton_pressed()
+
+
+func _on_RemoveButton_pressed():
+	emit_signal("removed", player_number)
+	reset()
+
+
+# Get the device id if its a controller event, or "keyboard" if its keyboard
+func get_device(event):
+	var device = event.device
+	if event is InputEventKey or event is InputEventMouse:
+		device = "keyboard"
+	return device
+
+
+# Return true if event device matches device_id
+func device_matches_event(event):
+	var device = get_device(event)
+	if typeof(device) != typeof(device_id):
+		return false
+	if device != device_id:
+		return false
+	return true
 
 
 func _on_ClosedButton_focus_entered():
-	$Cover/ClosedButton.text = "Kick player?"
+	$Cover/ClosedButton.text = "Remove?"
+	$Cover/EditLabel.visible = false
 
 
 func _on_ClosedButton_focus_exited():
 	$Cover/ClosedButton.text = "Ready"
+	$Cover/EditLabel.visible = true

@@ -450,3 +450,12 @@ func _on_Popup_about_to_show():
 
 func _on_Popup_hide():
 	set_process_input(true)
+
+
+func _on_PlayerSlot_removed(player):
+	local_players.erase(player)
+	if get_tree().network_peer:
+		rpc("update_player_list", local_players.keys())
+		connections[get_tree().get_network_unique_id()] = local_players.keys()
+	else:
+		connections[1] = local_players.keys()
