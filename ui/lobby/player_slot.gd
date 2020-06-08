@@ -2,14 +2,14 @@ extends Control
 
 
 signal removed
-signal color_taken
 
 const COLORS = [["Red", Color("ac4141")], ["Blue", Color("1a7586")], 
-	["Green", Color("299e57")], ["Yellow", Color("b0a335")]]
+	["Green", Color("299e57")], ["Orange", Color("bf5c00")], 
+	["Purple", Color("771cff")], ["Yellow", Color("d4b83f")]]
 const FONT_COLOR = Color(1, 1, 1)
 const TAKEN_FONT_COLOR = Color(0.5, 0.5, 0.5)
 
-var taken_colors = ["Yellow"]
+var taken_colors = []
 var color_i = 0
 var capturing_input = false
 var bot_id
@@ -17,6 +17,7 @@ var device_id
 var focused_button = null
 var ready = false
 var player_number
+var time_readied
 
 
 func _ready():
@@ -100,6 +101,7 @@ func reset():
 	$Cover/ClosedButton.visible = false
 	$Cover/Open.visible = true
 	$Cover/EditLabel.visible = false
+	time_readied = null
 	player_number = null
 	device_id = null
 	bot_id = null
@@ -125,10 +127,12 @@ remote func update_color(i):
 func _on_ReadyButton_pressed():
 	if taken_colors.has($Background/ColorName.text):
 		return
-	emit_signal("color_taken", COLORS[color_i][0])
+	time_readied = OS.get_ticks_msec()
 	player_ready()
+
 	if get_tree().network_peer:
 		rpc("player_ready")
+			
 
 
 remote func player_ready():
@@ -136,6 +140,11 @@ remote func player_ready():
 	capturing_input = false
 	set_edit_button_visibility(false)
 	$Cover/ClosedButton.visible = true
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		if slot != self:
+			slot.color_taken(COLORS[color_i][0])
+		if get_tree().network_peer:
+			slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
 	else:
@@ -145,9 +154,34 @@ remote func player_ready():
 remote func unready():
 	ready = false
 	capturing_input = true
+	time_readied = null
+	unhover_button(focused_button)
+	focused_button = get_node("Background/ColorContainer/LeftArrowContainer/Button")
+	hover_button(focused_button)
 	set_edit_button_visibility(true)
 	$Cover/ClosedButton.visible = false
 	$Cover/EditLabel.visible = false
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		slot.color_freed(COLORS[color_i][0])
+		if get_tree().network_peer:
+			slot.rpc("color_freed", COLORS[color_i][0])
+
+
+remote func color_taken(color):
+	if !taken_colors.has(color):
+		taken_colors.append(color)
+	if ready and COLORS[color_i][0] == color:
+		unready()
+	if COLORS[color_i][0] == color:
+		update_color(color_i)
+
+
+remote func color_freed(color):
+	if ready and COLORS[color_i][0] == color:
+		return
+	taken_colors.erase(color)
+	if COLORS[color_i][0] == color:
+		update_color(color_i)
 
 
 func set_edit_button_visibility(visible):
@@ -216,7 +250,11 @@ func _on_ClosedButton_pressed():
 
 
 func _on_RemoveButton_pressed():
-	emit_signal("removed", player_number)
+	emit_signal("removed", self)
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		slot.color_freed(COLORS[color_i][0])
+		if get_tree().network_peer:
+			slot.rpc("color_freed", COLORS[color_i][0])
 	reset()
 
 
@@ -244,5 +282,8 @@ func _on_ClosedButton_focus_entered():
 
 
 func _on_ClosedButton_focus_exited():
-	$Cover/ClosedButton.text = "Ready"
-	$Cover/EditLabel.visible = true
+	if bot_id:
+		$Cover/ClosedButton.text = "Bot ready"
+	else:
+		$Cover/ClosedButton.text = "Ready"
+		$Cover/EditLabel.visible = true
