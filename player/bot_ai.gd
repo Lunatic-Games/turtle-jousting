@@ -9,12 +9,12 @@ func _ready():
 	id = get_parent().device_id
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	set_joy_direction(Vector2(1, 0))
 	dodge(Vector2(-1, 0))
 
 
-func move_towards(pos):
+func move_towards(_pos):
 	pass
 
 

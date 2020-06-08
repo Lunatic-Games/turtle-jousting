@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/x_button.png-9b8faf6249906842316db07ca9a85061.stex"
+path="res://.import/a_button.png-a6518a8a9a7535c0c70cb84f32fc1ce1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/duel_indicator/x_button.png"
-dest_files=[ "res://.import/x_button.png-9b8faf6249906842316db07ca9a85061.stex" ]
+source_file="res://player/duel_indicator/assets/a_button.png"
+dest_files=[ "res://.import/a_button.png-a6518a8a9a7535c0c70cb84f32fc1ce1.stex" ]
 
 [params]
 

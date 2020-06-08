@@ -141,18 +141,14 @@ func _on_LeftColorButton_pressed():
 	color_i -= 1
 	if color_i < 0:
 		color_i = len(COLORS) - 1
-	$Background/ColorName.text = COLOR_NAMES[color_i]
-	if get_tree().network_peer:
-		rpc("update_color", color_i)
+	update_color(color_i)
 
 
 func _on_RightColorButton_pressed():
 	color_i += 1
 	if color_i >= len(COLORS):
 		color_i = 0
-	$Background/ColorName.text = COLOR_NAMES[color_i]
-	if get_tree().network_peer:
-		rpc("update_color", color_i)
+	update_color(color_i)
 	
 
 func send_data():

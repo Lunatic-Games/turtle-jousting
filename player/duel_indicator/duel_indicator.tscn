@@ -1,10 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/duel_indicator/duel_indicator.gd" type="Script" id=1]
-[ext_resource path="res://player/duel_indicator/b_button.png" type="Texture" id=2]
-[ext_resource path="res://player/duel_indicator/x_button.png" type="Texture" id=3]
-[ext_resource path="res://player/duel_indicator/y_button.png" type="Texture" id=4]
-[ext_resource path="res://player/duel_indicator/a_button.png" type="Texture" id=5]
+[ext_resource path="res://player/duel_indicator/assets/b_button.png" type="Texture" id=2]
+[ext_resource path="res://player/duel_indicator/assets/x_button.png" type="Texture" id=3]
+[ext_resource path="res://player/duel_indicator/assets/y_button.png" type="Texture" id=4]
+[ext_resource path="res://player/duel_indicator/assets/a_button.png" type="Texture" id=5]
+
 
 [node name="DuelIndicator" type="Popup"]
 anchor_left = 0.5

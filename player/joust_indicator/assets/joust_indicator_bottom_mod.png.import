@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/joust_indicator_point.png-407d9922faadfcf55cdd928b10dbc718.stex"
+path="res://.import/joust_indicator_bottom_mod.png-6ac1c1c05efc3aac195a9f8cadbba1b1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/assets/joust_indicator_point.png"
-dest_files=[ "res://.import/joust_indicator_point.png-407d9922faadfcf55cdd928b10dbc718.stex" ]
+source_file="res://player/joust_indicator/assets/joust_indicator_bottom_mod.png"
+dest_files=[ "res://.import/joust_indicator_bottom_mod.png-6ac1c1c05efc3aac195a9f8cadbba1b1.stex" ]
 
 [params]
 

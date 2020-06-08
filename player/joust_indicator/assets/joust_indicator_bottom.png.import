@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/b_button.png-2c7ad9247654c08cdfcbfd321acccb9b.stex"
+path="res://.import/joust_indicator_bottom.png-f2f7c6a6844df74edf664402b9d9a530.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://player/duel_indicator/b_button.png"
-dest_files=[ "res://.import/b_button.png-2c7ad9247654c08cdfcbfd321acccb9b.stex" ]
+source_file="res://player/joust_indicator/assets/joust_indicator_bottom.png"
+dest_files=[ "res://.import/joust_indicator_bottom.png-f2f7c6a6844df74edf664402b9d9a530.stex" ]
 
 [params]
 
