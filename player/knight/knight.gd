@@ -22,7 +22,7 @@ onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
 func _ready():
 	$Reversable/Sprite/BackArm/WeaponHandle.set_player(get_parent())
 	$AnimationTree.active = true
-	#$HealthLabel.text = str(health)
+	$HealthBar.set_health(health)
 	
 	if get_tree().network_peer:
 		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
@@ -53,11 +53,13 @@ func hit(damage, knockback_on_death=Vector2(0, 0)):
 	set_health(health, knockback_on_death)
 
 
+# Increase health
 func heal(amount):
 	if !alive:
 		return
 	health += amount
 	health = min(health, 100)
+	$HealthBar.set_health(health)
 
 
 # Set health to a value
@@ -65,7 +67,7 @@ func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	if !alive:
 		return
 	health = new_health
-	#$HealthLabel.text = str(health)
+	$HealthBar.set_health(health)
 	if health == 0:
 		if on_turtle and get_parent().is_in_group("player"):
 			get_parent().knock_knight_off(knockback_on_death)

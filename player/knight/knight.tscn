@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/knight_leg_BU.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://player/knight/assets/Mod_Eye_Cry.png" type="Texture" id=25]
 [ext_resource path="res://player/knight/assets/knight_chest_arched.png" type="Texture" id=26]
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=27]
+[ext_resource path="res://player/knight/health_bar/health_bar.tscn" type="PackedScene" id=28]
 [ext_resource path="res://player/knight/weapon_handle.gd" type="Script" id=29]
 
 [sub_resource type="Curve" id=1]
@@ -10867,7 +10868,6 @@ visible = false
 position = Vector2( -1.05411, 3.68933 )
 shape = SubResource( 88 )
 
-[node name="HealthBar" type="TextureRect" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="HealthBar" parent="." instance=ExtResource( 28 )]
+position = Vector2( -5.28125, -64.6997 )
 [connection signal="area_entered" from="FlyingHitbox" to="." method="_on_FlyingHitbox_area_entered"]
