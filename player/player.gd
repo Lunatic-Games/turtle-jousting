@@ -299,6 +299,7 @@ func hit_powerup(powerup):
 
 # Set color modulation for team color
 func set_color(color):
+	.set_color(color)
 	$JoustIndicator.set_color(color)
 	$Knight.set_color(color)
 
