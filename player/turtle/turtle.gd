@@ -120,6 +120,12 @@ func set_direction(dir_sign):
 	$Reversable.scale.x = dir_sign * abs($Reversable.scale.x)
 	$CollisionPolygon2D.scale.x = dir_sign * abs($CollisionPolygon2D.scale.x)
 	$Hitbox.scale.x = dir_sign * abs($Hitbox.scale.x)
+	if dir_sign == 1:
+		$Reversable/RightWakeParticles.emitting = true
+		$Reversable/LeftWakeParticles.emitting = false
+	else:
+		$Reversable/RightWakeParticles.emitting = false
+		$Reversable/LeftWakeParticles.emitting = true
 	if get_tree().network_peer and is_network_master():
 		$Reversable.rset("scale", $Reversable.scale)
 		$CollisionPolygon2D.rset("scale", $CollisionPolygon2D.scale)
@@ -198,5 +204,9 @@ func hit_powerup(_powerup):
 func moved(_movement):
 	pass
 
+
+# Set turtle color
+func set_color(color):
+	$Reversable/Sprite/Modulate.modulate = color
 
 

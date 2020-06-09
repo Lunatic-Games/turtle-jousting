@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
 [ext_resource path="res://player/turtle/assets/water_particle.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://player/turtle/assets/water_animation_turtle.png" type="Texture" id=6]
 [ext_resource path="res://player/turtle/assets/water_animation_turtle2.png" type="Texture" id=7]
 [ext_resource path="res://player/animation_tree.gd" type="Script" id=8]
+[ext_resource path="res://player/turtle/assets/turtle_modulation.png" type="Texture" id=9]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.152672, 1 )
@@ -27,6 +28,16 @@ flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+scale = 0.1
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=41]
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 180.0
 scale = 0.1
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
@@ -618,11 +629,18 @@ slowed_speed = 100.0
 
 [node name="Reversable" type="Node2D" parent="."]
 
-[node name="WakeParticles" type="Particles2D" parent="Reversable"]
+[node name="RightWakeParticles" type="Particles2D" parent="Reversable"]
 lifetime = 3.0
 speed_scale = 2.0
 local_coords = false
 process_material = SubResource( 5 )
+texture = ExtResource( 2 )
+
+[node name="LeftWakeParticles" type="Particles2D" parent="Reversable"]
+lifetime = 3.0
+speed_scale = 2.0
+local_coords = false
+process_material = SubResource( 41 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Reversable"]
@@ -631,12 +649,16 @@ scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 3 )
 offset = Vector2( -50, 0 )
 
+[node name="Modulate" type="Sprite" parent="Reversable/Sprite"]
+scale = Vector2( 1, 1 )
+texture = ExtResource( 9 )
+offset = Vector2( -50, 0 )
+
 [node name="WaterAnimation" type="AnimatedSprite" parent="Reversable/Sprite"]
 modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
 position = Vector2( -104.985, -26.8765 )
 scale = Vector2( 1.07527, 1 )
 frames = SubResource( 6 )
-frame = 1
 playing = true
 
 [node name="KnightPosition" type="Position2D" parent="Reversable"]
@@ -648,7 +670,6 @@ modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 7 )
-frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
