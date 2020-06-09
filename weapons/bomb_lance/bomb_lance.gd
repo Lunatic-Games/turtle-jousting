@@ -15,10 +15,10 @@ func _hit_knight(knight):
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
 	
 	if knight.parrying:
-		_knock_off_knight(player_held_by, -large_knockback)
+		_knock_off_knight(knight_held_by, -large_knockback)
 		_damage_knight(knight, SMALL_DAMAGE, medium_knockback)
 	else:
-		_knock_off_knight(player_held_by, -medium_knockback)
+		_knock_off_knight(knight_held_by, -medium_knockback)
 		if !knight.on_turtle:
 			_damage_knight(knight, MAX_DAMAGE)
 		else:
