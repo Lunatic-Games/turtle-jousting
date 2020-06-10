@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/knights_and_c4.wav-b9cefd555e0c70588cf34c31be98daf5.sample"
+
+[deps]
+
+source_file="res://powerups/bomb_lance_pickup/audio/knights_and_c4.wav"
+dest_files=[ "res://.import/knights_and_c4.wav-b9cefd555e0c70588cf34c31be98daf5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

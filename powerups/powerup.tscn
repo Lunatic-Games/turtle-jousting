@@ -775,3 +775,5 @@ anims/open_tier1 = SubResource( 2 )
 anims/open_tier2 = SubResource( 3 )
 anims/shine = SubResource( 4 )
 anims/spawn = SubResource( 5 )
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]

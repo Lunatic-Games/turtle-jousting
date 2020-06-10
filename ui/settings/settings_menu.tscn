@@ -13,24 +13,27 @@ script = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_left = 10.0
-margin_top = -73.0
-margin_right = 177.0
-margin_bottom = 73.0
+margin_left = 53.0
+margin_top = -44.0
+margin_right = 230.0
+margin_bottom = 102.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="MusicContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 0.0
-margin_right = 196.0
 margin_bottom = 26.0
 
 [node name="Label" parent="VBoxContainer/MusicContainer" index="0"]
+margin_right = 73.0
 text = "Music"
 
+[node name="Slider" parent="VBoxContainer/MusicContainer" index="1"]
+margin_left = 77.0
+margin_right = 177.0
+
 [node name="SFXContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 196.0
 
 [node name="Label" parent="VBoxContainer/SFXContainer" index="0"]
 margin_right = 50.0
@@ -42,7 +45,7 @@ margin_right = 154.0
 
 [node name="FullscreenContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 60.0
-margin_right = 196.0
+margin_right = 177.0
 margin_bottom = 86.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -69,7 +72,7 @@ enabled_focus_mode = 0
 
 [node name="VibrationContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 90.0
-margin_right = 196.0
+margin_right = 177.0
 margin_bottom = 116.0
 
 [node name="Button" parent="VBoxContainer/VibrationContainer" instance=ExtResource( 1 )]

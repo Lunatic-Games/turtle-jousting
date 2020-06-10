@@ -60,52 +60,52 @@ _data = {
 
 [sub_resource type="Curve2D" id=11]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
 }
 
 [sub_resource type="Curve2D" id=12]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 18.2028, 29.454, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 181.556, 29.9181 )
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
 }
 
 [sub_resource type="Curve2D" id=13]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 16.4042, 30.4409, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 180.597, 29.3628 )
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
 }
 
 [sub_resource type="Curve2D" id=14]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 15.9194, 29.1827, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.739, 29.5886 )
+"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 186.036, 161.268 )
 }
 
 [sub_resource type="Curve2D" id=15]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 15.7211, 28.9399, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.676, 28.8046 )
+"points": PoolVector2Array( 0, 0, 0, 0, 10.6004, 30.3, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 185.567, 30.0582 )
 }
 
 [sub_resource type="Curve2D" id=16]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 10.8088, 29.1826, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 184.098, 29.3178 )
+"points": PoolVector2Array( 0, 0, 0, 0, 18.2028, 29.454, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 181.556, 29.9181 )
 }
 
 [sub_resource type="Curve2D" id=17]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 186.036, 161.268 )
+"points": PoolVector2Array( 0, 0, 0, 0, 16.4042, 30.4409, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 180.597, 29.3628 )
 }
 
 [sub_resource type="Curve2D" id=18]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+"points": PoolVector2Array( 0, 0, 0, 0, 15.9194, 29.1827, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.739, 29.5886 )
 }
 
 [sub_resource type="Curve2D" id=19]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+"points": PoolVector2Array( 0, 0, 0, 0, 15.7211, 28.9399, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 179.676, 28.8046 )
 }
 
 [sub_resource type="Curve2D" id=20]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 185.619, 29.2708, 0.258481, -1.92905, -0.258481, 1.92905, 185.783, 93.6717, 0, 0, 0, 0, 186.745, 117.112, 0, 0, 0, 0, 185.596, 157.118 )
+"points": PoolVector2Array( 0, 0, 0, 0, 10.8088, 29.1826, -51.203, 0, 51.203, 0, 96.0186, 50.2097, 0, 0, 0, 0, 184.098, 29.3178 )
 }
 
 [sub_resource type="RectangleShape2D" id=21]
@@ -281,184 +281,196 @@ texture = ExtResource( 3 )
 
 [node name="YSort" type="YSort" parent="."]
 
-[node name="Buoy" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 10.8641, 32 )
+[node name="TopBuoys" type="Node2D" parent="YSort"]
+position = Vector2( 512, -0.001 )
 
-[node name="Rope" parent="YSort" instance=ExtResource( 7 )]
+[node name="Rope" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( -511.922, -0.617809 )
 curve = SubResource( 1 )
 buoy1 = NodePath("../Buoy")
 buoy2 = NodePath("../Buoy2")
 
-[node name="Buoy2" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 184, 32 )
-
-[node name="Rope2" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 170.939, -0.359985 )
+[node name="Rope2" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( -340.983, -0.977795 )
 curve = SubResource( 2 )
 buoy1 = NodePath("../Buoy2")
 buoy2 = NodePath("../Buoy3")
 
-[node name="Buoy3" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 348, 32 )
-
-[node name="Rope3" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 333.108, 0.698334 )
+[node name="Rope3" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( -178.814, 0.0805244 )
 curve = SubResource( 3 )
 buoy1 = NodePath("../Buoy3")
 buoy2 = NodePath("../Buoy4")
 
-[node name="Buoy4" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 512, 32 )
-
-[node name="Rope4" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 496.661, 0.939705 )
+[node name="Rope4" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( -15.2614, 0.321896 )
 curve = SubResource( 4 )
 buoy1 = NodePath("../Buoy4")
 buoy2 = NodePath("../Buoy5")
 
-[node name="Buoy5" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 676, 32 )
-
-[node name="Rope5" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 661.192, 0.939705 )
+[node name="Rope5" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( 149.27, 0.321896 )
 curve = SubResource( 5 )
 buoy1 = NodePath("../Buoy5")
 buoy2 = NodePath("../Buoy6")
 
-[node name="Buoy6" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 840, 32 )
-
-[node name="Rope6" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.61, 0.939705 )
+[node name="Rope6" parent="YSort/TopBuoys" instance=ExtResource( 7 )]
+position = Vector2( 318.688, 0.321896 )
 curve = SubResource( 6 )
 buoy1 = NodePath("../Buoy6")
 buoy2 = NodePath("../Buoy7")
 
-[node name="Buoy7" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 1014.83, 32 )
+[node name="Buoy" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( -501.058, 31.3822 )
 
-[node name="Rope7" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.61, 0.939705 )
+[node name="Buoy2" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( -327.922, 31.3822 )
+
+[node name="Buoy3" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( -163.922, 31.3822 )
+
+[node name="Buoy4" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( 0.0776062, 31.3822 )
+
+[node name="Buoy5" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( 164.078, 31.3822 )
+
+[node name="Buoy6" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( 328.078, 31.3822 )
+
+[node name="Buoy7" parent="YSort/TopBuoys" instance=ExtResource( 6 )]
+position = Vector2( 502.908, 31.3822 )
+
+[node name="RightBuoys" type="Node2D" parent="YSort"]
+position = Vector2( 1024, 0 )
+
+[node name="Rope7" parent="YSort/RightBuoys" instance=ExtResource( 7 )]
+position = Vector2( -193.645, 0.532715 )
 curve = SubResource( 7 )
-buoy1 = NodePath("../Buoy7")
+buoy1 = NodePath("../../TopBuoys/Buoy7")
 buoy2 = NodePath("../Buoy8")
 
-[node name="Buoy8" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 1014.83, 159 )
+[node name="Buoy8" parent="YSort/RightBuoys" instance=ExtResource( 6 )]
+position = Vector2( -9.42529, 158.593 )
 
-[node name="Rope8" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.471, 129.092 )
+[node name="Rope8" parent="YSort/RightBuoys" instance=ExtResource( 7 )]
+position = Vector2( -193.784, 128.685 )
 curve = SubResource( 8 )
 buoy1 = NodePath("../Buoy8")
 buoy2 = NodePath("../Buoy9")
 
-[node name="Buoy9" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 1014.83, 286 )
+[node name="Buoy9" parent="YSort/RightBuoys" instance=ExtResource( 6 )]
+position = Vector2( -9.42529, 285.593 )
 
-[node name="Rope9" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.43, 257.032 )
+[node name="Rope9" parent="YSort/RightBuoys" instance=ExtResource( 7 )]
+position = Vector2( -193.825, 256.625 )
 curve = SubResource( 9 )
 buoy1 = NodePath("../Buoy9")
 buoy2 = NodePath("../Buoy10")
 
-[node name="Buoy10" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 1014.83, 413 )
+[node name="Buoy10" parent="YSort/RightBuoys" instance=ExtResource( 6 )]
+position = Vector2( -9.42529, 412.593 )
 
-[node name="Rope10" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.417, 384.886 )
+[node name="Rope10" parent="YSort/RightBuoys" instance=ExtResource( 7 )]
+position = Vector2( -193.838, 384.479 )
 curve = SubResource( 10 )
 buoy1 = NodePath("../Buoy10")
 buoy2 = NodePath("../Buoy11")
 
-[node name="Buoy11" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 1014.83, 546.257 )
+[node name="Buoy11" parent="YSort/RightBuoys" instance=ExtResource( 6 )]
+position = Vector2( -9.42529, 545.85 )
 
-[node name="Rope11" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 830.735, 515.409 )
+[node name="LeftBuoys" type="Node2D" parent="YSort"]
+
+[node name="Rope20" parent="YSort/LeftBuoys" instance=ExtResource( 7 )]
+position = Vector2( -173.387, 2.60485 )
 curve = SubResource( 11 )
-buoy1 = NodePath("../Buoy12")
-buoy2 = NodePath("../Buoy11")
+buoy1 = NodePath("../Buoy20")
+buoy2 = NodePath("../../TopBuoys/Buoy")
 
-[node name="Buoy12" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 840, 546.257 )
+[node name="Buoy20" parent="YSort/LeftBuoys" instance=ExtResource( 6 )]
+position = Vector2( 10.8641, 159 )
 
-[node name="Rope12" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 659.411, 515.911 )
-curve = SubResource( 12 )
-buoy1 = NodePath("../Buoy13")
-buoy2 = NodePath("../Buoy12")
-
-[node name="Buoy13" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 676, 546.257 )
-
-[node name="Rope13" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 497.016, 515.553 )
-curve = SubResource( 13 )
-buoy1 = NodePath("../Buoy14")
-buoy2 = NodePath("../Buoy13")
-
-[node name="Buoy14" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 512, 546.257 )
-
-[node name="Rope14" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 333.547, 516.27 )
-curve = SubResource( 14 )
-buoy1 = NodePath("../Buoy15")
-buoy2 = NodePath("../Buoy14")
-
-[node name="Buoy15" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 348, 546.257 )
-
-[node name="Rope15" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 169.79, 516.783 )
-curve = SubResource( 15 )
-buoy1 = NodePath("../Buoy16")
-buoy2 = NodePath("../Buoy15")
-
-[node name="Buoy16" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 184, 546.257 )
-
-[node name="Rope16" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 1.41342, 516.27 )
-curve = SubResource( 16 )
-buoy1 = NodePath("../Buoy17")
-buoy2 = NodePath("../Buoy16")
-
-[node name="Buoy17" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 10.8641, 546.257 )
-
-[node name="Rope17" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( -173.678, 383.644 )
-curve = SubResource( 17 )
-buoy1 = NodePath("../Buoy17")
-buoy2 = NodePath("../Buoy18")
-
-[node name="Buoy18" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 10.8641, 413 )
-
-[node name="Rope18" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( -173.595, 255.966 )
-curve = SubResource( 18 )
-buoy1 = NodePath("../Buoy18")
-buoy2 = NodePath("../Buoy19")
-
-[node name="Buoy19" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 10.8641, 286 )
-
-[node name="Rope19" parent="YSort" instance=ExtResource( 7 )]
+[node name="Rope19" parent="YSort/LeftBuoys" instance=ExtResource( 7 )]
 position = Vector2( -173.465, 130.471 )
-curve = SubResource( 19 )
+curve = SubResource( 12 )
 buoy1 = NodePath("../Buoy19")
 buoy2 = NodePath("../Buoy20")
 
-[node name="Buoy20" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 10.8641, 159 )
+[node name="Buoy19" parent="YSort/LeftBuoys" instance=ExtResource( 6 )]
+position = Vector2( 10.8641, 286 )
 
-[node name="Rope20" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( -173.387, 2.60485 )
+[node name="Rope18" parent="YSort/LeftBuoys" instance=ExtResource( 7 )]
+position = Vector2( -173.595, 255.966 )
+curve = SubResource( 13 )
+buoy1 = NodePath("../Buoy18")
+buoy2 = NodePath("../Buoy19")
+
+[node name="Buoy18" parent="YSort/LeftBuoys" instance=ExtResource( 6 )]
+position = Vector2( 10.8641, 413 )
+
+[node name="Rope17" parent="YSort/LeftBuoys" instance=ExtResource( 7 )]
+position = Vector2( -173.678, 383.644 )
+curve = SubResource( 14 )
+buoy1 = NodePath("../../BottomBuoys/Buoy17")
+buoy2 = NodePath("../Buoy18")
+
+[node name="BottomBuoys" type="Node2D" parent="YSort"]
+position = Vector2( 512, 576 )
+
+[node name="Rope11" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( 318.939, -61.081 )
+curve = SubResource( 15 )
+buoy1 = NodePath("../Buoy12")
+buoy2 = NodePath("../../RightBuoys/Buoy11")
+
+[node name="Rope12" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( 147.615, -60.579 )
+curve = SubResource( 16 )
+buoy1 = NodePath("../Buoy13")
+buoy2 = NodePath("../Buoy12")
+
+[node name="Rope13" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( -14.78, -60.937 )
+curve = SubResource( 17 )
+buoy1 = NodePath("../Buoy14")
+buoy2 = NodePath("../Buoy13")
+
+[node name="Rope14" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( -178.249, -60.22 )
+curve = SubResource( 18 )
+buoy1 = NodePath("../Buoy15")
+buoy2 = NodePath("../Buoy14")
+
+[node name="Rope15" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( -342.006, -59.707 )
+curve = SubResource( 19 )
+buoy1 = NodePath("../Buoy16")
+buoy2 = NodePath("../Buoy15")
+
+[node name="Rope16" parent="YSort/BottomBuoys" instance=ExtResource( 7 )]
+position = Vector2( -510.383, -60.22 )
 curve = SubResource( 20 )
-buoy1 = NodePath("../Buoy20")
-buoy2 = NodePath("../Buoy")
+buoy1 = NodePath("../Buoy17")
+buoy2 = NodePath("../Buoy16")
+
+[node name="Buoy12" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( 328.204, -30.233 )
+
+[node name="Buoy13" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( 164.204, -30.233 )
+
+[node name="Buoy14" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( 0.204041, -30.233 )
+
+[node name="Buoy15" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( -163.796, -30.233 )
+
+[node name="Buoy16" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( -327.796, -30.233 )
+
+[node name="Buoy17" parent="YSort/BottomBuoys" instance=ExtResource( 6 )]
+position = Vector2( -500.932, -30.233 )
 
 [node name="SpawnPositions" type="Node2D" parent="."]
 visible = false
@@ -531,6 +543,7 @@ position = Vector2( 506.604, 467.833 )
 position = Vector2( 873.633, 469.126 )
 
 [node name="Walls" type="Node2D" parent="."]
+visible = false
 
 [node name="NorthWall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 0 )

@@ -1,17 +1,24 @@
 extends Control
 
 
+const NAMES = ["Joe Zlonicky", "Matthias Harden", "Noah Jacobsen",
+	"Davis Carlson"]
 var showing_credits = false
 
 
 # Begin visor animation
 func _ready():
 	$VisorTransition.lift_up()
+	var name_i = 0
+	for knight in get_tree().get_nodes_in_group("knight"):
+		knight.get_node("Name").text = NAMES[name_i]
+		name_i += 1
 
 
 # Check for cancel while showing credits
 func _input(event):
 	if event.is_action("ui_cancel") and event.pressed and showing_credits:
+		set_player_name_visibility(false)
 		$Title.visible = true
 		$ButtonContainer.visible = true
 		$ButtonContainer/CreditsButton.grab_focus()
@@ -38,6 +45,7 @@ func _on_SettingsButton_pressed():
 
 # Hide UI to show credits
 func _on_CreditsButton_pressed():
+	set_player_name_visibility(true)
 	$Title.visible = false
 	$ButtonContainer.visible = false
 	showing_credits = true
@@ -63,3 +71,10 @@ func _on_VisorTransition_lifted_up():
 # Change scene to lobby
 func _go_to_lobby():
 	var _err = get_tree().change_scene("res://ui/lobby/lobby_menu.tscn")
+
+
+# Set whether to show player names and hide health bars
+func set_player_name_visibility(visibility):
+	for knight in get_tree().get_nodes_in_group("knight"):
+		knight.get_node("HealthBar").visible = !visibility
+		knight.get_node("Name").visible = visibility

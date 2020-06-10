@@ -5,6 +5,7 @@ signal picked_up
 
 export (PackedScene) var status
 export (PackedScene) var weapon
+export (Array, Resource) var audio_on_pickup
 
 
 # Players will call this when they pick it up

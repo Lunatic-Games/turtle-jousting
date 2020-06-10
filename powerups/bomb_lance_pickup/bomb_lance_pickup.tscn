@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://powerups/bomb_lance_pickup/bomblance_icon.png" type="Texture" id=1]
+[ext_resource path="res://powerups/bomb_lance_pickup/assets/bomblance_icon.png" type="Texture" id=1]
 [ext_resource path="res://powerups/powerup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://weapons/bomb_lance/bomb_lance.tscn" type="PackedScene" id=4]
+
 
 [node name="BombLancePickup" instance=ExtResource( 2 )]
 weapon = ExtResource( 4 )

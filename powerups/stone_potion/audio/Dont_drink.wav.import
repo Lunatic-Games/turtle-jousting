@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Dont_drink.wav-692c9b6ac5e6e68dabfc82a60ff61390.sample"
+
+[deps]
+
+source_file="res://powerups/stone_potion/audio/Dont_drink.wav"
+dest_files=[ "res://.import/Dont_drink.wav-692c9b6ac5e6e68dabfc82a60ff61390.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
