@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/start_beep_3.wav-7d399d67b9653fe7a3978bd5eb7a3281.sample"
+
+[deps]
+
+source_file="res://arena/audio/start_beep_3.wav"
+dest_files=[ "res://.import/start_beep_3.wav-7d399d67b9653fe7a3978bd5eb7a3281.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

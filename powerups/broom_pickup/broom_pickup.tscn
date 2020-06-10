@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://powerups/powerup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://powerups/broom_pickup/assets/broom_icon.png" type="Texture" id=2]
 [ext_resource path="res://weapons/broom/broom.tscn" type="PackedScene" id=3]
+[ext_resource path="res://powerups/broom_pickup/audio/Good_idea.wav" type="AudioStream" id=4]
+[ext_resource path="res://powerups/broom_pickup/audio/Dont_understand.wav" type="AudioStream" id=5]
+[ext_resource path="res://powerups/broom_pickup/audio/Swept_away.wav" type="AudioStream" id=6]
+
 
 
 [node name="BroomPickup" instance=ExtResource( 1 )]
 weapon = ExtResource( 3 )
+audio_on_pickup = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ) ]
 
 [node name="Sprite" parent="." index="2"]
 visible = false

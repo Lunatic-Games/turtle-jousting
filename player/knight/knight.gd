@@ -31,6 +31,7 @@ func _ready():
 
 # Fly self through air if flying
 func _physics_process(delta):
+	$HealthBar.global_position.x = $Reversable/HealthBarPosition.global_position.x
 	if _is_flying():
 		var dist_ratio = flying_dist_travelled / MAX_FLY_DISTANCE
 		var vel = flying_velocity.interpolate(dist_ratio)
