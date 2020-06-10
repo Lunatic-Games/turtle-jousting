@@ -87,6 +87,7 @@ func all_players_added():
 func start():
 	set_player_process_input(true)
 	set_process(true)
+	$GameMusic.play()
 	$GameTimer.start()
 	$PowerupSpawnTimer.start()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://arena/arena.gd" type="Script" id=2]
@@ -7,6 +7,11 @@
 [ext_resource path="res://ui/pause/pause_menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://arena/buoy/buoy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://arena/rope.tscn" type="PackedScene" id=7]
+[ext_resource path="res://music/in_game.wav" type="AudioStream" id=8]
+[ext_resource path="res://arena/audio/start_beep_1.wav" type="AudioStream" id=9]
+[ext_resource path="res://arena/audio/start_beep_3.wav" type="AudioStream" id=10]
+[ext_resource path="res://arena/audio/start_beep_2.wav" type="AudioStream" id=11]
+[ext_resource path="res://arena/audio/start_beep_go.wav" type="AudioStream" id=12]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -215,6 +220,42 @@ tracks/5/keys = {
 "args": [  ],
 "method": "start"
 } ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("GameTimerLabel:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("CountdownBeep:stream")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.6, 1.6, 2.6, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 12 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("CountdownBeep:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.7, 1.7, 2.7, 3.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, true, true ]
 }
 
 [sub_resource type="Animation" id=31]
@@ -598,13 +639,12 @@ shape = SubResource( 25 )
 shape = SubResource( 26 )
 
 [node name="GameTimerLabel" type="Label" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 452.0
-margin_top = 10.0
+margin_top = -30.0
 margin_right = 572.0
-margin_bottom = 28.0
+margin_bottom = -12.0
 custom_fonts/font = SubResource( 27 )
 text = "120"
 align = 1
@@ -619,10 +659,10 @@ margin_top = 224.0
 margin_right = 640.0
 margin_bottom = 352.0
 rect_min_size = Vector2( 256, 128 )
-rect_scale = Vector2( 1.66667, 2.33333 )
+rect_scale = Vector2( 1, 1 )
 rect_pivot_offset = Vector2( 128, 64 )
 custom_fonts/font = SubResource( 28 )
-text = "2"
+text = "FIGHT"
 align = 1
 valign = 1
 __meta__ = {
@@ -663,7 +703,6 @@ margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )
 
 [node name="VisorTransition" parent="." instance=ExtResource( 4 )]
-visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 rect_min_size = Vector2( 1024, 576 )
@@ -671,6 +710,12 @@ rect_min_size = Vector2( 1024, 576 )
 [node name="PowerupSpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="CountdownBeep" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="begin_return_to_lobby"]
 [connection signal="return_to_main_menu" from="PausedMenu" to="." method="_on_PausedMenu_return_to_main_menu"]
