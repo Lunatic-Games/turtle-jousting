@@ -96,6 +96,8 @@ func load_player(number, player_data={}):
 func reset():
 	if focused_button:
 		unhover_button(focused_button)
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		slot.color_freed(COLORS[color_i][0])
 	color_i = 0
 	$Background/ColorName.text = COLORS[color_i][0]
 	$Cover/ClosedButton.visible = false
@@ -175,6 +177,12 @@ remote func color_taken(color):
 	if ready and COLORS[color_i][0] == color:
 		unready()
 	if COLORS[color_i][0] == color:
+		update_color(color_i)
+
+
+func update_taken_colors(colors):
+	taken_colors = colors
+	if colors.has(COLORS[color_i][0]):
 		update_color(color_i)
 
 
@@ -258,10 +266,6 @@ func _on_ClosedButton_pressed():
 
 func _on_RemoveButton_pressed():
 	emit_signal("removed", self)
-	for slot in get_tree().get_nodes_in_group("player_slot"):
-		slot.color_freed(COLORS[color_i][0])
-		if get_tree().network_peer and is_network_master():
-			slot.rpc("color_freed", COLORS[color_i][0])
 	reset()
 	if get_tree().network_peer and is_network_master():
 		rpc("reset")
