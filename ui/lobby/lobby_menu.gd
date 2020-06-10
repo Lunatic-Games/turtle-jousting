@@ -209,7 +209,7 @@ func _new_connection(id):
 func _disconnection(id):
 	if !connections.has(id):
 		return
-	for player in connections[id].keys():
+	for player in connections[id]:
 		get_player_slot(player).reset()
 	connections.erase(id)
 
@@ -447,10 +447,11 @@ func _on_ConnectionTimer_timeout():
 
 
 func _on_VisorTransition_lifted_up():
-	if button_container.get_node("OpenMultiplayerButton").visible:
-		button_container.get_node("OpenMultiplayerButton").grab_focus()
-	else:
-		button_container.get_node("CloseMultiplayerButton").grab_focus()
+	for element in button_container.get_children():
+		if element.visible:
+			element.grab_focus()
+			return
+	print("Unable to find topmost button")
 
 
 func _on_Popup_about_to_show():

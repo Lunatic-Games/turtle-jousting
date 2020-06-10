@@ -253,7 +253,7 @@ func _on_RemoveButton_pressed():
 	emit_signal("removed", self)
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		slot.color_freed(COLORS[color_i][0])
-		if get_tree().network_peer:
+		if get_tree().network_peer and is_network_master():
 			slot.rpc("color_freed", COLORS[color_i][0])
 	reset()
 	if get_tree().network_peer and is_network_master():
