@@ -4,7 +4,7 @@ extends Control
 const arena_scene = preload("res://arena/arena.tscn")
 
 onready var player_container = get_node("LobbySections/GameContainer/" +  
-	"VBoxContainer/PlayerContainer")
+	"PlayerContainer")
 onready var button_container = get_node("LobbySections/GameContainer/" +
 	"VBoxContainer")
 onready var online_container = get_node("ConnectionSection/VBoxContainer/" + 
@@ -472,3 +472,7 @@ func _on_PlayerSlot_removed(slot):
 		connections[get_tree().get_network_unique_id()] = local_players.keys()
 	else:
 		connections[1] = local_players.keys()
+
+
+func _on_VideoPlayer_finished():
+	$LobbySections/VideoContainer/VideoPlayer.play()

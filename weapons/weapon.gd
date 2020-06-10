@@ -23,7 +23,7 @@ func pick_up(player):
 	if player.has_node("Knight"):
 		knight_held_by = player.get_node("Knight")
 	visible = true
-	$CollisionShape2D.disabled = true
+	#$CollisionShape2D.set_deferred("disabled", true)
 
 
 # Remove all areas hit, useful for when starting a new attack

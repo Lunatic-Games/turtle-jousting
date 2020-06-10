@@ -7,10 +7,16 @@ const MAX_DAMAGE = 100
 const LARGE_DAMAGE = 60
 const SMALL_DAMAGE = 15
 
+var angle = 0
+
 
 func _hit_knight(knight):
 	._hit_knight(knight)
-	var forwards = knight.global_position - knight_held_by.global_position
+	if (overlaps_area(knight.weapon_handle.weapon) 
+			and knight.weapon_handle.weapon.can_joust):
+		print("Hit knight at same time weapons hit")
+		return
+	var forwards = Vector2(cos(angle), sin(angle))
 	var medium_knockback = forwards.normalized() * MEDIUM_KNOCKBACK
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
 	
@@ -29,7 +35,7 @@ func _hit_knight(knight):
 
 func _hit_weapon(weapon):
 	._hit_weapon(weapon)
-	var forwards = weapon.knight_held_by.global_position - knight_held_by.global_position
+	var forwards = Vector2(cos(angle), sin(angle))
 	var medium_knockback = forwards.normalized() * MEDIUM_KNOCKBACK
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
 	

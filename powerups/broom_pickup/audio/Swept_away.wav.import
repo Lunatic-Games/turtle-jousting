@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Swept_away.wav-4bde245bd42b94e00efc9e69b7532fe3.sample"
+
+[deps]
+
+source_file="res://powerups/broom_pickup/audio/Swept_away.wav"
+dest_files=[ "res://.import/Swept_away.wav-4bde245bd42b94e00efc9e69b7532fe3.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

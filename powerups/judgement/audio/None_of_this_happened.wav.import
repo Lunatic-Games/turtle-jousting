@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/None_of_this_happened.wav-1600cdf4562bb22c457e1dcd3f1036a7.sample"
+
+[deps]
+
+source_file="res://powerups/judgement/audio/None_of_this_happened.wav"
+dest_files=[ "res://.import/None_of_this_happened.wav-1600cdf4562bb22c457e1dcd3f1036a7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Wrath.wav-dda4aad201f9241f2c7a74c940276e40.sample"
+
+[deps]
+
+source_file="res://powerups/lightning_rod/audio/Wrath.wav"
+dest_files=[ "res://.import/Wrath.wav-dda4aad201f9241f2c7a74c940276e40.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

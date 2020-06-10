@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://ui/lobby/lobby_menu.gd" type="Script" id=1]
 [ext_resource path="res://ui/lobby/network_message_popup.tscn" type="PackedScene" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/visor_transition.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/lobby/assets/top_scaled.png" type="Texture" id=8]
+[ext_resource path="res://ui/lobby/assets/left_scaled_cropped.png" type="Texture" id=9]
+[ext_resource path="res://ui/lobby/assets/tv_scaled_cropped.png" type="Texture" id=10]
+[ext_resource path="res://video/rick.ogv" type="VideoStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -60,12 +64,6 @@ font_data = ExtResource( 5 )
 size = 24
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=14]
-size = 20
-extra_spacing_top = 2
-extra_spacing_bottom = 7
-font_data = ExtResource( 5 )
-
 [node name="Lobby" type="Control"]
 pause_mode = 1
 anchor_right = 1.0
@@ -75,37 +73,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="ConnectionSection" type="TextureRect" parent="."]
 anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.129412, 0.223529, 0.270588, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ConnectionSection" type="ColorRect" parent="."]
-anchor_right = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = 88.0
+margin_bottom = 576.0
 rect_min_size = Vector2( 0, 64 )
-color = Color( 0.180392, 0.266667, 0.309804, 1 )
+texture = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ConnectionSection"]
-margin_left = 10.0
-margin_top = 5.0
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 83.1025
+margin_top = 13.2964
+margin_right = 83.1025
+margin_bottom = -494.704
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="OnlineContainer" type="HBoxContainer" parent="ConnectionSection/VBoxContainer"]
-margin_right = 385.0
+margin_right = 1024.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 __meta__ = {
@@ -180,7 +169,7 @@ text = "SpecialCode"
 
 [node name="LocalContainer" type="HBoxContainer" parent="ConnectionSection/VBoxContainer"]
 margin_top = 36.0
-margin_right = 385.0
+margin_right = 1024.0
 margin_bottom = 68.0
 rect_min_size = Vector2( 0, 32 )
 __meta__ = {
@@ -254,48 +243,59 @@ text = "Local IP"
 [node name="LobbySections" type="HBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 92.0
+margin_top = 84.0
+margin_bottom = 11.0
+custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameContainer" type="MarginContainer" parent="LobbySections"]
-margin_right = 510.0
-margin_bottom = 484.0
+[node name="GameContainer" type="TextureRect" parent="LobbySections"]
+margin_right = 509.0
+margin_bottom = 503.0
 size_flags_horizontal = 3
-custom_constants/margin_right = 10
-custom_constants/margin_left = 10
+texture = ExtResource( 9 )
+
+[node name="PlayerContainer" type="GridContainer" parent="LobbySections/GameContainer"]
+show_behind_parent = true
+margin_left = 11.9225
+margin_top = 7.77835
+margin_right = 501.922
+margin_bottom = 311.778
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerSlot1" parent="LobbySections/GameContainer/PlayerContainer" instance=ExtResource( 4 )]
+margin_right = 243.0
+margin_bottom = 150.0
+
+[node name="PlayerSlot2" parent="LobbySections/GameContainer/PlayerContainer" instance=ExtResource( 4 )]
+margin_left = 247.0
+margin_right = 490.0
+margin_bottom = 150.0
+
+[node name="PlayerSlot3" parent="LobbySections/GameContainer/PlayerContainer" instance=ExtResource( 4 )]
+margin_top = 154.0
+margin_right = 243.0
+margin_bottom = 304.0
+
+[node name="PlayerSlot4" parent="LobbySections/GameContainer/PlayerContainer" instance=ExtResource( 4 )]
+margin_left = 247.0
+margin_top = 154.0
+margin_right = 490.0
+margin_bottom = 304.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LobbySections/GameContainer"]
-margin_left = 10.0
-margin_right = 500.0
-margin_bottom = 484.0
+margin_left = 62.6032
+margin_top = 331.198
+margin_right = 499.603
+margin_bottom = 486.198
 custom_constants/separation = 10
-
-[node name="PlayerContainer" type="GridContainer" parent="LobbySections/GameContainer/VBoxContainer"]
-margin_right = 490.0
-margin_bottom = 304.0
-columns = 2
-
-[node name="PlayerSlot1" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 4 )]
-margin_right = 243.0
-margin_bottom = 150.0
-
-[node name="PlayerSlot2" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 4 )]
-margin_left = 247.0
-margin_right = 490.0
-margin_bottom = 150.0
-
-[node name="PlayerSlot3" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 4 )]
-margin_top = 154.0
-margin_right = 243.0
-margin_bottom = 304.0
-
-[node name="PlayerSlot4" parent="LobbySections/GameContainer/VBoxContainer/PlayerContainer" instance=ExtResource( 4 )]
-margin_left = 247.0
-margin_top = 154.0
-margin_right = 490.0
-margin_bottom = 304.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="OpenMultiplayerButton" parent="LobbySections/GameContainer/VBoxContainer" groups=[
 "host_ui",
@@ -305,9 +305,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 314.0
+margin_top = 0.0
 margin_right = 242.0
-margin_bottom = 340.0
+margin_bottom = 26.0
 text = "Open to multiplayer"
 
 [node name="CloseMultiplayerButton" parent="LobbySections/GameContainer/VBoxContainer" groups=[
@@ -346,9 +346,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 350.0
+margin_top = 36.0
 margin_right = 68.0
-margin_bottom = 376.0
+margin_bottom = 62.0
 text = "Start"
 
 [node name="BackButton" parent="LobbySections/GameContainer/VBoxContainer" instance=ExtResource( 6 )]
@@ -357,64 +357,40 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 386.0
+margin_top = 72.0
 margin_right = 255.0
-margin_bottom = 412.0
+margin_bottom = 98.0
 text = "Return to main menu"
 
-[node name="TutorialContainer" type="MarginContainer" parent="LobbySections"]
-margin_left = 514.0
+[node name="VideoContainer" type="TextureRect" parent="LobbySections"]
+margin_left = 509.0
 margin_right = 1024.0
-margin_bottom = 484.0
-size_flags_horizontal = 3
-custom_constants/margin_right = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
-
-[node name="Rect" type="ColorRect" parent="LobbySections/TutorialContainer"]
-margin_left = 10.0
-margin_right = 500.0
-margin_bottom = 474.0
+margin_bottom = 503.0
 rect_min_size = Vector2( 100, 100 )
-color = Color( 0.180392, 0.266667, 0.309804, 1 )
+texture = ExtResource( 10 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LobbySections/TutorialContainer/Rect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Title" type="Label" parent="LobbySections/VideoContainer"]
 margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-custom_constants/separation = 10
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Title" type="Label" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
-margin_right = 470.0
-margin_bottom = 22.0
+margin_top = 20.5886
+margin_right = 505.0
+margin_bottom = 42.5886
 rect_min_size = Vector2( 0, 22 )
 size_flags_vertical = 1
 custom_fonts/font = SubResource( 13 )
 text = "How to play the game"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Video" type="ColorRect" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
-margin_top = 32.0
-margin_right = 470.0
-margin_bottom = 332.0
-rect_min_size = Vector2( 0, 300 )
-color = Color( 0.054902, 0.054902, 0.054902, 1 )
-
-[node name="Description" type="Label" parent="LobbySections/TutorialContainer/Rect/VBoxContainer"]
-margin_top = 342.0
-margin_right = 470.0
-margin_bottom = 454.0
-size_flags_vertical = 3
-custom_fonts/font = SubResource( 14 )
-text = "Press A to charge joust
-Press B to dodge
-Press X to parry"
+[node name="VideoPlayer" type="VideoPlayer" parent="LobbySections/VideoContainer"]
+margin_left = 31.0
+margin_top = 58.0
+margin_right = 492.0
+margin_bottom = 347.0
+rect_min_size = Vector2( 200, 200 )
+stream = ExtResource( 11 )
+autoplay = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -432,15 +408,16 @@ one_shot = true
 [node name="VisorTransition" parent="." instance=ExtResource( 7 )]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
-[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]
-[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot2" to="." method="_on_PlayerSlot_removed"]
-[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot3" to="." method="_on_PlayerSlot_removed"]
-[connection signal="removed" from="LobbySections/GameContainer/VBoxContainer/PlayerContainer/PlayerSlot4" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot2" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot3" to="." method="_on_PlayerSlot_removed"]
+[connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot4" to="." method="_on_PlayerSlot_removed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/OpenMultiplayerButton" to="." method="_on_OpenMultiplayerButton_pressed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/CloseMultiplayerButton" to="." method="_close_server"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/LeaveLobbyButton" to="." method="_disconnect"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="LobbySections/GameContainer/VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="finished" from="LobbySections/VideoContainer/VideoPlayer" to="." method="_on_VideoPlayer_finished"]
 [connection signal="about_to_show" from="NetworkMessagePopup" to="." method="_on_Popup_about_to_show"]
 [connection signal="popup_hide" from="NetworkMessagePopup" to="." method="_on_Popup_hide"]
 [connection signal="timeout" from="ConnectionTimer" to="." method="_on_ConnectionTimer_timeout"]

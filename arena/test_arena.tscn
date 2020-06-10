@@ -1,27 +1,61 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://arena/test_arena.gd" type="Script" id=2]
-[ext_resource path="res://powerups/broom_pickup/broom_pickup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn" type="PackedScene" id=3]
 [ext_resource path="res://powerups/mead/mead.tscn" type="PackedScene" id=4]
 [ext_resource path="res://powerups/stone_potion/stone_potion.tscn" type="PackedScene" id=5]
+[ext_resource path="res://player/knight/knight.tscn" type="PackedScene" id=6]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=3]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 335.945, 294.173 )
-locked_speed = 0.0
+locked = true
+slowed = true
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 703.077, 287.125 )
-locked_speed = 0.0
+position = Vector2( 600, 293.119 )
+locked = true
+slowed = true
 
-[node name="StonePotion" parent="." instance=ExtResource( 5 )]
-position = Vector2( 165.507, 85.8444 )
+[node name="BombLancePickup" parent="." instance=ExtResource( 3 )]
+position = Vector2( 495.382, 101.946 )
 
 [node name="Mead" parent="." instance=ExtResource( 4 )]
-position = Vector2( 506.703, 101.519 )
+position = Vector2( 721.483, 86.8723 )
 
-[node name="BroomPickup" parent="." instance=ExtResource( 3 )]
-position = Vector2( 786.11, 96.3925 )
+[node name="StonePotion" parent="." instance=ExtResource( 5 )]
+position = Vector2( 303.95, 71.7989 )
+
+[node name="Knight" parent="." instance=ExtResource( 6 )]
+position = Vector2( 444.589, 499.936 )
+
+[node name="AnimationTree" parent="Knight" index="3"]
+parameters/playback = SubResource( 1 )
+parameters/controlling/playback = SubResource( 2 )
+parameters/controlling/jousting/playback = SubResource( 3 )
+parameters/controlling/throwing/playback = SubResource( 4 )
+parameters/controlling/waiting/playback = SubResource( 5 )
+parameters/flying_off/playback = SubResource( 6 )
+
+[node name="Knight2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 514.725, 487.052 )
+scale = Vector2( -1, 1 )
+
+[editable path="Knight"]
+
+[editable path="Knight/Reversable/Sprite/BackArm/WeaponHandle/Lance"]

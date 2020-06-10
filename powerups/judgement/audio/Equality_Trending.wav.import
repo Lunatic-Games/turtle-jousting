@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Equality_Trending.wav-6f43116d76e981195f611933ec521fa6.sample"
+
+[deps]
+
+source_file="res://powerups/judgement/audio/Equality_Trending.wav"
+dest_files=[ "res://.import/Equality_Trending.wav-6f43116d76e981195f611933ec521fa6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=2]
+[gd_scene load_steps=136 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/parts/knight_leg_BU.png" type="Texture" id=2]
@@ -44,6 +44,7 @@
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F5.png" type="Texture" id=42]
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F6.png" type="Texture" id=43]
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F11.png" type="Texture" id=44]
+[ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=45]
 
 [sub_resource type="Curve" id=1]
 max_value = 400.0
@@ -5156,19 +5157,20 @@ tracks/41/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/42/type = "method"
-tracks/42/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle")
+tracks/42/type = "value"
+tracks/42/path = NodePath(".:on_turtle")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/imported = false
 tracks/42/enabled = true
 tracks/42/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 tracks/43/type = "value"
-tracks/43/path = NodePath(".:on_turtle")
+tracks/43/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
 tracks/43/interp = 1
 tracks/43/loop_wrap = true
 tracks/43/imported = false
@@ -5176,11 +5178,11 @@ tracks/43/enabled = true
 tracks/43/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
 }
 tracks/44/type = "value"
-tracks/44/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
+tracks/44/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
 tracks/44/interp = 1
 tracks/44/loop_wrap = true
 tracks/44/imported = false
@@ -5192,7 +5194,7 @@ tracks/44/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/45/type = "value"
-tracks/45/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
+tracks/45/path = NodePath("Reversable:modulate")
 tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/imported = false
@@ -5201,10 +5203,10 @@ tracks/45/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/46/type = "value"
-tracks/46/path = NodePath("Reversable:modulate")
+tracks/46/path = NodePath("Reversable/AnimatedSprite:visible")
 tracks/46/interp = 1
 tracks/46/loop_wrap = true
 tracks/46/imported = false
@@ -5212,8 +5214,8 @@ tracks/46/enabled = true
 tracks/46/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -10772,6 +10774,10 @@ graph_offset = Vector2( -246.339, 36 )
 [sub_resource type="CircleShape2D" id=89]
 radius = 18.4809
 
+[sub_resource type="DynamicFont" id=90]
+size = 22
+font_data = ExtResource( 45 )
+
 [node name="Knight" type="Area2D" groups=[
 "knight",
 ]]
@@ -10817,8 +10823,6 @@ texture = ExtResource( 8 )
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( 120.386, -16.4761 )
-rotation = -0.399244
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -10867,7 +10871,6 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Reversable"]
@@ -10879,8 +10882,7 @@ frame = 15
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PoolVector2Array( -14.4761, -38.6142, -4.7905, -45.7816, 10.1253, -30.2846, 5.08884, -18.8556, 14.5807, -0.452881, 11.1052, 9.49542, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -11.7641, -1.034, -8.08362, -21.5675 )
+polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 4 )
@@ -10926,4 +10928,18 @@ shape = SubResource( 89 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 28 )]
 position = Vector2( -5.28125, -64.6997 )
+
+[node name="Name" type="Label" parent="."]
+visible = false
+margin_left = -104.348
+margin_top = -74.3984
+margin_right = 95.6516
+margin_bottom = -60.3984
+rect_min_size = Vector2( 200, 0 )
+custom_fonts/font = SubResource( 90 )
+text = "Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="area_entered" from="FlyingHitbox" to="." method="_on_FlyingHitbox_area_entered"]
