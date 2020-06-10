@@ -11077,6 +11077,7 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Reversable"]
