@@ -130,7 +130,7 @@ func _on_ReadyButton_pressed():
 	time_readied = OS.get_ticks_msec()
 	player_ready()
 
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("player_ready")
 			
 
@@ -143,7 +143,7 @@ remote func player_ready():
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
 			slot.color_taken(COLORS[color_i][0])
-		if get_tree().network_peer:
+		if get_tree().network_peer and is_network_master():
 			slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
@@ -256,6 +256,8 @@ func _on_RemoveButton_pressed():
 		if get_tree().network_peer:
 			slot.rpc("color_freed", COLORS[color_i][0])
 	reset()
+	if get_tree().network_peer and is_network_master():
+		rpc("reset")
 
 
 # Get the device id if its a controller event, or "keyboard" if its keyboard
