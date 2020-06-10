@@ -165,6 +165,8 @@ remote func unready():
 		slot.color_freed(COLORS[color_i][0])
 		if get_tree().network_peer:
 			slot.rpc("color_freed", COLORS[color_i][0])
+	if get_tree().network_peer and is_network_master():
+		rpc("unready")
 
 
 remote func color_taken(color):
@@ -230,6 +232,8 @@ func is_mouse_over_node(node):
 
 
 func unhover_button(button):
+	if !button:
+		return
 	if "texture_normal" in button:
 		button.texture_normal = button.texture_disabled
 	elif "custom_colors/font_color" in button:
@@ -246,6 +250,9 @@ func hover_button(button):
 
 
 func _on_ClosedButton_pressed():
+	if (get_tree().network_peer and !is_network_master() 
+			and get_tree().get_network_unique_id() != 1):
+		return
 	_on_RemoveButton_pressed()
 
 
@@ -279,6 +286,9 @@ func device_matches_event(event):
 
 
 func _on_ClosedButton_focus_entered():
+	if (get_tree().network_peer and !is_network_master() 
+			and get_tree().get_network_unique_id() != 1):
+		return
 	$Cover/ClosedButton.text = "Remove?"
 	$Cover/EditLabel.visible = false
 
