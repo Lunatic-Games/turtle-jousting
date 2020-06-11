@@ -153,11 +153,12 @@ func _game_end():
 
 
 # Begin transition to return to the lobby
-func begin_return_to_lobby():
+remote func begin_return_to_lobby():
+	get_tree().paused = true
 	set_player_process_input(false)
 	$VisorTransition.bring_down(self, "_return_to_lobby")
-	if get_tree().network_peer:
-		$VisorTransition.rpc("bring_down")
+	if get_tree().network_peer and is_network_master():
+		rpc("begin_return_to_lobby")
 
 
 # Resume handling player input

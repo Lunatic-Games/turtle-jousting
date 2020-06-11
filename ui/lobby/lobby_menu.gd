@@ -261,8 +261,8 @@ remote func join(existing_connections, remote_code, local_code):
 	load_existing_connections()
 	rpc("update_player_list", local_players)
 	for player in local_players.keys():
-		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
+		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).send_data()
 	rpc("new_connection")
 
@@ -445,6 +445,7 @@ remote func connection_ready_to_start():
 func return_to():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = false
+	get_tree().paused = false
 	$VisorTransition.lift_up()
 	visible = true
 	set_process(true)

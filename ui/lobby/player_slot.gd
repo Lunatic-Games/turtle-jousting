@@ -75,6 +75,7 @@ func handle_mouse_event(event):
 
 
 func load_player(number, player_data={}):
+	print("LOADING PLAYER: ", player_data)
 	player_number = number
 	capturing_input = true
 	$Cover/Open.visible = false
@@ -90,7 +91,10 @@ func load_player(number, player_data={}):
 	bot_id = player_data.get("bot_id", null)
 	ready = player_data.get("ready", false)
 	if ready:
+		print("PLAYER IS READY")
 		player_ready()
+	else:
+		unready()
 	
 
 remote func reset():
@@ -138,6 +142,7 @@ func _on_ReadyButton_pressed():
 
 
 remote func player_ready():
+	print("READYING PLAYER")
 	ready = true
 	capturing_input = false
 	set_edit_button_visibility(false)
@@ -154,13 +159,14 @@ remote func player_ready():
 
 
 remote func unready():
+	print("UNREADYING")
 	ready = false
 	capturing_input = true
 	time_readied = null
+	set_edit_button_visibility(true)
 	unhover_button(focused_button)
 	focused_button = get_node("Background/ColorContainer/LeftArrowContainer/Button")
 	hover_button(focused_button)
-	set_edit_button_visibility(true)
 	$Cover/ClosedButton.visible = false
 	$Cover/EditLabel.visible = false
 	for slot in get_tree().get_nodes_in_group("player_slot"):
@@ -172,6 +178,7 @@ remote func unready():
 
 
 remote func color_taken(color):
+	print("COLOR TAKEN")
 	if !taken_colors.has(color):
 		taken_colors.append(color)
 	if ready and COLORS[color_i][0] == color:
