@@ -285,8 +285,8 @@ func hit_turtle(turtle):
 
 
 # Pickup knight if hit and in water
-func hit_knight(knight):
-	if !knight.on_turtle and knight.alive and number == knight.player_number:
+func hit_knight(knight_hit):
+	if knight_hit == knight:
 		call_deferred("pick_up_knight")
 
 

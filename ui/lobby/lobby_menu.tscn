@@ -406,7 +406,6 @@ one_shot = true
 [node name="KeyboardPopup" parent="." instance=ExtResource( 3 )]
 
 [node name="VisorTransition" parent="." instance=ExtResource( 7 )]
-visible = false
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
 [connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]
