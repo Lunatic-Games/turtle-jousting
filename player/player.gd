@@ -259,6 +259,8 @@ func load_data(data = {}):
 	$Knight.player_number = number
 	if data.get("color", null):
 		set_color(data["color"])
+		if get_tree().network_peer and is_network_master():
+			rpc("set_color", data["color"])
 
 
 # Set facing direction
