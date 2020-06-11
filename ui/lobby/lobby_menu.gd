@@ -260,6 +260,7 @@ remote func join(existing_connections, remote_code, local_code):
 	for player in local_players.keys():
 		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
+		get_player_slot(player).unready()
 		get_player_slot(player).send_data()
 	rpc("new_connection")
 

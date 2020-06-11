@@ -89,16 +89,26 @@ func start():
 	set_process(true)
 	$GameMusic.play()
 	$GameTimer.start()
-	$PowerupSpawnTimer.start()
+	if get_tree().network_peer and is_network_master():
+		$PowerupSpawnTimer.start()
 
 
 # Spawn a powerup
-func _spawn_powerup():
-	var powerup_scene = powerup_scenes[randi() % len(powerup_scenes)]
+func _spawn_random_powerup():
+	var powerup_i = randi() % len(powerup_scenes)
+	var pos = furthest_powerup_spawn_position()
+	spawn_powerup(powerup_i, pos)
+	if get_tree().network_peer:
+		rpc("spawn_powerup", powerup_i, pos)
+
+
+remote func spawn_powerup(i, position):
+	var powerup_scene = powerup_scenes[i]
 	var powerup = powerup_scene.instance()
 	$YSort.add_child(powerup)
-	powerup.global_position = furthest_powerup_spawn_position()
-	powerup.connect("picked_up", $PowerupSpawnTimer, "start")
+	powerup.global_position = position
+	if get_tree().network_peer and is_network_master():
+		powerup.connect("picked_up", $PowerupSpawnTimer, "start")
 
 
 # Determines the powerup spawn location that is furthest from players

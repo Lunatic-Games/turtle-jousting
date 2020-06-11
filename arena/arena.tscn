@@ -720,4 +720,4 @@ stream = ExtResource( 12 )
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="begin_return_to_lobby"]
 [connection signal="return_to_main_menu" from="PausedMenu" to="." method="_on_PausedMenu_return_to_main_menu"]
 [connection signal="lifted_up" from="VisorTransition" to="." method="_on_VisorTransition_lifted_up"]
-[connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_powerup"]
+[connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_random_powerup"]
