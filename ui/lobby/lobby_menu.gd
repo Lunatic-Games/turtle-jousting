@@ -388,7 +388,7 @@ func _on_StartButton_pressed():
 		rpc("start_pressed")
 
 
-func start_pressed():
+remote func start_pressed():
 	$VisorTransition.bring_down(self, "start")
 
 

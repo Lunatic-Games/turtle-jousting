@@ -32,7 +32,7 @@ scale = 0.1
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=41]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 orbit_velocity = 0.0
@@ -42,7 +42,7 @@ scale = 0.1
 scale_curve = SubResource( 4 )
 color_ramp = SubResource( 2 )
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=7]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ) ],
 "loop": true,
@@ -50,7 +50,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
@@ -58,7 +58,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
@@ -97,7 +97,7 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 1.5
 step = 0.05
 tracks/0/type = "value"
@@ -161,7 +161,7 @@ tracks/4/keys = {
 "values": [ 100.0 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
@@ -211,7 +211,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
@@ -262,7 +262,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
 tracks/0/interp = 1
@@ -300,7 +300,7 @@ tracks/2/keys = {
 "values": [ 400.0 ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -316,7 +316,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.05, 0.05 ), Vector2( 0.04, 0.06 ), Vector2( 0.05, 0.05 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=15]
 length = 1.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reversable/Sprite:scale")
@@ -355,100 +355,100 @@ tracks/2/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=16]
 animation = "dodging"
 
-[sub_resource type="AnimationNodeAnimation" id=16]
+[sub_resource type="AnimationNodeAnimation" id=17]
 animation = "charging_joust"
 
-[sub_resource type="AnimationNodeAnimation" id=17]
+[sub_resource type="AnimationNodeAnimation" id=18]
 animation = "jousting"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
 
-[sub_resource type="AnimationNodeStateMachine" id=19]
-states/charging_joust/node = SubResource( 16 )
+[sub_resource type="AnimationNodeStateMachine" id=20]
+states/charging_joust/node = SubResource( 17 )
 states/charging_joust/position = Vector2( 508, 120 )
-states/jousting/node = SubResource( 17 )
+states/jousting/node = SubResource( 18 )
 states/jousting/position = Vector2( 508, 203 )
-transitions = [ "charging_joust", "jousting", SubResource( 18 ) ]
+transitions = [ "charging_joust", "jousting", SubResource( 19 ) ]
 start_node = "charging_joust"
 graph_offset = Vector2( -26, 8 )
 
-[sub_resource type="AnimationNodeAnimation" id=20]
+[sub_resource type="AnimationNodeAnimation" id=21]
 animation = "parrying"
 
-[sub_resource type="AnimationNodeAnimation" id=21]
+[sub_resource type="AnimationNodeAnimation" id=22]
 animation = "idling"
 
-[sub_resource type="AnimationNodeAnimation" id=22]
+[sub_resource type="AnimationNodeAnimation" id=23]
 animation = "moving"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=24]
 
-[sub_resource type="AnimationNodeStateMachine" id=25]
-states/idling/node = SubResource( 21 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachine" id=26]
+states/idling/node = SubResource( 22 )
 states/idling/position = Vector2( 464, 120 )
-states/moving/node = SubResource( 22 )
+states/moving/node = SubResource( 23 )
 states/moving/position = Vector2( 464, 226 )
-transitions = [ "idling", "moving", SubResource( 23 ), "moving", "idling", SubResource( 24 ) ]
+transitions = [ "idling", "moving", SubResource( 24 ), "moving", "idling", SubResource( 25 ) ]
 start_node = "idling"
 graph_offset = Vector2( -76, 63 )
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 switch_mode = 2
 auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=28]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=29]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=31]
 
-[sub_resource type="AnimationNodeStateMachine" id=32]
-states/dodging/node = SubResource( 15 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
+[sub_resource type="AnimationNodeStateMachine" id=33]
+states/dodging/node = SubResource( 16 )
 states/dodging/position = Vector2( 287, 184 )
-states/jousting/node = SubResource( 19 )
+states/jousting/node = SubResource( 20 )
 states/jousting/position = Vector2( 497, 86 )
-states/parrying/node = SubResource( 20 )
+states/parrying/node = SubResource( 21 )
 states/parrying/position = Vector2( 714, 184 )
-states/waiting/node = SubResource( 25 )
+states/waiting/node = SubResource( 26 )
 states/waiting/position = Vector2( 497, 184 )
-transitions = [ "dodging", "waiting", SubResource( 26 ), "waiting", "dodging", SubResource( 27 ), "waiting", "parrying", SubResource( 28 ), "parrying", "waiting", SubResource( 29 ), "waiting", "jousting", SubResource( 30 ), "jousting", "waiting", SubResource( 31 ) ]
+transitions = [ "dodging", "waiting", SubResource( 27 ), "waiting", "dodging", SubResource( 28 ), "waiting", "parrying", SubResource( 29 ), "parrying", "waiting", SubResource( 30 ), "waiting", "jousting", SubResource( 31 ), "jousting", "waiting", SubResource( 32 ) ]
 start_node = "waiting"
 graph_offset = Vector2( -26, 48 )
 
-[sub_resource type="AnimationNodeAnimation" id=33]
+[sub_resource type="AnimationNodeAnimation" id=34]
 animation = "dueling"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=35]
 
-[sub_resource type="AnimationNodeStateMachine" id=36]
-states/controlling/node = SubResource( 32 )
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+[sub_resource type="AnimationNodeStateMachine" id=37]
+states/controlling/node = SubResource( 33 )
 states/controlling/position = Vector2( 400, 164.112 )
-states/dueling/node = SubResource( 33 )
+states/dueling/node = SubResource( 34 )
 states/dueling/position = Vector2( 174, 164.112 )
-transitions = [ "dueling", "controlling", SubResource( 34 ), "controlling", "dueling", SubResource( 35 ) ]
+transitions = [ "dueling", "controlling", SubResource( 35 ), "controlling", "dueling", SubResource( 36 ) ]
 start_node = "controlling"
 graph_offset = Vector2( -188, 33.112 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=37]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=38]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=39]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=41]
 
 [node name="Turtle" type="KinematicBody2D" groups=[
 "turtle",
@@ -471,7 +471,7 @@ texture = ExtResource( 2 )
 lifetime = 3.0
 speed_scale = 2.0
 local_coords = false
-process_material = SubResource( 41 )
+process_material = SubResource( 6 )
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Reversable"]
@@ -488,7 +488,8 @@ offset = Vector2( -50, 0 )
 modulate = Color( 0.854902, 0.854902, 0.854902, 1 )
 position = Vector2( -104.985, -26.8765 )
 scale = Vector2( 1.07527, 1 )
-frames = SubResource( 6 )
+frames = SubResource( 7 )
+frame = 1
 playing = true
 
 [node name="KnightPosition" type="Position2D" parent="Reversable"]
@@ -499,7 +500,8 @@ visible = false
 modulate = Color( 0.85098, 0.85098, 0.85098, 0.768627 )
 position = Vector2( -5.23145, -23.5454 )
 scale = Vector2( 0.05, 0.05 )
-frames = SubResource( 7 )
+frames = SubResource( 8 )
+frame = 1
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -514,20 +516,20 @@ scale = Vector2( 1.2, 1.2 )
 polygon = PoolVector2Array( -33.0186, 2.25064, -16.6109, -10.6767, 19.4861, -16.1459, 35.4961, -13.8588, 40.8934, -5.97791, 33.6068, 1.45511, 18.4918, 5.73108, -10.7439, 15.4763 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
-anims/charging_joust = SubResource( 8 )
-anims/dodging = SubResource( 9 )
-anims/dueling = SubResource( 10 )
-anims/idling = SubResource( 11 )
-anims/jousting = SubResource( 12 )
-anims/moving = SubResource( 13 )
-anims/parrying = SubResource( 14 )
+anims/charging_joust = SubResource( 9 )
+anims/dodging = SubResource( 10 )
+anims/dueling = SubResource( 11 )
+anims/idling = SubResource( 12 )
+anims/jousting = SubResource( 13 )
+anims/moving = SubResource( 14 )
+anims/parrying = SubResource( 15 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 36 )
+tree_root = SubResource( 37 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 37 )
-parameters/controlling/playback = SubResource( 38 )
-parameters/controlling/jousting/playback = SubResource( 39 )
-parameters/controlling/waiting/playback = SubResource( 40 )
+parameters/playback = SubResource( 38 )
+parameters/controlling/playback = SubResource( 39 )
+parameters/controlling/jousting/playback = SubResource( 40 )
+parameters/controlling/waiting/playback = SubResource( 41 )
 script = ExtResource( 8 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

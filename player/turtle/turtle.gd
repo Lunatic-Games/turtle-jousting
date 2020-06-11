@@ -35,6 +35,10 @@ func _ready():
 		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
 		$Hitbox.rset_config("scale", MultiplayerAPI.RPC_MODE_PUPPET)
+		$Reversable/RightWakeParticles.rset_config("emitting",
+			MultiplayerAPI.RPC_MODE_PUPPET)
+		$Reversable/LeftWakeParticles.rset_config("emitting",
+			MultiplayerAPI.RPC_MODE_PUPPET)
 
 
 # Handle inputs for device with corresponding id
@@ -130,6 +134,10 @@ func set_direction(dir_sign):
 		$Reversable.rset("scale", $Reversable.scale)
 		$CollisionPolygon2D.rset("scale", $CollisionPolygon2D.scale)
 		$Hitbox.rset("scale", $Hitbox.scale)
+		$Reversable/RightWakeParticles.rset("emitting",
+			$Reversable/RightWakeParticles.emitting)
+		$Reversable/LeftWakeParticles.rset("emitting",
+			$Reversable/LeftWakeParticles.emitting)
 
 
 # Check for move event and update movement_actions

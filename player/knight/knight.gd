@@ -26,6 +26,7 @@ func _ready():
 	if get_tree().network_peer:
 		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
+		rpc_config("call_deferred", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 # Fly self through air if flying

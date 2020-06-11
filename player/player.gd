@@ -25,6 +25,8 @@ onready var knight = get_node("Knight")
 func _ready():
 	if get_tree().network_peer and is_network_master():
 		rpc("set_color", $Reversable/Sprite/Modulate.modulate)
+	if get_tree().network_peer:
+		rpc_config("call_deferred", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 # Handle different actions
