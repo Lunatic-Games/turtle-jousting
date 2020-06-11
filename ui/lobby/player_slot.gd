@@ -100,8 +100,9 @@ remote func reset():
 	print("Resetting slot ", player_number)
 	if focused_button:
 		unhover_button(focused_button)
-	for slot in get_tree().get_nodes_in_group("player_slot"):
-		slot.color_freed(COLORS[color_i][0])
+	if ready:
+		for slot in get_tree().get_nodes_in_group("player_slot"):
+			slot.color_freed(COLORS[color_i][0])
 	color_i = 0
 	$Background/ColorName.text = COLORS[color_i][0]
 	$Cover/ClosedButton.visible = false
@@ -145,7 +146,10 @@ remote func player_ready():
 	$Cover/ClosedButton.visible = true
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
+			print("Taken: ", COLORS[color_i][0])
 			slot.color_taken(COLORS[color_i][0])
+			if get_tree().network_peer and is_network_master():
+				slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
 	else:
@@ -153,6 +157,8 @@ remote func player_ready():
 
 
 remote func unready():
+	if !ready:
+		return
 	ready = false
 	capturing_input = true
 	time_readied = null
@@ -162,8 +168,6 @@ remote func unready():
 	hover_button(focused_button)
 	$Cover/ClosedButton.visible = false
 	$Cover/EditLabel.visible = false
-	for slot in get_tree().get_nodes_in_group("player_slot"):
-		slot.color_freed(COLORS[color_i][0])
 	if get_tree().network_peer and is_network_master():
 		rpc("unready")
 
@@ -174,8 +178,7 @@ remote func color_taken(color):
 	if ready and COLORS[color_i][0] == color:
 		unready()
 	update_color_text()
-	if get_tree().network_peer and is_network_master():
-		rpc("color_taken", color)
+	
 
 
 remote func color_freed(color):
