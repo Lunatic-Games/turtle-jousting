@@ -180,7 +180,7 @@ remote func color_taken(color):
 	if ready and COLORS[color_i][0] == color:
 		unready()
 	if COLORS[color_i][0] == color:
-		update_color(color_i)
+		update_color(color_i, true)
 
 
 remote func color_freed(color):
@@ -188,7 +188,7 @@ remote func color_freed(color):
 		return
 	taken_colors.erase(color)
 	if COLORS[color_i][0] == color:
-		update_color(color_i)
+		update_color(color_i, true)
 
 
 func set_edit_button_visibility(visible):
