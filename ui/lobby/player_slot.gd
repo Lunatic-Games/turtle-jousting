@@ -218,9 +218,10 @@ func _on_RightColorButton_pressed():
 	
 
 func send_data():
+	rpc("update_color", color_i)
 	if ready:
 		rpc("player_ready")
-	rpc("update_color", color_i)
+	
 
 
 func move_ui(direction):

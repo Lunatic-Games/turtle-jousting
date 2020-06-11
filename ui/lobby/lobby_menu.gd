@@ -15,6 +15,8 @@ onready var local_container = get_node("ConnectionSection/VBoxContainer/" +
 # Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
 
+var connections_ready_to_start = []
+
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
@@ -403,7 +405,7 @@ remote func start_pressed():
 	$VisorTransition.bring_down(self, "start")
 
 
-remotesync func start():
+remote func start():
 	get_tree().paused = true
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
@@ -416,10 +418,27 @@ remotesync func start():
 				data = get_player_slot(player).get_player_data()
 			new_arena.add_player(player, connection, data)
 	get_tree().get_root().add_child(new_arena)
-	new_arena.all_players_added()
 	visible = false
 	set_process(false)
 	set_process_input(false)
+	if !get_tree().network_peer or is_network_master():
+		connection_ready_to_start()
+	elif get_tree().network_peer:
+		rpc_id(1, "connection_ready_to_start")
+
+
+remote func connection_ready_to_start():
+	var id = get_tree().get_rpc_sender_id()
+	if id == 0:
+		id = 1
+	connections_ready_to_start.append(id)
+	connections_ready_to_start.sort()
+	var conns = connections.keys()
+	conns.sort()
+	if connections_ready_to_start == conns:
+		get_tree().get_root().get_node("Arena").all_players_added()
+		if get_tree().network_peer:
+			get_tree().get_root().get_node("Arena").rpc("all_players_added")
 
 
 func return_to():
