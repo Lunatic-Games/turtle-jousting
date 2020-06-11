@@ -75,7 +75,6 @@ func handle_mouse_event(event):
 
 
 func load_player(number, player_data={}):
-	print("LOADING PLAYER: ", player_data)
 	player_number = number
 	capturing_input = true
 	$Cover/Open.visible = false
@@ -97,7 +96,6 @@ func load_player(number, player_data={}):
 	
 
 remote func reset():
-	print("Resetting slot ", player_number)
 	if focused_button:
 		unhover_button(focused_button)
 	if ready:
@@ -146,7 +144,6 @@ remote func player_ready():
 	$Cover/ClosedButton.visible = true
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
-			print("Taken: ", COLORS[color_i][0])
 			slot.color_taken(COLORS[color_i][0])
 			if get_tree().network_peer and is_network_master():
 				slot.rpc("color_taken", COLORS[color_i][0])
@@ -191,6 +188,8 @@ remote func color_freed(color):
 
 
 func update_color_text():
+	if get_tree().network_peer and !is_network_master():
+		return
 	if taken_colors.has(COLORS[color_i][0]):
 		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
 	else:
@@ -221,7 +220,6 @@ func _on_RightColorButton_pressed():
 	
 
 func send_data():
-	print("Sending data from slot ", player_number)
 	rpc("update_color", color_i)
 	if ready:
 		rpc("player_ready")
