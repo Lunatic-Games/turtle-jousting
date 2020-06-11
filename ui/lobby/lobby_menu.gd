@@ -278,9 +278,9 @@ remote func update_player_list(players):
 
 	connections[sender_id] = players
 	for player in connections[sender_id]:
-		get_player_slot(player).load_player(player, player_data.get(player, {}))
 		get_player_slot(player).set_network_master(sender_id)
-		
+		get_player_slot(player).load_player(player, player_data.get(player, {}))
+
 
 # Send existing data to the new connection
 remote func new_connection():

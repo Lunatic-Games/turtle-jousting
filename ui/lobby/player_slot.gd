@@ -91,7 +91,6 @@ func load_player(number, player_data={}):
 	bot_id = player_data.get("bot_id", null)
 	ready = player_data.get("ready", false)
 	if ready:
-		print("PLAYER IS READY")
 		player_ready()
 	else:
 		unready()
@@ -119,14 +118,14 @@ func get_player_data():
 		"color_i" : color_i, "color" : COLORS[color_i][1], "ready" : ready}
 
 
-remote func update_color(i):
+remote func update_color(i, send=false):
 	color_i = i
 	$Background/ColorName.text = COLORS[color_i][0]
 	if taken_colors.has(COLORS[color_i][0]):
 		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
 	else:
 		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
-	if get_tree().network_peer and is_network_master():
+	if get_tree().network_peer and is_network_master() and send:
 		rpc("update_color", color_i)
 
 
@@ -142,7 +141,6 @@ func _on_ReadyButton_pressed():
 
 
 remote func player_ready():
-	print("READYING PLAYER")
 	ready = true
 	capturing_input = false
 	set_edit_button_visibility(false)
@@ -159,7 +157,6 @@ remote func player_ready():
 
 
 remote func unready():
-	print("UNREADYING")
 	ready = false
 	capturing_input = true
 	time_readied = null
@@ -178,18 +175,11 @@ remote func unready():
 
 
 remote func color_taken(color):
-	print("COLOR TAKEN")
 	if !taken_colors.has(color):
 		taken_colors.append(color)
 	if ready and COLORS[color_i][0] == color:
 		unready()
 	if COLORS[color_i][0] == color:
-		update_color(color_i)
-
-
-func update_taken_colors(colors):
-	taken_colors = colors
-	if colors.has(COLORS[color_i][0]):
 		update_color(color_i)
 
 
@@ -214,17 +204,18 @@ func _on_LeftColorButton_pressed():
 	color_i -= 1
 	if color_i < 0:
 		color_i = len(COLORS) - 1
-	update_color(color_i)
+	update_color(color_i, true)
 
 
 func _on_RightColorButton_pressed():
 	color_i += 1
 	if color_i >= len(COLORS):
 		color_i = 0
-	update_color(color_i)
+	update_color(color_i, true)
 	
 
 func send_data():
+	print("Sending data from slot ", player_number)
 	rpc("update_color", color_i)
 	if ready:
 		rpc("player_ready")
