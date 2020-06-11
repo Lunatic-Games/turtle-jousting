@@ -116,6 +116,3 @@ func _on_FlyingHitbox_area_entered(area):
 func _is_flying():
 	return ($AnimationTree.is_in_state("flying_off/flying_off") or
 		$AnimationTree.is_in_state("flying_off/flying"))
-
-
-

@@ -93,7 +93,7 @@ func load_player(number, player_data={}):
 		player_ready()
 	
 
-func reset():
+remote func reset():
 	if focused_button:
 		unhover_button(focused_button)
 	for slot in get_tree().get_nodes_in_group("player_slot"):
@@ -145,8 +145,8 @@ remote func player_ready():
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
 			slot.color_taken(COLORS[color_i][0])
-		if get_tree().network_peer and is_network_master():
-			slot.rpc("color_taken", COLORS[color_i][0])
+			if get_tree().network_peer and is_network_master():
+				slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
 	else:
