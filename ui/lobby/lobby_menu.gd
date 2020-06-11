@@ -383,14 +383,13 @@ func toggle_ui_visibility(group_name, visibility):
 
 
 func _on_StartButton_pressed():
-	$VisorTransition.bring_down(self, "_call_start")
+	start_pressed()
+	if get_tree().network_peer and is_network_master():
+		rpc("start_pressed")
 
 
-func _call_start():
-	if get_tree().network_peer:
-		rpc("start")
-	else:
-		start()
+func start_pressed():
+	$VisorTransition.bring_down(self, "start")
 
 
 remotesync func start():
