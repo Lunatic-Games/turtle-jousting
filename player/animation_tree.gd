@@ -17,10 +17,9 @@ func is_in_state(state_path):
 
 # Travel to path/state
 remote func travel(state_path):
-	if get_tree().network_peer and !is_network_master():
-		return
-	elif get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("travel", state_path)
+	
 	var pieces = _seperate_state_path(state_path)
 	var travel_states = pieces[0].split("/")
 	var new_path = ""
