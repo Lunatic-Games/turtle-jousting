@@ -19,7 +19,6 @@ var joust_direction = Vector2(1, 0)
 var joust_move_actions
 var throw_charge = 0.0
 var dueling = false
-var number
 onready var knight = get_node("Knight")
 
 
@@ -251,7 +250,6 @@ remote func pick_up_knight():
 	add_child(knight)
 	knight.name = "Knight"
 	knight.position = $Reversable/KnightPosition.position
-	
 
 
 # Load player data
@@ -261,8 +259,6 @@ func load_data(data = {}):
 		add_child(bot_ai_scene.instance())
 	else:
 		device_id = data.get("device_id", null)
-	number = data.get("number", null)
-	$Knight.player_number = number
 	if data.get("color", null):
 		set_color(data["color"])
 
@@ -292,7 +288,7 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight:
+	if knight_hit == knight and !knight.on_turtle:
 		call_deferred("pick_up_knight")
 
 

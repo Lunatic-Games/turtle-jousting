@@ -12,7 +12,6 @@ const MAX_FLY_DISTANCE = 1024
 
 var health = MAX_HEALTH
 var alive = true
-var player_number
 var flying_knockback
 var flying_dist_travelled = 0
 onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
