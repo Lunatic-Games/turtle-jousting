@@ -58,10 +58,10 @@ func _input(event):
 func add_player(number, net_id, data = {}):
 	var new_player = player_scene.instance()
 	new_player.name = "Player" + str(number)
+	new_player.load_data(data)
 	new_player.set_network_master(net_id)
 	new_player.connect("lost", self, "_on_Player_lost")
 	$YSort.add_child(new_player)
-	new_player.load_data(data)
 
 
 # Set player positions once all have been added

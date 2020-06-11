@@ -23,6 +23,11 @@ var number
 onready var knight = get_node("Knight")
 
 
+func _ready():
+	if get_tree().network_peer and is_network_master():
+		rpc("set_color", $Reversable/Sprite/Modulate.modulate)
+
+
 # Handle different actions
 func _input(event):
 	if !_should_handle_event(event):
@@ -259,8 +264,6 @@ func load_data(data = {}):
 	$Knight.player_number = number
 	if data.get("color", null):
 		set_color(data["color"])
-		if get_tree().network_peer and is_network_master():
-			rpc("set_color", data["color"])
 
 
 # Set facing direction
