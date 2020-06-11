@@ -206,7 +206,7 @@ func moved(_movement):
 
 
 # Set turtle color
-func set_color(color):
+remote func set_color(color):
 	$Reversable/Sprite/Modulate.modulate = color
 
 

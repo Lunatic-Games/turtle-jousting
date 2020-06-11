@@ -223,6 +223,8 @@ func moved(movement):
 remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
+	if get_tree().network_peer:
+		rpc("knock_knight_off", knockback)
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
@@ -235,22 +237,21 @@ remote func knock_knight_off(knockback):
 		remove_status("Drunk")
 	elif has_status("Stoned"):
 		knight.hit(100)
-	if get_tree().network_peer:
-		rpc("knock_knight_off", knockback)
-	
+
 
 # Add knight back
 remote func pick_up_knight():
 	if has_node("Knight"):
 		return
+	if get_tree().network_peer:
+		rpc("pick_up_knight")
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
 	add_child(knight)
 	knight.name = "Knight"
 	knight.position = $Reversable/KnightPosition.position
-	if get_tree().network_peer:
-		rpc("pick_up_knight")
+	
 
 
 # Load player data
@@ -310,7 +311,7 @@ func hit_powerup(powerup):
 
 
 # Set color modulation for team color
-func set_color(color):
+remote func set_color(color):
 	.set_color(color)
 	$JoustIndicator.set_color(color)
 	$Knight.set_color(color)
