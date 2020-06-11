@@ -20,6 +20,7 @@ var joust_move_actions
 var throw_charge = 0.0
 var dueling = false
 var number
+onready var knight = get_node("Knight")
 
 
 # Handle different actions
@@ -214,10 +215,9 @@ func moved(movement):
 
 
 # Remove knight from self
-func knock_knight_off(knockback):
+remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
-	var knight = get_node("Knight")
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
@@ -230,16 +230,22 @@ func knock_knight_off(knockback):
 		remove_status("Drunk")
 	elif has_status("Stoned"):
 		knight.hit(100)
+	if get_tree().network_peer:
+		rpc("knock_knight_off", knockback)
 	
 
 # Add knight back
-func pick_up_knight(knight):
+remote func pick_up_knight():
+	if has_node("Knight"):
+		return
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
 	add_child(knight)
 	knight.name = "Knight"
 	knight.position = $Reversable/KnightPosition.position
+	if get_tree().network_peer:
+		rpc("pick_up_knight")
 
 
 # Load player data
@@ -281,7 +287,7 @@ func hit_turtle(turtle):
 # Pickup knight if hit and in water
 func hit_knight(knight):
 	if !knight.on_turtle and knight.alive and number == knight.player_number:
-		call_deferred("pick_up_knight", knight)
+		call_deferred("pick_up_knight")
 
 
 # Stop joust if hit a wall
