@@ -71,7 +71,7 @@ func handle_mouse_event(event):
 				focused_button = node
 				hover_button(focused_button)
 	if event is InputEventMouseMotion:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 
 
 func load_player(number, player_data={}):
@@ -97,6 +97,7 @@ func load_player(number, player_data={}):
 	
 
 remote func reset():
+	print("Resetting slot ", player_number)
 	if focused_button:
 		unhover_button(focused_button)
 	for slot in get_tree().get_nodes_in_group("player_slot"):
@@ -118,14 +119,11 @@ func get_player_data():
 		"color_i" : color_i, "color" : COLORS[color_i][1], "ready" : ready}
 
 
-remote func update_color(i, send=false):
+remote func update_color(i):
 	color_i = i
 	$Background/ColorName.text = COLORS[color_i][0]
-	if taken_colors.has(COLORS[color_i][0]):
-		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
-	else:
-		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
-	if get_tree().network_peer and is_network_master() and send:
+	update_color_text()
+	if get_tree().network_peer and is_network_master():
 		rpc("update_color", color_i)
 
 
@@ -148,8 +146,6 @@ remote func player_ready():
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
 			slot.color_taken(COLORS[color_i][0])
-			if get_tree().network_peer and is_network_master():
-				slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
 	else:
@@ -168,8 +164,6 @@ remote func unready():
 	$Cover/EditLabel.visible = false
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		slot.color_freed(COLORS[color_i][0])
-		if get_tree().network_peer:
-			slot.rpc("color_freed", COLORS[color_i][0])
 	if get_tree().network_peer and is_network_master():
 		rpc("unready")
 
@@ -179,16 +173,25 @@ remote func color_taken(color):
 		taken_colors.append(color)
 	if ready and COLORS[color_i][0] == color:
 		unready()
-	if COLORS[color_i][0] == color:
-		update_color(color_i, true)
+	update_color_text()
+	if get_tree().network_peer and is_network_master():
+		rpc("color_taken", color)
 
 
 remote func color_freed(color):
 	if ready and COLORS[color_i][0] == color:
 		return
 	taken_colors.erase(color)
-	if COLORS[color_i][0] == color:
-		update_color(color_i, true)
+	update_color_text()
+	if get_tree().network_peer and is_network_master():
+		rpc("color_freed", color)
+
+
+func update_color_text():
+	if taken_colors.has(COLORS[color_i][0]):
+		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
+	else:
+		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
 
 
 func set_edit_button_visibility(visible):
@@ -204,14 +207,14 @@ func _on_LeftColorButton_pressed():
 	color_i -= 1
 	if color_i < 0:
 		color_i = len(COLORS) - 1
-	update_color(color_i, true)
+	update_color(color_i)
 
 
 func _on_RightColorButton_pressed():
 	color_i += 1
 	if color_i >= len(COLORS):
 		color_i = 0
-	update_color(color_i, true)
+	update_color(color_i)
 	
 
 func send_data():
