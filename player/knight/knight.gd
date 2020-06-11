@@ -10,6 +10,7 @@ export (Curve) var flying_velocity
 const MAX_HEALTH = 100
 const MAX_FLY_DISTANCE = 1024
 
+var sudden_death = false
 var health = MAX_HEALTH
 var alive = true
 var flying_knockback
@@ -56,7 +57,7 @@ func hit(damage, knockback_on_death=Vector2(0, 0)):
 
 # Increase health
 func heal(amount):
-	if !alive:
+	if !alive or sudden_death:
 		return
 	health += amount
 	health = min(health, 100)

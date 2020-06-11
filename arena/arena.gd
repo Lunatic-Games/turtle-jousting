@@ -14,6 +14,7 @@ const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pic
 	preload("res://powerups/stone_potion/stone_potion.tscn")]
 
 var duels = []
+var game_done
 
 
 # Setup game and disable features if this is a menu version
@@ -21,6 +22,7 @@ func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if MENU_VERSION:
 		$GameTimerLabel.visible = false
+		$VisorTransition.visible = false
 		set_process_input(false)
 		add_player(1, 1, {"number": 1, "bot_id": 999})
 		add_player(2, 1, {"number": 2, "bot_id": 998})
@@ -128,8 +130,23 @@ func furthest_powerup_spawn_position():
 
 # Check if there is only one player remaining
 func _on_Player_lost():
+	if len(get_tree().get_nodes_in_group("player")) <= 1 and !game_done:
+		set_player_process_input(false)
+		game_done = true
+		$GameTimer.stop()
+		var timer = Timer.new()
+		timer.one_shot = true
+		timer.wait_time = 0.5
+		add_child(timer)
+		timer.connect("timeout", self, "_game_end")
+		timer.start()
+
+
+func _game_end():
 	if len(get_tree().get_nodes_in_group("player")) == 1:
-		$AnimationPlayer.play("end_game")
+		$AnimationPlayer.play("victory")
+	elif len(get_tree().get_nodes_in_group("player")) == 0:
+		$AnimationPlayer.play("failure")
 
 
 # Begin transition to return to the lobby
@@ -182,3 +199,12 @@ func set_player_process_input(process):
 
 func _on_VisorTransition_lifted_up():
 	$AnimationPlayer.play("countdown")
+
+
+func _on_GameTimer_timeout():
+	if len(get_tree().get_nodes_in_group("knight")) == 1:
+		$AnimationPlayer.play("times_up")
+		return
+	for knight in get_tree().get_nodes_in_group("knight"):
+		knight.set_health(1)
+	$AnimationPlayer.play("sudden_death")

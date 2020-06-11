@@ -251,6 +251,7 @@ remote func join(existing_connections, remote_code, local_code):
 		else:
 			new_local_players[pos] = local_players[player]
 			player_data[pos] = get_player_slot(player).get_player_data()
+			player_data[pos]["ready"] = false
 			connections[net_id].append(pos)
 		
 	_joined_lobby(remote_code, local_code)
@@ -260,7 +261,6 @@ remote func join(existing_connections, remote_code, local_code):
 	for player in local_players.keys():
 		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
-		get_player_slot(player).unready()
 		get_player_slot(player).send_data()
 	rpc("new_connection")
 
@@ -383,6 +383,17 @@ func toggle_ui_visibility(group_name, visibility):
 
 
 func _on_StartButton_pressed():
+	var num_ready = 0
+	var slots = get_tree().get_nodes_in_group("player_slot")
+	for slot in slots:
+		if slot.capturing_input:
+			$NetworkMessagePopup.show_not_everyone_ready()
+			return
+		elif slot.ready:
+			num_ready += 1
+	if num_ready == 0:
+		$NetworkMessagePopup.show_not_enough_players()
+		return
 	start_pressed()
 	if get_tree().network_peer and is_network_master():
 		rpc("start_pressed")
