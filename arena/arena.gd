@@ -82,6 +82,9 @@ func all_players_added():
 		if spawn_node.global_position.x > 1024 / 2:
 			player.invert_start_direction()
 		i += 1
+
+
+remote func games_synced():
 	get_tree().paused = false
 
 

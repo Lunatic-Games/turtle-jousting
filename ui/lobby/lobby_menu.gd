@@ -418,6 +418,7 @@ remote func start():
 				data = get_player_slot(player).get_player_data()
 			new_arena.add_player(player, connection, data)
 	get_tree().get_root().add_child(new_arena)
+	new_arena.all_players_added()
 	visible = false
 	set_process(false)
 	set_process_input(false)
@@ -436,9 +437,9 @@ remote func connection_ready_to_start():
 	var conns = connections.keys()
 	conns.sort()
 	if connections_ready_to_start == conns:
-		get_tree().get_root().get_node("Arena").all_players_added()
+		get_tree().get_root().get_node("Arena").games_synced()
 		if get_tree().network_peer:
-			get_tree().get_root().get_node("Arena").rpc("all_players_added")
+			get_tree().get_root().get_node("Arena").rpc("games_synced")
 
 
 func return_to():
