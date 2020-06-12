@@ -1,14 +1,20 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/lobby/player_slot.gd" type="Script" id=2]
 [ext_resource path="res://ui/resources/arrows.png" type="Texture" id=3]
-[ext_resource path="res://ui/lobby/assets/green_button_highlighted.png" type="Texture" id=4]
-[ext_resource path="res://ui/lobby/assets/green_button.png" type="Texture" id=5]
-[ext_resource path="res://ui/lobby/assets/red_button.png" type="Texture" id=6]
-[ext_resource path="res://ui/lobby/assets/green_button_darkened.png" type="Texture" id=7]
-[ext_resource path="res://ui/lobby/assets/red_button_darkened.png" type="Texture" id=8]
-[ext_resource path="res://ui/lobby/assets/red_button_highlighted.png" type="Texture" id=9]
+[ext_resource path="res://ui/lobby/assets/check_neutral.png" type="Texture" id=4]
+[ext_resource path="res://ui/lobby/assets/check_dark.png" type="Texture" id=5]
+[ext_resource path="res://ui/lobby/assets/x_neutral.png" type="Texture" id=6]
+[ext_resource path="res://ui/lobby/assets/check_light.png" type="Texture" id=7]
+[ext_resource path="res://ui/lobby/assets/x_light.png" type="Texture" id=8]
+[ext_resource path="res://ui/lobby/assets/x_dark.png" type="Texture" id=9]
+[ext_resource path="res://ui/lobby/assets/right_arrow_light.png" type="Texture" id=10]
+[ext_resource path="res://ui/lobby/assets/right_arrow_neutral.png" type="Texture" id=11]
+[ext_resource path="res://ui/lobby/assets/right_arrow_dark.png" type="Texture" id=12]
+[ext_resource path="res://ui/lobby/assets/Left_arrow_neutral.png" type="Texture" id=13]
+[ext_resource path="res://ui/lobby/assets/left_arrow_dark.png" type="Texture" id=14]
+[ext_resource path="res://ui/lobby/assets/left_arrow_light.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -31,7 +37,7 @@ flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 64, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=10]
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 48, 0, 16, 16 )
@@ -50,16 +56,6 @@ region = Rect2( 32, 0, 16, 16 )
 flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=9]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 48, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=11]
 flags = 4
@@ -142,49 +138,48 @@ __meta__ = {
 }
 
 [node name="LeftArrowContainer" type="CenterContainer" parent="Background/ColorContainer"]
-margin_left = 41.0
-margin_right = 57.0
-margin_bottom = 35.0
+margin_left = 12.0
+margin_right = 58.0
+margin_bottom = 48.0
 
 [node name="Button" type="TextureButton" parent="Background/ColorContainer/LeftArrowContainer" groups=[
 "edit_button",
 ]]
-margin_top = 9.0
-margin_right = 16.0
-margin_bottom = 25.0
+margin_top = 1.0
+margin_right = 46.0
+margin_bottom = 47.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath("../../RightArrowContainer/Button")
 focus_neighbour_bottom = NodePath("../../../BottomContainer/ReadyButton")
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = SubResource( 2 )
-texture_pressed = SubResource( 3 )
-texture_hover = SubResource( 4 )
-texture_disabled = SubResource( 5 )
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 15 )
+texture_disabled = ExtResource( 13 )
 stretch_mode = 3
 
 [node name="RightArrowContainer" type="CenterContainer" parent="Background/ColorContainer"]
-margin_left = 185.0
-margin_right = 201.0
-margin_bottom = 35.0
+margin_left = 186.0
+margin_right = 230.0
+margin_bottom = 48.0
 
 [node name="Button" type="TextureButton" parent="Background/ColorContainer/RightArrowContainer" groups=[
 "edit_button",
 ]]
-margin_top = 9.0
-margin_right = 16.0
-margin_bottom = 25.0
+margin_right = 44.0
+margin_bottom = 48.0
 focus_neighbour_left = NodePath("../../LeftArrowContainer/Button")
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath(".")
 focus_neighbour_bottom = NodePath("../../../BottomContainer/ReadyButton")
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = SubResource( 6 )
-texture_pressed = SubResource( 7 )
-texture_hover = SubResource( 8 )
-texture_disabled = SubResource( 9 )
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 10 )
+texture_disabled = ExtResource( 11 )
 stretch_mode = 3
 
 [node name="HatContainer" type="HBoxContainer" parent="Background"]
@@ -318,7 +313,7 @@ __meta__ = {
 [node name="ReadyButton" type="TextureButton" parent="Background/BottomContainer" groups=[
 "edit_button",
 ]]
-margin_left = 109.0
+margin_left = 102.0
 margin_right = 249.0
 margin_bottom = 60.0
 focus_neighbour_left = NodePath(".")
@@ -328,10 +323,10 @@ focus_neighbour_bottom = NodePath(".")
 focus_mode = 0
 size_flags_horizontal = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 5 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 4 )
-texture_disabled = ExtResource( 5 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 7 )
+texture_disabled = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -340,7 +335,7 @@ __meta__ = {
 "edit_button",
 ]]
 margin_left = 249.0
-margin_right = 376.0
+margin_right = 383.0
 margin_bottom = 60.0
 focus_neighbour_left = NodePath("../ReadyButton")
 focus_neighbour_top = NodePath("../../ColorContainer/RightArrowContainer/Button")
@@ -350,8 +345,8 @@ focus_mode = 0
 size_flags_horizontal = 0
 enabled_focus_mode = 0
 texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 8 )
-texture_hover = ExtResource( 9 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 8 )
 texture_disabled = ExtResource( 6 )
 
 [node name="Cover" type="Control" parent="."]
