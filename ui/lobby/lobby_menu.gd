@@ -254,7 +254,7 @@ remote func join(existing_connections, remote_code, local_code):
 	_joined_lobby(remote_code, local_code)
 	local_players = new_local_players
 	load_existing_connections()
-	rpc("update_player_list", local_players)
+	rpc("update_player_list", local_players.keys())
 	for player in local_players.keys():
 		get_player_slot(player).set_network_master(net_id)
 		get_player_slot(player).load_player(player, player_data[player])

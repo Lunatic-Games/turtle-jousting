@@ -266,10 +266,14 @@ func _on_ClosedButton_pressed():
 
 
 func _on_RemoveButton_pressed():
+	remove()
+	if get_tree().network_peer:
+		rpc("remove")
+
+
+remote func remove():
 	emit_signal("removed", self)
 	reset()
-	if get_tree().network_peer and is_network_master():
-		rpc("reset")
 
 
 # Get the device id if its a controller event, or "keyboard" if its keyboard
