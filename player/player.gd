@@ -4,8 +4,8 @@ extends "res://player/turtle/turtle.gd"
 signal lost
 
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
-const JOUST_CHARGE_RATE = 250
-const MAX_JOUST_CHARGE = 500
+const JOUST_CHARGE_RATE = 400
+const MAX_JOUST_CHARGE = 1000
 const THROW_START_CHARGE = 150
 const THROW_CHARGE_RATE = 150
 const MAX_THROW_CHARGE = 800
@@ -125,6 +125,7 @@ func begin_charging_throw():
 	throw_charge = THROW_START_CHARGE
 	$ThrowIndicator.set_curve($Knight.weapon_handle.weapon.get_curve())
 	$ThrowIndicator.update_indicator(throw_charge)
+	$ThrowIndicator.visible = true
 
 
 # Throw held weapon
@@ -194,7 +195,8 @@ func update_joust_indicator():
 	if dir.length() > JOUST_DEADZONE:
 		joust_direction = dir.normalized()
 	
-	$JoustIndicator.update_indicator(joust_direction, joust_charge)
+	$JoustIndicator.update_indicator(joust_direction, 
+		joust_charge / MAX_JOUST_CHARGE)
 
 
 # Extend update_sprite_direction to consider joust direction
@@ -294,12 +296,18 @@ func hit_knight(knight_hit):
 		call_deferred("pick_up_knight")
 
 
-# Stop joust if hit a wall
-func hit_wall(_wall):
-	if $AnimationTree.is_in_state("controlling/jousting/jousting"):
-		$AnimationTree.travel("controlling/waiting/idling")
-		if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
-			$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
+# Bounce off walls if jousting
+func hit_wall(wall):
+	if !$AnimationTree.is_in_state("controlling/jousting/jousting"):
+		return
+	if wall.is_in_group("east_wall"):
+		locked_direction.x = -abs(locked_direction.x)
+	elif wall.is_in_group("north_wall"):
+		locked_direction.y = abs(locked_direction.y)
+	elif wall.is_in_group("south_wall"):
+		locked_direction.y = -abs(locked_direction.y)
+	elif wall.is_in_group("west_wall"):
+		locked_direction.x = abs(locked_direction.x)
 
 
 # Pick up a powerup, if able

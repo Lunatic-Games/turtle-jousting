@@ -48,6 +48,7 @@ func _process(_delta):
 # Check for pause
 func _input(event):
 	if !MENU_VERSION and event.is_action("pause") and event.pressed:
+		print("Pause pressed")
 		if !get_tree().network_peer:
 			get_tree().paused = true
 		set_player_process_input(false)
@@ -182,16 +183,19 @@ func _return_to_lobby():
 
 
 # Transition to main menu
-func _on_PausedMenu_return_to_main_menu():
+remote func begin_return_to_main_menu():
 	$VisorTransition.bring_down(self, "_return_to_main_menu")
-	if get_tree().network_peer:
-		$VisorTransition.rpc("bring_down")
+	set_process_input(false)
+	if get_tree().network_peer and is_network_master():
+		rpc("begin_return_to_main_menu")
 
 
 # Change to main menu
 func _return_to_main_menu():
-	if !get_tree().network_peer:
-		get_tree().paused = false
+	get_tree().call_group("player", "remove_from_group", "player")
+	get_tree().call_group("knight", "remove_from_group", "knight")
+	queue_free()
+	get_tree().paused = false
 	var _err = get_tree().change_scene("res://ui/main/main_menu.tscn")
 
 

@@ -403,8 +403,9 @@ func _on_StartButton_pressed():
 
 remote func start_pressed():
 	$VisorTransition.bring_down(self, "start")
+	$AnimationPlayer.play("fade_music_out")
 
-
+ 
 remote func start():
 	get_tree().paused = true
 	if get_tree().network_peer and is_network_master():
@@ -440,6 +441,7 @@ remote func connection_ready_to_start():
 		get_tree().get_root().get_node("Arena").games_synced()
 		if get_tree().network_peer:
 			get_tree().get_root().get_node("Arena").rpc("games_synced")
+		connections_ready_to_start.clear()
 
 
 func return_to():
@@ -447,9 +449,11 @@ func return_to():
 		get_tree().refuse_new_network_connections = false
 	get_tree().paused = false
 	$VisorTransition.lift_up()
+	$AnimationPlayer.play("fade_music_in")
 	visible = true
 	set_process(true)
 	set_process_input(true)
+	
 
 
 func _on_BackButton_pressed():

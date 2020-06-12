@@ -111,6 +111,7 @@ remote func reset():
 	device_id = null
 	bot_id = null
 	ready = false
+	capturing_input = false
 
 
 func get_player_data():
@@ -175,7 +176,6 @@ remote func color_taken(color):
 	if ready and COLORS[color_i][0] == color:
 		unready()
 	update_color_text()
-	
 
 
 remote func color_freed(color):

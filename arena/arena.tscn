@@ -258,7 +258,7 @@ tracks/8/keys = {
 "values": [ true, true, true, true ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=31]
 resource_name = "failure"
 length = 2.0
 step = 0.05
@@ -455,8 +455,7 @@ tracks/4/keys = {
 "values": [ "TIME'S UP" ]
 }
 
-[sub_resource type="Animation" id=31]
-resource_name = "victory"
+[sub_resource type="Animation" id=34]
 length = 2.0
 step = 0.05
 tracks/0/type = "value"
@@ -800,6 +799,7 @@ visible = false
 position = Vector2( 512, 0 )
 
 [node name="Area2D" type="Area2D" parent="Walls/NorthWall" groups=[
+"north_wall",
 "wall",
 ]]
 
@@ -813,6 +813,7 @@ shape = SubResource( 22 )
 position = Vector2( 512, 576 )
 
 [node name="Area2D" type="Area2D" parent="Walls/SouthWall" groups=[
+"south_wall",
 "wall",
 ]]
 
@@ -826,6 +827,7 @@ shape = SubResource( 24 )
 position = Vector2( 1024, 288 )
 
 [node name="Area2D" type="Area2D" parent="Walls/EastWall" groups=[
+"east_wall",
 "wall",
 ]]
 
@@ -840,6 +842,7 @@ position = Vector2( 0, 288 )
 
 [node name="Area2D" type="Area2D" parent="Walls/WestWall" groups=[
 "wall",
+"west_wall",
 ]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WestWall/Area2D"]
@@ -900,15 +903,15 @@ __meta__ = {
 }
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 60.0
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/countdown = SubResource( 30 )
-anims/failure = SubResource( 34 )
+anims/failure = SubResource( 31 )
 anims/sudden_death = SubResource( 32 )
 anims/times_up = SubResource( 33 )
-anims/victory = SubResource( 31 )
+anims/victory = SubResource( 34 )
 
 [node name="PausedMenu" parent="." instance=ExtResource( 5 )]
 margin_right = 1024.0
@@ -932,6 +935,6 @@ stream = ExtResource( 12 )
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="begin_return_to_lobby"]
-[connection signal="return_to_main_menu" from="PausedMenu" to="." method="_on_PausedMenu_return_to_main_menu"]
+[connection signal="return_to_main_menu" from="PausedMenu" to="." method="begin_return_to_main_menu"]
 [connection signal="lifted_up" from="VisorTransition" to="." method="_on_VisorTransition_lifted_up"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_random_powerup"]
