@@ -8,7 +8,7 @@ var method_to_call
 
 
 # Bring down the visor, call obj's method when done
-func bring_down(obj, method):
+remote func bring_down(obj, method):
 	object_to_call = obj
 	method_to_call = method
 	$AnimationPlayer.play("down")
@@ -20,7 +20,7 @@ func _down_done():
 
 
 # Bring up the visor
-func lift_up():
+remote func lift_up():
 	$AnimationPlayer.play("up")
 
 

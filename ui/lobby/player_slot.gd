@@ -71,7 +71,7 @@ func handle_mouse_event(event):
 				focused_button = node
 				hover_button(focused_button)
 	if event is InputEventMouseMotion:
-			get_tree().set_input_as_handled()
+		get_tree().set_input_as_handled()
 
 
 func load_player(number, player_data={}):
@@ -91,11 +91,16 @@ func load_player(number, player_data={}):
 	ready = player_data.get("ready", false)
 	if ready:
 		player_ready()
+	else:
+		unready()
 	
 
-func reset():
+remote func reset():
 	if focused_button:
 		unhover_button(focused_button)
+	if ready:
+		for slot in get_tree().get_nodes_in_group("player_slot"):
+			slot.color_freed(COLORS[color_i][0])
 	color_i = 0
 	$Background/ColorName.text = COLORS[color_i][0]
 	$Cover/ClosedButton.visible = false
@@ -106,6 +111,7 @@ func reset():
 	device_id = null
 	bot_id = null
 	ready = false
+	capturing_input = false
 
 
 func get_player_data():
@@ -116,10 +122,7 @@ func get_player_data():
 remote func update_color(i):
 	color_i = i
 	$Background/ColorName.text = COLORS[color_i][0]
-	if taken_colors.has(COLORS[color_i][0]):
-		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
-	else:
-		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
+	update_color_text()
 	if get_tree().network_peer and is_network_master():
 		rpc("update_color", color_i)
 
@@ -130,7 +133,7 @@ func _on_ReadyButton_pressed():
 	time_readied = OS.get_ticks_msec()
 	player_ready()
 
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("player_ready")
 			
 
@@ -143,8 +146,8 @@ remote func player_ready():
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		if slot != self:
 			slot.color_taken(COLORS[color_i][0])
-		if get_tree().network_peer:
-			slot.rpc("color_taken", COLORS[color_i][0])
+			if get_tree().network_peer and is_network_master():
+				slot.rpc("color_taken", COLORS[color_i][0])
 	if is_mouse_over_node($Cover/ClosedButton):
 		_on_ClosedButton_focus_entered()
 	else:
@@ -152,19 +155,19 @@ remote func player_ready():
 
 
 remote func unready():
+	if !ready:
+		return
 	ready = false
 	capturing_input = true
 	time_readied = null
+	set_edit_button_visibility(true)
 	unhover_button(focused_button)
 	focused_button = get_node("Background/ColorContainer/LeftArrowContainer/Button")
 	hover_button(focused_button)
-	set_edit_button_visibility(true)
 	$Cover/ClosedButton.visible = false
 	$Cover/EditLabel.visible = false
-	for slot in get_tree().get_nodes_in_group("player_slot"):
-		slot.color_freed(COLORS[color_i][0])
-		if get_tree().network_peer:
-			slot.rpc("color_freed", COLORS[color_i][0])
+	if get_tree().network_peer and is_network_master():
+		rpc("unready")
 
 
 remote func color_taken(color):
@@ -172,16 +175,23 @@ remote func color_taken(color):
 		taken_colors.append(color)
 	if ready and COLORS[color_i][0] == color:
 		unready()
-	if COLORS[color_i][0] == color:
-		update_color(color_i)
+	update_color_text()
 
 
 remote func color_freed(color):
 	if ready and COLORS[color_i][0] == color:
 		return
 	taken_colors.erase(color)
-	if COLORS[color_i][0] == color:
-		update_color(color_i)
+	update_color_text()
+	if get_tree().network_peer and is_network_master():
+		rpc("color_freed", color)
+
+
+func update_color_text():
+	if taken_colors.has(COLORS[color_i][0]):
+		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
+	else:
+		$Background/ColorName.set("custom_colors/font_color", FONT_COLOR)
 
 
 func set_edit_button_visibility(visible):
@@ -208,9 +218,10 @@ func _on_RightColorButton_pressed():
 	
 
 func send_data():
+	rpc("update_color", color_i)
 	if ready:
 		rpc("player_ready")
-	rpc("update_color", color_i)
+	
 
 
 func move_ui(direction):
@@ -230,6 +241,8 @@ func is_mouse_over_node(node):
 
 
 func unhover_button(button):
+	if !button:
+		return
 	if "texture_normal" in button:
 		button.texture_normal = button.texture_disabled
 	elif "custom_colors/font_color" in button:
@@ -246,16 +259,17 @@ func hover_button(button):
 
 
 func _on_ClosedButton_pressed():
+	if (get_tree().network_peer and !is_network_master() 
+			and get_tree().get_network_unique_id() != 1):
+		return
 	_on_RemoveButton_pressed()
 
 
 func _on_RemoveButton_pressed():
 	emit_signal("removed", self)
-	for slot in get_tree().get_nodes_in_group("player_slot"):
-		slot.color_freed(COLORS[color_i][0])
-		if get_tree().network_peer:
-			slot.rpc("color_freed", COLORS[color_i][0])
 	reset()
+	if get_tree().network_peer and is_network_master():
+		rpc("reset")
 
 
 # Get the device id if its a controller event, or "keyboard" if its keyboard
@@ -277,6 +291,9 @@ func device_matches_event(event):
 
 
 func _on_ClosedButton_focus_entered():
+	if (get_tree().network_peer and !is_network_master() 
+			and get_tree().get_network_unique_id() != 1):
+		return
 	$Cover/ClosedButton.text = "Remove?"
 	$Cover/EditLabel.visible = false
 

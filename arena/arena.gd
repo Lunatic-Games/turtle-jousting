@@ -14,6 +14,7 @@ const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pic
 	preload("res://powerups/stone_potion/stone_potion.tscn")]
 
 var duels = []
+var game_done
 
 
 # Setup game and disable features if this is a menu version
@@ -21,6 +22,7 @@ func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if MENU_VERSION:
 		$GameTimerLabel.visible = false
+		$VisorTransition.visible = false
 		set_process_input(false)
 		add_player(1, 1, {"number": 1, "bot_id": 999})
 		add_player(2, 1, {"number": 2, "bot_id": 998})
@@ -46,6 +48,7 @@ func _process(_delta):
 # Check for pause
 func _input(event):
 	if !MENU_VERSION and event.is_action("pause") and event.pressed:
+		print("Pause pressed")
 		if !get_tree().network_peer:
 			get_tree().paused = true
 		set_player_process_input(false)
@@ -80,6 +83,9 @@ func all_players_added():
 		if spawn_node.global_position.x > 1024 / 2:
 			player.invert_start_direction()
 		i += 1
+
+
+remote func games_synced():
 	get_tree().paused = false
 
 
@@ -89,16 +95,26 @@ func start():
 	set_process(true)
 	$GameMusic.play()
 	$GameTimer.start()
-	$PowerupSpawnTimer.start()
+	if get_tree().network_peer and is_network_master():
+		$PowerupSpawnTimer.start()
 
 
 # Spawn a powerup
-func _spawn_powerup():
-	var powerup_scene = powerup_scenes[randi() % len(powerup_scenes)]
+func _spawn_random_powerup():
+	var powerup_i = randi() % len(powerup_scenes)
+	var pos = furthest_powerup_spawn_position()
+	spawn_powerup(powerup_i, pos)
+	if get_tree().network_peer:
+		rpc("spawn_powerup", powerup_i, pos)
+
+
+remote func spawn_powerup(i, position):
+	var powerup_scene = powerup_scenes[i]
 	var powerup = powerup_scene.instance()
 	$YSort.add_child(powerup)
-	powerup.global_position = furthest_powerup_spawn_position()
-	powerup.connect("picked_up", $PowerupSpawnTimer, "start")
+	powerup.global_position = position
+	if get_tree().network_peer and is_network_master():
+		powerup.connect("picked_up", $PowerupSpawnTimer, "start")
 
 
 # Determines the powerup spawn location that is furthest from players
@@ -118,16 +134,32 @@ func furthest_powerup_spawn_position():
 
 # Check if there is only one player remaining
 func _on_Player_lost():
+	if len(get_tree().get_nodes_in_group("player")) <= 1 and !game_done:
+		set_player_process_input(false)
+		game_done = true
+		$GameTimer.stop()
+		var timer = Timer.new()
+		timer.one_shot = true
+		timer.wait_time = 0.5
+		add_child(timer)
+		timer.connect("timeout", self, "_game_end")
+		timer.start()
+
+
+func _game_end():
 	if len(get_tree().get_nodes_in_group("player")) == 1:
-		$AnimationPlayer.play("end_game")
+		$AnimationPlayer.play("victory")
+	elif len(get_tree().get_nodes_in_group("player")) == 0:
+		$AnimationPlayer.play("failure")
 
 
 # Begin transition to return to the lobby
-func begin_return_to_lobby():
+remote func begin_return_to_lobby():
+	get_tree().paused = true
 	set_player_process_input(false)
 	$VisorTransition.bring_down(self, "_return_to_lobby")
-	if get_tree().network_peer:
-		$VisorTransition.rpc("bring_down")
+	if get_tree().network_peer and is_network_master():
+		rpc("begin_return_to_lobby")
 
 
 # Resume handling player input
@@ -151,16 +183,19 @@ func _return_to_lobby():
 
 
 # Transition to main menu
-func _on_PausedMenu_return_to_main_menu():
+remote func begin_return_to_main_menu():
 	$VisorTransition.bring_down(self, "_return_to_main_menu")
-	if get_tree().network_peer:
-		$VisorTransition.rpc("bring_down")
+	set_process_input(false)
+	if get_tree().network_peer and is_network_master():
+		rpc("begin_return_to_main_menu")
 
 
 # Change to main menu
 func _return_to_main_menu():
-	if !get_tree().network_peer:
-		get_tree().paused = false
+	get_tree().call_group("player", "remove_from_group", "player")
+	get_tree().call_group("knight", "remove_from_group", "knight")
+	queue_free()
+	get_tree().paused = false
 	var _err = get_tree().change_scene("res://ui/main/main_menu.tscn")
 
 
@@ -172,3 +207,12 @@ func set_player_process_input(process):
 
 func _on_VisorTransition_lifted_up():
 	$AnimationPlayer.play("countdown")
+
+
+func _on_GameTimer_timeout():
+	if len(get_tree().get_nodes_in_group("knight")) == 1:
+		$AnimationPlayer.play("times_up")
+		return
+	for knight in get_tree().get_nodes_in_group("knight"):
+		knight.set_health(1)
+	$AnimationPlayer.play("sudden_death")

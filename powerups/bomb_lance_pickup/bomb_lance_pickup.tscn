@@ -8,12 +8,11 @@
 [ext_resource path="res://powerups/bomb_lance_pickup/audio/end_well.wav" type="AudioStream" id=6]
 [ext_resource path="res://powerups/bomb_lance_pickup/audio/shouldnt_allow.wav" type="AudioStream" id=7]
 
-
-
 [node name="BombLancePickup" instance=ExtResource( 2 )]
 weapon = ExtResource( 4 )
 audio_on_pickup = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 7 ) ]
 
 [node name="Sprite" parent="." index="2"]
+visible = false
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 1 )

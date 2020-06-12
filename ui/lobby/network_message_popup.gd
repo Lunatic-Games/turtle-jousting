@@ -23,7 +23,19 @@ func show_creating_server():
 	$CreatingServerMessage.text = CREATING_SERVER_MESSAGE + " ."
 	$CreatingServerMessage.visible = true
 	net_type = NetworkType.SERVER
-	
+
+
+func show_not_everyone_ready():
+	popup()
+	$NotEveryoneReadyMessage.visible = true
+	$FailureTimer.start()
+
+
+func show_not_enough_players():
+	popup()
+	$NotEnoughPlayersMessage.visible = true
+	$FailureTimer.start()
+
 
 func hide():
 	$FailureTimer.stop()
@@ -75,4 +87,6 @@ func _on_DotTimer_timeout():
 
 
 func _on_FailureTimer_timeout():
+	for message in get_tree().get_nodes_in_group("network_message"):
+		message.visible = false
 	hide()

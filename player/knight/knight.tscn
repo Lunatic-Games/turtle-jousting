@@ -10980,18 +10980,12 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( -827.658, 396.848 )
-rotation = -4.64083
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( -687.41, 530.178 )
-rotation = -3.45575
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( -652.189, 540.242 )
-rotation = -3.46797
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
@@ -11003,21 +10997,15 @@ script = ExtResource( 29 )
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -179.869, 451.564 )
-rotation = -2.0368
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -255.34, 355.968 )
-rotation = -2.42077
 texture = ExtResource( 8 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Chest"]
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -122.01, 522.213 )
-rotation = -1.91463
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -11041,35 +11029,23 @@ texture = ExtResource( 13 )
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FL-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -395.592, 225.154 )
-rotation = -2.42252
 texture = ExtResource( 14 )
 
 [node name="FU-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -428.293, 334.585 )
-rotation = -3.07876
 texture = ExtResource( 15 )
 
 [node name="FH-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -289.934, 176.097 )
-rotation = -3.02815
 texture = ExtResource( 16 )
 
 [node name="FrontLeg" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FU-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
-position = Vector2( -242.764, 317.605 )
-rotation = -2.18166
 texture = ExtResource( 17 )
 
 [node name="FL-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
-position = Vector2( -206.285, 310.686 )
-rotation = -2.2602
 texture = ExtResource( 18 )
 
 [node name="FF-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
-position = Vector2( 266.66, -427.666 )
-rotation = -0.328122
 texture = ExtResource( 19 )
 
 [node name="WaterSplash" type="AnimatedSprite" parent="Reversable"]
@@ -11077,7 +11053,6 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Reversable"]
@@ -11088,7 +11063,7 @@ frames = SubResource( 3 )
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
+polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 4 )

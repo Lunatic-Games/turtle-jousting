@@ -4,8 +4,8 @@ extends "res://player/turtle/turtle.gd"
 signal lost
 
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
-const JOUST_CHARGE_RATE = 250
-const MAX_JOUST_CHARGE = 500
+const JOUST_CHARGE_RATE = 400
+const MAX_JOUST_CHARGE = 1000
 const THROW_START_CHARGE = 150
 const THROW_CHARGE_RATE = 150
 const MAX_THROW_CHARGE = 800
@@ -19,7 +19,14 @@ var joust_direction = Vector2(1, 0)
 var joust_move_actions
 var throw_charge = 0.0
 var dueling = false
-var number
+onready var knight = get_node("Knight")
+
+
+func _ready():
+	if get_tree().network_peer and is_network_master():
+		rpc("set_color", $Reversable/Sprite/Modulate.modulate)
+	if get_tree().network_peer:
+		rpc_config("call_deferred", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 # Handle different actions
@@ -118,6 +125,7 @@ func begin_charging_throw():
 	throw_charge = THROW_START_CHARGE
 	$ThrowIndicator.set_curve($Knight.weapon_handle.weapon.get_curve())
 	$ThrowIndicator.update_indicator(throw_charge)
+	$ThrowIndicator.visible = true
 
 
 # Throw held weapon
@@ -187,7 +195,8 @@ func update_joust_indicator():
 	if dir.length() > JOUST_DEADZONE:
 		joust_direction = dir.normalized()
 	
-	$JoustIndicator.update_indicator(joust_direction, joust_charge)
+	$JoustIndicator.update_indicator(joust_direction, 
+		joust_charge / MAX_JOUST_CHARGE)
 
 
 # Extend update_sprite_direction to consider joust direction
@@ -214,10 +223,11 @@ func moved(movement):
 
 
 # Remove knight from self
-func knock_knight_off(knockback):
+remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
-	var knight = get_node("Knight")
+	if get_tree().network_peer:
+		rpc("knock_knight_off", knockback)
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
@@ -230,10 +240,14 @@ func knock_knight_off(knockback):
 		remove_status("Drunk")
 	elif has_status("Stoned"):
 		knight.hit(100)
-	
+
 
 # Add knight back
-func pick_up_knight(knight):
+remote func pick_up_knight():
+	if has_node("Knight"):
+		return
+	if get_tree().network_peer:
+		rpc("pick_up_knight")
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
@@ -249,8 +263,6 @@ func load_data(data = {}):
 		add_child(bot_ai_scene.instance())
 	else:
 		device_id = data.get("device_id", null)
-	number = data.get("number", null)
-	$Knight.player_number = number
 	if data.get("color", null):
 		set_color(data["color"])
 
@@ -279,17 +291,23 @@ func hit_turtle(turtle):
 
 
 # Pickup knight if hit and in water
-func hit_knight(knight):
-	if !knight.on_turtle and knight.alive and number == knight.player_number:
-		call_deferred("pick_up_knight", knight)
+func hit_knight(knight_hit):
+	if knight_hit == knight and !knight.on_turtle:
+		call_deferred("pick_up_knight")
 
 
-# Stop joust if hit a wall
-func hit_wall(_wall):
-	if $AnimationTree.is_in_state("controlling/jousting/jousting"):
-		$AnimationTree.travel("controlling/waiting/idling")
-		if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
-			$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
+# Bounce off walls if jousting
+func hit_wall(wall):
+	if !$AnimationTree.is_in_state("controlling/jousting/jousting"):
+		return
+	if wall.is_in_group("east_wall"):
+		locked_direction.x = -abs(locked_direction.x)
+	elif wall.is_in_group("north_wall"):
+		locked_direction.y = abs(locked_direction.y)
+	elif wall.is_in_group("south_wall"):
+		locked_direction.y = -abs(locked_direction.y)
+	elif wall.is_in_group("west_wall"):
+		locked_direction.x = abs(locked_direction.x)
 
 
 # Pick up a powerup, if able
@@ -299,7 +317,7 @@ func hit_powerup(powerup):
 
 
 # Set color modulation for team color
-func set_color(color):
+remote func set_color(color):
 	.set_color(color)
 	$JoustIndicator.set_color(color)
 	$Knight.set_color(color)

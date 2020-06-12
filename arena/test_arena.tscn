@@ -1,29 +1,25 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://arena/test_arena.gd" type="Script" id=2]
-[ext_resource path="res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn" type="PackedScene" id=3]
-[ext_resource path="res://powerups/mead/mead.tscn" type="PackedScene" id=4]
-[ext_resource path="res://powerups/stone_potion/stone_potion.tscn" type="PackedScene" id=5]
+[ext_resource path="res://powerups/leech_pickup/leech_pickup.tscn" type="PackedScene" id=3]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 335.945, 294.173 )
-locked = true
 slowed = true
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 708.47, 289.62 )
-locked = true
 slowed = true
 
-[node name="BombLancePickup" parent="." instance=ExtResource( 3 )]
-position = Vector2( 495.382, 101.946 )
+[node name="LeechPickup" parent="." instance=ExtResource( 3 )]
+position = Vector2( 393.588, 73.9691 )
 
-[node name="Mead" parent="." instance=ExtResource( 4 )]
-position = Vector2( 721.483, 86.8723 )
+[node name="LeechPickup2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 661.367, 72.5371 )
 
-[node name="StonePotion" parent="." instance=ExtResource( 5 )]
-position = Vector2( 303.95, 71.7989 )
+[node name="LeechPickup3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 522.465, 73.9691 )

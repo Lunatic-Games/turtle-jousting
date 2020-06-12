@@ -75,7 +75,12 @@ func put_away():
 
 # Damage knight by given damage and apply damage mod
 func _damage_knight(knight, damage, knockback=Vector2(0, 0)):
-	knight.call_deferred("hit", damage*damage_mod, knockback)
+	if get_tree().network_peer:
+		if is_network_master():
+			knight.call_deferred("hit", damage*damage_mod, knockback)
+			knight.rpc("call_deferred", "hit", damage*damage_mod, knockback)
+	else:
+		knight.call_deferred("hit", damage*damage_mod, knockback)
 
 
 # Knock knight off of player with given knockback
@@ -83,12 +88,22 @@ func _knock_off_knight(knight, knockback):
 	var player = knight.get_parent()
 	if !player:
 		return
-	player.call_deferred("knock_knight_off", knockback)
+	if get_tree().network_peer:
+		if is_network_master():
+			player.call_deferred("knock_knight_off", knockback)
+			player.rpc("call_deferred", "knock_knight_off", knockback)
+	else:
+		player.call_deferred("knock_knight_off", knockback)
 
 
 # Tell weapon to unequp this weapon
 func _unequip():
-	get_parent().call_deferred("unequip_held_weapon")
+	if get_tree().network_peer:
+		if is_network_master():
+			get_parent().call_deferred("unequip_held_weapon")
+			get_parent().rpc("call_deferred", "unequip_held_weapon")
+	else:
+		get_parent().call_deferred("unequip_held_weapon")
 
 
 # Duel another player

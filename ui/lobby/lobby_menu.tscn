@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://ui/lobby/lobby_menu.gd" type="Script" id=1]
 [ext_resource path="res://ui/lobby/network_message_popup.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://ui/lobby/assets/left_scaled_cropped.png" type="Texture" id=9]
 [ext_resource path="res://ui/lobby/assets/tv_scaled_cropped.png" type="Texture" id=10]
 [ext_resource path="res://video/rick.ogv" type="VideoStream" id=11]
+[ext_resource path="res://music/lobby.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -63,6 +64,38 @@ font_data = ExtResource( 5 )
 [sub_resource type="DynamicFont" id=13]
 size = 24
 font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=15]
+resource_name = "fade_music_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("LobbyMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -80.0, -30.0, -20.0, -10.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "fade_music_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("LobbyMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7, 1.3, 1.7, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -10.0, -20.0, -30.0, -80.0 ]
+}
 
 [node name="Lobby" type="Control"]
 pause_mode = 1
@@ -384,6 +417,7 @@ __meta__ = {
 }
 
 [node name="VideoPlayer" type="VideoPlayer" parent="LobbySections/VideoContainer"]
+modulate = Color( 0, 0, 0, 1 )
 margin_left = 31.0
 margin_top = 58.0
 margin_right = 492.0
@@ -406,6 +440,15 @@ one_shot = true
 [node name="KeyboardPopup" parent="." instance=ExtResource( 3 )]
 
 [node name="VisorTransition" parent="." instance=ExtResource( 7 )]
+
+[node name="LobbyMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -6.0
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fade_music_in = SubResource( 15 )
+anims/fade_music_out = SubResource( 14 )
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
 [connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]

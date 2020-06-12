@@ -10,9 +10,9 @@ export (Curve) var flying_velocity
 const MAX_HEALTH = 100
 const MAX_FLY_DISTANCE = 1024
 
+var sudden_death = false
 var health = MAX_HEALTH
 var alive = true
-var player_number
 var flying_knockback
 var flying_dist_travelled = 0
 onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
@@ -27,6 +27,7 @@ func _ready():
 	if get_tree().network_peer:
 		$Reversable.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
 		$CollisionPolygon2D.rset_config("scale", MultiplayerAPI.RPC_MODE_REMOTE)
+		rpc_config("call_deferred", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 # Fly self through air if flying
@@ -56,7 +57,7 @@ func hit(damage, knockback_on_death=Vector2(0, 0)):
 
 # Increase health
 func heal(amount):
-	if !alive:
+	if !alive or sudden_death:
 		return
 	health += amount
 	health = min(health, 100)
@@ -116,6 +117,3 @@ func _on_FlyingHitbox_area_entered(area):
 func _is_flying():
 	return ($AnimationTree.is_in_state("flying_off/flying_off") or
 		$AnimationTree.is_in_state("flying_off/flying"))
-
-
-

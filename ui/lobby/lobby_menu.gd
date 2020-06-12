@@ -15,6 +15,8 @@ onready var local_container = get_node("ConnectionSection/VBoxContainer/" +
 # Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
 
+var connections_ready_to_start = []
+
 # Keeps track of local players, player_number : device_id
 var local_players = {}
 
@@ -209,7 +211,7 @@ func _new_connection(id):
 func _disconnection(id):
 	if !connections.has(id):
 		return
-	for player in connections[id].keys():
+	for player in connections[id]:
 		get_player_slot(player).reset()
 	connections.erase(id)
 
@@ -251,6 +253,7 @@ remote func join(existing_connections, remote_code, local_code):
 		else:
 			new_local_players[pos] = local_players[player]
 			player_data[pos] = get_player_slot(player).get_player_data()
+			player_data[pos]["ready"] = false
 			connections[net_id].append(pos)
 		
 	_joined_lobby(remote_code, local_code)
@@ -258,8 +261,8 @@ remote func join(existing_connections, remote_code, local_code):
 	load_existing_connections()
 	rpc("update_player_list", local_players)
 	for player in local_players.keys():
-		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).set_network_master(net_id)
+		get_player_slot(player).load_player(player, player_data[player])
 		get_player_slot(player).send_data()
 	rpc("new_connection")
 
@@ -275,9 +278,9 @@ remote func update_player_list(players):
 
 	connections[sender_id] = players
 	for player in connections[sender_id]:
-		get_player_slot(player).load_player(player, player_data.get(player, {}))
 		get_player_slot(player).set_network_master(sender_id)
-		
+		get_player_slot(player).load_player(player, player_data.get(player, {}))
+
 
 # Send existing data to the new connection
 remote func new_connection():
@@ -382,17 +385,28 @@ func toggle_ui_visibility(group_name, visibility):
 
 
 func _on_StartButton_pressed():
-	$VisorTransition.bring_down(self, "_call_start")
+	var num_ready = 0
+	var slots = get_tree().get_nodes_in_group("player_slot")
+	for slot in slots:
+		if slot.capturing_input:
+			$NetworkMessagePopup.show_not_everyone_ready()
+			return
+		elif slot.ready:
+			num_ready += 1
+	if num_ready == 0:
+		$NetworkMessagePopup.show_not_enough_players()
+		return
+	start_pressed()
+	if get_tree().network_peer and is_network_master():
+		rpc("start_pressed")
 
 
-func _call_start():
-	if get_tree().network_peer:
-		rpc("start")
-	else:
-		start()
+remote func start_pressed():
+	$VisorTransition.bring_down(self, "start")
+	$AnimationPlayer.play("fade_music_out")
 
-
-remotesync func start():
+ 
+remote func start():
 	get_tree().paused = true
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = true
@@ -409,15 +423,37 @@ remotesync func start():
 	visible = false
 	set_process(false)
 	set_process_input(false)
+	if !get_tree().network_peer or is_network_master():
+		connection_ready_to_start()
+	elif get_tree().network_peer:
+		rpc_id(1, "connection_ready_to_start")
+
+
+remote func connection_ready_to_start():
+	var id = get_tree().get_rpc_sender_id()
+	if id == 0:
+		id = 1
+	connections_ready_to_start.append(id)
+	connections_ready_to_start.sort()
+	var conns = connections.keys()
+	conns.sort()
+	if connections_ready_to_start == conns:
+		get_tree().get_root().get_node("Arena").games_synced()
+		if get_tree().network_peer:
+			get_tree().get_root().get_node("Arena").rpc("games_synced")
+		connections_ready_to_start.clear()
 
 
 func return_to():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = false
+	get_tree().paused = false
 	$VisorTransition.lift_up()
+	$AnimationPlayer.play("fade_music_in")
 	visible = true
 	set_process(true)
 	set_process_input(true)
+	
 
 
 func _on_BackButton_pressed():
@@ -447,10 +483,11 @@ func _on_ConnectionTimer_timeout():
 
 
 func _on_VisorTransition_lifted_up():
-	if button_container.get_node("OpenMultiplayerButton").visible:
-		button_container.get_node("OpenMultiplayerButton").grab_focus()
-	else:
-		button_container.get_node("CloseMultiplayerButton").grab_focus()
+	for element in button_container.get_children():
+		if element.visible:
+			element.grab_focus()
+			return
+	print("Unable to find topmost button")
 
 
 func _on_Popup_about_to_show():

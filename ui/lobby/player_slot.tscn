@@ -320,7 +320,7 @@ __meta__ = {
 ]]
 margin_left = 109.0
 margin_right = 249.0
-margin_bottom = 59.0
+margin_bottom = 60.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath("../../ColorContainer/LeftArrowContainer/Button")
 focus_neighbour_right = NodePath("../RemoveButton")
@@ -341,7 +341,7 @@ __meta__ = {
 ]]
 margin_left = 249.0
 margin_right = 376.0
-margin_bottom = 59.0
+margin_bottom = 60.0
 focus_neighbour_left = NodePath("../ReadyButton")
 focus_neighbour_top = NodePath("../../ColorContainer/RightArrowContainer/Button")
 focus_neighbour_right = NodePath(".")
