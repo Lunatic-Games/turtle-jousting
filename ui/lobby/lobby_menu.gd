@@ -323,7 +323,7 @@ remote func add_player(pos, device, bot_id=null):
 	else:
 		local_players[pos] = device
 	if get_tree().network_peer:
-		rpc("update_player_list", local_players)
+		rpc("update_player_list", local_players.keys())
 		var net_id = get_tree().get_network_unique_id()
 		get_player_slot(pos).set_network_master(net_id)
 		connections[net_id] = local_players.keys()
