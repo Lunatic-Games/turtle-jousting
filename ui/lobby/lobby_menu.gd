@@ -318,7 +318,10 @@ remote func slot_request_denied(device):
 remote func add_player(pos, device, bot_id=null):
 	if requested_devices.has(device):
 		requested_devices.erase(device)
-	local_players[pos] = bot_id
+	if bot_id:
+		local_players[pos] = bot_id
+	else:
+		local_players[pos] = device
 	if get_tree().network_peer:
 		rpc("update_player_list", local_players)
 		var net_id = get_tree().get_network_unique_id()
