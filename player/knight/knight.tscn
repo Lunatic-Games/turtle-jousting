@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=2]
+[gd_scene load_steps=136 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/parts/knight_leg_BU.png" type="Texture" id=2]
@@ -44,6 +44,7 @@
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F5.png" type="Texture" id=42]
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F6.png" type="Texture" id=43]
 [ext_resource path="res://player/knight/assets/dodge_frames/air_shield_F11.png" type="Texture" id=44]
+[ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=45]
 
 [sub_resource type="Curve" id=1]
 max_value = 400.0
@@ -549,6 +550,18 @@ tracks/39/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/40/type = "value"
+tracks/40/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ), Vector2( -25.3591, -48.6152 ) ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.6
@@ -1008,8 +1021,8 @@ tracks/37/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 ) ]
 }
-tracks/38/type = "method"
-tracks/38/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance")
+tracks/38/type = "value"
+tracks/38/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
 tracks/38/interp = 1
 tracks/38/loop_wrap = true
 tracks/38/imported = false
@@ -1017,22 +1030,34 @@ tracks/38/enabled = true
 tracks/38/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "reset_areas_hit"
-} ]
+"update": 0,
+"values": [ Vector2( -1, 1 ) ]
 }
 tracks/39/type = "value"
-tracks/39/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
+tracks/39/path = NodePath("Reversable/HealthBarPosition:position")
 tracks/39/interp = 1
 tracks/39/loop_wrap = true
 tracks/39/imported = false
 tracks/39/enabled = true
 tracks/39/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4.68982, -49.8774 ), Vector2( -5.95203, -50.0352 ) ]
+}
+tracks/40/type = "method"
+tracks/40/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -1, 1 ) ]
+"values": [ {
+"args": [  ],
+"method": "new_attack"
+} ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -2098,6 +2123,18 @@ tracks/43/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/44/type = "value"
+tracks/44/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/44/interp = 1
+tracks/44/loop_wrap = true
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 0.8
@@ -2606,6 +2643,18 @@ tracks/41/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/42/type = "value"
+tracks/42/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -4152,6 +4201,18 @@ tracks/35/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/36/type = "value"
+tracks/36/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/36/interp = 1
+tracks/36/loop_wrap = true
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ) ]
+}
 
 [sub_resource type="Animation" id=13]
 length = 0.3
@@ -4648,6 +4709,18 @@ tracks/40/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ) ]
 }
 
 [sub_resource type="Animation" id=14]
@@ -5156,19 +5229,20 @@ tracks/41/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/42/type = "method"
-tracks/42/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle")
+tracks/42/type = "value"
+tracks/42/path = NodePath(".:on_turtle")
 tracks/42/interp = 1
 tracks/42/loop_wrap = true
 tracks/42/imported = false
 tracks/42/enabled = true
 tracks/42/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"values": [  ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 tracks/43/type = "value"
-tracks/43/path = NodePath(".:on_turtle")
+tracks/43/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
 tracks/43/interp = 1
 tracks/43/loop_wrap = true
 tracks/43/imported = false
@@ -5176,11 +5250,11 @@ tracks/43/enabled = true
 tracks/43/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
 }
 tracks/44/type = "value"
-tracks/44/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
+tracks/44/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
 tracks/44/interp = 1
 tracks/44/loop_wrap = true
 tracks/44/imported = false
@@ -5192,7 +5266,7 @@ tracks/44/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 tracks/45/type = "value"
-tracks/45/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle:scale")
+tracks/45/path = NodePath("Reversable:modulate")
 tracks/45/interp = 1
 tracks/45/loop_wrap = true
 tracks/45/imported = false
@@ -5201,10 +5275,10 @@ tracks/45/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/46/type = "value"
-tracks/46/path = NodePath("Reversable:modulate")
+tracks/46/path = NodePath("Reversable/AnimatedSprite:visible")
 tracks/46/interp = 1
 tracks/46/loop_wrap = true
 tracks/46/imported = false
@@ -5212,8 +5286,20 @@ tracks/46/enabled = true
 tracks/46/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/47/type = "value"
+tracks/47/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/47/interp = 1
+tracks/47/loop_wrap = true
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ Vector2( -4.68988, -47.5107 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -5702,6 +5788,18 @@ tracks/39/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/40/type = "value"
+tracks/40/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 27.813, -47.511 ), Vector2( -4.68988, -47.5107 ) ]
+}
 
 [sub_resource type="Animation" id=16]
 length = 0.5
@@ -6174,6 +6272,18 @@ tracks/38/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/39/type = "value"
+tracks/39/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -25.3591, -48.6152 ), Vector2( 27.813, -43.8818 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -7129,6 +7239,18 @@ tracks/37/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/38/type = "value"
+tracks/38/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ), Vector2( 1.93689, -47.1952 ) ]
+}
 
 [sub_resource type="Animation" id=19]
 length = 0.4
@@ -7587,6 +7709,18 @@ tracks/37/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/38/type = "value"
+tracks/38/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/38/interp = 1
+tracks/38/loop_wrap = true
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.93689, -47.1952 ), Vector2( -4.69, -47.195 ) ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -8082,6 +8216,18 @@ tracks/40/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0, 15 ]
+}
+tracks/41/type = "value"
+tracks/41/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -4.68988, -47.5107 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -9080,6 +9226,18 @@ tracks/41/keys = {
 "method": "sweep_done"
 } ]
 }
+tracks/42/type = "value"
+tracks/42/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/42/interp = 1
+tracks/42/loop_wrap = true
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4.69, -50.035 ), Vector2( 7.9812, -49.1535 ), Vector2( -4.69, -49.154 ) ]
+}
 
 [sub_resource type="Animation" id=23]
 length = 0.2
@@ -9578,6 +9736,18 @@ tracks/40/keys = {
 "method": "show_held_weapon"
 } ]
 }
+tracks/41/type = "value"
+tracks/41/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/41/interp = 1
+tracks/41/loop_wrap = true
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -5.95203, -50.0352 ), Vector2( -4.69, -50.035 ) ]
+}
 
 [sub_resource type="Animation" id=24]
 length = 0.5
@@ -10062,6 +10232,18 @@ tracks/39/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( -1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/40/type = "value"
+tracks/40/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/40/interp = 1
+tracks/40/loop_wrap = true
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -5.95203, -50.0352 ) ]
 }
 
 [sub_resource type="Animation" id=25]
@@ -10772,6 +10954,10 @@ graph_offset = Vector2( -246.339, 36 )
 [sub_resource type="CircleShape2D" id=89]
 radius = 18.4809
 
+[sub_resource type="DynamicFont" id=90]
+size = 22
+font_data = ExtResource( 45 )
+
 [node name="Knight" type="Area2D" groups=[
 "knight",
 ]]
@@ -10780,6 +10966,9 @@ script = ExtResource( 1 )
 flying_velocity = SubResource( 1 )
 
 [node name="Reversable" type="Node2D" parent="."]
+
+[node name="HealthBarPosition" type="Position2D" parent="Reversable"]
+position = Vector2( -4.68988, -47.5107 )
 
 [node name="Sprite" type="Node2D" parent="Reversable"]
 scale = Vector2( 0.05, 0.05 )
@@ -10791,12 +10980,18 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( -827.658, 396.848 )
+rotation = -4.64083
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( -687.41, 530.178 )
+rotation = -3.45575
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( -652.189, 540.242 )
+rotation = -3.46797
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
@@ -10808,17 +11003,21 @@ script = ExtResource( 29 )
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -179.869, 451.564 )
+rotation = -2.0368
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -255.34, 355.968 )
+rotation = -2.42077
 texture = ExtResource( 8 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Chest"]
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( 120.386, -16.4761 )
-rotation = -0.399244
+position = Vector2( -122.01, 522.213 )
+rotation = -1.91463
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -10828,7 +11027,6 @@ texture = ExtResource( 11 )
 visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
-modulate = Color( 1, 1, 1, 0.666667 )
 position = Vector2( 9.76563, -598.45 )
 rotation = 1.07338
 scale = Vector2( 0.1, 0.1 )
@@ -10843,23 +11041,35 @@ texture = ExtResource( 13 )
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FL-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( -395.592, 225.154 )
+rotation = -2.42252
 texture = ExtResource( 14 )
 
 [node name="FU-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( -428.293, 334.585 )
+rotation = -3.07876
 texture = ExtResource( 15 )
 
 [node name="FH-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( -289.934, 176.097 )
+rotation = -3.02815
 texture = ExtResource( 16 )
 
 [node name="FrontLeg" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FU-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
+position = Vector2( -242.764, 317.605 )
+rotation = -2.18166
 texture = ExtResource( 17 )
 
 [node name="FL-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
+position = Vector2( -206.285, 310.686 )
+rotation = -2.2602
 texture = ExtResource( 18 )
 
 [node name="FF-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
+position = Vector2( 266.66, -427.666 )
+rotation = -0.328122
 texture = ExtResource( 19 )
 
 [node name="WaterSplash" type="AnimatedSprite" parent="Reversable"]
@@ -10875,12 +11085,10 @@ visible = false
 position = Vector2( -0.527344, -5.79785 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 3 )
-frame = 15
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-visible = false
-polygon = PoolVector2Array( -14.4761, -38.6142, -4.7905, -45.7816, 10.1253, -30.2846, 5.08884, -18.8556, 14.5807, -0.452881, 11.1052, 9.49542, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -11.7641, -1.034, -8.08362, -21.5675 )
+polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 4 )
@@ -10925,5 +11133,19 @@ position = Vector2( -1.05411, 3.68933 )
 shape = SubResource( 89 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 28 )]
-position = Vector2( -5.28125, -64.6997 )
+position = Vector2( -3.8584, -58.8555 )
+
+[node name="Name" type="Label" parent="."]
+visible = false
+margin_left = -104.348
+margin_top = -74.3984
+margin_right = 95.6516
+margin_bottom = -60.3984
+rect_min_size = Vector2( 200, 0 )
+custom_fonts/font = SubResource( 90 )
+text = "Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="area_entered" from="FlyingHitbox" to="." method="_on_FlyingHitbox_area_entered"]

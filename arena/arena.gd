@@ -4,9 +4,14 @@ extends Node2D
 export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
-const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn")]
-#const powerup_scenes = [preload("res://powerups/lightning_rod/lightning_rod.tscn"),
-#	preload("res://powerups/judgement/judgement.tscn")]
+const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn"),
+	preload("res://powerups/broom_pickup/broom_pickup.tscn"),
+	preload("res://powerups/invis_potion/invis_potion.tscn"),
+	preload("res://powerups/judgement/judgement.tscn"),
+	preload("res://powerups/leech_pickup/leech_pickup.tscn"),
+	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
+	preload("res://powerups/mead/mead.tscn"),
+	preload("res://powerups/stone_potion/stone_potion.tscn")]
 
 var duels = []
 
@@ -17,6 +22,12 @@ func _ready():
 	if MENU_VERSION:
 		$GameTimerLabel.visible = false
 		set_process_input(false)
+		add_player(1, 1, {"number": 1, "bot_id": 999})
+		add_player(2, 1, {"number": 2, "bot_id": 998})
+		add_player(3, 1, {"number": 3, "bot_id": 997})
+		add_player(4, 1, {"number": 4, "bot_id": 996})
+		all_players_added()
+		set_player_process_input(true)
 	else:
 		randomize()
 		set_process(false)
@@ -76,6 +87,7 @@ func all_players_added():
 func start():
 	set_player_process_input(true)
 	set_process(true)
+	$GameMusic.play()
 	$GameTimer.start()
 	$PowerupSpawnTimer.start()
 

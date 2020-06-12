@@ -1,9 +1,14 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://ui/resources/Coiny-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://ui/lobby/player_slot.gd" type="Script" id=2]
 [ext_resource path="res://ui/resources/arrows.png" type="Texture" id=3]
-[ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/lobby/assets/green_button_highlighted.png" type="Texture" id=4]
+[ext_resource path="res://ui/lobby/assets/green_button.png" type="Texture" id=5]
+[ext_resource path="res://ui/lobby/assets/red_button.png" type="Texture" id=6]
+[ext_resource path="res://ui/lobby/assets/green_button_darkened.png" type="Texture" id=7]
+[ext_resource path="res://ui/lobby/assets/red_button_darkened.png" type="Texture" id=8]
+[ext_resource path="res://ui/lobby/assets/red_button_highlighted.png" type="Texture" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -150,7 +155,7 @@ margin_bottom = 25.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath("../../RightArrowContainer/Button")
-focus_neighbour_bottom = NodePath("../../../BottomContainer/RemoveButton")
+focus_neighbour_bottom = NodePath("../../../BottomContainer/ReadyButton")
 focus_mode = 0
 enabled_focus_mode = 0
 texture_normal = SubResource( 2 )
@@ -300,52 +305,54 @@ stretch_mode = 3
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -26.0
-custom_constants/separation = 30
+margin_top = -23.0
+margin_right = 243.0
+margin_bottom = 37.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_constants/separation = 0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RemoveButton" parent="Background/BottomContainer" groups=[
+[node name="ReadyButton" type="TextureButton" parent="Background/BottomContainer" groups=[
 "edit_button",
-] instance=ExtResource( 4 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 20.0
-margin_top = 0.0
-margin_right = 117.0
-margin_bottom = 26.0
+]]
+margin_left = 109.0
+margin_right = 249.0
+margin_bottom = 59.0
 focus_neighbour_left = NodePath(".")
 focus_neighbour_top = NodePath("../../ColorContainer/LeftArrowContainer/Button")
-focus_neighbour_right = NodePath("../ReadyButton")
+focus_neighbour_right = NodePath("../RemoveButton")
 focus_neighbour_bottom = NodePath(".")
 focus_mode = 0
-custom_colors/font_color_disabled = Color( 0.627451, 0.627451, 0.627451, 1 )
+size_flags_horizontal = 0
 enabled_focus_mode = 0
-text = "Remove"
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 4 )
+texture_disabled = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ReadyButton" parent="Background/BottomContainer" groups=[
+[node name="RemoveButton" type="TextureButton" parent="Background/BottomContainer" groups=[
 "edit_button",
-] instance=ExtResource( 4 )]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 147.0
-margin_top = 0.0
-margin_right = 222.0
-margin_bottom = 26.0
-focus_neighbour_left = NodePath("../RemoveButton")
+]]
+margin_left = 249.0
+margin_right = 376.0
+margin_bottom = 59.0
+focus_neighbour_left = NodePath("../ReadyButton")
 focus_neighbour_top = NodePath("../../ColorContainer/RightArrowContainer/Button")
 focus_neighbour_right = NodePath(".")
 focus_neighbour_bottom = NodePath(".")
 focus_mode = 0
-custom_colors/font_color_disabled = Color( 0.627451, 0.627451, 0.627451, 1 )
+size_flags_horizontal = 0
 enabled_focus_mode = 0
-text = "Ready"
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 9 )
+texture_disabled = ExtResource( 6 )
 
 [node name="Cover" type="Control" parent="."]
 anchor_right = 1.0
@@ -412,8 +419,8 @@ __meta__ = {
 }
 [connection signal="pressed" from="Background/ColorContainer/LeftArrowContainer/Button" to="." method="_on_LeftColorButton_pressed"]
 [connection signal="pressed" from="Background/ColorContainer/RightArrowContainer/Button" to="." method="_on_RightColorButton_pressed"]
-[connection signal="pressed" from="Background/BottomContainer/RemoveButton" to="." method="_on_RemoveButton_pressed"]
 [connection signal="pressed" from="Background/BottomContainer/ReadyButton" to="." method="_on_ReadyButton_pressed"]
+[connection signal="pressed" from="Background/BottomContainer/RemoveButton" to="." method="_on_RemoveButton_pressed"]
 [connection signal="gui_input" from="Cover" to="." method="_on_Cover_gui_input"]
 [connection signal="focus_entered" from="Cover/ClosedButton" to="." method="_on_ClosedButton_focus_entered"]
 [connection signal="focus_exited" from="Cover/ClosedButton" to="." method="_on_ClosedButton_focus_exited"]

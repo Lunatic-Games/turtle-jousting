@@ -1,11 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://powerups/powerup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://weapons/leech/leech.tscn" type="PackedScene" id=2]
-[ext_resource path="res://powerups/leech_pickup/leech_icon.png" type="Texture" id=3]
+[ext_resource path="res://powerups/leech_pickup/assets/leech_icon.png" type="Texture" id=3]
+[ext_resource path="res://powerups/leech_pickup/audio/who_drew_that.wav" type="AudioStream" id=4]
+[ext_resource path="res://powerups/leech_pickup/audio/not_a_good_look.wav" type="AudioStream" id=5]
+[ext_resource path="res://powerups/leech_pickup/audio/blood_sucker.wav" type="AudioStream" id=6]
+
+
 
 [node name="LeechPickup" instance=ExtResource( 1 )]
 weapon = ExtResource( 2 )
+audio_on_pickup = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ]
 
 [node name="Sprite" parent="." index="2"]
 visible = false

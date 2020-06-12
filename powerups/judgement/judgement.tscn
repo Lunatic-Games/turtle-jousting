@@ -1,11 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://powerups/powerup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://powerups/judgement/assets/judgement.png" type="Texture" id=2]
 [ext_resource path="res://powerups/judgement/judgement.gd" type="Script" id=3]
+[ext_resource path="res://powerups/judgement/audio/Equality_Trending.wav" type="AudioStream" id=4]
+[ext_resource path="res://powerups/judgement/audio/None_of_this_happened.wav" type="AudioStream" id=5]
+[ext_resource path="res://powerups/judgement/audio/Equals.wav" type="AudioStream" id=6]
 
 [node name="Judgement" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+audio_on_pickup = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ]
 
 [node name="Sprite" parent="." index="2"]
 scale = Vector2( 0.075, 0.075 )

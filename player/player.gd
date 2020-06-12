@@ -107,6 +107,7 @@ func release_joust():
 	$JoustIndicator.visible = false
 	if $Knight.weapon_handle.weapon.name == "Lance":
 		$Knight.weapon_handle.weapon.charge = joust_charge / MAX_JOUST_CHARGE
+	$Knight.weapon_handle.weapon.angle = joust_direction.angle()
 	locked_direction = joust_direction
 
 
@@ -321,7 +322,8 @@ func add_status(status):
 
 # Remove a status from the player
 func remove_status(status_name):
-	$Statuses.get_node(status_name).queue_free()
+	if $Statuses.has_node(status_name):
+		$Statuses.get_node(status_name).queue_free()
 
 
 # Return true if you have a status

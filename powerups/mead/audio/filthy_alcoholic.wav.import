@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/filthy_alcoholic.wav-bd56f7d713a41d6a1a7f76cf0462022f.sample"
+
+[deps]
+
+source_file="res://powerups/mead/audio/filthy_alcoholic.wav"
+dest_files=[ "res://.import/filthy_alcoholic.wav-bd56f7d713a41d6a1a7f76cf0462022f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

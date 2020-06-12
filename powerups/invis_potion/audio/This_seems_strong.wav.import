@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/This_seems_strong.wav-dc726f4e8b20f5db4b5052ab7b38db14.sample"
+
+[deps]
+
+source_file="res://powerups/invis_potion/audio/This_seems_strong.wav"
+dest_files=[ "res://.import/This_seems_strong.wav-dc726f4e8b20f5db4b5052ab7b38db14.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
