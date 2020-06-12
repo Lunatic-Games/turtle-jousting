@@ -188,8 +188,6 @@ remote func color_freed(color):
 
 
 func update_color_text():
-	if get_tree().network_peer and !is_network_master():
-		return
 	if taken_colors.has(COLORS[color_i][0]):
 		$Background/ColorName.set("custom_colors/font_color", TAKEN_FONT_COLOR)
 	else:
