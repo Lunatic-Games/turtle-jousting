@@ -97,6 +97,8 @@ func start():
 	$GameTimer.start()
 	if get_tree().network_peer and is_network_master():
 		$PowerupSpawnTimer.start()
+	elif !get_tree().network_peer:
+		$PowerupSpawnTimer.start()
 
 
 # Spawn a powerup

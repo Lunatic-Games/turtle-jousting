@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://arena/test_arena.gd" type="Script" id=2]
-[ext_resource path="res://powerups/leech_pickup/leech_pickup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn" type="PackedScene" id=3]
+[ext_resource path="res://powerups/leech_pickup/leech_pickup.tscn" type="PackedScene" id=4]
 
 [node name="TestArena" type="Node2D"]
 script = ExtResource( 2 )
@@ -15,11 +16,8 @@ slowed = true
 position = Vector2( 708.47, 289.62 )
 slowed = true
 
-[node name="LeechPickup" parent="." instance=ExtResource( 3 )]
-position = Vector2( 393.588, 73.9691 )
+[node name="LeechPickup" parent="." instance=ExtResource( 4 )]
+position = Vector2( 154.449, 83.9929 )
 
-[node name="LeechPickup2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 661.367, 72.5371 )
-
-[node name="LeechPickup3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 522.465, 73.9691 )
+[node name="BombLancePickup" parent="." instance=ExtResource( 3 )]
+position = Vector2( 626.999, 65.3772 )

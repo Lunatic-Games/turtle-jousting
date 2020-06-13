@@ -65,7 +65,7 @@ font_data = ExtResource( 5 )
 size = 24
 font_data = ExtResource( 5 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=14]
 resource_name = "fade_music_in"
 length = 2.0
 tracks/0/type = "value"
@@ -81,8 +81,7 @@ tracks/0/keys = {
 "values": [ -80.0, -30.0, -20.0, -10.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "fade_music_out"
+[sub_resource type="Animation" id=15]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("LobbyMusic:volume_db")
@@ -417,7 +416,6 @@ __meta__ = {
 }
 
 [node name="VideoPlayer" type="VideoPlayer" parent="LobbySections/VideoContainer"]
-modulate = Color( 0, 0, 0, 1 )
 margin_left = 31.0
 margin_top = 58.0
 margin_right = 492.0
@@ -447,8 +445,8 @@ volume_db = -6.0
 autoplay = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/fade_music_in = SubResource( 15 )
-anims/fade_music_out = SubResource( 14 )
+anims/fade_music_in = SubResource( 14 )
+anims/fade_music_out = SubResource( 15 )
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
 [connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]

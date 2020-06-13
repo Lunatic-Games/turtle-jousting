@@ -15,7 +15,11 @@ onready var local_container = get_node("ConnectionSection/VBoxContainer/" +
 # Keeps track of multiplayer connections, connection_id : player_list
 var connections = {}
 
+# Don't start until all connections are loaded
 var connections_ready_to_start = []
+
+# Keeps track of devices not loaded, but have been requested
+var requested_devices = []
 
 # Keeps track of local players, player_number : device_id
 var local_players = {}
@@ -79,16 +83,13 @@ func _input(event):
 			print("Lobby full")
 			return
 		
-		local_players[pos] = device
-		if get_tree().network_peer:
-			rpc("update_player_list", local_players)
-			var net_id = get_tree().get_network_unique_id()
-			get_player_slot(pos).set_network_master(net_id)
-			connections[net_id] = local_players.keys()
+		if requested_devices.has(device):
+			print("Device already requested")
+			return
+		if !get_tree().network_peer or is_network_master():
+			add_player(pos, device)
 		else:
-			connections[1] = local_players.keys()
-
-		get_player_slot(pos).load_player(pos, {"device_id" : device})
+			rpc_id(1, "slot_requested", device)
 		get_tree().set_input_as_handled()
 		
 	elif event.is_action("add_bot") and event.pressed:
@@ -98,16 +99,10 @@ func _input(event):
 			return
 		
 		var bot_id = get_available_bot_id()
-		local_players[pos] = bot_id
-		if get_tree().network_peer:
-			rpc("update_player_list", local_players)
-			var net_id = get_tree().get_network_unique_id()
-			get_player_slot(pos).set_network_master(net_id)
-			connections[net_id] = local_players.keys()
+		if !get_tree().network_peer or is_network_master():
+			add_player(pos, device, bot_id)
 		else:
-			connections[1] = local_players.keys()
-		get_player_slot(pos).load_player(pos, {"device_id" : device,
-			"bot_id": bot_id})
+			rpc_id(1, "slot_requested", device, bot_id)
 		get_tree().set_input_as_handled()
 
 	elif event.is_action("ui_cancel") and event.pressed:
@@ -259,7 +254,7 @@ remote func join(existing_connections, remote_code, local_code):
 	_joined_lobby(remote_code, local_code)
 	local_players = new_local_players
 	load_existing_connections()
-	rpc("update_player_list", local_players)
+	rpc("update_player_list", local_players.keys())
 	for player in local_players.keys():
 		get_player_slot(player).set_network_master(net_id)
 		get_player_slot(player).load_player(player, player_data[player])
@@ -291,13 +286,51 @@ remote func new_connection():
 # Load players from connections that existed before joining
 func load_existing_connections():
 	var net_id = get_tree().get_network_unique_id()
-	
 	for connection in connections.keys():
 		if connection == net_id:
 			continue
 		for player in connections[connection]:
 			get_player_slot(player).load_player(player)
 			get_player_slot(player).set_network_master(connection)
+
+
+# A client has requested a slot for a player or bot
+master func slot_requested(device, bot_id=null):
+	var net_id = get_tree().get_rpc_sender_id()
+	var next_pos = get_next_open_position()
+	if next_pos == -1:
+		rpc_id(net_id, "slot_request_denied", device)
+	else:
+		rpc_id(net_id, "add_player", next_pos, device, bot_id)
+		if connections.has(net_id):
+			connections[net_id].append(next_pos)
+		else:
+			connections[net_id] = [next_pos]
+
+
+# Server isn't allowing a new player/bot to be added due to a full lobby
+remote func slot_request_denied(device):
+	requested_devices.erase(device)
+	print("Room full")
+
+
+# Add a player at position with given device in control
+remote func add_player(pos, device, bot_id=null):
+	if requested_devices.has(device):
+		requested_devices.erase(device)
+	if bot_id:
+		local_players[pos] = bot_id
+	else:
+		local_players[pos] = device
+	if get_tree().network_peer:
+		rpc("update_player_list", local_players.keys())
+		var net_id = get_tree().get_network_unique_id()
+		get_player_slot(pos).set_network_master(net_id)
+		connections[net_id] = local_players.keys()
+	else:
+		connections[1] = local_players.keys()
+	get_player_slot(pos).load_player(pos, {"device_id" : device,
+		"bot_id": bot_id})
 
 
 # Get associated player slot
@@ -335,6 +368,7 @@ func reset_to_local():
 		client.close()
 	get_tree().network_peer = null
 	connections.clear()
+	requested_devices.clear()
 	connections[1] = []
 	var old_local_players = local_players.duplicate()
 	var player_data = {}

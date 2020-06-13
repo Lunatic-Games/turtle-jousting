@@ -14,5 +14,6 @@ status = ExtResource( 4 )
 audio_on_pickup = [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ) ]
 
 [node name="Sprite" parent="." index="2"]
+visible = false
 scale = Vector2( 0.075, 0.075 )
 texture = ExtResource( 2 )
