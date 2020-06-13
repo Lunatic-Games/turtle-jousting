@@ -3,9 +3,11 @@ extends "res://player/turtle/turtle.gd"
 
 signal lost
 
+export (Curve) var joust_velocity
+
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
-const JOUST_CHARGE_RATE = 400
-const MAX_JOUST_CHARGE = 1000
+const JOUST_CHARGE_RATE = 600
+const MAX_JOUST_CHARGE = 1500
 const THROW_START_CHARGE = 150
 const THROW_CHARGE_RATE = 150
 const MAX_THROW_CHARGE = 800
@@ -14,6 +16,7 @@ const LOST_DUEL_KNOCKBACK = 100
 const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
 const bot_ai_scene = preload("res://player/bot_ai.tscn")
 
+var joust_initial_charge = 0.0
 var joust_charge = 0.0
 var joust_direction = Vector2(1, 0)
 var joust_move_actions
@@ -88,6 +91,8 @@ func _physics_process(delta):
 				$Knight.weapon_handle.disable_hitbox()
 			if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
 				$Knight/AnimationTree.travel("controlling/jousting/joust_ending")
+		else:
+			calculate_joust_locked_speed()
 
 
 # Begin to charge up joust
@@ -115,7 +120,16 @@ func release_joust():
 	if $Knight.weapon_handle.weapon.name == "Lance":
 		$Knight.weapon_handle.weapon.charge = joust_charge / MAX_JOUST_CHARGE
 	$Knight.weapon_handle.weapon.angle = joust_direction.angle()
+	joust_initial_charge = joust_charge
 	locked_direction = joust_direction
+	calculate_joust_locked_speed()
+
+
+# Follow joust velocity curve
+func calculate_joust_locked_speed():
+	var dist = joust_initial_charge - joust_charge
+	var ratio = dist / joust_initial_charge
+	locked_speed = joust_velocity.interpolate(ratio)
 
 
 # Begin to charge up your throw
