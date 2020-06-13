@@ -416,7 +416,6 @@ __meta__ = {
 }
 
 [node name="VideoPlayer" type="VideoPlayer" parent="LobbySections/VideoContainer"]
-modulate = Color( 0, 0, 0, 1 )
 margin_left = 31.0
 margin_top = 58.0
 margin_right = 492.0

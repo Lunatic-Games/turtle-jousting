@@ -322,6 +322,7 @@ func hit_wall(wall):
 		locked_direction.y = -abs(locked_direction.y)
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
+	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pick up a powerup, if able
