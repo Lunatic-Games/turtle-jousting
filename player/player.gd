@@ -168,6 +168,10 @@ func parry():
 func duel(opponent, slapping=false):
 	if opponent.dueling or !has_node("Knight") or !opponent.has_node("Knight"):
 		return
+	knight.set_direction(sign(opponent.knight.global_position.x 
+		- knight.global_position.x))
+	opponent.knight.set_direction(sign(knight.global_position.x
+		- opponent.knight.global_position.x))
 	var duel_indicator = duel_indicator_scene.instance()
 	get_parent().add_child(duel_indicator)
 	duel_indicator.display(self, opponent)
@@ -297,11 +301,17 @@ func hit_turtle(turtle):
 	var other_knight = turtle.get_node("../Knight")
 	if other_knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
 		return
+	if other_knight.get_node("AnimationTree").is_in_state("slapping"):
+		return
 	if $Knight.weapon_handle.weapon.areas_hit.has(other_knight):
+		return
+	if other_knight.weapon_handle.weapon.areas_hit.has(knight):
 		return
 	
 	if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
 		call_deferred("duel", turtle.get_parent(), true)
+		$Knight.weapon_handle.weapon.areas_hit.append(other_knight)
+		other_knight.weapon_handle.weapon.areas_hit.append(knight)
 
 
 # Pickup knight if hit and in water
@@ -322,6 +332,7 @@ func hit_wall(wall):
 		locked_direction.y = -abs(locked_direction.y)
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
+	$Knight.weapon_handle.weapon.reset_areas_hit()
 	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
