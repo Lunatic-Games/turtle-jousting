@@ -441,8 +441,9 @@ one_shot = true
 
 [node name="LobbyMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -6.0
+volume_db = -80.0
 autoplay = true
+bus = "LobbyMusic"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade_music_in = SubResource( 14 )

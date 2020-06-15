@@ -12,6 +12,15 @@ var base_diff = BASE_END_SCALE - BASE_START_SCALE
 var point_diff = POINT_END_SCALE - POINT_START_SCALE
 
 
+func _ready():
+	if get_tree().network_peer:
+		rset_config("visible", MultiplayerAPI.RPC_MODE_REMOTE)
+
+
+func _physics_process(delta):
+	rset("visible", visible)
+
+
 # Update rotation of indicator
 func update_indicator(direction, charge_percent):
 	var angle = direction.angle()

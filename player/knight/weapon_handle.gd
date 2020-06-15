@@ -75,3 +75,7 @@ func disable_hitbox():
 func set_damage_mod(mod):
 	damage_mod = mod
 	weapon.damage_mod = mod
+
+
+func show_held_weapon():
+	weapon.visible = true

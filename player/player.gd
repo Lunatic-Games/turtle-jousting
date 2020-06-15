@@ -295,24 +295,19 @@ func hit_turtle(turtle):
 	if !$AnimationTree.is_in_state("controlling/jousting/jousting"):
 		return
 	var angle = (turtle.global_position - global_position).angle()
-	print("ANGLE: ", angle)
 	if angle < PI / 5 and angle > -PI / 5:
-		print("Right")
 		locked_direction.x = -abs(locked_direction.x)
 	if angle >= PI / 5 and angle < 4 * PI / 5:
-		print("Up")
 		locked_direction.y = -abs(locked_direction.y)
 	if angle >= 4 * PI / 5 or angle <= -4 * PI / 5:
-		print("Left")
 		locked_direction.x = abs(locked_direction.x)
 	if angle < -PI / 5 and angle > -4 * PI / 5:
-		print("Down")
 		locked_direction.y = abs(locked_direction.y)
 
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight and !knight.on_turtle:
+	if knight_hit == knight and !knight.on_turtle and knight.alive:
 		call_deferred("pick_up_knight")
 
 

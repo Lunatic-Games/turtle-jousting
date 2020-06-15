@@ -903,7 +903,7 @@ __meta__ = {
 }
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 180.0
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -929,9 +929,11 @@ one_shot = true
 
 [node name="GameMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+bus = "InGameMusic"
 
 [node name="CountdownBeep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
+bus = "SFX"
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="begin_return_to_lobby"]

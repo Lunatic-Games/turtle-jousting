@@ -10930,46 +10930,46 @@ start_node = "flying_off"
 end_node = "mounting"
 graph_offset = Vector2( 10, 178 )
 
-[sub_resource type="AnimationNodeAnimation" id=73]
+[sub_resource type="AnimationNodeAnimation" id=72]
 animation = "turning_to_stone"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=74]
+[sub_resource type="AnimationNodeStateMachineTransition" id=73]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=75]
+[sub_resource type="AnimationNodeStateMachineTransition" id=74]
 switch_mode = 2
 auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=80]
+[sub_resource type="AnimationNodeStateMachineTransition" id=75]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=81]
+[sub_resource type="AnimationNodeStateMachineTransition" id=76]
 
-[sub_resource type="AnimationNodeStateMachine" id=82]
+[sub_resource type="AnimationNodeStateMachine" id=77]
 states/controlling/node = SubResource( 63 )
 states/controlling/position = Vector2( 413, 183 )
 states/flying_off/node = SubResource( 71 )
 states/flying_off/position = Vector2( 162.661, 183 )
-states/stoning/node = SubResource( 73 )
+states/stoning/node = SubResource( 72 )
 states/stoning/position = Vector2( 292.661, 74 )
-transitions = [ "controlling", "flying_off", SubResource( 74 ), "flying_off", "controlling", SubResource( 75 ), "controlling", "stoning", SubResource( 80 ), "stoning", "flying_off", SubResource( 81 ) ]
+transitions = [ "controlling", "flying_off", SubResource( 73 ), "flying_off", "controlling", SubResource( 74 ), "controlling", "stoning", SubResource( 75 ), "stoning", "flying_off", SubResource( 76 ) ]
 start_node = "controlling"
 graph_offset = Vector2( -243.339, 112 )
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=78]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=79]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=80]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=81]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=82]
+
 [sub_resource type="AnimationNodeStateMachinePlayback" id=83]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=84]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=85]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=86]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=87]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=88]
-
-[sub_resource type="CircleShape2D" id=89]
+[sub_resource type="CircleShape2D" id=84]
 radius = 18.4809
 
-[sub_resource type="DynamicFont" id=90]
+[sub_resource type="DynamicFont" id=85]
 size = 22
 font_data = ExtResource( 45 )
 
@@ -10983,7 +10983,7 @@ flying_velocity = SubResource( 1 )
 [node name="Reversable" type="Node2D" parent="."]
 
 [node name="HealthBarPosition" type="Position2D" parent="Reversable"]
-position = Vector2( -4.68988, -47.5107 )
+position = Vector2( -5.95203, -50.0352 )
 
 [node name="Sprite" type="Node2D" parent="Reversable"]
 scale = Vector2( 0.05, 0.05 )
@@ -10995,20 +10995,23 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 263.445, -119.748 )
-rotation = -1.05941
+position = Vector2( 163.807, -6.70508 )
+rotation = -0.610865
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 53.8867, -371.217 )
+position = Vector2( 145.362, -134.712 )
+rotation = 0.150098
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 83.8232, -347.268 )
+position = Vector2( 127.494, -162.828 )
+rotation = 0.150098
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
-position = Vector2( -138.835, 17.3408 )
+position = Vector2( 522.805, 61.2969 )
+scale = Vector2( 0.1, 0.1 )
 script = ExtResource( 29 )
 
 [node name="Lance" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 6 )]
@@ -11016,15 +11019,19 @@ script = ExtResource( 29 )
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -50.1865, 7.16943 )
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -7.16895, 0 )
+rotation = -0.118682
 texture = ExtResource( 8 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Chest"]
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -35.8486, 14.3389 )
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -11048,17 +11055,12 @@ texture = ExtResource( 13 )
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FL-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -155.671, -251.47 )
-rotation = -0.151844
 texture = ExtResource( 14 )
 
 [node name="FU-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -239.495, -101.785 )
-rotation = 1.05941
 texture = ExtResource( 15 )
 
 [node name="FH-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
-position = Vector2( -179.622, -275.419 )
 texture = ExtResource( 16 )
 
 [node name="FrontLeg" type="Node2D" parent="Reversable/Sprite"]
@@ -11087,7 +11089,7 @@ frames = SubResource( 3 )
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
+polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 )
 disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
@@ -11115,14 +11117,14 @@ anims/throwing = SubResource( 24 )
 anims/turning_to_stone = SubResource( 25 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 82 )
+tree_root = SubResource( 77 )
 anim_player = NodePath("../Animator")
-parameters/playback = SubResource( 83 )
-parameters/controlling/playback = SubResource( 84 )
-parameters/controlling/jousting/playback = SubResource( 85 )
-parameters/controlling/throwing/playback = SubResource( 86 )
-parameters/controlling/waiting/playback = SubResource( 87 )
-parameters/flying_off/playback = SubResource( 88 )
+parameters/playback = SubResource( 78 )
+parameters/controlling/playback = SubResource( 79 )
+parameters/controlling/jousting/playback = SubResource( 80 )
+parameters/controlling/throwing/playback = SubResource( 81 )
+parameters/controlling/waiting/playback = SubResource( 82 )
+parameters/flying_off/playback = SubResource( 83 )
 script = ExtResource( 27 )
 
 [node name="FlyingHitbox" type="Area2D" parent="."]
@@ -11130,7 +11132,7 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlyingHitbox"]
 position = Vector2( -1.05411, 3.68933 )
-shape = SubResource( 89 )
+shape = SubResource( 84 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 28 )]
 position = Vector2( -3.8584, -58.8555 )
@@ -11142,7 +11144,7 @@ margin_top = -74.3984
 margin_right = 95.6516
 margin_bottom = -60.3984
 rect_min_size = Vector2( 200, 0 )
-custom_fonts/font = SubResource( 90 )
+custom_fonts/font = SubResource( 85 )
 text = "Name"
 align = 1
 __meta__ = {

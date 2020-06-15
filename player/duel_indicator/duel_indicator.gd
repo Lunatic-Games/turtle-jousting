@@ -10,6 +10,15 @@ var player_2
 var duel_decided = false
 
 
+func _ready():
+	if get_tree().network_peer:
+		rset_config("visible", MultiplayerAPI.RPC_MODE_REMOTE)
+
+
+func _physics_process(delta):
+	rset("visible", visible)
+
+
 # Check both players for presses
 func _input(event):
 	if event.get("pressed"):

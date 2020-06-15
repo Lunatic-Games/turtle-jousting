@@ -9,7 +9,7 @@ func _ready():
 	$AnimationPlayer.play("flash")
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	_set_lightning_position()
 
 

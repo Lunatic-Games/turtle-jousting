@@ -9,6 +9,7 @@ var showing_credits = false
 # Begin visor animation
 func _ready():
 	$VisorTransition.lift_up()
+	$AnimationPlayer.play("fade_music_in")
 	var name_i = 0
 	for knight in get_tree().get_nodes_in_group("knight"):
 		knight.get_node("Name").text = NAMES[name_i]
@@ -28,6 +29,7 @@ func _input(event):
 # Begin transition to lobby
 func _on_PvpButton_pressed():
 	$VisorTransition.bring_down(self, "_go_to_lobby")
+	$AnimationPlayer.play("fade_music_out")
 
 
 # Will eventually lead to Horde lobby

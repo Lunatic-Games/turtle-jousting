@@ -33,6 +33,8 @@ func _ready():
 	else:
 		randomize()
 		set_process(false)
+		$GameTimer.wait_time = 120
+		$GameTimer.wait_time += 30 * len(get_tree().get_nodes_in_group("knight"))
 		$GameTimerLabel.text = str($GameTimer.wait_time)
 		$VisorTransition.rpc_config("bring_down", MultiplayerAPI.RPC_MODE_REMOTE)
 		$VisorTransition.lift_up()
