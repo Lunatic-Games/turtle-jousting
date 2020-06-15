@@ -16,7 +16,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	rset("visible", visible)
+	if get_tree().network_peer and is_network_master():
+		rset("visible", visible)
 
 
 # Check both players for presses
