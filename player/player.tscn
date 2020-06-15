@@ -40,12 +40,6 @@ joust_velocity = SubResource( 1 )
 [node name="Sprite" parent="Reversable" index="2"]
 scale = Vector2( 0.05, 0.05 )
 
-[node name="WaterAnimation" parent="Reversable/Sprite" index="1"]
-frame = 1
-
-[node name="WaterWakeAnimation" parent="Reversable" index="4"]
-frame = 1
-
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 2 )
 parameters/controlling/playback = SubResource( 3 )

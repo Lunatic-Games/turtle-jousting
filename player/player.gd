@@ -165,7 +165,7 @@ func parry():
 
 
 # Duel with an enemy
-func duel(opponent, slapping=false):
+func duel(opponent):
 	if opponent.dueling or !has_node("Knight") or !opponent.has_node("Knight"):
 		return
 	knight.set_direction(sign(opponent.knight.global_position.x 
@@ -175,18 +175,15 @@ func duel(opponent, slapping=false):
 	var duel_indicator = duel_indicator_scene.instance()
 	get_parent().add_child(duel_indicator)
 	duel_indicator.display(self, opponent)
-	begin_dueling(slapping)
-	opponent.begin_dueling(slapping)
+	begin_dueling()
+	opponent.begin_dueling()
 
 
 # Setup required for both players of a duel
-func begin_dueling(slapping):
+func begin_dueling():
 	dueling = true
 	$AnimationTree.travel("dueling")
-	if slapping:
-		$Knight/AnimationTree.travel("slapping")
-	else:
-		$Knight/AnimationTree.travel("controlling/jousting/dueling")
+	$Knight/AnimationTree.travel("controlling/jousting/dueling")
 	$JoustIndicator.visible = false
 
 
@@ -295,23 +292,22 @@ func set_direction(dir_sign):
 
 # Stop joust when hit another turtle
 func hit_turtle(turtle):
-	if !has_node("Knight") or !turtle.has_node("../Knight"):
+	if !$AnimationTree.is_in_state("controlling/jousting/jousting"):
 		return
-
-	var other_knight = turtle.get_node("../Knight")
-	if other_knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
-		return
-	if other_knight.get_node("AnimationTree").is_in_state("slapping"):
-		return
-	if $Knight.weapon_handle.weapon.areas_hit.has(other_knight):
-		return
-	if other_knight.weapon_handle.weapon.areas_hit.has(knight):
-		return
-	
-	if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
-		call_deferred("duel", turtle.get_parent(), true)
-		$Knight.weapon_handle.weapon.areas_hit.append(other_knight)
-		other_knight.weapon_handle.weapon.areas_hit.append(knight)
+	var angle = (turtle.global_position - global_position).angle()
+	print("ANGLE: ", angle)
+	if angle < PI / 5 and angle > -PI / 5:
+		print("Right")
+		locked_direction.x = -abs(locked_direction.x)
+	if angle >= PI / 5 and angle < 4 * PI / 5:
+		print("Up")
+		locked_direction.y = -abs(locked_direction.y)
+	if angle >= 4 * PI / 5 or angle <= -4 * PI / 5:
+		print("Left")
+		locked_direction.x = abs(locked_direction.x)
+	if angle < -PI / 5 and angle > -4 * PI / 5:
+		print("Down")
+		locked_direction.y = abs(locked_direction.y)
 
 
 # Pickup knight if hit and in water

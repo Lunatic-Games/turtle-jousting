@@ -115,7 +115,7 @@ remote func spawn_powerup(i, position):
 	var powerup = powerup_scene.instance()
 	$YSort.add_child(powerup)
 	powerup.global_position = position
-	if get_tree().network_peer and is_network_master():
+	if !get_tree().network_peer or is_network_master():
 		powerup.connect("picked_up", $PowerupSpawnTimer, "start")
 
 

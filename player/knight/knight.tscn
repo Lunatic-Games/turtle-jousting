@@ -1,4 +1,4 @@
-[gd_scene load_steps=136 format=2]
+[gd_scene load_steps=131 format=2]
 
 [ext_resource path="res://player/knight/knight.gd" type="Script" id=1]
 [ext_resource path="res://player/knight/assets/parts/knight_leg_BU.png" type="Texture" id=2]
@@ -10930,9 +10930,6 @@ start_node = "flying_off"
 end_node = "mounting"
 graph_offset = Vector2( 10, 178 )
 
-[sub_resource type="AnimationNodeAnimation" id=72]
-animation = "slapping"
-
 [sub_resource type="AnimationNodeAnimation" id=73]
 animation = "turning_to_stone"
 
@@ -10941,14 +10938,6 @@ animation = "turning_to_stone"
 [sub_resource type="AnimationNodeStateMachineTransition" id=75]
 switch_mode = 2
 auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=76]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=77]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=78]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=79]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=80]
 
@@ -10959,13 +10948,11 @@ states/controlling/node = SubResource( 63 )
 states/controlling/position = Vector2( 413, 183 )
 states/flying_off/node = SubResource( 71 )
 states/flying_off/position = Vector2( 162.661, 183 )
-states/slapping/node = SubResource( 72 )
-states/slapping/position = Vector2( 292.661, 329 )
 states/stoning/node = SubResource( 73 )
 states/stoning/position = Vector2( 292.661, 74 )
-transitions = [ "controlling", "flying_off", SubResource( 74 ), "flying_off", "controlling", SubResource( 75 ), "controlling", "slapping", SubResource( 76 ), "slapping", "controlling", SubResource( 77 ), "slapping", "flying_off", SubResource( 78 ), "flying_off", "slapping", SubResource( 79 ), "controlling", "stoning", SubResource( 80 ), "stoning", "flying_off", SubResource( 81 ) ]
+transitions = [ "controlling", "flying_off", SubResource( 74 ), "flying_off", "controlling", SubResource( 75 ), "controlling", "stoning", SubResource( 80 ), "stoning", "flying_off", SubResource( 81 ) ]
 start_node = "controlling"
-graph_offset = Vector2( -250.339, 147 )
+graph_offset = Vector2( -243.339, 112 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=83]
 
