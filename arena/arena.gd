@@ -138,6 +138,9 @@ func furthest_powerup_spawn_position():
 
 # Check if there is only one player remaining
 func _on_Player_lost():
+	if MENU_VERSION:
+		return
+	
 	if len(get_tree().get_nodes_in_group("player")) <= 1 and !game_done:
 		set_player_process_input(false)
 		game_done = true

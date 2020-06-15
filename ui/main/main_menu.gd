@@ -3,6 +3,8 @@ extends Control
 
 const NAMES = ["Joe Zlonicky", "Matthias Harden", "Noah Jacobsen",
 	"Davis Carlson"]
+const COLORS = [Color("bf5c00"), Color("771cff"), Color("299e57"),
+	Color("ac4141")]
 var showing_credits = false
 
 
@@ -10,10 +12,11 @@ var showing_credits = false
 func _ready():
 	$VisorTransition.lift_up()
 	$AnimationPlayer.play("fade_music_in")
-	var name_i = 0
-	for knight in get_tree().get_nodes_in_group("knight"):
-		knight.get_node("Name").text = NAMES[name_i]
-		name_i += 1
+	var i = 0
+	for player in get_tree().get_nodes_in_group("player"):
+		player.knight.get_node("Name").text = NAMES[i]
+		player.set_color(COLORS[i])
+		i += 1
 
 
 # Check for cancel while showing credits

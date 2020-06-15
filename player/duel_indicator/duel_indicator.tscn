@@ -6,7 +6,6 @@
 [ext_resource path="res://player/duel_indicator/assets/y_button.png" type="Texture" id=4]
 [ext_resource path="res://player/duel_indicator/assets/a_button.png" type="Texture" id=5]
 
-
 [node name="DuelIndicator" type="Popup"]
 anchor_left = 0.5
 anchor_top = 0.5

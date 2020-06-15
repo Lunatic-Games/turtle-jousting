@@ -17,7 +17,7 @@ func _ready():
 		rset_config("visible", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_tree().network_peer and is_network_master():
 		rset("visible", visible)
 

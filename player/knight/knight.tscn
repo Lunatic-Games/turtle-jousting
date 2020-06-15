@@ -10928,7 +10928,7 @@ states/mounting/position = Vector2( 513, 464 )
 transitions = [ "drowning", "mounting", SubResource( 68 ), "flying_off", "flying", SubResource( 69 ), "flying", "drowning", SubResource( 70 ) ]
 start_node = "flying_off"
 end_node = "mounting"
-graph_offset = Vector2( 10, 178 )
+graph_offset = Vector2( 41, 299 )
 
 [sub_resource type="AnimationNodeAnimation" id=72]
 animation = "turning_to_stone"
@@ -10952,7 +10952,7 @@ states/stoning/node = SubResource( 72 )
 states/stoning/position = Vector2( 292.661, 74 )
 transitions = [ "controlling", "flying_off", SubResource( 73 ), "flying_off", "controlling", SubResource( 74 ), "controlling", "stoning", SubResource( 75 ), "stoning", "flying_off", SubResource( 76 ) ]
 start_node = "controlling"
-graph_offset = Vector2( -243.339, 112 )
+graph_offset = Vector2( -239.339, 47 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=78]
 
@@ -11079,6 +11079,7 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Reversable"]

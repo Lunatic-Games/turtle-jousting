@@ -4,6 +4,7 @@ extends Node
 var id
 var player
 var knight
+var duel_indicator
 
 
 func _ready():
@@ -11,57 +12,86 @@ func _ready():
 	player = get_parent()
 	knight = player.get_node("Knight")
 	id = player.device_id
+	player.connect("began_duel", self, "_on_began_duel")
+	player.connect("duel_ended", self, "_on_duel_ended")
 
 
 func _physics_process(_delta):
-	var closest_player = get_closest_player()
-	var closest_powerup = get_closest_powerup()
-	if !closest_player and !closest_powerup:
+	if !player.has_node("Knight"):
+		var dir = knight.global_position - player.global_position
+		set_joy_direction(dir.normalized())
 		return
-	
-	if (!closest_player or closest_powerup 
-			and closest_comparison(closest_powerup, closest_player)):
-		move_towards(closest_powerup.global_position)
-	else:
-		move_towards(closest_player.global_position)
-		
+	if knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
+		set_joy_direction(Vector2(0, 0))
+		return
+	if player.get_node("AnimationTree").is_in_state("controlling/waiting"):
+		set_joy_direction(Vector2(randf(), randf()).normalized())
+		press_action("joust")
+		return
+	if player.get_node("AnimationTree").is_in_state("controlling/jousting/charging_joust"):
+		if player.joust_charge == player.MAX_JOUST_CHARGE:
+			release_action("joust")
 
 
 func move_towards(pos):
 	set_joy_direction(pos - player.global_position)
 
 
-func charge_joust():
+func press_action(action):
 	var ev = InputEventAction.new()
 	ev.device = id
-	ev.action = "joust"
+	ev.action = action
 	ev.pressed = true
 	get_tree().input_event(ev)
 
 
-func release_joust():
+func release_action(action):
 	var ev = InputEventAction.new()
 	ev.device = id
-	ev.action = "joust"
+	ev.action = action
 	ev.pressed = false
 	get_tree().input_event(ev)
 
 
 func dodge(direction):
 	set_joy_direction(direction)
-	var ev = InputEventAction.new()
-	ev.device = id
-	ev.action = "dodge"
-	ev.pressed = true
-	get_tree().input_event(ev)
+	press_action("dodge")
+	release_action("dodge")
 
 
 func parry():
-	var ev = InputEventAction.new()
-	ev.device = id
-	ev.action = "parry"
-	ev.pressed = true
-	get_tree().input_event(ev)
+	press_action("parry")
+	release_action("parry")
+
+
+func _on_began_duel(indicator):
+	print("Duel begun")
+	var timer = Timer.new()
+	timer.name = "DuelTimer"
+	timer.wait_time = randf()
+	timer.connect("timeout", self, "press_duel_button")
+	duel_indicator = indicator
+	add_child(timer)
+	timer.start()
+
+
+func _on_duel_ended():
+	if has_node("DuelTimer"):
+		get_node("DuelTimer").stop()
+		get_node("DuelTimer").queue_free()
+
+
+func press_duel_button():
+	print("Pressing button")
+	match(duel_indicator.displayed_button):
+		'A':
+			press_action("duel_a")
+		'B':
+			press_action("duel_b")
+		'X':
+			press_action("duel_x")
+		'Y':
+			press_action("duel_y")
 
 
 func set_joy_direction(vec):

@@ -20,7 +20,6 @@ func _hit_knight(knight):
 	._hit_knight(knight)
 	if (overlaps_area(knight.weapon_handle.weapon) 
 			and knight.weapon_handle.weapon.can_joust):
-		print("Hit knight at same time weapons hit")
 		return
 	var forwards = Vector2(cos(angle), sin(angle))
 	var knockback = forwards.normalized() * KNOCKBACK
@@ -34,5 +33,6 @@ func _hit_knight(knight):
 
 # Start a duel between the two players
 func _hit_weapon(weapon):
+	._hit_weapon(weapon)
 	if weapon.can_duel:
 		_duel_player(weapon.player_held_by)
