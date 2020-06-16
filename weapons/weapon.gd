@@ -77,15 +77,19 @@ func put_away():
 
 # Damage knight by given damage and apply damage mod
 func _damage_knight(knight, damage, knockback=Vector2(0, 0)):
-	knight.call_deferred("hit", damage*damage_mod, knockback)
+	if !get_tree().network_peer:
+		knight.call_deferred("hit", damage*damage_mod, knockback)
 	if get_tree().network_peer and is_network_master():
+		knight.call_deferred("hit", damage*damage_mod, knockback)
 		knight.rpc("call_deferred", "hit", damage*damage_mod, knockback)
 
 
 # Heal knight by given amount
 func _heal_knight(knight, amount):
-	knight.call_deferred("heal", amount)
+	if !get_tree().network_peer:
+		knight.call_deferred("heal", amount)
 	if get_tree().network_peer and is_network_master():
+		knight.call_deferred("heal", amount)
 		knight.rpc("call_deferred", "heal", amount)
 
 
@@ -94,21 +98,27 @@ func _knock_off_knight(knight, knockback):
 	var player = knight.get_parent()
 	if !player:
 		return
-	player.call_deferred("knock_knight_off", knockback)
+	if !get_tree().network_peer:
+		player.call_deferred("knock_knight_off", knockback)
 	if get_tree().network_peer and is_network_master():
+		player.call_deferred("knock_knight_off", knockback)
 		player.rpc("call_deferred", "knock_knight_off", knockback)
 
 
 # Tell weapon to unequp this weapon
 func _unequip():
-	get_parent().call_deferred("unequip_held_weapon")
+	if !get_tree().network_peer:
+		get_parent().call_deferred("unequip_held_weapon")
 	if get_tree().network_peer and is_network_master():
+		get_parent().call_deferred("unequip_held_weapon")
 		get_parent().rpc("call_deferred", "unequip_held_weapon")
 
 
 func _q_free():
-	queue_free()
+	if !get_tree().network_peer:
+		queue_free()
 	if get_tree().network_peer and is_network_master():
+		queue_free()
 		rpc("queue_free")
 
 
