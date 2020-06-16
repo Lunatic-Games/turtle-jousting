@@ -77,7 +77,6 @@ func _physics_process(delta):
 	if !_should_process():
 		position = last_net_position
 		move_predictions.append(last_net_velocity * delta)
-		print(last_net_velocity)
 		for movement in move_predictions:
 			position += movement
 		return
@@ -100,7 +99,7 @@ func _physics_process(delta):
 
 
 remote func update_net_movement(pos, vel):
-	move_predictions.erase()
+	move_predictions.clear()
 	last_net_position = pos
 	last_net_velocity = vel
 
