@@ -70,7 +70,7 @@ func _should_handle_event(event):
 
 
 # Update movement
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !_should_process():
 		return
 
@@ -84,7 +84,7 @@ func _physics_process(delta):
 		else:
 			movement *= SPEED * speed_modifier
 		moved(movement)
-	var vel = move_and_slide(movement)
+	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
 	if get_tree().network_peer and is_network_master():
