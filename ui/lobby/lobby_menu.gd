@@ -483,6 +483,7 @@ func return_to():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = false
 	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$VisorTransition.lift_up()
 	$AnimationPlayer.play("fade_music_in")
 	visible = true

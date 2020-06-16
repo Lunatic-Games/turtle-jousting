@@ -38,6 +38,7 @@ func _ready():
 		$GameTimerLabel.text = str($GameTimer.wait_time)
 		$VisorTransition.rpc_config("bring_down", MultiplayerAPI.RPC_MODE_REMOTE)
 		$VisorTransition.lift_up()
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 # Update game timer display
@@ -50,11 +51,11 @@ func _process(_delta):
 # Check for pause
 func _input(event):
 	if !MENU_VERSION and event.is_action("pause") and event.pressed:
-		print("Pause pressed")
 		if !get_tree().network_peer:
 			get_tree().paused = true
 		set_player_process_input(false)
 		$PausedMenu.set_process_input(true)
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		$PausedMenu.popup_centered(Vector2(1024, 576))
 		get_tree().set_input_as_handled()
 
@@ -172,6 +173,7 @@ remote func begin_return_to_lobby():
 # Resume handling player input
 func _on_PausedMenu_popup_hide():
 	set_player_process_input(true)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 # Transition to lobby

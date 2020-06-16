@@ -11,6 +11,7 @@ var showing_credits = false
 # Begin visor animation
 func _ready():
 	$VisorTransition.lift_up()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$AnimationPlayer.play("fade_music_in")
 	var i = 0
 	for player in get_tree().get_nodes_in_group("player"):
