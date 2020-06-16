@@ -159,7 +159,8 @@ remote func unready():
 		return
 	
 	ready = false
-	color_freed(COLORS[color_i][0])
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		color_freed(COLORS[color_i][0])
 	capturing_input = true
 	time_readied = null
 	set_edit_button_visibility(true)
