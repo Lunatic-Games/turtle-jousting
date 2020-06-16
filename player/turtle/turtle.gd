@@ -18,7 +18,7 @@ var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
 var last_net_velocity = Vector2(0, 0)
 onready var last_net_position = position
-var net_frames = 0
+var move_predictions = []
 
 
 # Keeps track of movement input [button_active, joystick strength]
@@ -73,10 +73,12 @@ func _should_handle_event(event):
 
 
 # Update movement
-func _physics_process(_delta):
+func _physics_process(delta):
 	if !_should_process():
-		position = last_net_position + last_net_velocity * net_frames
-		net_frames += 1
+		position = last_net_position
+		for movement in move_predictions:
+			position += movement
+		move_predictions.append(last_net_velocity * delta)
 		return
 
 	var movement
@@ -97,7 +99,7 @@ func _physics_process(_delta):
 
 
 remote func update_net_movement(pos, vel):
-	net_frames = 0
+	move_predictions.erase()
 	last_net_position = pos
 	last_net_velocity = vel
 
