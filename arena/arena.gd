@@ -10,8 +10,7 @@ const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pic
 	preload("res://powerups/invis_potion/invis_potion.tscn"),
 	preload("res://powerups/judgement/judgement.tscn"),
 	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
-	preload("res://powerups/mead/mead.tscn"),
-	preload("res://powerups/stone_potion/stone_potion.tscn")]
+	preload("res://powerups/mead/mead.tscn")]
 
 var duels = []
 var game_done

@@ -66,7 +66,7 @@ func heal(amount):
 
 
 # Set health to a value
-func set_health(new_health, knockback_on_death=Vector2(0,0)):
+remote func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	if !alive:
 		return
 	health = new_health
