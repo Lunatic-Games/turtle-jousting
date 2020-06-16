@@ -17,6 +17,7 @@ var device_id
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
 
+
 # Keeps track of movement input [button_active, joystick strength]
 var movement_actions = {"up" : [false, 0], "right" : [false, 0],
 	 "down" : [false, 0], "left" : [false, 0]}
@@ -86,8 +87,8 @@ func _physics_process(_delta):
 	var _vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
-	if get_tree().network_peer:
-		rset_unreliable("position", position)
+	if get_tree().network_peer and is_network_master():
+		rset("position", position)
 
 
 # Should only process if offline or network master

@@ -120,7 +120,7 @@ func release_joust():
 	$AnimationTree.travel("controlling/jousting/jousting")
 	$JoustIndicator.visible = false
 	if $Knight.weapon_handle.weapon.name == "Lance":
-		$Knight.weapon_handle.weapon.charge = joust_charge / MAX_JOUST_CHARGE
+		$Knight.weapon_handle.weapon.set_charge(joust_charge / MAX_JOUST_CHARGE)
 	$Knight.weapon_handle.weapon.angle = joust_direction.angle()
 	joust_initial_charge = joust_charge
 	locked_direction = joust_direction

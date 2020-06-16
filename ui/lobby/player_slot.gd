@@ -103,6 +103,7 @@ remote func reset():
 			slot.color_freed(COLORS[color_i][0])
 	color_i = 0
 	$Background/ColorName.text = COLORS[color_i][0]
+	update_color_text()
 	$Cover/ClosedButton.visible = false
 	$Cover/Open.visible = true
 	$Cover/EditLabel.visible = false
@@ -135,7 +136,6 @@ func _on_ReadyButton_pressed():
 
 	if get_tree().network_peer and is_network_master():
 		rpc("player_ready")
-			
 
 
 remote func player_ready():
@@ -157,7 +157,12 @@ remote func player_ready():
 remote func unready():
 	if !ready:
 		return
+	
 	ready = false
+	for slot in get_tree().get_nodes_in_group("player_slot"):
+		slot.color_freed(COLORS[color_i][0])
+		if get_tree().network_peer and is_network_master():
+			slot.rpc("color_freed", COLORS[color_i][0])
 	capturing_input = true
 	time_readied = null
 	set_edit_button_visibility(true)

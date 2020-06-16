@@ -23,7 +23,7 @@ func _physics_process(_delta):
 
 
 # Update rotation of indicator
-func update_indicator(direction, charge_percent):
+remote func update_indicator(direction, charge_percent):
 	var angle = direction.angle()
 	var dist = INNER_RADIUS
 	$Base.position = direction.normalized() * dist
@@ -33,6 +33,8 @@ func update_indicator(direction, charge_percent):
 	$Point.position = direction.normalized() * dist
 	$Point.rotation = angle + PI / 2
 	$Point.scale.y = point_diff * charge_percent + POINT_START_SCALE
+	if get_tree().network_peer and is_network_master():
+		rpc("update_indicator", direction, charge_percent)
 
 
 # Set team color

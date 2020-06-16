@@ -176,6 +176,10 @@ func _connect_to_server(code):
 		$NetworkMessagePopup.invalid_code()
 		return
 	
+	for i in range(1, 5):
+		if get_player_slot(i).ready:
+			get_player_slot(i).unready()
+	
 	client = network_handler.connect_to_server_with_code(code)
 	if !client:
 		$NetworkMessagePopup.connection_failed()
@@ -189,6 +193,7 @@ func _connect_to_server(code):
 func _connect_online():
 	var code = online_container.get_node("CodeEditContainer/LineEdit").text
 	_connect_to_server(code)
+	
 
 
 # When local join pressed
@@ -249,7 +254,6 @@ remote func join(existing_connections, remote_code, local_code):
 		else:
 			new_local_players[pos] = local_players[player]
 			player_data[pos] = get_player_slot(player).get_player_data()
-			player_data[pos]["ready"] = false
 			connections[net_id].append(pos)
 		
 	_joined_lobby(remote_code, local_code)
@@ -489,7 +493,6 @@ func return_to():
 	visible = true
 	set_process(true)
 	set_process_input(true)
-	
 
 
 func _on_BackButton_pressed():
