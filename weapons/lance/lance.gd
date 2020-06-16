@@ -6,7 +6,7 @@ export (Curve) var damage_curve
 const DAMAGE = 20
 const KNOCKBACK = 150
 
-var charge = 0  # Value between 0 and 1 for damage curve
+remote var charge = 0  # Value between 0 and 1 for damage curve
 var angle = 0
 
 
