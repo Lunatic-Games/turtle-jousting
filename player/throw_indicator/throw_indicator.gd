@@ -15,16 +15,13 @@ func _ready():
 
 
 func _physics_process(_delta):
-	print("Visible: ", visible)
 	if get_tree().network_peer and is_network_master():
 		rset("visible", visible)
 
 
 # Set the Curve2D using for displaying the trajectory
-remote func set_curve(new_curve):
+func set_curve(new_curve):
 	curve = new_curve
-	if get_tree().network_peer and is_network_master():
-		rpc("set_curve", new_curve)
 
 
 # Update indicator with new charge amount
