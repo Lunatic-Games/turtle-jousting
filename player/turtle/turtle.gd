@@ -78,7 +78,7 @@ func _physics_process(_delta):
 			print("Recieved an update")
 			recieved_net_update = false
 		else:
-			print("Didn't recieve an update")
+			print("Didn't recieve an update: ", last_velocity )
 			var _vel = move_and_slide(last_velocity)
 		return
 
@@ -96,11 +96,11 @@ func _physics_process(_delta):
 	update_sprite_direction(movement)
 	
 	if get_tree().network_peer and is_network_master():
-		rset_unreliable("position", position)
-		rpc_unreliable("update_last_velocity", vel)
+		rpc_unreliable("update_net_movement", position, vel)
 
 
-remote func update_last_velocity(vel):
+remote func update_net_movement(pos, vel):
+	position = pos
 	last_velocity = vel
 	recieved_net_update = true
 
