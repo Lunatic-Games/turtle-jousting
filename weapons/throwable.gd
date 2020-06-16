@@ -9,6 +9,11 @@ var distance_travelled
 var dir_sign
 
 
+func pick_up(player):
+	.pick_up(player)
+	player_held_by.get_node("ThrowIndicator").curve = get_curve()
+
+
 # Begin the throw with given charge, throw_direction is -1 or 1
 remote func throw(throw_charge, throw_direction):
 	$CollisionShape2D.disabled = false

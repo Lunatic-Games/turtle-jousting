@@ -139,7 +139,6 @@ func begin_charging_throw():
 	$Knight/AnimationTree.travel("controlling/throwing/charging_throw")
 	$AnimationTree.travel("controlling/waiting/idling")
 	throw_charge = THROW_START_CHARGE
-	$ThrowIndicator.set_curve($Knight.weapon_handle.weapon.get_curve())
 	$ThrowIndicator.update_indicator(throw_charge)
 	$ThrowIndicator.visible = true
 
