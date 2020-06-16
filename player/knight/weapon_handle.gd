@@ -23,9 +23,9 @@ func equip(new_weapon):
 	unequip_held_weapon()
 	$Lance.put_away()
 	weapon = new_weapon
+	add_child(weapon)
 	weapon.pick_up(player_owned_by)
 	weapon.damage_mod = damage_mod
-	add_child(weapon)
 
 
 func unequip_held_weapon():
