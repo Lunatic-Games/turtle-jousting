@@ -489,7 +489,6 @@ func return_to():
 	visible = true
 	set_process(true)
 	set_process_input(true)
-	
 
 
 func _on_BackButton_pressed():
