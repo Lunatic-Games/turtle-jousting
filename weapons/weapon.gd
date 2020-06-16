@@ -23,6 +23,9 @@ func pick_up(player):
 	if player.has_node("Knight"):
 		knight_held_by = player.get_node("Knight")
 	visible = true
+	if get_tree().network_peer:
+		set_network_master(player.get_network_master())
+		rpc_config("queue_free", MultiplayerAPI.RPC_MODE_REMOTE)
 
 
 # Remove all areas hit, useful for when starting a new attack
@@ -74,12 +77,16 @@ func put_away():
 
 # Damage knight by given damage and apply damage mod
 func _damage_knight(knight, damage, knockback=Vector2(0, 0)):
-	if get_tree().network_peer:
-		if is_network_master():
-			knight.call_deferred("hit", damage*damage_mod, knockback)
-			knight.rpc("call_deferred", "hit", damage*damage_mod, knockback)
-	else:
-		knight.call_deferred("hit", damage*damage_mod, knockback)
+	knight.call_deferred("hit", damage*damage_mod, knockback)
+	if get_tree().network_peer and is_network_master():
+		knight.rpc("call_deferred", "hit", damage*damage_mod, knockback)
+
+
+# Heal knight by given amount
+func _heal_knight(knight, amount):
+	knight.call_deferred("heal", amount)
+	if get_tree().network_peer and is_network_master():
+		knight.rpc("call_deferred", "heal", amount)
 
 
 # Knock knight off of player with given knockback
@@ -87,22 +94,22 @@ func _knock_off_knight(knight, knockback):
 	var player = knight.get_parent()
 	if !player:
 		return
-	if get_tree().network_peer:
-		if is_network_master():
-			player.call_deferred("knock_knight_off", knockback)
-			player.rpc("call_deferred", "knock_knight_off", knockback)
-	else:
-		player.call_deferred("knock_knight_off", knockback)
+	player.call_deferred("knock_knight_off", knockback)
+	if get_tree().network_peer and is_network_master():
+		player.rpc("call_deferred", "knock_knight_off", knockback)
 
 
 # Tell weapon to unequp this weapon
 func _unequip():
-	if get_tree().network_peer:
-		if is_network_master():
-			get_parent().call_deferred("unequip_held_weapon")
-			get_parent().rpc("call_deferred", "unequip_held_weapon")
-	else:
-		get_parent().call_deferred("unequip_held_weapon")
+	get_parent().call_deferred("unequip_held_weapon")
+	if get_tree().network_peer and is_network_master():
+		get_parent().rpc("call_deferred", "unequip_held_weapon")
+
+
+func _q_free():
+	queue_free()
+	if get_tree().network_peer and is_network_master():
+		rpc("queue_free")
 
 
 # Duel another player
