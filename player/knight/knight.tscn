@@ -10235,39 +10235,25 @@ tracks/37/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 ) ]
 }
-tracks/38/type = "method"
-tracks/38/path = NodePath("Reversable/Sprite/BackArm/WeaponHandle/Lance")
+tracks/38/type = "value"
+tracks/38/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
 tracks/38/interp = 1
 tracks/38/loop_wrap = true
 tracks/38/imported = false
 tracks/38/enabled = true
 tracks/38/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "reset_areas_hit"
-} ]
-}
-tracks/39/type = "value"
-tracks/39/path = NodePath("Reversable/Sprite/BackArm/BU-Arm:scale")
-tracks/39/interp = 1
-tracks/39/loop_wrap = true
-tracks/39/imported = false
-tracks/39/enabled = true
-tracks/39/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( -1, 1 ), Vector2( -1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
 }
-tracks/40/type = "value"
-tracks/40/path = NodePath("Reversable/HealthBarPosition:position")
-tracks/40/interp = 1
-tracks/40/loop_wrap = true
-tracks/40/imported = false
-tracks/40/enabled = true
-tracks/40/keys = {
+tracks/39/type = "value"
+tracks/39/path = NodePath("Reversable/HealthBarPosition:position")
+tracks/39/interp = 1
+tracks/39/loop_wrap = true
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -10995,22 +10981,24 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 163.807, -6.70508 )
-rotation = -0.610865
+position = Vector2( 192.486, -551.6 )
+rotation = -2.42775
+scale = Vector2( -1, 1 )
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 145.362, -134.712 )
-rotation = 0.150098
+position = Vector2( 525.356, -615.08 )
+rotation = -3.63378
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 127.494, -162.828 )
-rotation = 0.150098
+position = Vector2( 550.505, -420.938 )
+rotation = -3.17999
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 522.805, 61.2969 )
+position = Vector2( 6.58789, -612.646 )
+rotation = -2.72446
 scale = Vector2( 0.1, 0.1 )
 script = ExtResource( 29 )
 

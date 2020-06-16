@@ -17,8 +17,6 @@ remote func throw(throw_charge, throw_direction):
 	charge = throw_charge
 	dir_sign = throw_direction
 	scale.x = throw_direction * abs(scale.x)
-	if get_tree().network_peer and is_network_master():
-		rpc("throw", throw_charge, throw_direction)
 
 
 # If thrown, fly through the air

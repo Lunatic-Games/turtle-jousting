@@ -9,6 +9,16 @@ var charge = 0.0
 var curve
 
 
+func _ready():
+	if get_tree().network_peer:
+		rset_config("visible", MultiplayerAPI.RPC_MODE_REMOTE)
+
+
+func _physics_process(_delta):
+	if get_tree().network_peer and is_network_master():
+		rset("visible", visible)
+
+
 # Set the Curve2D using for displaying the trajectory
 func set_curve(new_curve):
 	curve = new_curve

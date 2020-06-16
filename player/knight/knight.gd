@@ -43,7 +43,6 @@ func _physics_process(delta):
 			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
-		
 
 
 # Reduce health

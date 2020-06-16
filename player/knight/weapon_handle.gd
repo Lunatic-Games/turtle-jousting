@@ -43,7 +43,7 @@ func equip_queued_weapons():
 	queued_weapons.remove(0)
 
 
-func throw_held_weapon(charge, dir_sign):
+remote func throw_held_weapon(charge, dir_sign):
 	var prev_position = weapon.global_position
 	remove_child(weapon)
 	player_owned_by.get_parent().add_child(weapon)
@@ -51,6 +51,8 @@ func throw_held_weapon(charge, dir_sign):
 	weapon.scale = Vector2(0.05, 0.05)
 	weapon.throw(charge, dir_sign)
 	weapon = $Lance
+	if get_tree().network_peer and is_network_master():
+		rpc("throw_held_weapon", charge, dir_sign)
 
 
 func sweep_held_weapon():
