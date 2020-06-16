@@ -157,6 +157,7 @@ remote func player_ready():
 remote func unready():
 	if !ready:
 		return
+	
 	ready = false
 	capturing_input = true
 	time_readied = null
