@@ -10,7 +10,7 @@
 [ext_resource path="res://ui/lobby/assets/top_scaled.png" type="Texture" id=8]
 [ext_resource path="res://ui/lobby/assets/left_scaled_cropped.png" type="Texture" id=9]
 [ext_resource path="res://ui/lobby/assets/tv_scaled_cropped.png" type="Texture" id=10]
-[ext_resource path="res://video/rick.ogv" type="VideoStream" id=11]
+[ext_resource path="res://video/turtle_jousting_tut_1.ogv" type="VideoStream" id=11]
 [ext_resource path="res://music/lobby.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=1]

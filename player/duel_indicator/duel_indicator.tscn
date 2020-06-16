@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/duel_indicator/duel_indicator.gd" type="Script" id=1]
 [ext_resource path="res://player/duel_indicator/assets/b_button.png" type="Texture" id=2]
 [ext_resource path="res://player/duel_indicator/assets/x_button.png" type="Texture" id=3]
 [ext_resource path="res://player/duel_indicator/assets/y_button.png" type="Texture" id=4]
 [ext_resource path="res://player/duel_indicator/assets/a_button.png" type="Texture" id=5]
+[ext_resource path="res://player/duel_indicator/assets/w_key.png" type="Texture" id=6]
+[ext_resource path="res://player/duel_indicator/assets/a_key.png" type="Texture" id=7]
+[ext_resource path="res://player/duel_indicator/assets/s_key.png" type="Texture" id=8]
+[ext_resource path="res://player/duel_indicator/assets/d_key.png" type="Texture" id=9]
 
 [node name="DuelIndicator" type="Popup"]
 anchor_left = 0.5
@@ -17,48 +21,100 @@ margin_right = 32.0
 margin_bottom = 32.0
 rect_pivot_offset = Vector2( 16, 16 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="AButton" type="TextureRect" parent="."]
+[node name="AButton" type="HBoxContainer" parent="."]
 visible = false
-margin_right = 64.0
-margin_bottom = 64.0
-rect_scale = Vector2( 0.1, 0.1 )
+margin_right = 78.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Keyboard" type="TextureRect" parent="AButton"]
+margin_right = 39.0
+margin_bottom = 36.0
+texture = ExtResource( 7 )
+
+[node name="Controller" type="TextureRect" parent="AButton"]
+margin_left = 43.0
+margin_right = 79.0
+margin_bottom = 36.0
 texture = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BButton" type="TextureRect" parent="."]
+[node name="BButton" type="HBoxContainer" parent="."]
 visible = false
-margin_right = 64.0
-margin_bottom = 64.0
-rect_scale = Vector2( 0.1, 0.1 )
+margin_right = 78.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Keyboard" type="TextureRect" parent="BButton"]
+margin_right = 38.0
+margin_bottom = 36.0
+texture = ExtResource( 6 )
+
+[node name="Controller" type="TextureRect" parent="BButton"]
+margin_left = 42.0
+margin_right = 78.0
+margin_bottom = 36.0
 texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="XButton" type="TextureRect" parent="."]
+[node name="XButton" type="HBoxContainer" parent="."]
 visible = false
-margin_right = 64.0
-margin_bottom = 64.0
-rect_scale = Vector2( 0.1, 0.1 )
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Keyboard" type="TextureRect" parent="XButton"]
+margin_right = 38.0
+margin_bottom = 40.0
+texture = ExtResource( 8 )
+
+[node name="Controller" type="TextureRect" parent="XButton"]
+margin_left = 42.0
+margin_right = 78.0
+margin_bottom = 40.0
 texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="YButton" type="TextureRect" parent="."]
+[node name="YButton" type="HBoxContainer" parent="."]
 visible = false
-margin_right = 64.0
-margin_bottom = 64.0
-rect_scale = Vector2( 0.1, 0.1 )
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Keyboard" type="TextureRect" parent="YButton"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 9 )
+
+[node name="Controller" type="TextureRect" parent="YButton"]
+margin_left = 44.0
+margin_right = 80.0
+margin_bottom = 40.0
 texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 autostart = true
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
