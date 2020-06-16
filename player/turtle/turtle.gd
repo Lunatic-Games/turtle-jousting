@@ -75,9 +75,11 @@ func _should_handle_event(event):
 func _physics_process(_delta):
 	if !_should_process():
 		if recieved_net_update:
+			print("Recieved an update")
 			recieved_net_update = false
 		else:
-			move_and_slide(last_velocity)
+			print("Didn't recieve an update")
+			var _vel = move_and_slide(last_velocity)
 		return
 
 	var movement
@@ -95,7 +97,7 @@ func _physics_process(_delta):
 	
 	if get_tree().network_peer and is_network_master():
 		rset_unreliable("position", position)
-		rpc("update_last_velocity", vel)
+		rpc_unreliable("update_last_velocity", vel)
 
 
 remote func update_last_velocity(vel):
