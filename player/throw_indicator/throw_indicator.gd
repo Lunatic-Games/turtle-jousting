@@ -15,9 +15,11 @@ func set_curve(new_curve):
 
 
 # Update indicator with new charge amount
-func update_indicator(new_charge):
+remote func update_indicator(new_charge):
 	charge = new_charge
 	update()
+	if get_tree().network_peer and is_network_master():
+		rpc("update_indicator", new_charge)
 
 
 # Draw throw arc
