@@ -76,9 +76,10 @@ func _should_handle_event(event):
 func _physics_process(delta):
 	if !_should_process():
 		position = last_net_position
+		move_predictions.append(last_net_velocity * delta)
+		print(last_net_velocity)
 		for movement in move_predictions:
 			position += movement
-		move_predictions.append(last_net_velocity * delta)
 		return
 
 	var movement
