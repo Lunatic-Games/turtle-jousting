@@ -1,6 +1,5 @@
 extends HBoxContainer
 
-
 const SLIDE_SPEED = 100
 const SLIDE_JUMP = 5
 

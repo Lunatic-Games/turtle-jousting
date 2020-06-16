@@ -2,6 +2,8 @@ extends "res://player/turtle/turtle.gd"
 
 
 signal lost
+signal began_duel
+signal duel_ended
 
 export (Curve) var joust_velocity
 
@@ -12,7 +14,7 @@ const THROW_START_CHARGE = 150
 const THROW_CHARGE_RATE = 150
 const MAX_THROW_CHARGE = 800
 const MOUSE_SENSITIVITY = 0.01
-const LOST_DUEL_KNOCKBACK = 100
+const LOST_DUEL_KNOCKBACK = 200
 const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
 const bot_ai_scene = preload("res://player/bot_ai.tscn")
 
@@ -165,25 +167,27 @@ func parry():
 
 
 # Duel with an enemy
-func duel(opponent, slapping=false):
+func duel(opponent):
 	if opponent.dueling or !has_node("Knight") or !opponent.has_node("Knight"):
 		return
+	knight.set_direction(sign(opponent.knight.global_position.x 
+		- knight.global_position.x))
+	opponent.knight.set_direction(sign(knight.global_position.x
+		- opponent.knight.global_position.x))
 	var duel_indicator = duel_indicator_scene.instance()
 	get_parent().add_child(duel_indicator)
 	duel_indicator.display(self, opponent)
-	begin_dueling(slapping)
-	opponent.begin_dueling(slapping)
+	begin_dueling(duel_indicator)
+	opponent.begin_dueling(duel_indicator)
 
 
 # Setup required for both players of a duel
-func begin_dueling(slapping):
+func begin_dueling(indicator):
 	dueling = true
 	$AnimationTree.travel("dueling")
-	if slapping:
-		$Knight/AnimationTree.travel("slapping")
-	else:
-		$Knight/AnimationTree.travel("controlling/jousting/dueling")
+	$Knight/AnimationTree.travel("controlling/jousting/dueling")
 	$JoustIndicator.visible = false
+	emit_signal("began_duel", indicator)
 
 
 # Player won the duel, just go back to idle
@@ -191,12 +195,14 @@ func won_duel():
 	dueling = false
 	$Knight/AnimationTree.travel("controlling/waiting/idling")
 	$AnimationTree.travel("controlling/waiting/idling")
+	emit_signal("duel_ended")
 
 
 # Player lost the duel, knock them off
 func lost_duel(knockback_dir):
 	dueling = false
 	knock_knight_off(knockback_dir * LOST_DUEL_KNOCKBACK)
+	emit_signal("duel_ended")
 
 
 # Update position and rotation of joust indicator while charging joust
@@ -291,22 +297,22 @@ func set_direction(dir_sign):
 
 # Stop joust when hit another turtle
 func hit_turtle(turtle):
-	if !has_node("Knight") or !turtle.has_node("../Knight"):
+	if !$AnimationTree.is_in_state("controlling/jousting/jousting"):
 		return
-
-	var other_knight = turtle.get_node("../Knight")
-	if other_knight.get_node("AnimationTree").is_in_state("flying_off/mounting"):
-		return
-	if $Knight.weapon_handle.weapon.areas_hit.has(other_knight):
-		return
-	
-	if $Knight/AnimationTree.is_in_state("controlling/jousting/jousting"):
-		call_deferred("duel", turtle.get_parent(), true)
+	var angle = (turtle.global_position - global_position).angle()
+	if angle < PI / 5 and angle > -PI / 5:
+		locked_direction.x = -abs(locked_direction.x)
+	if angle >= PI / 5 and angle < 4 * PI / 5:
+		locked_direction.y = -abs(locked_direction.y)
+	if angle >= 4 * PI / 5 or angle <= -4 * PI / 5:
+		locked_direction.x = abs(locked_direction.x)
+	if angle < -PI / 5 and angle > -4 * PI / 5:
+		locked_direction.y = abs(locked_direction.y)
 
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight and !knight.on_turtle:
+	if knight_hit == knight and !knight.on_turtle and knight.alive:
 		call_deferred("pick_up_knight")
 
 
@@ -322,6 +328,7 @@ func hit_wall(wall):
 		locked_direction.y = -abs(locked_direction.y)
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
+	$Knight.weapon_handle.weapon.reset_areas_hit()
 	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 

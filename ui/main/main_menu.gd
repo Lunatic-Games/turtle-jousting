@@ -3,16 +3,21 @@ extends Control
 
 const NAMES = ["Joe Zlonicky", "Matthias Harden", "Noah Jacobsen",
 	"Davis Carlson"]
+const COLORS = [Color("bf5c00"), Color("771cff"), Color("299e57"),
+	Color("ac4141")]
 var showing_credits = false
 
 
 # Begin visor animation
 func _ready():
 	$VisorTransition.lift_up()
-	var name_i = 0
-	for knight in get_tree().get_nodes_in_group("knight"):
-		knight.get_node("Name").text = NAMES[name_i]
-		name_i += 1
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	$AnimationPlayer.play("fade_music_in")
+	var i = 0
+	for player in get_tree().get_nodes_in_group("player"):
+		player.knight.get_node("Name").text = NAMES[i]
+		player.set_color(COLORS[i])
+		i += 1
 
 
 # Check for cancel while showing credits
@@ -28,6 +33,7 @@ func _input(event):
 # Begin transition to lobby
 func _on_PvpButton_pressed():
 	$VisorTransition.bring_down(self, "_go_to_lobby")
+	$AnimationPlayer.play("fade_music_out")
 
 
 # Will eventually lead to Horde lobby

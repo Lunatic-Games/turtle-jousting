@@ -57,7 +57,7 @@ func sweep_done():
 	weapon.sweep_done()
 
 
-func new_attack():
+func reset_areas_hit():
 	assert(weapon != null)
 	weapon.reset_areas_hit()
 
@@ -79,4 +79,3 @@ func set_damage_mod(mod):
 
 func show_held_weapon():
 	weapon.visible = true
-

@@ -6,11 +6,9 @@
 [ext_resource path="res://player/throw_indicator/throw_indicator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/knight/knight.tscn" type="PackedScene" id=8]
 
-[sub_resource type="Curve" id=11]
+[sub_resource type="Curve" id=1]
 max_value = 450.0
 _data = [ Vector2( 0, 450 ), 0.0, 0.0, 0, 0, Vector2( 0.882353, 450 ), 0.0, 0.0, 0, 0, Vector2( 1, 216.818 ), -3880.64, 0.0, 0, 0 ]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
@@ -30,21 +28,29 @@ _data = [ Vector2( 0, 450 ), 0.0, 0.0, 0, 0, Vector2( 0.882353, 450 ), 0.0, 0.0,
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
+
 [node name="Player" groups=[
 "player",
 ] instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 locked_speed = 450.0
-joust_velocity = SubResource( 11 )
+joust_velocity = SubResource( 1 )
 
 [node name="Sprite" parent="Reversable" index="2"]
 scale = Vector2( 0.05, 0.05 )
 
+[node name="WaterAnimation" parent="Reversable/Sprite" index="1"]
+frame = 0
+
+[node name="WaterWakeAnimation" parent="Reversable" index="4"]
+frame = 0
+
 [node name="AnimationTree" parent="." index="4"]
-parameters/playback = SubResource( 1 )
-parameters/controlling/playback = SubResource( 2 )
-parameters/controlling/jousting/playback = SubResource( 3 )
-parameters/controlling/waiting/playback = SubResource( 4 )
+parameters/playback = SubResource( 2 )
+parameters/controlling/playback = SubResource( 3 )
+parameters/controlling/jousting/playback = SubResource( 4 )
+parameters/controlling/waiting/playback = SubResource( 5 )
 
 [node name="Knight" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 1.38696, -28.2939 )
@@ -53,12 +59,12 @@ position = Vector2( 1.38696, -28.2939 )
 frame = 1
 
 [node name="AnimationTree" parent="Knight" index="3"]
-parameters/playback = SubResource( 5 )
-parameters/controlling/playback = SubResource( 6 )
-parameters/controlling/jousting/playback = SubResource( 7 )
-parameters/controlling/throwing/playback = SubResource( 8 )
-parameters/controlling/waiting/playback = SubResource( 9 )
-parameters/flying_off/playback = SubResource( 10 )
+parameters/playback = SubResource( 6 )
+parameters/controlling/playback = SubResource( 7 )
+parameters/controlling/jousting/playback = SubResource( 8 )
+parameters/controlling/throwing/playback = SubResource( 9 )
+parameters/controlling/waiting/playback = SubResource( 10 )
+parameters/flying_off/playback = SubResource( 11 )
 
 [node name="JoustIndicator" parent="." index="6" instance=ExtResource( 3 )]
 visible = false

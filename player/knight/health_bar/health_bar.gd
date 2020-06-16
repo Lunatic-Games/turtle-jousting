@@ -34,6 +34,8 @@ func _physics_process(delta):
 		if previous < actual:
 			previous = actual
 			changing = false
+			if actual == 0:
+				visible = false
 	elif previous < actual:
 		previous += CHANGE_RATE * delta
 		if previous > actual:

@@ -43,6 +43,7 @@ func _ready():
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
 	$VisorTransition.lift_up()
+	$AnimationPlayer.play("fade_music_in")
 
 
 # Check for keyboard popup and register new devices
@@ -482,6 +483,7 @@ func return_to():
 	if get_tree().network_peer and is_network_master():
 		get_tree().refuse_new_network_connections = false
 	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$VisorTransition.lift_up()
 	$AnimationPlayer.play("fade_music_in")
 	visible = true
@@ -492,6 +494,7 @@ func return_to():
 
 func _on_BackButton_pressed():
 	$VisorTransition.bring_down(self, "_go_back")
+	$AnimationPlayer.play("fade_music_out")
 	
 
 # Exit game (this will eventually lead back to main menu)

@@ -10,7 +10,7 @@
 [ext_resource path="res://ui/lobby/assets/top_scaled.png" type="Texture" id=8]
 [ext_resource path="res://ui/lobby/assets/left_scaled_cropped.png" type="Texture" id=9]
 [ext_resource path="res://ui/lobby/assets/tv_scaled_cropped.png" type="Texture" id=10]
-[ext_resource path="res://video/rick.ogv" type="VideoStream" id=11]
+[ext_resource path="res://video/tutorial.ogv" type="VideoStream" id=11]
 [ext_resource path="res://music/lobby.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=1]
@@ -441,8 +441,9 @@ one_shot = true
 
 [node name="LobbyMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
-volume_db = -6.0
+volume_db = -80.0
 autoplay = true
+bus = "LobbyMusic"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade_music_in = SubResource( 14 )

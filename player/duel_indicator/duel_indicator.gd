@@ -10,6 +10,16 @@ var player_2
 var duel_decided = false
 
 
+func _ready():
+	if get_tree().network_peer:
+		rset_config("visible", MultiplayerAPI.RPC_MODE_REMOTE)
+
+
+func _physics_process(_delta):
+	if get_tree().network_peer and is_network_master():
+		rset("visible", visible)
+
+
 # Check both players for presses
 func _input(event):
 	if event.get("pressed"):
@@ -25,7 +35,7 @@ func display(p1, p2):
 	
 	var pos = p1.global_position
 	pos += (p2.global_position - p1.global_position) / 2
-	pos += Vector2(-18, -100)
+	pos += Vector2(-36, -100)
 	set_global_position(pos)
 	random_button()
 	popup()
@@ -42,14 +52,14 @@ func check_for_press(event, player, other_player):
 	if device != player.device_id:
 		return
 	
-	if event.is_action("duel_a") and displayed_button == "A":
-		winning_press(player, other_player)
-	elif event.is_action("duel_b") and displayed_button == "B":
-		winning_press(player, other_player)
-	elif event.is_action("duel_x") and displayed_button == "X":
-		winning_press(player, other_player)
-	elif event.is_action("duel_y") and displayed_button == "Y":
-		winning_press(player, other_player)
+	var keys = {"A": "duel_a", "B": "duel_b", "X": "duel_x", "Y": "duel_y"}
+	for key in keys.keys():
+		if event.is_action_pressed(keys[key]) and displayed_button == key:
+			winning_press(player, other_player)
+			return
+		elif event.is_action_pressed(keys[key]):
+			losing_press(player, other_player)
+			return
 
 
 # Correct button pressed
@@ -58,6 +68,11 @@ func winning_press(winner, loser):
 	loser.lost_duel((loser.global_position - winner.global_position).normalized())
 	duel_decided = true
 	queue_free()
+
+
+# Incorrect button pressed
+func losing_press(loser, winner):
+	winning_press(winner, loser)
 
 
 # Change displayed button to be a new random one

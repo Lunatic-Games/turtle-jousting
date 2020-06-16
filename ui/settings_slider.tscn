@@ -56,6 +56,7 @@ margin_left = 96.0
 margin_right = 196.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 100, 0 )
+value = 100.0
 
 [node name="HoldTimer" type="Timer" parent="."]
 wait_time = 0.5

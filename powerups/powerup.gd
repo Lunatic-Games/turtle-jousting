@@ -34,6 +34,7 @@ func spawn_anim_done():
 func play_audio():
 	var audio = audio_on_pickup[randi() % len(audio_on_pickup)]
 	var player = AudioStreamPlayer.new()
+	player.connect("finished", player, "queue_free")
 	player.stream = audio
 	get_parent().add_child(player)
 	player.playing = true
