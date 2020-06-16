@@ -161,6 +161,8 @@ remote func unready():
 	ready = false
 	for slot in get_tree().get_nodes_in_group("player_slot"):
 		color_freed(COLORS[color_i][0])
+		if get_tree().network_peer and is_network_master():
+			slot.rpc("color_freed", COLORS[color_i][0])
 	capturing_input = true
 	time_readied = null
 	set_edit_button_visibility(true)
