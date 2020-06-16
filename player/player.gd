@@ -114,7 +114,7 @@ func begin_charging_joust():
 func release_joust():
 	if has_status("Stoned"):
 		$Knight.weapon_handle.enable_hitbox()
-		$Knight.weapon_handle.new_attack()
+		$Knight.weapon_handle.reset_areas_hit()
 	else:
 		$Knight/AnimationTree.travel("controlling/jousting/jousting")
 	$AnimationTree.travel("controlling/jousting/jousting")
