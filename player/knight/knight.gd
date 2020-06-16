@@ -43,6 +43,8 @@ func _physics_process(delta):
 			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
+	if get_tree().network_peer and is_network_master():
+		rpc("set_health", health)
 
 
 # Reduce health

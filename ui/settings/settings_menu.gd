@@ -1,7 +1,7 @@
 extends Popup
 
 
-var bus_layout = preload("res://audio_settings.tres")
+var bus_layout = load("res://audio_settings.tres")
 
 
 func _ready():

@@ -6,10 +6,8 @@
 [ext_resource path="res://weapons/lance/assets/lance_mod.png" type="Texture" id=4]
 [ext_resource path="res://weapons/lance/lance.gd" type="Script" id=5]
 
-
-
 [sub_resource type="Curve" id=1]
-_data = [ Vector2( 0, 0.227273 ), 0.0, 0.0659574, 0, 0, Vector2( 1, 1 ), 1.37778, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.3 ), 0.0, 0.481469, 0, 0, Vector2( 1, 1 ), 0.117874, 0.0, 0, 0 ]
 
 [node name="Lance" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
