@@ -7,6 +7,10 @@ var damage_mod = 1
 var queued_weapons = []
 
 
+func _ready():
+	rpc_config("call_deferred", MultiplayerAPI.RPC_MODE_REMOTE)
+
+
 func set_player(player):
 	player_owned_by = player
 	weapon.pick_up(player)
