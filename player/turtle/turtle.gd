@@ -16,8 +16,9 @@ var speed_modifier = 1
 var device_id
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
-var last_velocity = Vector2(0, 0)
-var recieved_net_update = false
+var last_net_velocity = Vector2(0, 0)
+onready var last_net_position = position
+var net_frames = 0
 
 
 # Keeps track of movement input [button_active, joystick strength]
@@ -74,12 +75,8 @@ func _should_handle_event(event):
 # Update movement
 func _physics_process(_delta):
 	if !_should_process():
-		if recieved_net_update:
-			print("Recieved an update")
-			recieved_net_update = false
-		else:
-			print("Didn't recieve an update: ", last_velocity )
-			var _vel = move_and_slide(last_velocity)
+		position = last_net_position + last_net_velocity * net_frames
+		net_frames += 1
 		return
 
 	var movement
@@ -100,9 +97,9 @@ func _physics_process(_delta):
 
 
 remote func update_net_movement(pos, vel):
-	position = pos
-	last_velocity = vel
-	recieved_net_update = true
+	net_frames = 0
+	last_net_position = pos
+	last_net_velocity = vel
 
 
 # Should only process if offline or network master
