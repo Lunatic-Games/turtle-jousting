@@ -6,7 +6,7 @@
 [ext_resource path="res://ui/main/main_menu.gd" type="Script" id=4]
 [ext_resource path="res://ui/settings/settings_menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/visor_transition.tscn" type="PackedScene" id=6]
-[ext_resource path="res://music/in_game.wav" type="AudioStream" id=7]
+[ext_resource path="res://music/main_menu.wav" type="AudioStream" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fade_music_in"

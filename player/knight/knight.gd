@@ -44,7 +44,7 @@ func _physics_process(delta):
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
 	if get_tree().network_peer and is_network_master():
-		rpc("set_health", health)
+		rpc("set_health", health, Vector2(150, 0))
 
 
 # Reduce health

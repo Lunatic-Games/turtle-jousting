@@ -35,11 +35,11 @@ func _hit_knight(knight):
 func _hit_weapon(weapon):
 	._hit_weapon(weapon)
 	if weapon.can_duel:
+		var forwards = Vector2(cos(angle), sin(angle))
+		var knockback = forwards.normalized() * KNOCKBACK
 		_damage_knight(weapon.knight_held_by, 
-			int(DAMAGE * damage_curve.interpolate(charge)))
+			int(DAMAGE * damage_curve.interpolate(charge)), knockback)
 		if charge >= weapon.charge:
-			var forwards = Vector2(cos(angle), sin(angle))
-			var knockback = forwards.normalized() * KNOCKBACK
 			_knock_off_knight(weapon.knight_held_by, knockback)
 		areas_hit.append(weapon.knight_held_by)
 

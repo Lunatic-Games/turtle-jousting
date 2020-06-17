@@ -422,6 +422,7 @@ margin_right = 492.0
 margin_bottom = 347.0
 rect_min_size = Vector2( 200, 200 )
 stream = ExtResource( 11 )
+volume_db = -80.0
 autoplay = true
 __meta__ = {
 "_edit_use_anchors_": false
