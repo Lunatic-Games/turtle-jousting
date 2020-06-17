@@ -8,13 +8,13 @@ signal duel_ended
 export (Curve) var joust_velocity
 
 const JOUST_DEADZONE = 0.7  # Min length of movement to count
-const JOUST_CHARGE_RATE = 600
-const MAX_JOUST_CHARGE = 1500
-const THROW_START_CHARGE = 150
-const THROW_CHARGE_RATE = 150
-const MAX_THROW_CHARGE = 800
+const JOUST_CHARGE_RATE = 600.0
+const MAX_JOUST_CHARGE = 1500.0
+const THROW_START_CHARGE = 150.0
+const THROW_CHARGE_RATE = 150.0
+const MAX_THROW_CHARGE = 800.0
 const MOUSE_SENSITIVITY = 0.01
-const LOST_DUEL_KNOCKBACK = 200
+const LOST_DUEL_KNOCKBACK = 200.0
 const duel_indicator_scene = preload("res://player/duel_indicator/duel_indicator.tscn")
 const bot_ai_scene = preload("res://player/bot_ai.tscn")
 
@@ -301,12 +301,16 @@ func hit_turtle(turtle):
 	var angle = (turtle.global_position - global_position).angle()
 	if angle < PI / 5 and angle > -PI / 5:
 		locked_direction.x = -abs(locked_direction.x)
+		$BounceAnimator.play("bounce")
 	if angle >= PI / 5 and angle < 4 * PI / 5:
 		locked_direction.y = -abs(locked_direction.y)
 	if angle >= 4 * PI / 5 or angle <= -4 * PI / 5:
 		locked_direction.x = abs(locked_direction.x)
+		$BounceAnimator.play("bounce")
 	if angle < -PI / 5 and angle > -4 * PI / 5:
 		locked_direction.y = abs(locked_direction.y)
+	$Knight.weapon_handle.weapon.reset_areas_hit()
+	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pickup knight if hit and in water
@@ -321,12 +325,14 @@ func hit_wall(wall):
 		return
 	if wall.is_in_group("east_wall"):
 		locked_direction.x = -abs(locked_direction.x)
+		$BounceAnimator.play("bounce")
 	elif wall.is_in_group("north_wall"):
 		locked_direction.y = abs(locked_direction.y)
 	elif wall.is_in_group("south_wall"):
 		locked_direction.y = -abs(locked_direction.y)
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
+		$BounceAnimator.play("bounce")
 	$Knight.weapon_handle.weapon.reset_areas_hit()
 	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 

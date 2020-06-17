@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://player/turtle/turtle.gd" type="Script" id=1]
 [ext_resource path="res://player/turtle/assets/water_particle.png" type="Texture" id=2]
@@ -261,6 +261,16 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/4/type = "animation"
+tracks/4/path = NodePath("BounceAnimator")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": PoolStringArray( "[stop]" ),
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="Animation" id=13]
 tracks/0/type = "value"
@@ -438,12 +448,26 @@ graph_offset = Vector2( -188, 33.112 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=41]
 
+[sub_resource type="Animation" id=42]
+resource_name = "bounce"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Reversable/Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 3,
+"values": [ Vector2( 0.03, 0.05 ), Vector2( 0.05, 0.05 ) ]
+}
+
 [node name="Turtle" type="KinematicBody2D" groups=[
 "turtle",
 ]]
 position = Vector2( 516.15, 290.027 )
 script = ExtResource( 1 )
-locked = true
 locked_speed = 0.0
 slowed_speed = 100.0
 
@@ -465,7 +489,7 @@ texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Reversable"]
 position = Vector2( 0, -27 )
-scale = Vector2( 0.042, 0.05 )
+scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 3 )
 offset = Vector2( -50, 0 )
 
@@ -521,4 +545,7 @@ parameters/controlling/playback = SubResource( 39 )
 parameters/controlling/jousting/playback = SubResource( 40 )
 parameters/controlling/waiting/playback = SubResource( 41 )
 script = ExtResource( 8 )
+
+[node name="BounceAnimator" type="AnimationPlayer" parent="."]
+anims/bounce = SubResource( 42 )
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

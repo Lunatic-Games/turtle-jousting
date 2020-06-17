@@ -23,6 +23,7 @@ func pick_up(player):
 	if player.has_node("Knight"):
 		knight_held_by = player.get_node("Knight")
 	visible = true
+	$CollisionShape2D.disabled = true
 	if get_tree().network_peer:
 		set_network_master(player.get_network_master())
 		rpc_config("queue_free", MultiplayerAPI.RPC_MODE_REMOTE)

@@ -10969,7 +10969,7 @@ flying_velocity = SubResource( 1 )
 [node name="Reversable" type="Node2D" parent="."]
 
 [node name="HealthBarPosition" type="Position2D" parent="Reversable"]
-position = Vector2( -5.95203, -50.0352 )
+position = Vector2( -4.69, -49.154 )
 
 [node name="Sprite" type="Node2D" parent="Reversable"]
 scale = Vector2( 0.05, 0.05 )
@@ -10981,25 +10981,16 @@ texture = ExtResource( 2 )
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 192.486, -551.6 )
-rotation = -2.42775
-scale = Vector2( -1, 1 )
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 525.356, -615.08 )
-rotation = -3.63378
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 550.505, -420.938 )
-rotation = -3.17999
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
-position = Vector2( 6.58789, -612.646 )
-rotation = -2.72446
-scale = Vector2( 0.1, 0.1 )
+position = Vector2( 400.92, 133.002 )
 script = ExtResource( 29 )
 
 [node name="Lance" parent="Reversable/Sprite/BackArm/WeaponHandle" instance=ExtResource( 6 )]
@@ -11007,19 +10998,15 @@ script = ExtResource( 29 )
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -50.1865, 7.16943 )
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -7.16895, 0 )
-rotation = -0.118682
 texture = ExtResource( 8 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Chest"]
 texture = ExtResource( 9 )
 
 [node name="Head" type="Sprite" parent="Reversable/Sprite/MainBody"]
-position = Vector2( -35.8486, 14.3389 )
 texture = ExtResource( 10 )
 
 [node name="Modulate" type="Sprite" parent="Reversable/Sprite/MainBody/Head"]
@@ -11067,7 +11054,6 @@ visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
-frame = 1
 playing = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Reversable"]
@@ -11078,7 +11064,7 @@ frames = SubResource( 3 )
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 9.0433, -29.5511, 3.79712, -20.8574, 12.2508, -4.01685, 23.9043, -4.49252, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -8.49396, -22.5062 )
+polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
 disabled = true
 
 [node name="Animator" type="AnimationPlayer" parent="."]
