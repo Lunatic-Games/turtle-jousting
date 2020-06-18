@@ -16,6 +16,9 @@ var speed_modifier = 1
 var device_id
 var locked_direction = Vector2(0, 0)
 var last_direction = Vector2(1, 0)
+var last_net_position
+var last_net_velocity
+var net_updated = false
 
 
 # Keeps track of movement input [button_active, joystick strength]
@@ -72,6 +75,11 @@ func _should_handle_event(event):
 # Update movement
 func _physics_process(_delta):
 	if !_should_process():
+		if net_updated:
+			move_and_slide((last_net_position - position) + last_net_velocity)
+			net_updated = false
+		elif last_net_velocity:
+			move_and_slide(last_net_velocity)
 		return
 
 	var movement
@@ -84,11 +92,17 @@ func _physics_process(_delta):
 		else:
 			movement *= SPEED * speed_modifier
 		moved(movement)
-	var _vel = move_and_slide(movement)
+	var vel = move_and_slide(movement)
 	update_sprite_direction(movement)
 	
 	if get_tree().network_peer and is_network_master():
-		rset("position", position)
+		rpc_unreliable("update_net_movement", position, vel)
+
+
+remote func update_net_movement(pos, vel):
+	net_updated = true
+	last_net_position = pos
+	last_net_velocity = vel
 
 
 # Should only process if offline or network master

@@ -5,16 +5,16 @@ export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
 
-const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn")]
-#const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn"),
-#	preload("res://powerups/broom_pickup/broom_pickup.tscn"),
-#	preload("res://powerups/invis_potion/invis_potion.tscn"),
-#	preload("res://powerups/judgement/judgement.tscn"),
-#	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
-#	preload("res://powerups/mead/mead.tscn")]
+const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn"),
+	preload("res://powerups/broom_pickup/broom_pickup.tscn"),
+	preload("res://powerups/invis_potion/invis_potion.tscn"),
+	preload("res://powerups/judgement/judgement.tscn"),
+	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
+	preload("res://powerups/mead/mead.tscn")]
 
 var duels = []
-var game_done
+var game_done = false
+var game_started = false
 
 
 # Setup game and disable features if this is a menu version
@@ -93,6 +93,7 @@ remote func games_synced():
 
 # The game begins
 func start():
+	game_started = true
 	set_player_process_input(true)
 	set_process(true)
 	$GameMusic.play()
@@ -171,7 +172,8 @@ remote func begin_return_to_lobby():
 
 # Resume handling player input
 func _on_PausedMenu_popup_hide():
-	set_player_process_input(true)
+	if game_started:
+		set_player_process_input(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
