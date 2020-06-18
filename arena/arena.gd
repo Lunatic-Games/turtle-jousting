@@ -18,7 +18,6 @@ var game_done
 
 # Setup game and disable features if this is a menu version
 func _ready():
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if MENU_VERSION:
 		$GameTimerLabel.visible = false
 		$VisorTransition.visible = false
@@ -184,10 +183,8 @@ func _on_PausedMenu_return_to_lobby():
 
 # Change to lobby
 func _return_to_lobby():
-	if !get_tree().network_peer:
-		get_tree().paused = false
-	get_parent().get_node("Lobby").return_to()
 	queue_free()
+	get_parent().get_node("Lobby").return_to()
 
 
 # Transition to main menu
@@ -224,3 +221,15 @@ func _on_GameTimer_timeout():
 	for knight in get_tree().get_nodes_in_group("knight"):
 		knight.set_health(1)
 	$AnimationPlayer.play("sudden_death")
+
+
+func play_turtle_voice(audio, override=false):
+	if $TurtleVoice.playing and !override:
+		return
+	$TurtleVoice.stream = audio
+	$TurtleVoice.play()
+	$GameMusic.volume_db = -10
+
+
+func _on_TurtleVoice_finished():
+	$GameMusic.volume_db = 0

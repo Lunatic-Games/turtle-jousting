@@ -214,7 +214,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 3.6 ),
+"times": PoolRealArray( 3.7 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -933,10 +933,17 @@ bus = "InGameMusic"
 
 [node name="CountdownBeep" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
+volume_db = -17.0
+pitch_scale = 0.85
 bus = "SFX"
+
+[node name="TurtleVoice" type="AudioStreamPlayer" parent="."]
+volume_db = 10.0
+bus = "Voice"
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
 [connection signal="popup_hide" from="PausedMenu" to="." method="_on_PausedMenu_popup_hide"]
 [connection signal="return_to_lobby" from="PausedMenu" to="." method="begin_return_to_lobby"]
 [connection signal="return_to_main_menu" from="PausedMenu" to="." method="begin_return_to_main_menu"]
 [connection signal="lifted_up" from="VisorTransition" to="." method="_on_VisorTransition_lifted_up"]
 [connection signal="timeout" from="PowerupSpawnTimer" to="." method="_spawn_random_powerup"]
+[connection signal="finished" from="TurtleVoice" to="." method="_on_TurtleVoice_finished"]

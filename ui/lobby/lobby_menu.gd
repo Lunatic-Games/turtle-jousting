@@ -25,7 +25,7 @@ var requested_devices = []
 var local_players = {}
 
 # Has useful network functions
-var network_handler = preload("res://ui/lobby/networking.gd").new()
+var network_handler = load("res://ui/lobby/networking.gd").new()
 
 # Stores data for servers and clients
 var server

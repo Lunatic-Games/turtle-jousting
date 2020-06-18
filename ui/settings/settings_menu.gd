@@ -13,6 +13,10 @@ func _ready():
 	level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX"))
 	var sfx_slider = $VBoxContainer/SFXContainer/Slider
 	sfx_slider.value = sfx_slider.max_value * db2linear(level)
+	
+	level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Voice"))
+	var voice_slider = $VBoxContainer/VoiceContainer/Slider
+	voice_slider.value = voice_slider.max_value * db2linear(level)
 
 
 # Check for cancel
@@ -50,6 +54,14 @@ func _on_MusicSlider_value_changed(value):
 func _on_SFXSlider_value_changed(value):
 	var ratio = value / $VBoxContainer/SFXContainer/Slider.max_value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),
+		linear2db(ratio))
+	var _err = ResourceSaver.save("audio_settings.tres", 
+		AudioServer.generate_bus_layout())
+
+
+func _on_VoiceSlider_value_changed(value):
+	var ratio = value / $VBoxContainer/VoiceContainer/Slider.max_value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Voice"),
 		linear2db(ratio))
 	var _err = ResourceSaver.save("audio_settings.tres", 
 		AudioServer.generate_bus_layout())

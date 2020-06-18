@@ -7,7 +7,12 @@ func _ready():
 	knight.visible = false
 
 
+func refresh():
+	$DurationTimer.start()
+
+
 func _on_DurationTimer_timeout():
 	player.get_node("Reversable").visible = true
 	player.get_node("Statuses").visible = true
 	knight.visible = true
+	queue_free()
