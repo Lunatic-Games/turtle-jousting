@@ -15,13 +15,18 @@ _global_script_class_icons={
 
 [Config]
 
-Version="0.1"
+Version="0.2"
 
 [application]
 
 config/name="Turtle Jousting"
 run/main_scene="res://ui/main/main_menu.tscn"
+boot_splash/image="res://boot_splash.png"
 config/icon="res://icon.png"
+
+[autoload]
+
+Config="*res://config.gd"
 
 [display]
 

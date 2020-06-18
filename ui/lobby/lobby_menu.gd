@@ -42,6 +42,10 @@ func _ready():
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
 	_err = get_tree().connect("connection_failed", self, "_connected_fail")
 	_err = get_tree().connect("server_disconnected", self, "_server_disconnected")
+	var line_edit = local_container.get_node("CodeEditContainer/LineEdit")
+	line_edit.text = Config.get_last_local_code()
+	line_edit = online_container.get_node("CodeEditContainer/LineEdit")
+	line_edit.text = Config.get_last_online_code()
 	$VisorTransition.lift_up()
 	$AnimationPlayer.play("fade_music_in")
 
@@ -190,15 +194,18 @@ func _connect_to_server(code):
 
 # When online join pressed
 func _connect_online():
-	var code = online_container.get_node("CodeEditContainer/LineEdit").text
-	_connect_to_server(code)
-	
+	var online_code = online_container.get_node("CodeEditContainer/LineEdit").text
+	var offline_code = local_container.get_node("CodeEditContainer/LineEdit").text
+	Config.save_last_codes(offline_code, online_code)
+	_connect_to_server(online_code)
 
 
 # When local join pressed
 func _connect_local():
-	var code = local_container.get_node("CodeEditContainer/LineEdit").text
-	_connect_to_server(code)
+	var online_code = online_container.get_node("CodeEditContainer/LineEdit").text
+	var offline_code = local_container.get_node("CodeEditContainer/LineEdit").text
+	Config.save_last_codes(offline_code, online_code)
+	_connect_to_server(offline_code)
 	
 
 # Tell the new client connection to add itself

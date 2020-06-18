@@ -40,7 +40,7 @@ func show_not_enough_players():
 
 func show_differing_versions(var s_version, var c_version):
 	popup()
-	$FailureTimer.wait_time = 2.0
+	$FailureTimer.wait_time = 3.0
 	$DifferingVersionMessage.text = differing_message % [s_version, c_version]
 	$DifferingVersionMessage.visible = true
 	$FailureTimer.start()

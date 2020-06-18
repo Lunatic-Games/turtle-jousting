@@ -1,11 +1,7 @@
 extends Popup
 
 
-var bus_layout = load("res://audio_settings.tres")
-
-
 func _ready():
-	AudioServer.set_bus_layout(bus_layout)
 	var level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music"))
 	var music_slider = $VBoxContainer/MusicContainer/Slider
 	music_slider.value = music_slider.max_value * db2linear(level)
@@ -17,6 +13,8 @@ func _ready():
 	level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Voice"))
 	var voice_slider = $VBoxContainer/VoiceContainer/Slider
 	voice_slider.value = voice_slider.max_value * db2linear(level)
+	
+	$VBoxContainer/FullscreenContainer/CheckBox.pressed = OS.window_fullscreen
 
 
 # Check for cancel
@@ -41,6 +39,7 @@ func _on_FullscreenButton_pressed():
 	var pressed = !$VBoxContainer/FullscreenContainer/CheckBox.pressed
 	$VBoxContainer/FullscreenContainer/CheckBox.pressed = pressed
 	OS.window_fullscreen = pressed
+	Config.save()
 
 
 func _on_MusicSlider_value_changed(value):
@@ -49,6 +48,7 @@ func _on_MusicSlider_value_changed(value):
 		linear2db(ratio))
 	var _err = ResourceSaver.save("audio_settings.tres", 
 		AudioServer.generate_bus_layout())
+	Config.save()
 
 
 func _on_SFXSlider_value_changed(value):
@@ -57,6 +57,7 @@ func _on_SFXSlider_value_changed(value):
 		linear2db(ratio))
 	var _err = ResourceSaver.save("audio_settings.tres", 
 		AudioServer.generate_bus_layout())
+	Config.save()
 
 
 func _on_VoiceSlider_value_changed(value):
@@ -65,3 +66,4 @@ func _on_VoiceSlider_value_changed(value):
 		linear2db(ratio))
 	var _err = ResourceSaver.save("audio_settings.tres", 
 		AudioServer.generate_bus_layout())
+	Config.save()
