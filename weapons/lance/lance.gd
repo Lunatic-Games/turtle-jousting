@@ -28,6 +28,7 @@ func _hit_knight(knight):
 	else:
 		_damage_knight(knight, int(DAMAGE * damage_curve.interpolate(charge)),
 			knockback)
+		display_hit_particle()
 		_knock_off_knight(knight, knockback)
 
 
@@ -48,3 +49,13 @@ func set_charge(new_charge):
 	charge = new_charge
 	if get_tree().network_peer:
 		rset("charge", charge)
+
+
+func display_hit_particle():
+	var particle = $HitParticle.duplicate()
+	player_held_by.get_parent().add_child(particle)
+	particle.get_node("FreeTimer").connect("timeout", particle, "queue_free")
+	particle.get_node("FreeTimer").start()
+	particle.emitting = true
+	particle.visible = true
+	particle.global_position = $Tip.global_position

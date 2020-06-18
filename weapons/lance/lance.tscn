@@ -1,13 +1,31 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://weapons/weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://weapons/lance/assets/lance_front.png" type="Texture" id=2]
 [ext_resource path="res://weapons/lance/assets/lance_back.png" type="Texture" id=3]
 [ext_resource path="res://weapons/lance/assets/lance_mod.png" type="Texture" id=4]
 [ext_resource path="res://weapons/lance/lance.gd" type="Script" id=5]
+[ext_resource path="res://weapons/lance/assets/pow.png" type="Texture" id=6]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0.3 ), 0.0, 0.481469, 0, 0, Vector2( 1, 1 ), 0.117874, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.594595, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 15.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 0.04
+color_ramp = SubResource( 4 )
 
 [node name="Lance" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
@@ -30,3 +48,17 @@ texture = ExtResource( 4 )
 [node name="CollisionShape2D" parent="." index="3"]
 position = Vector2( 288.855, -2.65009 )
 polygon = PoolVector2Array( 928.387, -80.3078, -350.198, 343.193, -347.68, -248.429 )
+
+[node name="HitParticle" type="Particles2D" parent="." index="4"]
+emitting = false
+amount = 1
+lifetime = 0.75
+one_shot = true
+process_material = SubResource( 2 )
+texture = ExtResource( 6 )
+
+[node name="FreeTimer" type="Timer" parent="HitParticle" index="0"]
+wait_time = 0.75
+
+[node name="Tip" type="Position2D" parent="." index="5"]
+position = Vector2( 1190.05, -81.5105 )

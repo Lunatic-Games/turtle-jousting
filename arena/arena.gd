@@ -5,12 +5,13 @@ export (bool) var MENU_VERSION = false
 
 const player_scene = preload("res://player/player.tscn")
 
-const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn"),
-	preload("res://powerups/broom_pickup/broom_pickup.tscn"),
-	preload("res://powerups/invis_potion/invis_potion.tscn"),
-	preload("res://powerups/judgement/judgement.tscn"),
-	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
-	preload("res://powerups/mead/mead.tscn")]
+const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn")]
+#const powerup_scenes = [preload("res://powerups/bomb_lance_pickup/bomb_lance_pickup.tscn"),
+#	preload("res://powerups/broom_pickup/broom_pickup.tscn"),
+#	preload("res://powerups/invis_potion/invis_potion.tscn"),
+#	preload("res://powerups/judgement/judgement.tscn"),
+#	preload("res://powerups/lightning_rod/lightning_rod.tscn"),
+#	preload("res://powerups/mead/mead.tscn")]
 
 var duels = []
 var game_done
