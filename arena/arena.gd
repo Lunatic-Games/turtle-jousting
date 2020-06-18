@@ -19,6 +19,7 @@ var game_started = false
 
 # Setup game and disable features if this is a menu version
 func _ready():
+	randomize()
 	if MENU_VERSION:
 		$GameTimerLabel.visible = false
 		$VisorTransition.visible = false
@@ -30,7 +31,6 @@ func _ready():
 		all_players_added()
 		set_player_process_input(true)
 	else:
-		randomize()
 		set_process(false)
 		$GameTimer.wait_time = 120
 		$GameTimer.wait_time += 30 * len(get_tree().get_nodes_in_group("knight"))
