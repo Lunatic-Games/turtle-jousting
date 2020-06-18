@@ -34,10 +34,8 @@ func spawn_anim_done():
 func play_audio():
 	var audio = audio_on_pickup[randi() % len(audio_on_pickup)]
 	if get_tree().get_root().has_node("Arena"):
-		print("Playing turtle voice")
 		get_tree().get_root().get_node("Arena").play_turtle_voice(audio)
 	else:
-		print("Old")
 		var player = AudioStreamPlayer.new()
 		player.connect("finished", player, "queue_free")
 		player.stream = audio

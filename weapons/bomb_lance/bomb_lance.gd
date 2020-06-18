@@ -12,20 +12,18 @@ var angle = 0
 
 func _hit_knight(knight):
 	._hit_knight(knight)
-	explode()
 	if (overlaps_area(knight.weapon_handle.weapon) 
 			and knight.weapon_handle.weapon.can_joust):
-		print("Hit knight at same time weapons hit")
 		return
+	explode()
 	var forwards = Vector2(cos(angle), sin(angle))
 	var medium_knockback = forwards.normalized() * MEDIUM_KNOCKBACK
 	var large_knockback = forwards.normalized() * LARGE_KNOCKBACK
 	
 	if knight.parrying:
-		_knock_off_knight(knight_held_by, -large_knockback)
 		_damage_knight(knight, SMALL_DAMAGE, medium_knockback)
+		_knock_off_knight(knight_held_by, -large_knockback)
 	else:
-		_knock_off_knight(knight_held_by, -medium_knockback)
 		if !knight.on_turtle:
 			_damage_knight(knight, MAX_DAMAGE)
 		else:
@@ -46,11 +44,10 @@ func _hit_weapon(weapon):
 	
 	_damage_knight(weapon.knight_held_by, LARGE_DAMAGE, large_knockback)
 	_knock_off_knight(weapon.knight_held_by, large_knockback)
-	
 
 
 func explode():
-	var sprite = $Explosion
+	var sprite = $Explosion.duplicate()
 	remove_child($Explosion)
 	player_held_by.get_parent().add_child(sprite)
 	sprite.global_position = $Tip.global_position

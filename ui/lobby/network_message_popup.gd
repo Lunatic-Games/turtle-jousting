@@ -5,6 +5,7 @@ enum NetworkType {SERVER, CLIENT}
 const CONNECTING_MESSAGE = "Connecting"
 const CREATING_SERVER_MESSAGE = "Creating server"
 const MAX_DOTS = 3
+var differing_message = "Differing versions\nServer: v%s\nClient: v%s"
 var dots = 1
 var net_type
 
@@ -37,14 +38,23 @@ func show_not_enough_players():
 	$FailureTimer.start()
 
 
+func show_differing_versions(var s_version, var c_version):
+	popup()
+	$FailureTimer.wait_time = 2.0
+	$DifferingVersionMessage.text = differing_message % [s_version, c_version]
+	$DifferingVersionMessage.visible = true
+	$FailureTimer.start()
+
 func hide():
 	$FailureTimer.stop()
+	$FailureTimer.wait_time = 1.0
 	$DotTimer.stop()
 	$ConnectingMessage.visible = false
 	$CreatingServerMessage.visible = false
 	$ConnectionFailedMessage.visible = false
 	$InvalidCodeMessage.visible = false
 	$ServerCreationFailedMessage.visible = false
+	$DifferingVersionMessage.visible = false
 	
 	visible = false
 

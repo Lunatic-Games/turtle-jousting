@@ -76,10 +76,11 @@ func _should_handle_event(event):
 func _physics_process(_delta):
 	if !_should_process():
 		if net_updated:
-			move_and_slide((last_net_position - position) + last_net_velocity)
+			var _vel = move_and_slide((last_net_position - position)
+				+ last_net_velocity)
 			net_updated = false
-		elif last_net_velocity:
-			move_and_slide(last_net_velocity)
+		elif last_net_velocity != null:
+			var _vel = move_and_slide(last_net_velocity)
 		return
 
 	var movement

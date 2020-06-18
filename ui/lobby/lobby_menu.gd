@@ -85,7 +85,6 @@ func _input(event):
 			return
 		
 		if requested_devices.has(device):
-			print("Device already requested")
 			return
 		if !get_tree().network_peer or is_network_master():
 			add_player(pos, device)
@@ -205,7 +204,8 @@ func _connect_local():
 # Tell the new client connection to add itself
 func _new_connection(id):
 	if is_network_master():
-		rpc_id(id, "join", connections, server.remote_code, server.local_code)
+		rpc_id(id, "join", connections, server.remote_code, server.local_code,
+			ProjectSettings.get_setting("Config/Version"))
 
 
 # Remove associated player slots on client disconnect
@@ -237,7 +237,13 @@ func _connected_fail():
 
 
 # Add players and register connection
-remote func join(existing_connections, remote_code, local_code):
+remote func join(existing_connections, remote_code, local_code, server_version):
+	var version = ProjectSettings.get_setting("Config/Version")
+	if version != server_version:
+		$NetworkMessagePopup.show_differing_versions(server_version, version)
+		get_tree().set_deferred("network_peer", null)
+		return
+	
 	connections = existing_connections
 	var net_id = get_tree().get_network_unique_id()
 	connections[net_id] = []
