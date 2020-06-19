@@ -260,13 +260,11 @@ remote func knock_knight_off(knockback):
 	$ThrowIndicator.visible = false
 	if has_status("Drunk"):
 		remove_status("Drunk")
-	elif has_status("Stoned"):
-		knight.hit(100)
 
 
 # Add knight back
 remote func pick_up_knight():
-	if has_node("Knight") or knight.on_turtle:
+	if has_node("Knight") or knight.on_turtle or knight.get_node("CollisionPolygon2D").disabled:
 		return
 	if get_tree().network_peer and is_network_master():
 		rpc("pick_up_knight")
