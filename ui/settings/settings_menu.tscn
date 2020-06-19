@@ -5,7 +5,6 @@
 [ext_resource path="res://ui/settings_slider.tscn" type="PackedScene" id=3]
 
 [node name="SettingsMenu" type="Popup"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 popup_exclusive = true
@@ -25,10 +24,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MusicContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
+[node name="MasterContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 0.0
-margin_right = 196.0
+margin_right = 290.0
 margin_bottom = 26.0
+
+[node name="Label" parent="VBoxContainer/MasterContainer" index="0"]
+margin_right = 186.0
+text = "Master Volume"
+
+[node name="Slider" parent="VBoxContainer/MasterContainer" index="1"]
+margin_left = 190.0
+margin_right = 290.0
+
+[node name="MusicContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_right = 290.0
 
 [node name="Label" parent="VBoxContainer/MusicContainer" index="0"]
 margin_right = 73.0
@@ -39,7 +49,9 @@ margin_left = 77.0
 margin_right = 177.0
 
 [node name="SFXContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 196.0
+margin_top = 60.0
+margin_right = 290.0
+margin_bottom = 86.0
 
 [node name="Label" parent="VBoxContainer/SFXContainer" index="0"]
 margin_right = 50.0
@@ -50,9 +62,9 @@ margin_left = 54.0
 margin_right = 154.0
 
 [node name="VoiceContainer" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 60.0
-margin_right = 196.0
-margin_bottom = 86.0
+margin_top = 90.0
+margin_right = 290.0
+margin_bottom = 116.0
 
 [node name="Label" parent="VBoxContainer/VoiceContainer" index="0"]
 margin_right = 69.0
@@ -63,9 +75,9 @@ margin_left = 73.0
 margin_right = 173.0
 
 [node name="FullscreenContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 90.0
-margin_right = 196.0
-margin_bottom = 116.0
+margin_top = 120.0
+margin_right = 290.0
+margin_bottom = 146.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -120,16 +132,19 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 0.0
-margin_top = 120.0
+margin_top = 150.0
 margin_right = 62.0
-margin_bottom = 146.0
+margin_bottom = 176.0
 text = "Back"
+[connection signal="value_changed" from="VBoxContainer/MasterContainer/Slider" to="." method="_on_MasterSlider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/MusicContainer/Slider" to="." method="_on_MusicSlider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/SFXContainer/Slider" to="." method="_on_SFXSlider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/VoiceContainer/Slider" to="." method="_on_VoiceSlider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/FullscreenContainer/Button" to="." method="_on_FullscreenButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/VibrationContainer/Button" to="." method="_on_VibrationButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+
+[editable path="VBoxContainer/MasterContainer"]
 
 [editable path="VBoxContainer/MusicContainer"]
 

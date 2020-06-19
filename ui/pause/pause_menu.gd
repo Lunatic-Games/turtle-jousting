@@ -32,6 +32,7 @@ func _on_ContinueButton_pressed():
 # Show settings
 func _on_SettingsButton_pressed():
 	$SettingsMenu.popup()
+	$SettingsMenu/VBoxContainer/MasterContainer/Slider.grab_focus()
 	$ButtonContainer.visible = false
 
 

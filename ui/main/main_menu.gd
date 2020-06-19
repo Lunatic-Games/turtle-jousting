@@ -46,7 +46,7 @@ func _on_SettingsButton_pressed():
 	$Title.visible = false
 	$ButtonContainer.visible = false
 	$SettingsMenu.popup()
-	$SettingsMenu/VBoxContainer/MusicContainer/Slider.grab_focus()
+	$SettingsMenu/VBoxContainer/MasterContainer/Slider.grab_focus()
 
 
 # Hide UI to show credits

@@ -42,12 +42,17 @@ func _on_FullscreenButton_pressed():
 	Config.save()
 
 
+func _on_MasterSlider_value_changed(value):
+	var ratio = value / $VBoxContainer/MasterContainer/Slider.max_value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),
+		linear2db(ratio))
+	Config.save()
+
+
 func _on_MusicSlider_value_changed(value):
 	var ratio = value / $VBoxContainer/MusicContainer/Slider.max_value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),
 		linear2db(ratio))
-	var _err = ResourceSaver.save("audio_settings.tres", 
-		AudioServer.generate_bus_layout())
 	Config.save()
 
 
@@ -55,8 +60,6 @@ func _on_SFXSlider_value_changed(value):
 	var ratio = value / $VBoxContainer/SFXContainer/Slider.max_value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),
 		linear2db(ratio))
-	var _err = ResourceSaver.save("audio_settings.tres", 
-		AudioServer.generate_bus_layout())
 	Config.save()
 
 
@@ -64,6 +67,6 @@ func _on_VoiceSlider_value_changed(value):
 	var ratio = value / $VBoxContainer/VoiceContainer/Slider.max_value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Voice"),
 		linear2db(ratio))
-	var _err = ResourceSaver.save("audio_settings.tres", 
-		AudioServer.generate_bus_layout())
 	Config.save()
+
+

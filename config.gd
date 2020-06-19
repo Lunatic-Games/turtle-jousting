@@ -11,6 +11,12 @@ func _ready():
 		if fullscreen:
 			OS.window_fullscreen = true
 			
+		var master_volume = f.get_value("audio", "master", 1.0)
+		if not f.has_section_key("audio", "master"):
+			f.set_value("audio", "master", 1.0)
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),
+			linear2db(master_volume))
+			
 		var music = f.get_value("audio", "music", 1.0)
 		if not f.has_section_key("audio", "music"):
 			f.set_value("audio", "music", 1.0)
@@ -36,6 +42,10 @@ func save():
 	var f = ConfigFile.new()
 	var _err = f.load("user://settings.cfg")
 	f.set_value("display", "fullscreen", OS.window_fullscreen)
+	
+	var master_bus = AudioServer.get_bus_index("Music")
+	f.set_value("audio", "master",
+		db2linear(AudioServer.get_bus_volume_db(master_bus)))
 	
 	var music_bus = AudioServer.get_bus_index("Music")
 	f.set_value("audio", "music", 
