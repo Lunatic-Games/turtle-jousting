@@ -246,10 +246,8 @@ func moved(movement):
 remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
-	if get_tree().network_peer and is_network_master():
+	if get_tree().network_peer and get_tree().get_rpc_sender_id() == 0:
 		rpc("knock_knight_off", knockback)
-	elif get_tree().network_peer:
-		return
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
@@ -268,7 +266,7 @@ remote func knock_knight_off(knockback):
 remote func pick_up_knight():
 	if has_node("Knight") or knight.on_turtle:
 		return
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("pick_up_knight")
 	knight.get_node("CollisionPolygon2D").disabled = true
 	knight.on_turtle = true
