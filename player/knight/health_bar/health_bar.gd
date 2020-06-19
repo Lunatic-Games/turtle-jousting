@@ -1,13 +1,13 @@
 extends Sprite
 
 
-const MAX_HEALTH = 100.0
+const MAX_HEALTH = 10000.0
 const CHANGE_RATE = 100.0
 const IMG_RIGHT = 879.0
 const IMG_LEFT = 145.0
 
-var actual = 100.0
-var previous = 100.0
+var actual = 10000.0
+var previous = 10000.0
 var changing = false
 
 

@@ -268,6 +268,7 @@ remote func pick_up_knight():
 		return
 	if get_tree().network_peer:
 		rpc("pick_up_knight")
+	knight.get_node("CollisionPolygon2D").disabled = true
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
@@ -310,8 +311,9 @@ func hit_turtle(turtle):
 		$BounceAnimator.play("bounce")
 	if angle < -PI / 5 and angle > -4 * PI / 5:
 		locked_direction.y = abs(locked_direction.y)
-	$Knight.weapon_handle.weapon.reset_areas_hit()
-	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
+	if has_node("Knight"):
+		$Knight.weapon_handle.weapon.reset_areas_hit()
+		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pickup knight if hit and in water
@@ -356,6 +358,8 @@ func _on_Knight_died():
 	set_process_input(false)
 	remove_from_group("player")
 	emit_signal("lost")
+	for status in $Statuses.get_children():
+		status.queue_free()
 
 
 # Add a status to the player

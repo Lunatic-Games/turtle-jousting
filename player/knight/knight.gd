@@ -7,7 +7,7 @@ export (bool) var parrying = false
 export (bool) var on_turtle = true
 export (Curve) var flying_velocity
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 10000
 const MAX_FLY_DISTANCE = 1024
 
 var sudden_death = false
@@ -34,6 +34,10 @@ func _ready():
 func _physics_process(delta):
 	$HealthBar.global_position.x = $Reversable/HealthBarPosition.global_position.x
 	if _is_flying():
+		for area in get_overlapping_areas():
+			if area.is_in_group("wall"):
+				_on_FlyingHitbox_area_entered(area)
+				return
 		var dist_ratio = flying_dist_travelled / MAX_FLY_DISTANCE
 		var vel = flying_velocity.interpolate(dist_ratio)
 		var movement = flying_knockback.normalized() * vel * delta
@@ -43,6 +47,7 @@ func _physics_process(delta):
 			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
+		
 	if get_tree().network_peer and is_network_master():
 		rpc("set_health", health, Vector2(150, 0))
 
