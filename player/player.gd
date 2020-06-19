@@ -336,8 +336,9 @@ func hit_wall(wall):
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
 		$BounceAnimator.play("bounce")
-	$Knight.weapon_handle.weapon.reset_areas_hit()
-	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
+	if has_node("Knight"):
+		$Knight.weapon_handle.weapon.reset_areas_hit()
+		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pick up a powerup, if able
