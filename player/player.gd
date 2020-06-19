@@ -44,7 +44,8 @@ func _input(event):
 	
 	if $Knight/AnimationTree.is_in_state("controlling/waiting"):
 		if (event.is_action_pressed("joust") 
-				and $Knight.weapon_handle.weapon.can_joust):
+				and $Knight.weapon_handle.weapon.can_joust
+				and !$Knight.weapon_handle.queued_weapons):
 			begin_charging_joust()
 		if (event.is_action_pressed("joust") 
 				and $Knight.weapon_handle.weapon.is_in_group("throwable")):

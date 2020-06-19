@@ -20,7 +20,10 @@ func set_health(health):
 	if actual == health:
 		return
 	$AnimationPlayer.play("hit")
-	update_texture($Health, health / MAX_HEALTH)
+	if health > actual and previous < actual:
+		update_texture($Damage, health / MAX_HEALTH)
+	elif previous > actual:
+		update_texture($Health, health / MAX_HEALTH)
 	actual = health
 	changing = false
 	$Delay.start()
@@ -33,15 +36,19 @@ func _physics_process(delta):
 		previous -= CHANGE_RATE * delta
 		if previous < actual:
 			previous = actual
+			update_texture($Health, previous / MAX_HEALTH)
 			changing = false
 			if actual == 0:
 				visible = false
+		update_texture($Damage, previous / MAX_HEALTH)
 	elif previous < actual:
 		previous += CHANGE_RATE * delta
 		if previous > actual:
 			previous = actual
+			update_texture($Damage, previous / MAX_HEALTH)
 			changing = false
-	update_texture($Damage, previous / MAX_HEALTH)
+		update_texture($Health, previous / MAX_HEALTH)
+	
 	
 
 func _on_Delay_timeout():

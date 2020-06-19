@@ -18,7 +18,7 @@ func set_player(player):
 
 func equip(new_weapon):
 	if player_owned_by.get_node("AnimationTree").is_in_state("controlling/jousting/jousting"):
-		queued_weapons.append(new_weapon)
+		queued_weapons = [new_weapon]
 		return
 	unequip_held_weapon()
 	$Lance.put_away()
@@ -40,7 +40,7 @@ func equip_queued_weapons():
 	if !queued_weapons:
 		return
 	equip(queued_weapons[0])
-	queued_weapons.remove(0)
+	queued_weapons.clear()
 
 
 remote func throw_held_weapon(charge, dir_sign):

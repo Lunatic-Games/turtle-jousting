@@ -38,6 +38,7 @@ tracks/0/keys = {
 }
 
 [node name="HealthBar" type="Sprite"]
+position = Vector2( 516.099, 246.72 )
 scale = Vector2( 0.075, 0.05 )
 texture = ExtResource( 1 )
 offset = Vector2( 20, 800 )
