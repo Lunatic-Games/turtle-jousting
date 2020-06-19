@@ -36,11 +36,6 @@ func _on_PvpButton_pressed():
 	$AnimationPlayer.play("fade_music_out")
 
 
-# Will eventually lead to Horde lobby
-func _on_HordeButton_pressed():
-	print("Not implemented yet")
-
-
 # Go to settings
 func _on_SettingsButton_pressed():
 	$Title.visible = false

@@ -22,7 +22,7 @@ func set_health(health):
 	$AnimationPlayer.play("hit")
 	if health > actual and previous < actual:
 		update_texture($Damage, health / MAX_HEALTH)
-	elif previous > actual:
+	elif previous >= actual:
 		update_texture($Health, health / MAX_HEALTH)
 	actual = health
 	changing = false

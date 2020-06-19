@@ -5,18 +5,20 @@ var id
 var player
 var knight
 var duel_indicator
+var joust_direction_set = false
 
 
 func _ready():
 	assert(get_parent().is_in_group("player"))
+	randomize()
 	player = get_parent()
 	knight = player.get_node("Knight")
 	id = player.device_id
-	player.connect("began_duel", self, "_on_began_duel")
-	player.connect("duel_ended", self, "_on_duel_ended")
 
 
 func _physics_process(_delta):
+	if !player.is_processing_input():
+		return
 	if !player.has_node("Knight"):
 		var dir = knight.global_position - player.global_position
 		set_joy_direction(dir.normalized())
@@ -25,12 +27,16 @@ func _physics_process(_delta):
 		set_joy_direction(Vector2(0, 0))
 		return
 	if player.get_node("AnimationTree").is_in_state("controlling/waiting"):
-		set_joy_direction(Vector2(randf(), randf()).normalized())
 		press_action("joust")
+		if !joust_direction_set:
+			var joust_direction = Vector2((randf() - 0.5) * 2, (randf() - 0.5) * 2).normalized()
+			set_joy_direction(joust_direction)
+			joust_direction_set = true
 		return
 	if player.get_node("AnimationTree").is_in_state("controlling/jousting/charging_joust"):
 		if player.joust_charge == player.MAX_JOUST_CHARGE:
 			release_action("joust")
+		joust_direction_set = false
 
 
 func move_towards(pos):
@@ -62,36 +68,6 @@ func dodge(direction):
 func parry():
 	press_action("parry")
 	release_action("parry")
-
-
-func _on_began_duel(indicator):
-	print("Duel begun")
-	var timer = Timer.new()
-	timer.name = "DuelTimer"
-	timer.wait_time = randf()
-	timer.connect("timeout", self, "press_duel_button")
-	duel_indicator = indicator
-	add_child(timer)
-	timer.start()
-
-
-func _on_duel_ended():
-	if has_node("DuelTimer"):
-		get_node("DuelTimer").stop()
-		get_node("DuelTimer").queue_free()
-
-
-func press_duel_button():
-	print("Pressing button")
-	match(duel_indicator.displayed_button):
-		'A':
-			press_action("duel_a")
-		'B':
-			press_action("duel_b")
-		'X':
-			press_action("duel_x")
-		'Y':
-			press_action("duel_y")
 
 
 func set_joy_direction(vec):

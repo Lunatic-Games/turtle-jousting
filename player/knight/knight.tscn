@@ -2656,6 +2656,18 @@ tracks/42/keys = {
 "update": 0,
 "values": [ Vector2( -4.68988, -47.5107 ) ]
 }
+tracks/43/type = "value"
+tracks/43/path = NodePath(".:on_turtle")
+tracks/43/interp = 1
+tracks/43/loop_wrap = true
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=9]
 length = 0.3
@@ -10964,32 +10976,41 @@ font_data = ExtResource( 45 )
 ]]
 position = Vector2( 503.375, 293.431 )
 script = ExtResource( 1 )
+on_turtle = false
 flying_velocity = SubResource( 1 )
 
 [node name="Reversable" type="Node2D" parent="."]
 
 [node name="HealthBarPosition" type="Position2D" parent="Reversable"]
-position = Vector2( -4.69, -49.154 )
+position = Vector2( -4.68988, -47.5107 )
 
 [node name="Sprite" type="Node2D" parent="Reversable"]
 scale = Vector2( 0.05, 0.05 )
 
 [node name="BU-Leg" type="Sprite" parent="Reversable/Sprite"]
+visible = false
 z_index = -1
 texture = ExtResource( 2 )
 
 [node name="BackArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="BU-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 225.789, -3.56592 )
+rotation = -0.471239
 texture = ExtResource( 3 )
 
 [node name="BH-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 271.126, -181.75 )
+rotation = 0.417134
 texture = ExtResource( 4 )
 
 [node name="BL-Arm" type="Sprite" parent="Reversable/Sprite/BackArm"]
+position = Vector2( 219.062, -163.175 )
+rotation = 0.275762
 texture = ExtResource( 5 )
 
 [node name="WeaponHandle" type="Node2D" parent="Reversable/Sprite/BackArm"]
+visible = false
 position = Vector2( 400.92, 133.002 )
 script = ExtResource( 29 )
 
@@ -10998,6 +11019,8 @@ script = ExtResource( 29 )
 [node name="MainBody" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="Neck" type="Sprite" parent="Reversable/Sprite/MainBody"]
+position = Vector2( -46.4272, 7.73804 )
+rotation = 0.151844
 texture = ExtResource( 7 )
 
 [node name="Chest" type="Sprite" parent="Reversable/Sprite/MainBody"]
@@ -11013,7 +11036,6 @@ texture = ExtResource( 10 )
 texture = ExtResource( 11 )
 
 [node name="Tears" type="Node2D" parent="Reversable/Sprite/MainBody/Head"]
-visible = false
 
 [node name="Right_Tear" type="Sprite" parent="Reversable/Sprite/MainBody/Head/Tears"]
 position = Vector2( 9.76563, -598.45 )
@@ -11030,15 +11052,22 @@ texture = ExtResource( 13 )
 [node name="FrontArm" type="Node2D" parent="Reversable/Sprite"]
 
 [node name="FL-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( 104.016, -570.755 )
+rotation = -1.49575
 texture = ExtResource( 14 )
 
 [node name="FU-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( -39.9316, -501.221 )
+rotation = -2.72446
 texture = ExtResource( 15 )
 
 [node name="FH-Arm" type="Sprite" parent="Reversable/Sprite/FrontArm"]
+position = Vector2( 221.696, -489.485 )
+rotation = -2.11883
 texture = ExtResource( 16 )
 
 [node name="FrontLeg" type="Node2D" parent="Reversable/Sprite"]
+visible = false
 
 [node name="FU-Leg" type="Sprite" parent="Reversable/Sprite/FrontLeg"]
 texture = ExtResource( 17 )
@@ -11050,7 +11079,6 @@ texture = ExtResource( 18 )
 texture = ExtResource( 19 )
 
 [node name="WaterSplash" type="AnimatedSprite" parent="Reversable"]
-visible = false
 position = Vector2( -2.37207, 0 )
 scale = Vector2( 0.05, 0.05 )
 frames = SubResource( 2 )
@@ -11064,8 +11092,7 @@ frames = SubResource( 3 )
 speed_scale = 3.4
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -13.3538, -39.4797, -3.45538, -47.3406, 9.6105, -28.5699, 3.52054, -19.9936, 13.3858, 0.380493, 21.5777, 2.38858, 17.2057, 22.4697, -2.22607, 34.0955, -16.8415, 28.4487, -10.6964, -1.44644, -7.43686, -17.5586 )
-disabled = true
+polygon = PoolVector2Array( -13.89, -40.3432, -4.14713, -45.8892, 17.1013, -41.6791, 20.5488, -23.2426, 21.9436, -10.7247, 21.468, 7.58801, 14.7564, 14.3315, -2.69614, 17.155, -10.5021, 14.6637, -10.6964, -1.44644, -8.49396, -22.5062 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/charging_joust = SubResource( 4 )
