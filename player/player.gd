@@ -264,7 +264,7 @@ remote func knock_knight_off(knockback):
 
 # Add knight back
 remote func pick_up_knight():
-	if has_node("Knight"):
+	if has_node("Knight") or knight.on_turtle:
 		return
 	if get_tree().network_peer:
 		rpc("pick_up_knight")
@@ -318,7 +318,7 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight and !knight.on_turtle and knight.alive:
+	if knight_hit == knight and knight.alive and !has_node("Knight"):
 		call_deferred("pick_up_knight")
 
 
