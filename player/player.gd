@@ -251,6 +251,8 @@ remote func knock_knight_off(knockback):
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
+	knight.get_node("CollisionPolygon2D").disabled = true
+	knight.on_turtle = false
 	knight.global_position = prev_pos
 	knight.fly_off(knockback)
 	$AnimationTree.travel("controlling/waiting")
