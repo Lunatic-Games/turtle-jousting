@@ -246,8 +246,10 @@ func moved(movement):
 remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("knock_knight_off", knockback)
+	elif get_tree().network_peer:
+		return
 	var prev_pos = knight.global_position
 	remove_child(knight)
 	get_parent().add_child(knight)
