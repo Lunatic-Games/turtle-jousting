@@ -7,8 +7,8 @@ export (bool) var parrying = false
 export (bool) var on_turtle = true
 export (Curve) var flying_velocity
 
-const MAX_HEALTH = 10000
-const MAX_FLY_DISTANCE = 1024
+const MAX_HEALTH = 100.0
+const MAX_FLY_DISTANCE = 1024.0
 
 var sudden_death = false
 var health = MAX_HEALTH

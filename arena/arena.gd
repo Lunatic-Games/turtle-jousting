@@ -97,7 +97,7 @@ func start():
 	set_player_process_input(true)
 	set_process(true)
 	$GameMusic.play()
-	#$GameTimer.start()
+	$GameTimer.start()
 	if get_tree().network_peer and is_network_master():
 		$PowerupSpawnTimer.start()
 	elif !get_tree().network_peer:

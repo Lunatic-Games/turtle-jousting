@@ -20,7 +20,7 @@ Version="1.0"
 [application]
 
 config/name="Turtle Jousting"
-run/main_scene="res://ui/main/main_menu.tscn"
+run/main_scene="res://ui/splash/splash.tscn"
 boot_splash/image="res://boot_splash.png"
 config/icon="res://icon.png"
 
