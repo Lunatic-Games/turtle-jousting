@@ -43,7 +43,7 @@ func save():
 	var _err = f.load("user://settings.cfg")
 	f.set_value("display", "fullscreen", OS.window_fullscreen)
 	
-	var master_bus = AudioServer.get_bus_index("Music")
+	var master_bus = AudioServer.get_bus_index("Master")
 	f.set_value("audio", "master",
 		db2linear(AudioServer.get_bus_volume_db(master_bus)))
 	

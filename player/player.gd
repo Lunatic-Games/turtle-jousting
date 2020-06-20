@@ -246,9 +246,10 @@ func moved(movement):
 remote func knock_knight_off(knockback):
 	if !has_node("Knight"):
 		return
-	if get_tree().network_peer:
+	if get_tree().network_peer and get_tree().get_rpc_sender_id() == 0:
 		rpc("knock_knight_off", knockback)
 	var prev_pos = knight.global_position
+	knight.get_node("CollisionPolygon2D").disabled = true
 	remove_child(knight)
 	get_parent().add_child(knight)
 	knight.global_position = prev_pos
@@ -258,15 +259,13 @@ remote func knock_knight_off(knockback):
 	$ThrowIndicator.visible = false
 	if has_status("Drunk"):
 		remove_status("Drunk")
-	elif has_status("Stoned"):
-		knight.hit(100)
 
 
 # Add knight back
 remote func pick_up_knight():
-	if has_node("Knight"):
+	if has_node("Knight") or knight.get_node("CollisionPolygon2D").disabled:
 		return
-	if get_tree().network_peer:
+	if get_tree().network_peer and is_network_master():
 		rpc("pick_up_knight")
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
@@ -310,13 +309,14 @@ func hit_turtle(turtle):
 		$BounceAnimator.play("bounce")
 	if angle < -PI / 5 and angle > -4 * PI / 5:
 		locked_direction.y = abs(locked_direction.y)
-	$Knight.weapon_handle.weapon.reset_areas_hit()
-	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
+	if has_node("Knight") and $Knight.weapon_handle.weapon.can_joust:
+		$Knight.weapon_handle.weapon.reset_areas_hit()
+		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight and !knight.on_turtle and knight.alive:
+	if knight_hit == knight and knight.alive and !knight.on_turtle:
 		call_deferred("pick_up_knight")
 
 
@@ -334,8 +334,9 @@ func hit_wall(wall):
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
 		$BounceAnimator.play("bounce")
-	$Knight.weapon_handle.weapon.reset_areas_hit()
-	$Knight.weapon_handle.weapon.angle = locked_direction.angle()
+	if has_node("Knight") and $Knight.weapon_handle.weapon.can_joust:
+		$Knight.weapon_handle.weapon.reset_areas_hit()
+		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
 
 # Pick up a powerup, if able
@@ -356,6 +357,8 @@ func _on_Knight_died():
 	set_process_input(false)
 	remove_from_group("player")
 	emit_signal("lost")
+	for status in $Statuses.get_children():
+		status.queue_free()
 
 
 # Add a status to the player

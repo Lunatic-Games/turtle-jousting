@@ -48,7 +48,6 @@ func _hit_weapon(weapon):
 
 func explode():
 	var sprite = $Explosion.duplicate()
-	remove_child($Explosion)
 	player_held_by.get_parent().add_child(sprite)
 	sprite.global_position = $Tip.global_position
 	sprite.playing = true

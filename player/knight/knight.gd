@@ -7,7 +7,7 @@ export (bool) var parrying = false
 export (bool) var on_turtle = true
 export (Curve) var flying_velocity
 
-const MAX_HEALTH = 100
+const MAX_HEALTH = 10000
 const MAX_FLY_DISTANCE = 1024
 
 var sudden_death = false
@@ -15,12 +15,13 @@ var health = MAX_HEALTH
 var alive = true
 var flying_knockback
 var flying_dist_travelled = 0
+onready var player = get_parent()
 onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
 
 
 # Setup
 func _ready():
-	$Reversable/Sprite/BackArm/WeaponHandle.set_player(get_parent())
+	$Reversable/Sprite/BackArm/WeaponHandle.set_player(player)
 	$AnimationTree.active = true
 	$HealthBar.set_health(health)
 	
@@ -34,6 +35,10 @@ func _ready():
 func _physics_process(delta):
 	$HealthBar.global_position.x = $Reversable/HealthBarPosition.global_position.x
 	if _is_flying():
+		for area in get_overlapping_areas():
+			if area.is_in_group("wall"):
+				_on_FlyingHitbox_area_entered(area)
+				return
 		var dist_ratio = flying_dist_travelled / MAX_FLY_DISTANCE
 		var vel = flying_velocity.interpolate(dist_ratio)
 		var movement = flying_knockback.normalized() * vel * delta
@@ -43,6 +48,9 @@ func _physics_process(delta):
 			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
+	if on_turtle and get_parent() != player:
+		player.pick_up_knight() 
+		
 	if get_tree().network_peer and is_network_master():
 		rpc("set_health", health, Vector2(150, 0))
 
@@ -73,7 +81,7 @@ remote func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	$HealthBar.set_health(health)
 	if health == 0:
 		if on_turtle and get_parent().is_in_group("player"):
-			get_parent().knock_knight_off(knockback_on_death)
+			player.knock_knight_off(knockback_on_death)
 		alive = false
 		emit_signal("died")
 
