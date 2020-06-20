@@ -15,12 +15,13 @@ var health = MAX_HEALTH
 var alive = true
 var flying_knockback
 var flying_dist_travelled = 0
+onready var player = get_parent()
 onready var weapon_handle = $Reversable/Sprite/BackArm/WeaponHandle
 
 
 # Setup
 func _ready():
-	$Reversable/Sprite/BackArm/WeaponHandle.set_player(get_parent())
+	$Reversable/Sprite/BackArm/WeaponHandle.set_player(player)
 	$AnimationTree.active = true
 	$HealthBar.set_health(health)
 	
@@ -47,6 +48,9 @@ func _physics_process(delta):
 			movement = movement.clamped(max(0, diff))
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
+	if on_turtle and get_parent() != player:
+		print("Hard fix for bug")
+		player.pick_up_knight() 
 		
 	if get_tree().network_peer and is_network_master():
 		rpc("set_health", health, Vector2(150, 0))
@@ -78,7 +82,7 @@ remote func set_health(new_health, knockback_on_death=Vector2(0,0)):
 	$HealthBar.set_health(health)
 	if health == 0:
 		if on_turtle and get_parent().is_in_group("player"):
-			get_parent().knock_knight_off(knockback_on_death)
+			player.knock_knight_off(knockback_on_death)
 		alive = false
 		emit_signal("died")
 

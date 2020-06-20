@@ -249,10 +249,9 @@ remote func knock_knight_off(knockback):
 	if get_tree().network_peer and get_tree().get_rpc_sender_id() == 0:
 		rpc("knock_knight_off", knockback)
 	var prev_pos = knight.global_position
+	knight.get_node("CollisionPolygon2D").disabled = true
 	remove_child(knight)
 	get_parent().add_child(knight)
-	knight.get_node("CollisionPolygon2D").disabled = true
-	knight.on_turtle = false
 	knight.global_position = prev_pos
 	knight.fly_off(knockback)
 	$AnimationTree.travel("controlling/waiting")
@@ -264,11 +263,10 @@ remote func knock_knight_off(knockback):
 
 # Add knight back
 remote func pick_up_knight():
-	if has_node("Knight") or knight.on_turtle or knight.get_node("CollisionPolygon2D").disabled:
+	if has_node("Knight") or knight.get_node("CollisionPolygon2D").disabled:
 		return
 	if get_tree().network_peer and is_network_master():
 		rpc("pick_up_knight")
-	knight.get_node("CollisionPolygon2D").disabled = true
 	knight.on_turtle = true
 	knight.get_node("AnimationTree").travel("flying_off/mounting")
 	knight.get_parent().remove_child(knight)
@@ -318,7 +316,7 @@ func hit_turtle(turtle):
 
 # Pickup knight if hit and in water
 func hit_knight(knight_hit):
-	if knight_hit == knight and knight.alive and !has_node("Knight"):
+	if knight_hit == knight and knight.alive and !knight.on_turtle:
 		call_deferred("pick_up_knight")
 
 
