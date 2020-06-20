@@ -49,7 +49,6 @@ func _physics_process(delta):
 			$AnimationTree.travel("flying_off/drowning")
 		position += movement
 	if on_turtle and get_parent() != player:
-		print("Hard fix for bug")
 		player.pick_up_knight() 
 		
 	if get_tree().network_peer and is_network_master():

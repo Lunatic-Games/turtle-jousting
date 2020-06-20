@@ -540,7 +540,6 @@ func _on_VisorTransition_lifted_up():
 		if element.visible:
 			element.grab_focus()
 			return
-	print("Unable to find topmost button")
 
 
 func _on_Popup_about_to_show():

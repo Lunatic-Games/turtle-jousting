@@ -309,7 +309,7 @@ func hit_turtle(turtle):
 		$BounceAnimator.play("bounce")
 	if angle < -PI / 5 and angle > -4 * PI / 5:
 		locked_direction.y = abs(locked_direction.y)
-	if has_node("Knight"):
+	if has_node("Knight") and $Knight.weapon_handle.weapon.can_joust:
 		$Knight.weapon_handle.weapon.reset_areas_hit()
 		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
@@ -334,7 +334,7 @@ func hit_wall(wall):
 	elif wall.is_in_group("west_wall"):
 		locked_direction.x = abs(locked_direction.x)
 		$BounceAnimator.play("bounce")
-	if has_node("Knight"):
+	if has_node("Knight") and $Knight.weapon_handle.weapon.can_joust:
 		$Knight.weapon_handle.weapon.reset_areas_hit()
 		$Knight.weapon_handle.weapon.angle = locked_direction.angle()
 
