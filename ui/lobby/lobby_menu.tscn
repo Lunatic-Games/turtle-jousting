@@ -158,7 +158,7 @@ focus_neighbour_right = NodePath("../../JoinContainer/Button")
 focus_neighbour_bottom = NodePath("../../../LocalContainer/CodeEditContainer/LineEdit")
 custom_styles/normal = SubResource( 2 )
 custom_fonts/font = SubResource( 3 )
-max_length = 7
+max_length = 8
 context_menu_enabled = false
 
 [node name="JoinContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/OnlineContainer" groups=[
@@ -232,7 +232,7 @@ focus_neighbour_top = NodePath("../../../OnlineContainer/CodeEditContainer/LineE
 focus_neighbour_right = NodePath("../../JoinContainer/Button")
 custom_styles/normal = SubResource( 11 )
 custom_fonts/font = SubResource( 12 )
-max_length = 7
+max_length = 8
 context_menu_enabled = false
 
 [node name="JoinContainer" type="CenterContainer" parent="ConnectionSection/VBoxContainer/LocalContainer" groups=[
@@ -449,6 +449,7 @@ bus = "LobbyMusic"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade_music_in = SubResource( 14 )
 anims/fade_music_out = SubResource( 15 )
+
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/OnlineContainer/JoinContainer/Button" to="." method="_connect_online"]
 [connection signal="pressed" from="ConnectionSection/VBoxContainer/LocalContainer/JoinContainer/Button" to="." method="_connect_local"]
 [connection signal="removed" from="LobbySections/GameContainer/PlayerContainer/PlayerSlot1" to="." method="_on_PlayerSlot_removed"]
